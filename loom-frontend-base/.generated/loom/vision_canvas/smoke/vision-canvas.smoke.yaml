@@ -1,3 +1,4 @@
+# GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.
 scenario: loom.vision_canvas.smoke-1
 screen: loom.vision_canvas
 steps:

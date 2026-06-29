@@ -1,0 +1,64 @@
+{
+  "$schema": "https://loom.local/schemas/canonical-authority.registry.schema.json",
+  "registry_version": "1.0.0",
+  "product_name": "Loom",
+  "compatibility_aliases": ["Gaijinn", "AOC"],
+  "generated_artifact_policy": {
+    "generated_roots": ["loom-frontend-base/.generated/loom"],
+    "source_roots": ["loom-frontend-base/examples/loom-source", "loom-frontend-base/frontend-formation", "loom-frontend-base/extension-src"],
+    "inactive_duplicate_roots": ["frontend-formation-complete", "vaults/gaijinn-memory-fs"],
+    "marker": "GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources."
+  },
+  "authorities": {
+    "naming_and_package_identity": {
+      "classification": "canonical runtime authority",
+      "source": "pyproject.toml",
+      "evidence": ["project.name is loom", "console script loom points to aoc_cli.cli:app"],
+      "compatibility": ["aoc_cli package path", "aoc_supervisor package path", "GAIJINN_* environment aliases retained where runtime uses them"]
+    },
+    "canonical_paths": {
+      "classification": "canonical runtime authority",
+      "source": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+      "evidence": ["static UI router and UI tests import route and contract paths from this module"]
+    },
+    "intent_contracts": {
+      "classification": "canonical runtime authority",
+      "sources": ["ui/loom-system-intent-map.json", "ui/loom-pipeline-intent-map.json", "ui/loom-intent-forge-intent-map.json", "ui/loom-continuation-intent-map.json", "ui/command-engine-ui-intent-map.json"],
+      "evidence": ["UiIntentDriver loads ui/loom-ui-intent-map.json and ui/loom-pipeline-intent-map.json", "static router serves contracts under /ui/contracts/{contract_name}"]
+    },
+    "frontend_runtime": {
+      "classification": "canonical runtime authority",
+      "source": "sandbox_frontend",
+      "evidence": ["repo_paths.FRONTEND_DIR resolves to sandbox_frontend", "static_ui serves /, /sandbox/{page_name}, /shared/{asset_name}, and /workspaces/{fragment_name} from sandbox_frontend"]
+    },
+    "frontend_formation_compiler": {
+      "classification": "canonical build authority",
+      "source": "loom-frontend-base/frontend-formation",
+      "source_inputs": ["loom-frontend-base/examples/loom-source", "loom-frontend-base/extension-src", "loom-frontend-base/scripts/build.py"],
+      "generated_outputs": ["loom-frontend-base/.generated/loom"],
+      "inactive_duplicates": ["frontend-formation-complete"]
+    },
+    "overlay_policy_and_registry": {
+      "classification": "canonical runtime authority",
+      "sources": [".loom/overlays/policy.json", ".loom/overlays/registry.json"],
+      "enforcer": "aoc_supervisor/aoc_supervisor/overlay_system.py"
+    },
+    "workflow_evaluation": {
+      "classification": "canonical runtime authority",
+      "source": "aoc_supervisor/aoc_supervisor/workflow_evaluator.py",
+      "evidence": ["tests/test_workflow_evaluator.py covers evaluator invariants", "evaluate_workflow enforces overlay authority by default"]
+    },
+    "api_routing": {
+      "classification": "canonical runtime authority",
+      "source": "aoc_supervisor/aoc_supervisor/api.py",
+      "ui_router": "aoc_supervisor/aoc_supervisor/routers/static_ui.py",
+      "evidence": ["FastAPI app includes static_ui.router", "API routes are declared with @app.* decorators in api.py"]
+    },
+    "perfect_spec_interrogation": {
+      "classification": "runtime-canonical optional subsystem driven by intent contracts",
+      "sources": ["docs/specs/PERFECT-SPEC-INTERROGATION.md", "aoc_supervisor/aoc_supervisor/adaptive_question_engine.py", "aoc_supervisor/aoc_supervisor/reasoning_schema.py", "aoc_supervisor/aoc_supervisor/spec_analysis_types.py", "aoc_supervisor/aoc_supervisor/intent_forge_service.py"],
+      "tests": ["tests/test_adaptive_interrogation.py", "tests/test_interrogation_evidence.py", "tests/test_interrogation_voice_contract.py"],
+      "status": "Active for paid/adaptive Intent Forge sessions; deterministic fake reasoning is test/local only. Historical composer plan is archived."
+    }
+  }
+}

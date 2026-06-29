@@ -1,3 +1,4 @@
+# GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.
 actions:
   intake.start_session:
     description: Create a paid Intent Forge session from the user vision.

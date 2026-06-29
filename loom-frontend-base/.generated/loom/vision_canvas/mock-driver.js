@@ -1,3 +1,4 @@
+// GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.
 /**
  * Deterministic Loom contract driver.
  *

@@ -30,19 +30,47 @@ SCREENS = {
 def run(cmd: list[str], *, cwd: Path = ROOT, capture: bool = True) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     env['PYTHONPATH'] = str(TOOL) + (os.pathsep + env['PYTHONPATH'] if env.get('PYTHONPATH') else '')
-    return subprocess.run(cmd, cwd=cwd, env=env, text=True, capture_output=capture, check=True)
+    return subprocess.run(cmd, cwd=cwd, env=env, text=True, capture_output=capture, check=True)  # noqa: S603
 
 
 def selected_driver_name() -> str:
     env_val = os.environ.get("LOOM_ENV", "").strip().lower()
-    use_mock = os.environ.get("LOOM_USE_MOCK_DRIVER", "").strip().lower() in {"1", "true", "yes"} or env_val in {"test", "demo"}
+    use_mock_env = os.environ.get("LOOM_USE_MOCK_DRIVER", "").strip().lower() in {"1", "true", "yes"}
+    use_mock = use_mock_env or env_val in {"test", "demo"}
     return "mock-driver.js" if use_mock else "api-driver.js"
+
+
+def mark_generated_file(path: Path) -> None:
+    markers = {
+        ".yaml": "# GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.\n",
+        ".yml": "# GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.\n",
+        ".js": "// GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.\n",
+        ".css": "/* GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources. */\n",
+        ".html": "<!-- GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources. -->\n",
+    }
+    marker = markers.get(path.suffix)
+    if marker is None:
+        return
+    content = path.read_text(encoding="utf-8")
+    if "GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources." in content[:300]:
+        return
+    path.write_text(marker + content, encoding="utf-8")
+
+
+def mark_generated_tree(root: Path) -> None:
+    for path in root.rglob("*"):
+        if path.is_file():
+            mark_generated_file(path)
 
 
 def patch_scripts(html_path: Path) -> None:
     content = html_path.read_text(encoding='utf-8')
     needle = '  <script src="shell.js"></script>\n  <script src="screen.custom.js"></script>'
-    replacement = '  <script src="mock-driver.js"></script>\n  <script src="shell.js"></script>\n  <script src="screen.custom.js"></script>'
+    replacement = (
+        '  <script src="mock-driver.js"></script>\n'
+        '  <script src="shell.js"></script>\n'
+        '  <script src="screen.custom.js"></script>'
+    )
     if content.count(needle) != 1:
         raise RuntimeError(f'Expected one generated script block in {html_path}')
     html_path.write_text(content.replace(needle, replacement), encoding='utf-8')
@@ -73,13 +101,19 @@ def main() -> int:
         shutil.copy2(EXT / f'{screen}.custom.js', target / 'screen.custom.js')
         shutil.copy2(EXT / f'{screen}.custom.css', target / 'screen.custom.css')
         patch_scripts(target / 'index.html')
+        mark_generated_tree(target)
 
         for js_name in ('mock-driver.js', 'shell.js', 'screen.custom.js'):
             if shutil.which('node'):
                 checked = run(['node', '--check', str(target / js_name)])
                 node_log.append({'screen': screen, 'file': js_name, 'passed': True, 'stdout': checked.stdout.strip()})
             else:
-                node_log.append({'screen': screen, 'file': js_name, 'passed': True, 'stdout': 'Skipped check (node missing)'})
+                node_log.append({
+                    'screen': screen,
+                    'file': js_name,
+                    'passed': True,
+                    'stdout': 'Skipped check (node missing)',
+                })
 
     shutil.copy2(SRC / 'actions.registry.yaml', OUT / 'actions.registry.yaml')
     shutil.copy2(SRC / 'knowledge.registry.yaml', OUT / 'knowledge.registry.yaml')
@@ -93,6 +127,9 @@ def main() -> int:
         ],
     }
     (OUT / 'frontend-formation.all.yaml').write_text(yaml.safe_dump(aggregate, sort_keys=False), encoding='utf-8')
+    mark_generated_file(OUT / 'actions.registry.yaml')
+    mark_generated_file(OUT / 'knowledge.registry.yaml')
+    mark_generated_file(OUT / 'frontend-formation.all.yaml')
 
     validation = run([
         sys.executable, '-m', 'validator.cli.main',
@@ -106,7 +143,8 @@ def main() -> int:
     css_json = json.loads(css.stdout)
 
     (REPORTS / 'generation.json').write_text(json.dumps(generation_log, indent=2), encoding='utf-8')
-    (REPORTS / 'node-check.json').write_text(json.dumps({'passed': True, 'checks': node_log}, indent=2), encoding='utf-8')
+    node_report = json.dumps({'passed': True, 'checks': node_log}, indent=2)
+    (REPORTS / 'node-check.json').write_text(node_report, encoding='utf-8')
     (REPORTS / 'css-check.json').write_text(json.dumps(css_json, indent=2), encoding='utf-8')
     (REPORTS / 'validation-summary.json').write_text(json.dumps(validation_json, indent=2), encoding='utf-8')
 

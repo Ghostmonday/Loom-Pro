@@ -1,3 +1,4 @@
+# GENERATED FILE - DO NOT EDIT. Regenerate from canonical sources.
 rule_set_version: 1.0.0
 action_registry: actions.registry.yaml
 knowledge_registry: knowledge.registry.yaml
