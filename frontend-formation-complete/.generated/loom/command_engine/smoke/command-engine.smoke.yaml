@@ -1,0 +1,31 @@
+scenario: loom.command_engine.smoke-1
+screen: loom.command_engine
+steps:
+- kind: assert_initial_state
+  target: command-feedback
+  expected:
+    present: true
+- kind: perform_interaction
+  target: command-deliberate-btn
+- kind: assert_intermediate_feedback
+  target: command-feedback
+  expected:
+    state: pending
+- kind: assert_terminal_state
+  target: command-feedback
+  expected:
+    any_of:
+    - succeeded
+    - failed
+- kind: assert_contract_projection
+  target: loom.command.feedback
+  expected:
+    observable: true
+- kind: assert_accessibility_state
+  target: command-deliberate-btn
+  expected:
+    accessible_name: true
+- kind: assert_no_prohibited_side_effect
+  target: command-deliberate-btn
+  expected:
+    inline_handlers: false

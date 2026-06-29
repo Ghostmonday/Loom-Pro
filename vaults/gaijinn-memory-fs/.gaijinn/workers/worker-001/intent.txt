@@ -1,0 +1,201 @@
+# Agent Intent Vector
+
+Worker: worker-001
+
+## Allowed Paths
+- .agents/vault.yaml
+- .cursorrules
+- 000_Brain_MOC.md
+- 00_Brain/invariants/INV-GAIJINN-BINDING.md
+- 010_Protocols_MOC.md
+- 020_Active_State_MOC.md
+- 030_Cold_Memories_MOC.md
+- 10_Operations/agents/promoter/promote.sh
+- 10_Operations/knowledge-linter.py
+- 10_Operations/tasks/OBSIDIAN-RUN-16.md
+- 10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md
+- 30_Decisions/ADR-002-dual-invariant-domains.md
+- 40_Concepts/council-memory-cron-topology.md
+- 40_Concepts/council-memory-executor-stack.md
+- 40_Concepts/council-memory-ux-process-stage.md
+- 40_Concepts/council-memory-vault-artifacts-shipped.md
+- 40_Concepts/ingress-vault-civilization.md
+- 40_Concepts/linter-supervisor-api.md
+- 40_Concepts/metrics-dashboard.md
+- 40_Concepts/metrics-linter.md
+- 40_Concepts/vault-filesystem.md
+- CLAUDE.md
+- Current_Context.md
+- README.md
+- aoc_supervisor/README.md
+- aoc_supervisor/aoc_supervisor/intent_blueprint.py
+- aoc_supervisor/aoc_supervisor/prompt_coverage.py
+- raw/constitution-v0-section-xiii.md
+- ui/WU-004-deploy-path-validation.md
+
+## Denied Paths
+- .agents/codex-deepseek.toml.example
+- .agents/hermes-deepseek.env.example
+- .obsidian/app.json
+- .obsidian/appearance.json
+- .obsidian/core-plugins.json
+- .obsidian/graph.json
+- .obsidian/workspace.json
+- 10_Operations/HERMES-DEVELOPMENT-ORDERS.md
+- 10_Operations/HERMES-MEMORY.md
+- 10_Operations/HERMES-SPRINT-DIRECTIVE.md
+- 10_Operations/VAULT-GEMINI-SHARE.md
+- 10_Operations/agents/promoter/validate_promotion.py
+- 10_Operations/tasks/topology-merges.md
+- 10_Operations/tasks/topology-splits.md
+- 20_Projects/deepseek-codex-setup.md
+- 20_Projects/deepseek-hermes-setup.md
+- 40_Concepts/convergence-governance.md
+- 40_Concepts/council-memory-convergence-semantics.md
+- 40_Concepts/council-memory-development-program.md
+- 40_Concepts/council-memory-empty-spawn-crisis.md
+- 40_Concepts/council-memory-handoff-bus.md
+- 40_Concepts/council-memory-hermes-mandate.md
+- 40_Concepts/council-memory-index.md
+- 40_Concepts/council-memory-infrastructure-incidents.md
+- 40_Concepts/council-memory-merge-compounding.md
+- 40_Concepts/council-memory-monorepo-state.md
+- 40_Concepts/council-memory-operational-hazards.md
+- 40_Concepts/council-memory-product-vision.md
+- 40_Concepts/council-memory-protocol.md
+- 40_Concepts/council-memory-sprint-14w-arc.md
+- 40_Concepts/council-memory-vault-dogfood-arc.md
+- 40_Concepts/dual-ledger-bridge.md
+- 40_Concepts/event-sourcing-vault.md
+- 40_Concepts/hermes-cron-orchestration.md
+- 40_Concepts/hermes-memory-vault.md
+- 40_Concepts/knowledge-linter-architecture.md
+- 40_Concepts/linter-core-governance.md
+- 40_Concepts/linter-markdown-schema.md
+- 40_Concepts/memory-execution-loop.md
+- 40_Concepts/metrics-convergence.md
+- 40_Concepts/metrics-gravity.md
+- 40_Concepts/obsidian-city-neighborhoods.md
+- 40_Concepts/obsidian-vault-mapping.md
+- 40_Concepts/promotion-pipeline.md
+- 40_Concepts/test-promotion-concept.md
+- 40_Concepts/vault-affairs.md
+- 40_Concepts/vault-gaijinn.md
+- 40_Concepts/vault-topology-and-density.md
+- AGENTS.md
+- _multi-agent/events.md
+- aoc_supervisor/__init__.py
+- aoc_supervisor/aoc_supervisor/__init__.py
+- aoc_supervisor/aoc_supervisor/api.py
+- aoc_supervisor/aoc_supervisor/billing.py
+- aoc_supervisor/aoc_supervisor/complexity.py
+- aoc_supervisor/aoc_supervisor/enforcer.py
+- aoc_supervisor/aoc_supervisor/knowledge_linter.py
+- aoc_supervisor/aoc_supervisor/orchestrate_session.py
+- aoc_supervisor/aoc_supervisor/orchestrator.py
+- aoc_supervisor/aoc_supervisor/preflight.py
+- aoc_supervisor/aoc_supervisor/repo_paths.py
+- aoc_supervisor/aoc_supervisor/ui_intent.py
+- aoc_supervisor/aoc_supervisor/vault_deploy.py
+- aoc_supervisor/aoc_supervisor/vault_links.py
+- aoc_supervisor/aoc_supervisor/workflow_evaluator.py
+- project.executor-profile.json
+- ui/vault-ui-intent-map.json
+
+## Allowed Commands
+- none
+
+## Denied Commands
+- git push
+
+## Capabilities
+- constitution
+- knowledge
+- metrics
+- vault
+
+## Prohibitions
+- no destructive cleanup outside workspace
+- no edits outside assigned paths
+- no git push
+- no network calls
+- no secret exfiltration
+
+## Invariants
+- deterministic output
+- preserve existing project.json compatibility
+- write generated Gaijinn artifacts under .gaijinn/
+
+## Structural Tokens
+- handoff_only: true
+- no_sibling_trespass: true
+- scope_strict: true
+
+## Sibling Denied Paths
+- .agents/codex-deepseek.toml.example
+- .agents/hermes-deepseek.env.example
+- .obsidian/app.json
+- .obsidian/appearance.json
+- .obsidian/core-plugins.json
+- .obsidian/graph.json
+- .obsidian/workspace.json
+- 10_Operations/HERMES-DEVELOPMENT-ORDERS.md
+- 10_Operations/HERMES-MEMORY.md
+- 10_Operations/HERMES-SPRINT-DIRECTIVE.md
+- 10_Operations/VAULT-GEMINI-SHARE.md
+- 10_Operations/agents/promoter/validate_promotion.py
+- 10_Operations/tasks/topology-merges.md
+- 10_Operations/tasks/topology-splits.md
+- 20_Projects/deepseek-codex-setup.md
+- 20_Projects/deepseek-hermes-setup.md
+- 40_Concepts/convergence-governance.md
+- 40_Concepts/council-memory-convergence-semantics.md
+- 40_Concepts/council-memory-development-program.md
+- 40_Concepts/council-memory-empty-spawn-crisis.md
+- 40_Concepts/council-memory-handoff-bus.md
+- 40_Concepts/council-memory-hermes-mandate.md
+- 40_Concepts/council-memory-index.md
+- 40_Concepts/council-memory-infrastructure-incidents.md
+- 40_Concepts/council-memory-merge-compounding.md
+- 40_Concepts/council-memory-monorepo-state.md
+- 40_Concepts/council-memory-operational-hazards.md
+- 40_Concepts/council-memory-product-vision.md
+- 40_Concepts/council-memory-protocol.md
+- 40_Concepts/council-memory-sprint-14w-arc.md
+- 40_Concepts/council-memory-vault-dogfood-arc.md
+- 40_Concepts/dual-ledger-bridge.md
+- 40_Concepts/event-sourcing-vault.md
+- 40_Concepts/hermes-cron-orchestration.md
+- 40_Concepts/hermes-memory-vault.md
+- 40_Concepts/knowledge-linter-architecture.md
+- 40_Concepts/linter-core-governance.md
+- 40_Concepts/linter-markdown-schema.md
+- 40_Concepts/memory-execution-loop.md
+- 40_Concepts/metrics-convergence.md
+- 40_Concepts/metrics-gravity.md
+- 40_Concepts/obsidian-city-neighborhoods.md
+- 40_Concepts/obsidian-vault-mapping.md
+- 40_Concepts/promotion-pipeline.md
+- 40_Concepts/test-promotion-concept.md
+- 40_Concepts/vault-affairs.md
+- 40_Concepts/vault-gaijinn.md
+- 40_Concepts/vault-topology-and-density.md
+- AGENTS.md
+- _multi-agent/events.md
+- aoc_supervisor/__init__.py
+- aoc_supervisor/aoc_supervisor/__init__.py
+- aoc_supervisor/aoc_supervisor/api.py
+- aoc_supervisor/aoc_supervisor/billing.py
+- aoc_supervisor/aoc_supervisor/complexity.py
+- aoc_supervisor/aoc_supervisor/enforcer.py
+- aoc_supervisor/aoc_supervisor/knowledge_linter.py
+- aoc_supervisor/aoc_supervisor/orchestrate_session.py
+- aoc_supervisor/aoc_supervisor/orchestrator.py
+- aoc_supervisor/aoc_supervisor/preflight.py
+- aoc_supervisor/aoc_supervisor/repo_paths.py
+- aoc_supervisor/aoc_supervisor/ui_intent.py
+- aoc_supervisor/aoc_supervisor/vault_deploy.py
+- aoc_supervisor/aoc_supervisor/vault_links.py
+- aoc_supervisor/aoc_supervisor/workflow_evaluator.py
+- project.executor-profile.json
+- ui/vault-ui-intent-map.json

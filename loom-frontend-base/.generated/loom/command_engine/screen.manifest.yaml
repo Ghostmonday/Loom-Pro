@@ -1,0 +1,54 @@
+screen: loom.command_engine
+mission: Deliberate architecture, synthesize the blueprint, and approve preparation.
+mission_id: loom-command-engine
+elements:
+- id: command-deliberate-btn
+  classification: action_control
+  action: teleology.deliberate
+  feedback_target: command-feedback
+  label: Run Architectural Teleology
+- id: command-synthesize-btn
+  classification: action_control
+  action: blueprint.synthesize
+  feedback_target: command-feedback
+  label: Synthesize Canonical Blueprint
+- id: command-prepare-btn
+  classification: action_control
+  action: orchestrate.prepare
+  feedback_target: command-feedback
+  label: Approve Blueprint and Prepare
+- id: command-phase-display
+  classification: display
+  contract_path: loom.command.teleology_phase
+  label: Teleology idle
+- id: command-topology-display
+  classification: display
+  contract_path: loom.command.topology
+  label: Topology evidence unavailable
+- id: command-bridge-display
+  classification: display
+  contract_path: loom.command.bridge_plan
+  label: Dark bridge plan unavailable
+- id: command-blueprint-display
+  classification: display
+  contract_path: loom.command.blueprint
+  label: Blueprint not synthesized
+- id: command-approval-display
+  classification: display
+  contract_path: loom.command.approval_gate
+  label: Blueprint approval locked
+- id: command-feedback
+  classification: display
+  contract_path: loom.command.feedback
+  label: Command Engine initialized
+  tag: output
+knowledge_bindings:
+  design_intent: loom.command.design_intent
+  behavioral: loom.command.behavioral
+  operational: loom.command.operational
+  governance: loom.command.governance
+  institutional: loom.command.institutional
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/command-engine.smoke.yaml

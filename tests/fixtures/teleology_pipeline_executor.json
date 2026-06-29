@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "session_id": "sess_c22_test_01",
+  "user_id": "c22-test",
+  "tier": "paid",
+  "session_status": "FINALIZED",
+  "original_prompt": "Build a CLI note-taking app with markdown export and tag-based search.",
+  "questions_and_answers": [
+    {
+      "question_id": "q_intake",
+      "text": "Initial intent (intake)",
+      "answer": "Build a CLI note-taking app with markdown export and tag-based search.",
+      "domain": "product_scope"
+    },
+    {
+      "question_id": "q_users",
+      "text": "Who are the target users?",
+      "answer": "Developers and technical writers who want a fast terminal-based note system.",
+      "domain": "target_users"
+    }
+  ],
+  "confirmed_requirements": [
+    {
+      "id": "REQ-001",
+      "text": "CLI note-taking app with markdown export",
+      "source_question_id": "q_intake",
+      "confidence": 0.95,
+      "domain": "product_scope"
+    },
+    {
+      "id": "REQ-002",
+      "text": "Tag-based search functionality",
+      "source_question_id": "q_intake",
+      "confidence": 0.9,
+      "domain": "functional_requirements"
+    }
+  ],
+  "inferred_requirements": [],
+  "constraints": ["Must run on Linux and macOS", "No external SaaS dependencies", "Data stored locally in plain text"],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "text": "Use SQLite for local tag index",
+      "rationale": "Lightweight, no external dependencies"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "ASSUME-001",
+      "text": "Users have Python 3.10+ installed",
+      "risk_if_wrong": "medium"
+    }
+  ],
+  "non_goals": ["No GUI", "No cloud sync", "No real-time collaboration"],
+  "deferred_items": [],
+  "unresolved_items": [],
+  "contradictions": [],
+  "risks": [
+    {
+      "id": "RISK-001",
+      "text": "SQLite may not scale to 100k+ notes",
+      "severity": "low"
+    }
+  ],
+  "domain_coverage": {
+    "product_scope": {"addressed": true, "na": false},
+    "target_users": {"addressed": true, "na": false},
+    "user_journeys": {"addressed": true, "na": false},
+    "functional_requirements": {"addressed": true, "na": false},
+    "non_functional_requirements": {"addressed": false, "na": true},
+    "interface_behavior": {"addressed": true, "na": false},
+    "data_model": {"addressed": true, "na": false},
+    "business_rules": {"addressed": false, "na": true},
+    "authz": {"addressed": false, "na": true},
+    "security_privacy": {"addressed": true, "na": false},
+    "error_handling": {"addressed": true, "na": false},
+    "infrastructure": {"addressed": true, "na": false},
+    "performance": {"addressed": false, "na": true},
+    "observability": {"addressed": false, "na": true},
+    "testing_acceptance": {"addressed": false, "na": true},
+    "risks_assumptions": {"addressed": true, "na": false}
+  },
+  "confidence_by_domain": {
+    "product_scope": 0.95,
+    "target_users": 0.8,
+    "user_journeys": 0.7,
+    "functional_requirements": 0.9,
+    "non_functional_requirements": 0.0,
+    "interface_behavior": 0.75,
+    "data_model": 0.8,
+    "business_rules": 0.0,
+    "authz": 0.0,
+    "security_privacy": 0.7,
+    "error_handling": 0.6,
+    "infrastructure": 0.7,
+    "performance": 0.0,
+    "observability": 0.0,
+    "testing_acceptance": 0.0,
+    "risks_assumptions": 0.7
+  },
+  "confidence_threshold": {
+    "product_scope": 0.65,
+    "target_users": 0.65,
+    "user_journeys": 0.65,
+    "functional_requirements": 0.65,
+    "non_functional_requirements": 0.65,
+    "interface_behavior": 0.65,
+    "data_model": 0.65,
+    "business_rules": 0.65,
+    "authz": 0.65,
+    "security_privacy": 0.65,
+    "error_handling": 0.65,
+    "infrastructure": 0.65,
+    "performance": 0.65,
+    "observability": 0.65,
+    "testing_acceptance": 0.65,
+    "risks_assumptions": 0.65
+  },
+  "acceptance_criteria": ["Markdown export preserves all formatting", "Tag search returns results in <500ms"],
+  "blueprint_graph": {
+    "version": 1,
+    "nodes": [
+      {"id": "REQ-001", "label": "CLI note-taking app", "kind": "requirement", "domain": "product_scope", "confidence": 0.95},
+      {"id": "REQ-002", "label": "Tag-based search", "kind": "requirement", "domain": "functional_requirements", "confidence": 0.9}
+    ],
+    "edges": []
+  },
+  "blueprint_version": 3,
+  "orchestrator_policy_version": "1.0.0",
+  "model_metadata": {},
+  "telemetry_consent": {"operational": true, "analytics": false, "training": false},
+  "current_question": null,
+  "evidence_revision": 0,
+  "analysis_revision": 0,
+  "analysis_receipts": [],
+  "project_evidence": [
+    {
+      "id": "ev-repo",
+      "kind": "repository",
+      "summary": "Fresh project with no existing code",
+      "provenance": "authorized_scan",
+      "confidence": 0.9
+    }
+  ],
+  "document_evidence": [],
+  "research_evidence": [],
+  "environment_evidence": [],
+  "latest_analysis": null,
+  "ergonomics_requirements": [],
+  "automation_boundaries": [],
+  "accessibility_requirements": [],
+  "voice_requirements": [],
+  "created_at": "2026-06-25T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "finalized_at": "2026-06-25T00:00:01Z",
+  "handed_off_at": null,
+  "artifact": {
+    "schema_version": 1,
+    "provisional": false,
+    "session_id": "sess_c22_test_01",
+    "blueprint_version": 3,
+    "product_definition": "Build a CLI note-taking app with markdown export and tag-based search.",
+    "confirmed_requirements": [
+      {"id": "REQ-001", "text": "CLI note-taking app with markdown export", "source_question_id": "q_intake", "confidence": 0.95, "domain": "product_scope"},
+      {"id": "REQ-002", "text": "Tag-based search functionality", "source_question_id": "q_intake", "confidence": 0.9, "domain": "functional_requirements"}
+    ],
+    "inferred_requirements": [],
+    "decisions": [],
+    "assumptions": [],
+    "non_goals": [],
+    "deferred_items": [],
+    "risks": [],
+    "acceptance_criteria": [],
+    "domain_coverage": {},
+    "confidence_by_domain": {},
+    "dependency_graph": {},
+    "validation": {
+      "status": "complete",
+      "readiness": "verified"
+    }
+  },
+  "executable_projection": {
+    "project_goal": "Build a CLI note-taking app with markdown export and tag-based search.",
+    "work_units": [
+      {
+        "id": "PREPARE",
+        "title": "Prepare the project execution environment",
+        "path": "src/prepare/",
+        "risk": "low",
+        "depends_on": [],
+        "acceptance_checks": ["pytest"],
+        "allowed_paths": ["src/prepare/"]
+      },
+      {
+        "id": "WU-001",
+        "title": "Core project scaffold",
+        "path": "src/core/",
+        "risk": "medium",
+        "depends_on": ["PREPARE"],
+        "acceptance_checks": ["pytest"],
+        "allowed_paths": ["src/core/"]
+      },
+      {
+        "id": "WU-002",
+        "title": "Document indexing and SQLite store",
+        "path": "src/storage/",
+        "risk": "medium",
+        "depends_on": ["WU-001"],
+        "acceptance_checks": ["pytest"],
+        "allowed_paths": ["src/storage/"]
+      },
+      {
+        "id": "WU-003",
+        "title": "CLI tooling and markdown export",
+        "path": "src/cli/",
+        "risk": "low",
+        "depends_on": ["WU-001"],
+        "acceptance_checks": ["pytest"],
+        "allowed_paths": ["src/cli/"]
+      }
+    ],
+    "pipeline_plan": {
+      "current_index": 0,
+      "current_phase": "foundation",
+      "completed_phases": [],
+      "phases": ["foundation", "storage", "interface"]
+    },
+    "projection_mode": "keyword"
+  }
+}

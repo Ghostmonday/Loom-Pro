@@ -1,0 +1,98 @@
+{
+  "base_branch": "gaijinn/integration",
+  "base_ref": "f3dc8cc8e457b5452c32cd5bc3365c867c3b917b",
+  "collected_at": "2026-06-18T10:15:01Z",
+  "schema_version": 1,
+  "workers": {
+    "worker-001": {
+      "allowed_paths": [
+        "."
+      ],
+      "changed_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "intent_hash": "b7521dcda540bdeaccf2f1c9938e39b30f0f962b175549a8a4f9a7a676bb953c",
+      "status": "blocked",
+      "trespasses": []
+    },
+    "worker-002": {
+      "allowed_paths": [
+        "."
+      ],
+      "changed_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "intent_hash": "862456f76328ca83f25811240bb0993cbbdb73ab6031a11becd62513fd060371",
+      "status": "blocked",
+      "trespasses": []
+    },
+    "worker-003": {
+      "allowed_paths": [
+        "."
+      ],
+      "changed_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "intent_hash": "8c97a567dabfa1d8c548718077fd7df11320821d306e7dd6e05abc67ac1d7827",
+      "status": "blocked",
+      "trespasses": []
+    },
+    "worker-004": {
+      "allowed_paths": [
+        "."
+      ],
+      "changed_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "intent_hash": "e335eb3c032d238daa13dc6c90051cd2d89bd163436b35b505da7016d37148fb",
+      "status": "blocked",
+      "trespasses": []
+    },
+    "worker-005": {
+      "allowed_paths": [
+        "."
+      ],
+      "changed_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "intent_hash": "39f28859a952c8d54adc15c20375c0dfd97e035aefbcf11970e55b8f949fe492",
+      "status": "blocked",
+      "trespasses": []
+    }
+  }
+}

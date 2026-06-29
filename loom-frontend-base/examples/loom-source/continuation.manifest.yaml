@@ -1,0 +1,85 @@
+screen: loom.continuation
+mission: Attach an existing repository, preserve lineage, approve a bounded delta,
+  and rejoin teleology.
+mission_id: loom-continuation
+elements:
+- id: continuation-attach-btn
+  classification: action_control
+  action: intake.attach_project
+  feedback_target: continuation-feedback
+  label: Attach Existing Project
+- id: continuation-resume-btn
+  classification: action_control
+  action: intake.resume_session
+  feedback_target: continuation-feedback
+  label: Load Loom Lineage
+- id: continuation-kind-btn
+  classification: action_control
+  action: intake.session_kind_select
+  feedback_target: continuation-feedback
+  label: Select Continuation Policy
+- id: continuation-bootstrap-btn
+  classification: action_control
+  action: graph.bootstrap
+  feedback_target: continuation-feedback
+  label: Bootstrap Repository Graph
+- id: continuation-mode-btn
+  classification: action_control
+  action: interrogation.set_mode
+  feedback_target: continuation-feedback
+  label: Select Delta Interrogation Mode
+- id: continuation-answer-btn
+  classification: action_control
+  action: question.submit_answer
+  feedback_target: continuation-feedback
+  label: Submit Delta Answer
+- id: continuation-scope-btn
+  classification: action_control
+  action: continuation.confirm_scope
+  feedback_target: continuation-feedback
+  label: Confirm Evolution Scope
+- id: continuation-confirm-handoff-btn
+  classification: action_control
+  action: handoff.confirm
+  feedback_target: continuation-feedback
+  label: Confirm Continuation Handoff
+- id: continuation-accept-handoff-btn
+  classification: action_control
+  action: handoff.accept
+  feedback_target: continuation-feedback
+  label: Accept Continuation Handoff
+- id: continuation-lineage-display
+  classification: display
+  contract_path: loom.continuation.lineage
+  label: No project attached
+- id: continuation-graph-display
+  classification: display
+  contract_path: loom.continuation.graph_status
+  label: Graph unavailable
+- id: continuation-mode-display
+  classification: display
+  contract_path: loom.continuation.interrogation_mode
+  label: Interrogation policy unset
+- id: continuation-scope-display
+  classification: display
+  contract_path: loom.continuation.delta_scope
+  label: Delta scope unavailable
+- id: continuation-handoff-display
+  classification: display
+  contract_path: loom.continuation.handoff_state
+  label: Continuation handoff locked
+- id: continuation-feedback
+  classification: display
+  contract_path: loom.continuation.feedback
+  label: Continuation initialized
+  tag: output
+knowledge_bindings:
+  design_intent: loom.continuation.design_intent
+  behavioral: loom.continuation.behavioral
+  operational: loom.continuation.operational
+  governance: loom.continuation.governance
+  institutional: loom.continuation.institutional
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/continuation.smoke.yaml

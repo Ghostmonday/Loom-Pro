@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deliberate architecture, synthesize the blueprint, and approve preparation.</title>
+  <link rel="stylesheet" href="screen.css">
+  <link rel="stylesheet" href="screen.custom.css">
+</head>
+<body>
+  <main
+    id="screen-root"
+    data-screen="loom.command_engine"
+    data-mission="loom-command-engine"
+    class="workspace-shell"
+  >
+    <h1>Deliberate architecture, synthesize the blueprint, and approve preparation.</h1>
+    <button id="command-deliberate-btn" data-classification="action_control" data-action="teleology.deliberate" data-feedback-target="command-feedback" aria-label="Run Architectural Teleology" aria-busy="false" type="button">Run Architectural Teleology</button>
+    <button id="command-synthesize-btn" data-classification="action_control" data-action="blueprint.synthesize" data-feedback-target="command-feedback" aria-label="Synthesize Canonical Blueprint" aria-busy="false" type="button">Synthesize Canonical Blueprint</button>
+    <button id="command-prepare-btn" data-classification="action_control" data-action="orchestrate.prepare" data-feedback-target="command-feedback" aria-label="Approve Blueprint and Prepare" aria-busy="false" type="button">Approve Blueprint and Prepare</button>
+    <div id="command-phase-display" data-classification="display" data-contract-path="loom.command.teleology_phase">Teleology idle</div>
+    <div id="command-topology-display" data-classification="display" data-contract-path="loom.command.topology">Topology evidence unavailable</div>
+    <div id="command-bridge-display" data-classification="display" data-contract-path="loom.command.bridge_plan">Dark bridge plan unavailable</div>
+    <div id="command-blueprint-display" data-classification="display" data-contract-path="loom.command.blueprint">Blueprint not synthesized</div>
+    <div id="command-approval-display" data-classification="display" data-contract-path="loom.command.approval_gate">Blueprint approval locked</div>
+    <output id="command-feedback" data-classification="display" data-contract-path="loom.command.feedback" aria-live="polite" aria-atomic="true">Command Engine initialized</output>
+  </main>
+  <script src="mock-driver.js"></script>
+  <script src="shell.js"></script>
+  <script src="screen.custom.js"></script>
+</body>
+</html>

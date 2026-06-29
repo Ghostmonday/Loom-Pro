@@ -1,0 +1,34 @@
+{
+  "required_top_level_keys": [
+    "original_intent",
+    "active_answers",
+    "superseded_answers",
+    "confirmed_requirements",
+    "inferred_requirements",
+    "assumptions",
+    "constraints",
+    "non_goals",
+    "decisions",
+    "contradictions",
+    "unresolved_items",
+    "deferred_items",
+    "risks",
+    "acceptance_criteria",
+    "blueprint_graph",
+    "domain_coverage",
+    "project_evidence",
+    "research_evidence",
+    "environment_evidence",
+    "analysis_receipts",
+    "ergonomics_requirements",
+    "accessibility_requirements",
+    "voice_requirements",
+    "model_metadata",
+    "digest"
+  ],
+  "forbidden_question_sources": [
+    "DOMAIN_PROMPTS",
+    "rank_candidate_domains",
+    "PROFILE_DOMAIN_ORDER"
+  ]
+}

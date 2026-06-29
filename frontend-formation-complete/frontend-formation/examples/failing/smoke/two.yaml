@@ -1,0 +1,7 @@
+scenario: sandbox.broken.smoke
+screen: sandbox.broken
+steps:
+  - kind: assert_initial_state
+    target: unknown-element
+    expected:
+      present: true

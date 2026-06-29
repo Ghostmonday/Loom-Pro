@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaijinn.local/schemas/teleology-output.schema.json",
+  "title": "Loom Teleology Output",
+  "description": "Layer 1 truth artifact. WHY + WHAT. Source for curvature analysis and Loom map generation. Not a substitute for loom-*.json contracts.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "goal",
+    "constraints",
+    "success_criteria",
+    "domains",
+    "required_capabilities",
+    "invariants"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "session_id": { "type": "string", "minLength": 1 },
+    "intent_forge_session_id": { "type": "string" },
+    "session_kind": {
+      "type": "string",
+      "enum": ["genesis", "continuation", "hotfix", "v2", "refactor"]
+    },
+    "goal": { "type": "string", "minLength": 1 },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "success_criteria": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "domains": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "required_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_.]*$" },
+          "description": { "type": "string" },
+          "depends_on": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "minItems": 1
+    },
+    "states": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" },
+          "forbid": { "type": "string" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "forge_prompt": { "type": "string" },
+        "questions_answered": { "type": "integer", "minimum": 0 },
+        "handoff_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

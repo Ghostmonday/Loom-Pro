@@ -1,0 +1,98 @@
+<!-- Curvature Analysis — Workspace Content Fragment -->
+
+<div class="flex flex-col h-full p-gutter">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-stack-lg">
+    <div>
+      <h2 class="font-headline-lg text-title-md text-on-surface">Curvature Geometry Map</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">Ollivier-Ricci evaluation of component dependencies.</p>
+    </div>
+    <div class="flex space-x-stack-md">
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 rounded-full bg-[#3b82f6]"></div>
+        <span class="font-label-caps text-label-caps">Internal Cohesion (κ > 0)</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 rounded-full bg-[#10b981]"></div>
+        <span class="font-label-caps text-label-caps">Boundary Coupling (κ < 0)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1">
+    <div class="flex-1 flex items-end justify-between space-x-[2px] pb-4 px-2 h-48" id="distribution-chart"></div>
+
+    <!-- Sliders -->
+    <div class="grid grid-cols-2 gap-gutter mt-stack-lg border-t border-outline-variant/30 pt-stack-lg">
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <label class="font-label-caps text-label-caps text-primary">Bridge Threshold (θ<sub>bridge</sub>)</label>
+          <span class="font-mono-precision text-mono-precision text-primary" id="val-bridge">0.42</span>
+        </div>
+        <input class="w-full h-1 bg-surface-container-highest rounded-full appearance-none custom-slider" id="bridge-slider" max="100" min="0" type="range" value="42"/>
+      </div>
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <label class="font-label-caps text-label-caps text-secondary">Cohesion Limit (θ<sub>cohesion</sub>)</label>
+          <span class="font-mono-precision text-mono-precision text-secondary" id="val-cohesion">0.78</span>
+        </div>
+        <input class="w-full h-1 bg-surface-container-highest rounded-full appearance-none custom-slider" id="cohesion-slider" max="100" min="0" type="range" value="78"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="mt-gutter glass-panel rounded-xl p-stack-lg border border-outline-variant/20">
+    <h3 class="font-title-md text-body-lg text-on-surface mb-stack-md">Metric Deformation Timeline</h3>
+    <div class="space-y-stack-sm">
+      <div class="flex items-center space-x-gutter p-stack-md hover:bg-white/5 rounded-lg border-b border-outline-variant/10">
+        <span class="font-mono-precision text-mono-precision text-outline w-16">08:24:12</span>
+        <span class="flex-1 font-body-sm text-body-sm">Global Manifold Optimization Cycle 44</span>
+        <span class="font-mono-precision text-mono-precision text-secondary">-0.0024 Δ</span>
+      </div>
+      <div class="flex items-center space-x-gutter p-stack-md hover:bg-white/5 rounded-lg border-b border-outline-variant/10">
+        <span class="font-mono-precision text-mono-precision text-outline w-16">08:22:05</span>
+        <span class="flex-1 font-body-sm text-body-sm">Curvature Normalization (Layer 7)</span>
+        <span class="font-mono-precision text-mono-precision text-primary">+0.0150 Δ</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Propose FAB -->
+  <button class="mt-gutter flex items-center space-x-stack-md bg-primary text-on-primary font-bold px-stack-lg py-stack-md rounded-full shadow-[0_8px_32px_rgba(170,199,255,0.4)] active:scale-95 transition-all self-center">
+    <span class="material-symbols-outlined">auto_graph</span>
+    <span class="font-body-lg text-body-lg">Propose Partition Scheme</span>
+  </button>
+
+</div>
+
+<script>
+(function () {
+  var totalBars = 100;
+  var chartEl = document.getElementById("distribution-chart");
+  if (!chartEl) return;
+  for (var i = 0; i < totalBars; i++) {
+    var bar = document.createElement("div");
+    bar.className = "thin-bar rounded-full";
+    var mix = i / totalBars;
+    var height = 20 + Math.sin(i * 0.3) * 30 + Math.sin(i * 0.7) * 20 + 20;
+    var bridge = 42, cohesion = 78;
+    var color = i < bridge ? "#3b82f6" : (i > cohesion ? "#10b981" : "#60a5fa");
+    bar.style.cssText = "height:" + height + "px;background:" + color + ";opacity:0.8;";
+    bar.addEventListener("mouseenter", function () { this.style.transform = "scaleY(1.1)"; });
+    bar.addEventListener("mouseleave", function () { this.style.transform = ""; });
+    chartEl.appendChild(bar);
+  }
+  // Wire sliders
+  var bs = document.getElementById("bridge-slider");
+  var cs = document.getElementById("cohesion-slider");
+  if (bs) bs.addEventListener("input", function () {
+    document.getElementById("val-bridge").innerText = (this.value / 100).toFixed(2);
+  });
+  if (cs) cs.addEventListener("input", function () {
+    document.getElementById("val-cohesion").innerText = (this.value / 100).toFixed(2);
+  });
+})();
+</script>

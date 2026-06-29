@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "session_id": "sess_c22_test_01",
+  "graph_ref": ".gaijinn/graph.json",
+  "clusters": [
+    {
+      "id": "foundation",
+      "node_ids": ["prepare", "wu_001"]
+    },
+    {
+      "id": "features",
+      "node_ids": ["wu_003", "wu_002"]
+    }
+  ],
+  "high_curvature_edges": [
+    {
+      "source": "wu_001",
+      "target": "wu_002",
+      "curvature": -0.4,
+      "is_shadow_bridge": true
+    }
+  ],
+  "boundary_candidates": ["wu_001"],
+  "isolation_zones": [],
+  "work_units": [
+    {
+      "id": "prepare",
+      "paths": ["src/prepare/"],
+      "operation": "ADD"
+    },
+    {
+      "id": "wu_001",
+      "paths": ["src/core/"],
+      "operation": "ADD"
+    },
+    {
+      "id": "wu_003",
+      "paths": ["src/cli/"],
+      "operation": "ADD"
+    },
+    {
+      "id": "wu_002",
+      "paths": ["src/storage/"],
+      "operation": "ADD"
+    }
+  ],
+  "handoff_gateway_count": 1,
+  "curvature_meta": {
+    "curvature_floor": -0.3,
+    "module": "aoc_cli/gravity.py",
+    "entrypoint": "compute_gravity_and_curvature"
+  }
+}

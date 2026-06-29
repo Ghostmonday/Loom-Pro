@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "surface": "command-engine",
+  "description": "Contract intent map for the command-engine stepper surface. Browser implementation removed; API bindings documented for rebuild.",
+  "parent_spec": "ui/loom-ui-intent-map.json",
+  "shipped": "contract_only",
+  "gaps": [
+    "Browser command-engine surface removed pending UI rebuild",
+    "UiIntentDriver not shipped for command-engine flow",
+    "Phase 02 topology not wired to live graph.json in browser"
+  ],
+  "elements": {
+    "intake.prompt": {"dom_id": "prompt-input", "type": "textarea"},
+    "intake.begin": {"dom_id": "btn-begin-orchestration", "type": "button"},
+    "intake.char_count": {"dom_id": "prompt-char-count", "type": "label"},
+    "swarm.panel": {"dom_id": "swarm-panel", "type": "panel"},
+    "swarm.summary": {"dom_id": "swarm-summary", "type": "status_label"},
+    "swarm.options": {"dom_id": "swarm-options", "type": "button_group", "dynamic": true},
+    "swarm.deploy": {"dom_id": "btn-deploy-swarm", "type": "button"},
+    "topology.deliberation_status": {"dom_id": "deliberation-status", "type": "status_indicator"},
+    "topology.canvas": {"dom_id": "deliberation-canvas", "type": "canvas"},
+    "topology.mode_raw": {"dom_id": "mode-raw", "type": "button"},
+    "topology.mode_surgery": {"dom_id": "mode-surgery", "type": "button"},
+    "council.sprint_progress": {"dom_id": "sprint-progress", "type": "progress_bar"},
+    "council.agent_grid": {"dom_id": "agent-grid", "type": "agent_grid"},
+    "status.ticket": {"dom_id": "status-ticket", "type": "badge"},
+    "status.bus": {"dom_id": "status-bus", "type": "badge"},
+    "status.mode": {"dom_id": "status-mode", "type": "badge"}
+  },
+  "flow": [
+    {
+      "action": "intake.submit",
+      "api": ["POST /api/v1/moat/parse"],
+      "algorithm_binding": {"module": "aoc_cli/moat.py", "entrypoint": "parse_prompt", "mode": "real"}
+    },
+    {
+      "action": "deliberate.start",
+      "api": ["GET /api/v1/blueprint/deliberate"],
+      "algorithm_binding": {"module": "aoc_supervisor/api.py", "entrypoint": "blueprint_deliberate", "mode": "real"}
+    },
+    {
+      "action": "orchestrate.prepare",
+      "api": ["POST /api/v1/orchestrate/prepare"],
+      "algorithm_binding": {"module": "aoc_supervisor/orchestrate_session.py", "entrypoint": "OrchestrateSessionStore.prepare", "mode": "real", "ticket": "ENG-103"}
+    },
+    {
+      "action": "swarm.deploy",
+      "api": ["POST /api/v1/quote", "POST /api/v1/blueprint/purchase", "POST /api/v1/grid/spawn"],
+      "algorithm_binding": {"module": "aoc_supervisor/api.py", "entrypoint": "POST /api/v1/grid/spawn", "mode": "real", "mock_flag": "GAIJINN_MOCK_GRID", "mock_mode": "mock"}
+    },
+    {
+      "action": "council.poll",
+      "api": ["GET /api/v1/council/ledger"],
+      "algorithm_binding": {"module": "aoc_cli/helpers/council.py", "entrypoint": "ledger_snapshot", "mode": "real"}
+    },
+    {
+      "action": "merge.run",
+      "api": ["POST /api/v1/grid/merge"],
+      "algorithm_binding": {"module": "aoc_cli/helpers/merge.py", "entrypoint": "merge_pipeline_status", "mode": "real"}
+    }
+  ],
+  "ai_notes": "Contract-only map after UI rebuild. Add data-intent-id when browser surface returns."
+}

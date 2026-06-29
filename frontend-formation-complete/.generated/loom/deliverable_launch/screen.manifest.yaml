@@ -1,0 +1,80 @@
+screen: loom.deliverable_launch
+mission: Present the merged product, launch a runnable surface, and preserve lineage
+  for future evolution.
+mission_id: loom-deliverable-launch
+elements:
+- id: deliverable-detect-btn
+  classification: action_control
+  action: deliverable.detect_surfaces
+  feedback_target: deliverable-feedback
+  label: Detect Runnable Surfaces
+- id: deliverable-present-btn
+  classification: action_control
+  action: deliverable.present
+  feedback_target: deliverable-feedback
+  label: Present Primary Launch
+- id: deliverable-open-terminal-btn
+  classification: action_control
+  action: deliverable.open_terminal
+  feedback_target: deliverable-feedback
+  label: Run in Terminal
+- id: deliverable-open-browser-btn
+  classification: action_control
+  action: deliverable.open_browser
+  feedback_target: deliverable-feedback
+  label: Open in Browser
+- id: deliverable-open-native-btn
+  classification: action_control
+  action: deliverable.open_native
+  feedback_target: deliverable-feedback
+  label: Open Native Application
+- id: deliverable-download-btn
+  classification: action_control
+  action: deliverable.download
+  feedback_target: deliverable-feedback
+  label: Download Archive
+- id: deliverable-diff-btn
+  classification: action_control
+  action: deliverable.view_diff
+  feedback_target: deliverable-feedback
+  label: Review Diff
+- id: deliverable-register-btn
+  classification: action_control
+  action: project.register_for_continuation
+  feedback_target: deliverable-feedback
+  label: Register Continuation Lineage
+- id: deliverable-card-display
+  classification: display
+  contract_path: loom.deliverable.launch_card
+  label: Launch presentation unavailable
+- id: deliverable-surface-display
+  classification: display
+  contract_path: loom.deliverable.surfaces
+  label: No surfaces detected
+- id: deliverable-run-display
+  classification: display
+  contract_path: loom.deliverable.run_status
+  label: No launch active
+- id: deliverable-change-display
+  classification: display
+  contract_path: loom.deliverable.changelog
+  label: Changelog unavailable
+- id: deliverable-lineage-display
+  classification: display
+  contract_path: loom.deliverable.lineage
+  label: Lineage not registered
+- id: deliverable-feedback
+  classification: display
+  contract_path: loom.deliverable.feedback
+  label: Deliverable Launch initialized
+  tag: output
+knowledge_bindings:
+  design_intent: loom.deliverable.design_intent
+  behavioral: loom.deliverable.behavioral
+  operational: loom.deliverable.operational
+  governance: loom.deliverable.governance
+  institutional: loom.deliverable.institutional
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/deliverable-launch.smoke.yaml

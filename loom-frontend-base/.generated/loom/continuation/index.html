@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attach an existing repository, preserve lineage, approve a bounded delta, and rejoin teleology.</title>
+  <link rel="stylesheet" href="screen.css">
+  <link rel="stylesheet" href="screen.custom.css">
+</head>
+<body>
+  <main
+    id="screen-root"
+    data-screen="loom.continuation"
+    data-mission="loom-continuation"
+    class="workspace-shell"
+  >
+    <h1>Attach an existing repository, preserve lineage, approve a bounded delta, and rejoin teleology.</h1>
+    <button id="continuation-attach-btn" data-classification="action_control" data-action="intake.attach_project" data-feedback-target="continuation-feedback" aria-label="Attach Existing Project" aria-busy="false" type="button">Attach Existing Project</button>
+    <button id="continuation-resume-btn" data-classification="action_control" data-action="intake.resume_session" data-feedback-target="continuation-feedback" aria-label="Load Loom Lineage" aria-busy="false" type="button">Load Loom Lineage</button>
+    <button id="continuation-kind-btn" data-classification="action_control" data-action="intake.session_kind_select" data-feedback-target="continuation-feedback" aria-label="Select Continuation Policy" aria-busy="false" type="button">Select Continuation Policy</button>
+    <button id="continuation-bootstrap-btn" data-classification="action_control" data-action="graph.bootstrap" data-feedback-target="continuation-feedback" aria-label="Bootstrap Repository Graph" aria-busy="false" type="button">Bootstrap Repository Graph</button>
+    <button id="continuation-mode-btn" data-classification="action_control" data-action="interrogation.set_mode" data-feedback-target="continuation-feedback" aria-label="Select Delta Interrogation Mode" aria-busy="false" type="button">Select Delta Interrogation Mode</button>
+    <button id="continuation-answer-btn" data-classification="action_control" data-action="question.submit_answer" data-feedback-target="continuation-feedback" aria-label="Submit Delta Answer" aria-busy="false" type="button">Submit Delta Answer</button>
+    <button id="continuation-scope-btn" data-classification="action_control" data-action="continuation.confirm_scope" data-feedback-target="continuation-feedback" aria-label="Confirm Evolution Scope" aria-busy="false" type="button">Confirm Evolution Scope</button>
+    <button id="continuation-confirm-handoff-btn" data-classification="action_control" data-action="handoff.confirm" data-feedback-target="continuation-feedback" aria-label="Confirm Continuation Handoff" aria-busy="false" type="button">Confirm Continuation Handoff</button>
+    <button id="continuation-accept-handoff-btn" data-classification="action_control" data-action="handoff.accept" data-feedback-target="continuation-feedback" aria-label="Accept Continuation Handoff" aria-busy="false" type="button">Accept Continuation Handoff</button>
+    <div id="continuation-lineage-display" data-classification="display" data-contract-path="loom.continuation.lineage">No project attached</div>
+    <div id="continuation-graph-display" data-classification="display" data-contract-path="loom.continuation.graph_status">Graph unavailable</div>
+    <div id="continuation-mode-display" data-classification="display" data-contract-path="loom.continuation.interrogation_mode">Interrogation policy unset</div>
+    <div id="continuation-scope-display" data-classification="display" data-contract-path="loom.continuation.delta_scope">Delta scope unavailable</div>
+    <div id="continuation-handoff-display" data-classification="display" data-contract-path="loom.continuation.handoff_state">Continuation handoff locked</div>
+    <output id="continuation-feedback" data-classification="display" data-contract-path="loom.continuation.feedback" aria-live="polite" aria-atomic="true">Continuation initialized</output>
+  </main>
+  <script src="mock-driver.js"></script>
+  <script src="shell.js"></script>
+  <script src="screen.custom.js"></script>
+</body>
+</html>

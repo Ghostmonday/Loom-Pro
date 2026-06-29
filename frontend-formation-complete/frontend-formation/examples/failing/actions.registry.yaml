@@ -1,0 +1,13 @@
+actions:
+  sandbox.broken.submit:
+    description: Submit broken flow
+    lifecycle_states:
+      - accepted
+      - pending
+  sandbox.broken.other:
+    description: Other action
+    lifecycle_states:
+      - accepted
+      - pending
+      - succeeded
+      - failed

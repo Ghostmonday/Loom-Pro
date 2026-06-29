@@ -1,0 +1,28 @@
+"use strict";
+
+(function installScreenProjectionController() {
+  const bindings = {
+  "loom.deliverable.launch_card": "deliverable-card-display",
+  "loom.deliverable.surfaces": "deliverable-surface-display",
+  "loom.deliverable.run_status": "deliverable-run-display",
+  "loom.deliverable.changelog": "deliverable-change-display",
+  "loom.deliverable.lineage": "deliverable-lineage-display"
+};
+
+  function project(paths) {
+    if (!globalThis.LoomProjectionDriver?.project) return;
+    const unique = [...new Set(paths)];
+    for (const path of unique) {
+      const id = bindings[path];
+      if (!id) continue;
+      const target = document.getElementById(id);
+      if (target) globalThis.LoomProjectionDriver.project(path, { state: "succeeded", action: "projection.refresh" }, target);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => project(Object.keys(bindings)));
+  document.addEventListener("loom:action-complete", (event) => {
+    const changed = Array.isArray(event.detail?.changed) ? event.detail.changed : [];
+    project(changed.filter((path) => Object.prototype.hasOwnProperty.call(bindings, path)));
+  });
+})();

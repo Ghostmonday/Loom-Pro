@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "screen": "vision_canvas",
+      "file": "mock-driver.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "vision_canvas",
+      "file": "shell.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "vision_canvas",
+      "file": "screen.custom.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "command_engine",
+      "file": "mock-driver.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "command_engine",
+      "file": "shell.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "command_engine",
+      "file": "screen.custom.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "terminal",
+      "file": "mock-driver.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "terminal",
+      "file": "shell.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "terminal",
+      "file": "screen.custom.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "continuation",
+      "file": "mock-driver.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "continuation",
+      "file": "shell.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "continuation",
+      "file": "screen.custom.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "deliverable_launch",
+      "file": "mock-driver.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "deliverable_launch",
+      "file": "shell.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    },
+    {
+      "screen": "deliverable_launch",
+      "file": "screen.custom.js",
+      "passed": true,
+      "stdout": "Skipped check (node missing)"
+    }
+  ]
+}

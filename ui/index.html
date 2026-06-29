@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Loom Blueprint Workbench</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+    <style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://cdn.jsdelivr.net/npm/@fontsource/jet-brains-mono@5.0.0/files/jet-brains-mono-latin-400-normal.woff2') format('woff2');
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #000000;
+            color: #e4e2e4;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(28, 28, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background: rgba(44, 44, 46, 0.4);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(44, 44, 46, 0.6);
+            border-color: rgba(170, 199, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen flex flex-col overflow-hidden">
+    <!-- Background Shader -->
+    <canvas id="bg-canvas" class="fixed inset-0 w-full h-full pointer-events-none -z-10"></canvas>
+    <script>
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 65;
+            const connectionDistance = 125;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.25;
+                    this.vy = (Math.random() - 0.5) * 0.25;
+                    this.radius = Math.random() * 2 + 1;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(170, 199, 255, 0.2)';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < connectionDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            const alpha = (1 - dist / connectionDistance) * 0.1;
+                            ctx.strokeStyle = `rgba(170, 199, 255, ${alpha})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+    </script>
+
+    <!-- TopNavBar -->
+    <header class="bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-container-margin w-full h-16 fixed top-0 z-50">
+        <div class="flex items-center gap-stack-lg">
+            <span class="font-display-lg text-[24px] font-bold text-primary tracking-tighter">Loom Blueprint Workbench</span>
+            <nav class="hidden md:flex items-center gap-stack-lg ml-gutter" id="top-nav-breadcrumbs">
+                <a class="text-on-surface-variant font-medium font-body-lg text-body-lg" href="/">Dashboard</a>
+                <span class="material-symbols-outlined text-outline-variant text-[14px]">chevron_right</span>
+                <span class="text-primary font-bold font-body-lg text-body-lg" id="app-view-title">Project Hub</span>
+            </nav>
+        </div>
+        <div class="flex items-center gap-stack-lg">
+            <div class="relative group">
+                <input class="bg-surface-container-high/50 border border-outline-variant/30 rounded-full px-4 py-1.5 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search blueprints..." type="text"/>
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+            </div>
+            <div class="flex items-center gap-stack-md">
+                <button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+                    <span class="material-symbols-outlined">help</span>
+                </button>
+                <button class="p-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center overflow-hidden ml-stack-sm">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmG9G2tohcWqyeYpXnWrTZ371cBwh2hzNFSaAZ3vYxpOsVQbmKXDIi7mP2iPagZQUkBq8OIR_cHVCdLiKfDFa7WV8wRQQQkv1-mRvgPDgHrIiZRZ4PhZULUYJPyv_IscF9MsHgl2lv2AqVCkenDDgS58ceogbsSPZ6Vc7mutWrPBl6sA7qd_oojn7VprnRCPvVjAA-BRYofCdVp3rxcbYvN_D_lyMQif6ZSXiLspHv_NwptEAOGBWHYSRBeiyUTbjuoEIge58pubU"/>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 pt-16 overflow-hidden relative z-10">
+        <!-- Shared SideNavBar -->
+        <aside class="bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 flex flex-col items-center py-stack-lg space-y-stack-md w-[64px] h-full shrink-0" id="unified-sidebar">
+            <div class="flex flex-col items-center gap-stack-lg w-full" id="unified-nav-container">
+                <!-- Populated dynamically by Router -->
+            </div>
+            <div class="mt-auto flex flex-col items-center gap-stack-lg">
+                <span class="font-label-caps text-[10px] text-on-surface-variant/50 tracking-widest vertical-rl rotate-180 mb-stack-lg">V1.2</span>
+            </div>
+        </aside>
+
+        <!-- View Viewport -->
+        <main class="flex-1 overflow-hidden relative flex flex-col" id="app-viewport">
+            <div class="flex items-center justify-center h-full text-on-surface-variant font-mono">Loading active workspace view...</div>
+        </main>
+    </div>
+
+    <!-- Client-Side SPA Router -->
+    <script>
+        const routeMap = {
+            '/': '/project-hub.html',
+            '/claims': '/claims-ledger.html',
+            '/graph': '/topological-observatory.html',
+            '/analysis': '/curvature-analysis.html',
+            '/ratify': '/blueprint-ratification.html',
+            '/packets': '/packet-export.html',
+            '/drift': '/drift-monitor.html'
+        };
+
+        const viewTitles = {
+            '/': 'Project Hub',
+            '/claims': 'Claims Ledger',
+            '/graph': 'Observatory Graph',
+            '/analysis': 'Curvature Analysis',
+            '/ratify': 'Blueprint Ratification',
+            '/packets': 'Packet Export',
+            '/drift': 'Drift Monitor'
+        };
+
+        const tools = [
+            { icon: 'home', title: 'Project Hub', url: '/' },
+            { icon: 'forum', title: 'Intent Forge Wizard', url: '/intent-forge' },
+            { icon: 'playlist_add_check', title: 'Claims Ledger', url: '/claims' },
+            { icon: 'architecture', title: 'Observatory Graph', url: '/graph' },
+            { icon: 'query_stats', title: 'Curvature Analysis', url: '/analysis' },
+            { icon: 'verified_user', title: 'Blueprint Ratification', url: '/ratify' },
+            { icon: 'terminal', title: 'Swarm Cockpit', url: '/packets' }
+        ];
+
+        function renderSidebar(currentPath) {
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get("session_id") || "sess_default";
+            const container = document.getElementById('unified-nav-container');
+            if (!container) return;
+
+            container.innerHTML = '';
+            tools.forEach(t => {
+                const isActive = currentPath === t.url;
+                const btn = document.createElement('a');
+                
+                if (t.url === '/intent-forge') {
+                    btn.href = `/intent-forge?session_id=${sessionId}`;
+                    btn.target = '_blank';
+                } else {
+                    btn.href = `${t.url}?session_id=${sessionId}`;
+                }
+                
+                btn.title = t.title;
+                btn.className = `w-10 h-10 flex items-center justify-center rounded-xl transition-all cursor-pointer ${
+                    isActive 
+                    ? 'bg-secondary-container text-on-secondary-container shadow-[0_0_15px_rgba(71,226,102,0.3)]' 
+                    : 'text-on-surface-variant hover:bg-surface-container-high hover:text-primary'
+                }`;
+                btn.innerHTML = `<span class="material-symbols-outlined">${t.icon}</span>`;
+                container.appendChild(btn);
+            });
+        }
+
+        async function loadView(path) {
+            const viewport = document.getElementById('app-viewport');
+            const viewTitle = document.getElementById('app-view-title');
+            
+            if (viewTitle) {
+                viewTitle.textContent = viewTitles[path] || 'Project Hub';
+            }
+
+            renderSidebar(path);
+
+            const fileUrl = routeMap[path] || '/project-hub.html';
+            try {
+                const res = await fetch(fileUrl);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const html = await res.text();
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                const newMain = doc.querySelector('main') || doc.body;
+                
+                let contentHTML = newMain.innerHTML;
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = contentHTML;
+                const dupHeader = tempDiv.querySelector('header');
+                const dupSidebar = tempDiv.querySelector('#unified-sidebar');
+                if (dupHeader) dupHeader.remove();
+                if (dupSidebar) dupSidebar.remove();
+
+                viewport.innerHTML = tempDiv.innerHTML;
+
+                const scripts = doc.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                });
+            } catch (err) {
+                console.error(`Failed to load view ${path}:`, err);
+                viewport.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-error font-mono">
+                    <span>Failed to resolve workspace view: ${path}</span>
+                    <span class="text-xs opacity-60 mt-2">${err.message}</span>
+                </div>`;
+            }
+        }
+
+        const fileToRouteMap = {
+            'project-hub.html': '/',
+            'claims-ledger.html': '/claims',
+            'topological-observatory.html': '/graph',
+            'curvature-analysis.html': '/analysis',
+            'blueprint-ratification.html': '/ratify',
+            'packet-export.html': '/packets',
+            'drift-monitor.html': '/drift'
+        };
+
+        document.addEventListener('click', e => {
+            const a = e.target.closest('a');
+            if (a && a.getAttribute('href') && a.target !== '_blank') {
+                const href = a.getAttribute('href');
+                if (href.startsWith('http') || href.startsWith('//') || href.startsWith('javascript:')) return;
+                
+                const parts = href.split('?');
+                let target = parts[0];
+                const query = parts[1] || '';
+
+                if (fileToRouteMap[target]) {
+                    target = fileToRouteMap[target];
+                } else if (target.startsWith('/') && fileToRouteMap[target.substring(1)]) {
+                    target = fileToRouteMap[target.substring(1)];
+                }
+
+                if (routeMap[target]) {
+                    e.preventDefault();
+                    const newPath = target + (query ? '?' + query : '');
+                    window.history.pushState({}, '', newPath);
+                    loadView(target);
+                }
+            }
+        });
+
+        window.addEventListener('popstate', () => {
+            loadView(window.location.pathname);
+        });
+
+        loadView(window.location.pathname);
+    </script>
+</body>
+</html>

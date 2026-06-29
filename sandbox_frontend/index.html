@@ -1,0 +1,95 @@
+<\!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Loom Blueprint Workbench</title>
+  <\!-- Shared Design System -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="shared/tailwind-config.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared/shell.css"/>
+</head>
+<body class="bg-background text-on-background flex flex-col h-screen overflow-hidden">
+
+  <\!-- TopNavBar -->
+  <header id="shell-topnav"
+          class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 z-50 flex justify-between items-center px-container-margin spring-transition">
+  </header>
+
+  <\!-- Main Layout -->
+  <div class="flex flex-1 pt-16 overflow-hidden relative z-10">
+
+    <\!-- SideNavBar -->
+    <aside id="shell-sidenav"
+           class="w-[64px] bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 flex flex-col items-center py-stack-lg shrink-0 z-40">
+    </aside>
+
+    <\!-- Workspace Content Area -->
+    <main id="workspace-content" class="flex-1 overflow-y-auto custom-scrollbar">
+      <div class="workspace-loading">Loading…</div>
+    </main>
+
+    <\!-- Right Inspector Panel -->
+    <aside id="shell-inspector"
+           class="w-[320px] bg-surface-container-low/80 backdrop-blur-xl border-l border-outline-variant/30 flex flex-col overflow-y-auto custom-scrollbar shrink-0 z-40">
+      <div id="inspector-content" class="p-stack-lg flex flex-col gap-stack-md">
+      </div>
+    </aside>
+
+  </div>
+
+  <\!-- Bottom Console -->
+  <footer id="shell-console"
+          class="h-10 bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/30 flex items-center shrink-0 z-40">
+  </footer>
+
+  <\!-- Floating Dashboard (Architectural Pulse) -->
+  <aside id="dashboard-panel" class="floating-dashboard glass-panel">
+    <div class="flex justify-between items-center p-stack-lg border-b border-outline-variant/30">
+      <h3 class="font-title-md text-title-md text-on-surface">Architectural Pulse</h3>
+      <button id="dashboard-close" class="material-symbols-outlined text-on-surface-variant hover:text-primary spring-transition">close</button>
+    </div>
+    <div class="p-stack-lg space-y-stack-lg overflow-y-auto custom-scrollbar" style="height: calc(100vh - 60px);">
+      <div class="glass-card rounded-xl p-stack-lg">
+        <span class="font-label-caps text-label-caps text-on-surface-variant">CRITICAL DRIFT</span>
+        <div class="text-[2rem] font-bold text-error mt-unit">1.24%</div>
+      </div>
+      <div class="glass-card rounded-xl p-stack-lg">
+        <span class="font-label-caps text-label-caps text-on-surface-variant">AWAITING RATIFICATION</span>
+        <ul class="mt-stack-md space-y-stack-sm">
+          <li class="font-body-sm text-body-sm text-on-surface py-stack-sm border-b border-outline-variant/20">LOOM_MAINFRAME_B2</li>
+          <li class="font-body-sm text-body-sm text-on-surface py-stack-sm">CORE_EXPANSION_P7</li>
+        </ul>
+      </div>
+      <div class="glass-card rounded-xl p-stack-lg">
+        <span class="font-label-caps text-label-caps text-on-surface-variant">RECENT ACTIVITY</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-stack-md">All systems nominal.</p>
+      </div>
+    </div>
+  </aside>
+
+  <\!-- Shell JavaScript -->
+  <script src="shared/shell.js"></script>
+
+  <\!-- Global Micro-Interactions -->
+  <script>
+    (function () {
+      document.addEventListener("mousedown", function (e) {
+        var btn = e.target.closest("button");
+        if (btn) btn.style.transform = "scale(0.97)";
+      });
+      document.addEventListener("mouseup", function (e) {
+        var btn = e.target.closest("button");
+        if (btn) btn.style.transform = "";
+      });
+      document.addEventListener("mouseleave", function (e) {
+        var btn = e.target.closest("button");
+        if (btn) btn.style.transform = "";
+      });
+    })();
+  </script>
+
+</body>
+</html>

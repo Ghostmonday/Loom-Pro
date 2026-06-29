@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "session_id": "sess_contract_01",
+  "user_id": "contract-tester",
+  "tier": "paid",
+  "session_status": "QUESTIONING",
+  "original_prompt": "Build a secure API gateway with OAuth2, rate limits, and audit logs for team dashboards.",
+  "questions_and_answers": [
+    {
+      "question_id": "q_intake",
+      "text": "Initial intent (intake)",
+      "answer": "Build a secure API gateway with OAuth2, rate limits, and audit logs for team dashboards.",
+      "domain": "product_scope",
+      "source": "intake_prompt"
+    }
+  ],
+  "confirmed_requirements": [
+    {
+      "id": "REQ-INTAKE",
+      "text": "Build a secure API gateway with OAuth2, rate limits, and audit logs for team dashboards.",
+      "source_question_id": "q_intake",
+      "confidence": 0.9,
+      "domain": "product_scope"
+    }
+  ],
+  "project_evidence": [
+    {
+      "id": "ev-repo",
+      "kind": "repository",
+      "summary": "Monorepo already contains FastAPI service scaffold.",
+      "provenance": "authorized_scan",
+      "confidence": 0.8
+    }
+  ],
+  "inferred_requirements": [],
+  "constraints": [],
+  "decisions": [],
+  "assumptions": [],
+  "non_goals": [],
+  "deferred_items": [],
+  "unresolved_items": [],
+  "contradictions": [],
+  "risks": [],
+  "domain_coverage": {
+    "product_scope": {"addressed": true, "na": false},
+    "authz": {"addressed": false, "na": false}
+  },
+  "confidence_by_domain": {"product_scope": 0.9, "authz": 0.0},
+  "confidence_threshold": {"product_scope": 0.65, "authz": 0.65},
+  "acceptance_criteria": [],
+  "blueprint_graph": {"version": 1, "nodes": [], "edges": []},
+  "blueprint_version": 1,
+  "analysis_revision": 0,
+  "evidence_revision": 0,
+  "analysis_receipts": [],
+  "current_question": null,
+  "created_at": "2026-06-19T00:00:00Z",
+  "updated_at": "2026-06-19T00:00:00Z"
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Present the merged product, launch a runnable surface, and preserve lineage for future evolution.</title>
+  <link rel="stylesheet" href="screen.css">
+  <link rel="stylesheet" href="screen.custom.css">
+</head>
+<body>
+  <main
+    id="screen-root"
+    data-screen="loom.deliverable_launch"
+    data-mission="loom-deliverable-launch"
+    class="workspace-shell"
+  >
+    <h1>Present the merged product, launch a runnable surface, and preserve lineage for future evolution.</h1>
+    <button id="deliverable-detect-btn" data-classification="action_control" data-action="deliverable.detect_surfaces" data-feedback-target="deliverable-feedback" aria-label="Detect Runnable Surfaces" aria-busy="false" type="button">Detect Runnable Surfaces</button>
+    <button id="deliverable-present-btn" data-classification="action_control" data-action="deliverable.present" data-feedback-target="deliverable-feedback" aria-label="Present Primary Launch" aria-busy="false" type="button">Present Primary Launch</button>
+    <button id="deliverable-open-terminal-btn" data-classification="action_control" data-action="deliverable.open_terminal" data-feedback-target="deliverable-feedback" aria-label="Run in Terminal" aria-busy="false" type="button">Run in Terminal</button>
+    <button id="deliverable-open-browser-btn" data-classification="action_control" data-action="deliverable.open_browser" data-feedback-target="deliverable-feedback" aria-label="Open in Browser" aria-busy="false" type="button">Open in Browser</button>
+    <button id="deliverable-open-native-btn" data-classification="action_control" data-action="deliverable.open_native" data-feedback-target="deliverable-feedback" aria-label="Open Native Application" aria-busy="false" type="button">Open Native Application</button>
+    <button id="deliverable-download-btn" data-classification="action_control" data-action="deliverable.download" data-feedback-target="deliverable-feedback" aria-label="Download Archive" aria-busy="false" type="button">Download Archive</button>
+    <button id="deliverable-diff-btn" data-classification="action_control" data-action="deliverable.view_diff" data-feedback-target="deliverable-feedback" aria-label="Review Diff" aria-busy="false" type="button">Review Diff</button>
+    <button id="deliverable-register-btn" data-classification="action_control" data-action="project.register_for_continuation" data-feedback-target="deliverable-feedback" aria-label="Register Continuation Lineage" aria-busy="false" type="button">Register Continuation Lineage</button>
+    <div id="deliverable-card-display" data-classification="display" data-contract-path="loom.deliverable.launch_card">Launch presentation unavailable</div>
+    <div id="deliverable-surface-display" data-classification="display" data-contract-path="loom.deliverable.surfaces">No surfaces detected</div>
+    <div id="deliverable-run-display" data-classification="display" data-contract-path="loom.deliverable.run_status">No launch active</div>
+    <div id="deliverable-change-display" data-classification="display" data-contract-path="loom.deliverable.changelog">Changelog unavailable</div>
+    <div id="deliverable-lineage-display" data-classification="display" data-contract-path="loom.deliverable.lineage">Lineage not registered</div>
+    <output id="deliverable-feedback" data-classification="display" data-contract-path="loom.deliverable.feedback" aria-live="polite" aria-atomic="true">Deliverable Launch initialized</output>
+  </main>
+  <script src="mock-driver.js"></script>
+  <script src="shell.js"></script>
+  <script src="screen.custom.js"></script>
+</body>
+</html>

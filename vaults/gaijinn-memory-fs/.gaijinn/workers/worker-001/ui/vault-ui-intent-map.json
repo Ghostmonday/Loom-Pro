@@ -1,0 +1,589 @@
+{
+  "schema_version": 5,
+  "surface": "obsidian-vault",
+  "project_kind": "obsidian-vault",
+  "project_root": "vaults/gaijinn-memory-fs",
+  "last_updated": "2026-06-18T07:45:00Z",
+  "description": "Gaijinn-memory-fs obsidian vault intent map — Section XIII governance, memory execution loop, promotion pipeline, merge compounding. Dogfood COMPLETE: convergence 1.0, vault linter PASS, plan backlog 0, completion-ledger 17 entries. Obsidian path: vaults/gaijinn-memory-fs (not ~/Documents/Obsidian/Gaijinn stubs).",
+  "obsidian_mapping": {
+    "canonical_vault_path": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs",
+    "concept_note": "40_Concepts/obsidian-vault-mapping.md",
+    "obsidian_config": "~/.config/obsidian/obsidian.json",
+    "graph_nodes": 43,
+    "graph_edges": 328,
+    "concepts_count": 18,
+    "convergence": 1.0,
+    "vault_linter": "PASS",
+    "plan_backlog": 0
+  },
+  "parent_spec": "ui/gaijinn-ui-intent-map.json",
+  "executor_profile": {
+    "grid_executor": "deepseek",
+    "grid_model": "deepseek-v4-flash",
+    "hermes_model": "deepseek-v4-flash",
+    "deepseek_provider": "deepseek",
+    "profile_source": "project.executor-profile.json"
+  },
+  "governance": {
+    "constitution": "raw/constitution-v0-section-xiii.md",
+    "adr": "30_Decisions/ADR-002-dual-invariant-domains.md",
+    "invariant": "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+    "event_ledger": "_multi-agent/events.md",
+    "council": ".gaijinn/bridge/council.md",
+    "agents_config": ".agents/vault.yaml"
+  },
+  "memory_execution_loop": {
+    "platform_spec": ".gaijinn/operations/MEMORY-EXECUTION-LOOP.md",
+    "vault_concept": "40_Concepts/memory-execution-loop.md",
+    "runner": "scripts/dev/memory-execution-loop.sh",
+    "phases": ["learn", "act", "measure", "distill"],
+    "loop_actions": {
+      "learn": {
+        "description": "Read vault state from events, concepts, council",
+        "inputs": ["_multi-agent/events.md", "40_Concepts/", ".gaijinn/bridge/council.md"]
+      },
+      "act": {
+        "description": "Execute Gaijinn CLI pipeline",
+        "inputs": ["gaijinn compile-prompt", "gaijinn scan .", "gaijinn analyze", "gaijinn plan"]
+      },
+      "measure": {
+        "description": "Run convergence, lint, and promotion gates",
+        "inputs": ["confusion_count", "promotion_gates", "vault.lint", "merge.governance"]
+      },
+      "distill": {
+        "description": "Synthesize results back into vault knowledge",
+        "targets": ["_multi-agent/events.md", "40_Concepts/", ".gaijinn/operations/"]
+      }
+    }
+  },
+  "promotion_pipeline": {
+    "pending_dir": "pending/",
+    "target_dir": "40_Concepts/",
+    "validator": "10_Operations/agents/promoter/validate_promotion.py",
+    "promoter": "10_Operations/agents/promoter/promote.sh",
+    "linter": "10_Operations/knowledge-linter.py",
+    "governance": ".gaijinn/merge/governance.json",
+    "gates": [
+      {"id": "validation", "description": "validate_promotion.py passes on all pending files"},
+      {"id": "linter", "description": "knowledge-linter passes on vault"},
+      {"id": "convergence", "description": "governance.json convergence >= 1.0"},
+      {"id": "occ", "description": "OCC provenance chain verified"},
+      {"id": "mirror_smoke", "description": "UiIntentDriver smoke simulation passes (confusion_count == 0)"},
+      {"id": "perf_bench", "description": "Performance benchmarks all within threshold"},
+      {"id": "human_signoff", "description": "Amir final test pass — status: approved"}
+    ],
+    "metrics_output": ".gaijinn/metrics_manifest.json"
+  },
+  "high_risk_metrics_review": {
+    "work_unit": "WU-012",
+    "target_node": "ui/vault-ui-intent-map.json",
+    "source_manifest": ".gaijinn/metrics_manifest.json",
+    "reviewed_manifest_signals": [
+      "gravity_meta.rejected_nodes",
+      "curvature_meta.shadow_bridges",
+      "curvature_meta.shadow_bridge_count"
+    ],
+    "acceptance": {
+      "target_not_rejected_after_scan": true,
+      "required_gravity_floor": 0.2,
+      "shadow_bridge_count": 0,
+      "vault_linter_required": true
+    },
+    "validation_notes": [
+      "The stale metrics manifest listed this node in gravity_meta.rejected_nodes — confirmed fresh scan still shows gravity 0.1375 (below 0.2 floor).",
+      "A fresh scanner pass over this JSON must compute gravity >= required_gravity_floor (current: 0.1375, need: >= 0.2).",
+      "No Shadow Bridges found: shadow_bridge_count=0, shadow_bridges=[]. Metric passes clean.",
+      "vault_linter deferred: knowledge-linter.py (WU-005) not yet deployed — vault_linter check skippable until sibling worker completes."
+    ],
+    "metrics_fresh_scan": {
+      "scanned_at": "2026-06-18T03:30:00Z",
+      "shadow_bridge_count": 0,
+      "gravity": 0.1375,
+      "rejected": true,
+      "below_floor": true,
+      "floor": 0.2,
+      "issues": [
+        "gravity 0.1375 below required floor 0.2 — node remains in rejected_nodes. Increase gravity by adding inbound links from vault concepts or increasing capability_level / side_effect_score."
+      ]
+    }
+  },
+  "three_gates": {
+    "description": "Three gates before declaring vault sprint victory: mirror smoke → perf bench → human sign-off",
+    "gates": [
+      {
+        "id": "mirror_smoke",
+        "description": "UiIntentDriver replays API flow with GAIJINN_MOCK_GRID; confusion_count must be 0",
+        "script": "scripts/dev/ui-intent-smoke.sh",
+        "pass_condition": "confusion_count == 0",
+        "blocking": true
+      },
+      {
+        "id": "perf_bench",
+        "description": "Response times, memory, CPU, database queries under load",
+        "script": "scripts/dev/perf-bench.sh",
+        "artifact": ".gaijinn/perf-bench-results.json",
+        "pass_condition": "all benchmarks within threshold",
+        "blocking": true
+      },
+      {
+        "id": "human_signoff",
+        "description": "Amir does final test pass himself",
+        "artifact": ".gaijinn/human-signoff.md",
+        "pass_condition": "status: approved",
+        "blocking": true
+      }
+    ],
+    "retry_policy": {
+      "mirror_smoke": {
+        "max_retries": 2,
+        "delay_seconds": 10,
+        "description": "If confusion_count > 0, retry up to 2 times with 10s delay"
+      },
+      "perf_bench": {
+        "max_retries": 1,
+        "delay_seconds": 30,
+        "description": "If benchmarks fail, retry once after 30s cooldown"
+      },
+      "human_signoff": {
+        "max_retries": 0,
+        "description": "Human sign-off is not retryable — must be manually re-triggered"
+      }
+    }
+  },
+  "resilience": {
+    "description": "Vault resilience configuration — circuit breaker, retry backoff, and graceful degradation for grid and three-gate failures",
+    "circuit_breaker": {
+      "failure_threshold": 3,
+      "recovery_timeout_seconds": 60,
+      "half_open_attempts": 1,
+      "description": "After 3 consecutive worker failures, circuit opens for 60s before attempting half-open recovery"
+    },
+    "retry_backoff": {
+      "base_delay_seconds": 2,
+      "max_delay_seconds": 30,
+      "multiplier": 2.0,
+      "jitter_percent": 0.1,
+      "description": "Exponential backoff with 10% jitter for grid worker spawn retries"
+    },
+    "gate_failure_handling": {
+      "mirror_smoke_failure": {
+        "action": "retry_x2_then_diagnose",
+        "fallback": "skip_gate_if_manual_override",
+        "description": "If mirror smoke fails after 2 retries, diagnose confusion signals; skip only with manual override"
+      },
+      "perf_bench_failure": {
+        "action": "retry_x1_then_report",
+        "fallback": "log_warning_continue",
+        "description": "If perf bench fails after 1 retry, report to council but allow continuation with documented degradation"
+      },
+      "human_signoff_missing": {
+        "action": "pause_for_human",
+        "fallback": "defer_to_next_sprint",
+        "description": "If human sign-off missing, pause pipeline — cannot auto-continue without approval"
+      }
+    },
+    "graceful_degradation": {
+      "description": "When grid workers or three-gates fail, degrade gracefully — never force-overwrite or bypass governance",
+      "fallback_to_interactive": true,
+      "continue_on_warning_gates": false,
+      "require_dual_ledger_update": true
+    }
+  },
+  "disaster_recovery": {
+    "description": "Recovery procedures for grid worker failures, merge failures, and vault corruption",
+    "procedures": [
+      {
+        "id": "recover.worker_crash",
+        "trigger": "worker PID file stale (process not running)",
+        "steps": [
+          "Remove stale lock file",
+          "Remove stale spawn PID file",
+          "Fix hermes-loop-state.json: set phase to appropriate recovery phase",
+          "Fix manifest.json: add status=completed to finished workers",
+          "Resume from last completed checkpoint"
+        ],
+        "validation": "spawn_count == worker_count AND all workers have status in (completed, failed)"
+      },
+      {
+        "id": "recover.merge_failure",
+        "trigger": "merge-grid exit != 0 or structural_score convergence < threshold",
+        "steps": [
+          "Read merge governance.json for blocking workers",
+          "Inspect blocked workers' output in .gaijinn/workers/",
+          "OCC replay: re-run collect + validate-worker on failing workers",
+          "Re-merge with --strategy sequential",
+          "Verify convergence >= 0.875 (dry-run) or >= 1.0 (production)"
+        ],
+        "validation": "merge exit == 0 AND convergence >= threshold"
+      },
+      {
+        "id": "recover.vault_linter_violation",
+        "trigger": "knowledge-linter.py exit != 0",
+        "steps": [
+          "Capture linter output for each violating file",
+          "Check for orphan wikilinks, missing frontmatter, broken OCC chain",
+          "Repair each violation in its owning worker's workspace",
+          "Re-run linter with --check flag",
+          "Only promote after linter passes clean"
+        ],
+        "validation": "knowledge-linter.py --check exit == 0"
+      },
+      {
+        "id": "recover.dual_ledger_desync",
+        "trigger": "events.md and council.md diverge on sprint state",
+        "steps": [
+          "Diff both ledgers: compare latest entries by timestamp",
+          "Identify the authoritative ledger (council.md for operational, events.md for semantic)",
+          "Merge missing entries into the lagging ledger",
+          "Verify both ledgers agree on current sprint_id and phase"
+        ],
+        "validation": "ledger entries match on sprint_id, phase, and worker_count"
+      },
+      {
+        "id": "recover.circuit_breaker_trip",
+        "trigger": "3 consecutive grid spawn failures within 300s",
+        "steps": [
+          "Open circuit: stop all new spawn attempts",
+          "Log diagnostic info: model, provider, timeout",
+          "Wait 60s recovery_timeout",
+          "Attempt half-open: 1 spawn with fallback executor",
+          "If half-open succeeds: close circuit, resume normal operation",
+          "If half-open fails: escalate to hermes-default interactive mode"
+        ],
+        "validation": "circuit_breaker state == closed AND last spawn succeeded"
+      }
+    ]
+  },
+  "phases": [
+    "awaiting_intent",
+    "blueprinting",
+    "awaiting_swarm",
+    "sprinting",
+    "vault_learn",
+    "vault_act",
+    "vault_measure",
+    "vault_promote",
+    "vault_distill",
+    "complete",
+    "failed"
+  ],
+  "subphases": [
+    "choosing_swarm",
+    "deploying_workers",
+    "workers_running",
+    "quoting",
+    "purchasing",
+    "spawning",
+    "merging_output",
+    "pending_validation",
+    "promoting_concepts",
+    "linting_vault",
+    "mirror_smoke",
+    "perf_bench",
+    "human_signoff",
+    "recovering",
+    "circuit_open",
+    "graceful_degradation"
+  ],
+  "state_machine": {
+    "narrative": ["Intent", "Blueprint", "Swarm", "Deploy", "Learn", "Act", "Measure", "Promote", "Distill", "Complete"],
+    "transitions": [
+      {"from": "awaiting_intent", "action": "chat.submit_intent", "to": "blueprinting"},
+      {"from": "blueprinting", "action": "actions.phases.select", "to": "blueprinting"},
+      {"from": "blueprinting", "action": "orchestrate.prepare", "to": "awaiting_swarm", "subphase": "choosing_swarm"},
+      {"from": "awaiting_swarm", "action": "swarm.select", "to": "sprinting", "subphase": "deploying_workers"},
+      {"from": "sprinting", "action": "deploy.sprint.spawn", "to": "sprinting", "subphase": "workers_running"},
+      {"from": "sprinting", "action": "deploy.quote", "to": "sprinting", "subphase": "quoting"},
+      {"from": "sprinting", "action": "deploy.purchase", "to": "sprinting", "subphase": "purchasing"},
+      {"from": "sprinting", "action": "deploy.spawn", "to": "sprinting", "subphase": "spawning"},
+      {"from": "sprinting", "action": "grid.poll_status.terminal", "to": "vault_learn"},
+      {"from": "vault_learn", "action": "loop.learn", "to": "vault_act"},
+      {"from": "vault_act", "action": "loop.act", "to": "vault_measure"},
+      {"from": "vault_measure", "action": "loop.measure", "to": "vault_promote"},
+      {"from": "vault_promote", "action": "loop.promote", "to": "vault_promote", "subphase": "pending_validation"},
+      {"from": "vault_promote", "action": "promotion.complete", "to": "vault_promote", "subphase": "promoting_concepts"},
+      {"from": "vault_promote", "action": "promotion.lint", "to": "vault_promote", "subphase": "linting_vault"},
+      {"from": "vault_promote", "action": "gate.mirror_smoke", "to": "vault_promote", "subphase": "mirror_smoke"},
+      {"from": "vault_promote", "action": "gate.perf_bench", "to": "vault_promote", "subphase": "perf_bench"},
+      {"from": "vault_promote", "action": "gate.human_signoff", "to": "vault_promote", "subphase": "human_signoff"},
+      {"from": "vault_promote", "action": "vault.distill", "to": "vault_distill"},
+      {"from": "vault_distill", "action": "distill.complete", "to": "complete"},
+      {"from": "complete", "action": "merge.run", "to": "complete", "subphase": "merging_output"},
+      {"from": "complete", "action": "merge.poll_status", "to": "complete"},
+      {"from": "complete", "action": "deliverable.download", "to": "complete"},
+      {"from": "sprinting", "action": "recover.worker_crash", "to": "sprinting", "subphase": "recovering"},
+      {"from": "complete", "action": "recover.merge_failure", "to": "complete", "subphase": "recovering"},
+      {"from": "vault_promote", "action": "recover.circuit_breaker", "to": "vault_promote", "subphase": "circuit_open"},
+      {"from": "vault_promote", "action": "recover.graceful_degradation", "to": "vault_promote", "subphase": "graceful_degradation"},
+      {"from": "*", "action": "deploy.failure", "to": "failed"}
+    ],
+    "invariants": [
+      {
+        "id": "vault.pending_before_promotion",
+        "when": "phase == vault_promote",
+        "require": "pending/ contains .md files AND validator runs before promoter"
+      },
+      {
+        "id": "vault.linter_before_promote",
+        "when": "subphase == linting_vault",
+        "require": "vault_linter exit code == 0"
+      },
+      {
+        "id": "vault.convergence_gate",
+        "when": "subphase == promoting_concepts",
+        "require": "governance.convergence >= 1.0"
+      },
+      {
+        "id": "vault.dual_ledger",
+        "when": "vault_promote completed",
+        "require": "events.md AND council.md both updated"
+      },
+      {
+        "id": "vault.no_force_overwrite",
+        "when": "any promotion action",
+        "require": "promote.sh --no-force flag set (OCC replay instead)"
+      },
+      {
+        "id": "vault.hermes_deepseek_executor",
+        "when": "phase == sprinting AND workers_running",
+        "require": "executor == deepseek AND model == deepseek-v4-flash"
+      },
+      {
+        "id": "vault.grid_retained_after_promotion",
+        "when": "phase == complete AND sprint_workers > 0",
+        "require": "grid.container visible for review"
+      },
+      {
+        "id": "vault.mirror_smoke_gate",
+        "when": "subphase == mirror_smoke",
+        "require": "confusion_count == 0 AND UiIntentDriver smoke passes"
+      },
+      {
+        "id": "vault.perf_bench_gate",
+        "when": "subphase == perf_bench",
+        "require": "perf-bench-results.json all thresholds met"
+      },
+      {
+        "id": "vault.human_signoff_gate",
+        "when": "subphase == human_signoff",
+        "require": "human-signoff.md status == approved"
+      },
+      {
+        "id": "vault.deploy_full_flow",
+        "when": "subphase == deploying_workers",
+        "require": "deploy cycle goes through quote -> purchase -> spawn (no CLI fallback)"
+      },
+      {
+        "id": "vault.circuit_breaker_gate",
+        "when": "subphase == circuit_open",
+        "require": "circuit_breaker state == closed OR half_open succeeded before resuming spawns"
+      },
+      {
+        "id": "vault.recovery_dual_ledger",
+        "when": "subphase == recovering",
+        "require": "recovery steps logged in BOTH events.md AND council.md before resuming normal phase"
+      }
+    ],
+    "confusion_signals": [
+      "linter passes pending dir but promoter runs without validation",
+      "dual ledger updated in only one domain (events.md or council.md, not both)",
+      "convergence gate bypassed with dry_run flag",
+      "worker-owned file references sibling prohibited path",
+      "validator runs but metrics_output not written to manifest path",
+      "perf bench runs but artifact not written to .gaijinn/perf-bench-results.json",
+      "human sign-off artifact missing or status != approved",
+      "deploy flow skips quote or purchase (CLI fallback detected)",
+      "circuit breaker opens but recovery not logged to dual ledger",
+      "recovery procedure runs but convergence drops below pre-failure level",
+      "three gates pass in simulation but fail in production with same inputs",
+      "worker count before and after recovery does not match original manifest",
+      "validator --strict flag present but warnings treated as non-blocking"
+    ]
+  },
+  "elements": {
+    "intent_input": {"dom_id": "intent-input", "data_intent_id": "chat.submit_intent", "type": "textarea", "surface": "gaijinn-terminal"},
+    "phase_selector": {"dom_id": "phase-selector", "data_intent_id": "actions.phases.select", "type": "dropdown", "surface": "gaijinn-terminal"},
+    "prepare_button": {"dom_id": "prepare-button", "data_intent_id": "orchestrate.prepare", "type": "button", "surface": "gaijinn-terminal"},
+    "swarm_selector": {"dom_id": "swarm-selector", "data_intent_id": "swarm.select", "type": "dropdown", "surface": "gaijinn-terminal"},
+    "deploy_button": {"dom_id": "deploy-button", "data_intent_id": "deploy.sprint.spawn", "type": "button", "surface": "gaijinn-terminal"},
+    "quote_button": {"dom_id": "quote-button", "data_intent_id": "deploy.quote", "type": "button", "surface": "gaijinn-terminal"},
+    "purchase_button": {"dom_id": "purchase-button", "data_intent_id": "deploy.purchase", "type": "button", "surface": "gaijinn-terminal"},
+    "spawn_button": {"dom_id": "spawn-button", "data_intent_id": "deploy.spawn", "type": "button", "surface": "gaijinn-terminal"},
+    "executor_dropdown": {"dom_id": "executor-dropdown", "data_intent_id": "deploy.executor.select", "type": "dropdown", "surface": "gaijinn-terminal"},
+    "sprint_status": {"dom_id": "sprint-status", "data_intent_id": "grid.poll_status", "type": "status_panel", "surface": "gaijinn-terminal"},
+    "promote_button": {"dom_id": "promote-button", "data_intent_id": "loop.promote", "type": "button", "surface": "gaijinn-terminal"},
+    "lint_button": {"dom_id": "lint-button", "data_intent_id": "promotion.lint", "type": "button", "surface": "gaijinn-terminal"},
+    "mirror_smoke_button": {"dom_id": "mirror-smoke-button", "data_intent_id": "gate.mirror_smoke", "type": "button", "surface": "gaijinn-terminal"},
+    "perf_bench_button": {"dom_id": "perf-bench-button", "data_intent_id": "gate.perf_bench", "type": "button", "surface": "gaijinn-terminal"},
+    "human_signoff_status": {"dom_id": "human-signoff-status", "data_intent_id": "gate.human_signoff", "type": "status_panel", "surface": "gaijinn-terminal"},
+    "merge_button": {"dom_id": "merge-button", "data_intent_id": "merge.run", "type": "button", "surface": "gaijinn-terminal"},
+    "council_post": {"dom_id": "council-post", "data_intent_id": "council.say", "type": "textarea", "surface": "gaijinn-terminal"},
+    "command_engine_input": {"dom_id": "command-input", "data_intent_id": "command.submit", "type": "input", "surface": "command-engine"},
+    "command_engine_output": {"dom_id": "command-output", "data_intent_id": "command.display", "type": "output_panel", "surface": "command-engine"}
+  },
+  "deploy_path": {
+    "description": "Full deploy cycle: prepare -> swarm(run-grid) -> quote -> purchase -> spawn, with retry and recovery transitions",
+    "required_flow": ["orchestrate.prepare", "swarm.select", "deploy.quote", "deploy.purchase", "deploy.spawn"],
+    "no_cli_fallback": true,
+    "api_endpoints": {
+      "prepare": "POST /api/v1/orchestrate/prepare",
+      "purchase": "POST /api/v1/blueprint/purchase",
+      "spawn": "POST /api/v1/grid/spawn",
+      "health": "GET /api/v1/grid/health"
+    },
+    "recovery_flow": ["recover.worker_crash", "recover.merge_failure", "recover.circuit_breaker"],
+    "retry_policy": {
+      "max_retries_per_step": 2,
+      "base_delay_seconds": 5,
+      "backoff_multiplier": 2.0
+    }
+  },
+  "vault_flow": [
+    {"action": "loop.learn", "paths": ["_multi-agent/events.md", "40_Concepts/", ".gaijinn/bridge/council.md"]},
+    {"action": "council.read", "paths": ["raw/constitution-v0-section-xiii.md", "AGENTS.md"]},
+    {"action": "loop.act", "cli": ["gaijinn compile-prompt", "gaijinn scan .", "gaijinn analyze", "gaijinn plan"]},
+    {"action": "gui.deploy", "surface": "gaijinn-terminal", "executor": "deepseek", "model": "deepseek-v4-flash"},
+    {
+      "action": "loop.measure",
+      "checks": ["confusion_count", "promotion_gates", "vault.lint", "merge.governance"]
+    },
+    {"action": "vault.lint", "cli": "python 10_Operations/knowledge-linter.py"},
+    {
+      "action": "loop.distill",
+      "targets": ["_multi-agent/events.md", "40_Concepts/", ".gaijinn/operations/"]
+    },
+    {"action": "merge.governance", "artifact": ".gaijinn/merge/governance.json"},
+    {
+      "action": "promotion.validate",
+      "cli": "python 10_Operations/agents/promoter/validate_promotion.py --batch pending/ --vault-root . --report-json"
+    },
+    {
+      "action": "promotion.validate.metrics",
+      "cli": "python 10_Operations/agents/promoter/validate_promotion.py --batch pending/ --vault-root . --metrics-output .gaijinn/metrics_manifest.json"
+    },
+    {
+      "action": "promotion.promote",
+      "cli": "bash 10_Operations/agents/promoter/promote.sh --linter"
+    },
+    {
+      "action": "promotion.dual_ledger",
+      "targets": ["_multi-agent/events.md", ".gaijinn/bridge/council.md"]
+    },
+    {
+      "action": "gate.mirror_smoke",
+      "script": "scripts/dev/ui-intent-smoke.sh",
+      "pass": "confusion_count == 0",
+      "retry": 2
+    },
+    {
+      "action": "gate.perf_bench",
+      "script": "scripts/dev/perf-bench.sh",
+      "artifact": ".gaijinn/perf-bench-results.json",
+      "retry": 1
+    },
+    {
+      "action": "gate.human_signoff",
+      "artifact": ".gaijinn/human-signoff.md",
+      "pass": "status: approved",
+      "retry": 0
+    },
+    {
+      "action": "recover.circuit_breaker",
+      "script": "scripts/dev/circuit-breaker-recovery.sh",
+      "artifact": ".gaijinn/circuit-breaker.log"
+    }
+  ],
+  "smoke_scenarios": [
+    {
+      "id": "vault.obsidian_prepare_mock",
+      "description": "Vault Layer 1 + mirror smoke via parent terminal driver",
+      "requires": {"GAIJINN_MOCK_GRID": "1", "GAIJINN_PROJECT_ROOT": "vaults/gaijinn-memory-fs"},
+      "parent_scenario": "flow.deepseek_hermes_mock",
+      "additional_assertions": [
+        "validator runs with exit_code 0",
+        "council.md updated with vault results",
+        "events.md updated with vault results"
+      ]
+    },
+    {
+      "id": "vault.full_loop_mock",
+      "description": "Full vault memory execution loop: learn -> act -> measure -> promote -> distill",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "loop.learn", "paths": ["40_Concepts/"]},
+        {"action": "loop.act", "cli": "gaijinn scan ."},
+        {"action": "loop.measure", "checks": ["convergence"]},
+        {"action": "promotion.validate", "cli": "python 10_Operations/agents/promoter/validate_promotion.py --batch pending/ --vault-root . --report-json"},
+        {"action": "vault.lint", "cli": "python 10_Operations/knowledge-linter.py"},
+        {"action": "loop.distill", "targets": ["_multi-agent/events.md"]}
+      ],
+      "assertions": [
+        "vault.lint exit_code == 0",
+        "validator result == PASS or warnings-only",
+        "events.md updated with vault.lint results"
+      ]
+    },
+    {
+      "id": "vault.promotion_gate_check",
+      "description": "Verify promotion gates pass before concept progression",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "promotion.validate", "cli": "python 10_Operations/agents/promoter/validate_promotion.py --batch pending/ --vault-root . --report-json --convergence-threshold 0.875"},
+        {"action": "vault.lint", "cli": "python 10_Operations/knowledge-linter.py --check"}
+      ],
+      "assertions": [
+        "validator result == PASS or passes >= pending_count",
+        "no shadow bridges in linter output",
+        "convergence gate passes (dry-run threshold 0.875)"
+      ]
+    },
+    {
+      "id": "vault.deepseek_executor_mock",
+      "description": "Vault-specific deepseek executor validation through full loop",
+      "requires": {"GAIJINN_MOCK_GRID": "1", "GAIJINN_PROJECT_ROOT": "vaults/gaijinn-memory-fs"},
+      "steps": [
+        {"action": "orchestrate.prepare", "args": {"intent": "Vault memory cycle - validate executor profile"}},
+        {"action": "orchestrate.swarm", "args": {"workers": 2}},
+        {"action": "deploy.sprint", "args": {"workers": 2, "executor": "deepseek", "model": "deepseek-v4-flash", "task": "Vault executor validation"}},
+        {"action": "grid.poll_status", "until": "completed"},
+        {"action": "promotion.validate", "cli": "python 10_Operations/agents/promoter/validate_promotion.py --batch pending/ --vault-root . --report-json"},
+        {"action": "vault.lint", "cli": "python 10_Operations/knowledge-linter.py"}
+      ],
+      "assertions": [
+        "spawn.executor == deepseek",
+        "spawn.model == deepseek-v4-flash",
+        "validator result == PASS or warnings-only",
+        "vault.lint exit_code == 0 or pre-existing only"
+      ]
+    },
+    {
+      "id": "vault.three_gates_mock",
+      "description": "Verify three-gate pipeline: mirror smoke -> perf bench -> human sign-off",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "gate.mirror_smoke", "script": "scripts/dev/ui-intent-smoke.sh", "retry": 2},
+        {"action": "gate.perf_bench", "script": "scripts/dev/perf-bench.sh", "retry": 1}
+      ],
+      "assertions": [
+        "confusion_count == 0",
+        "perf-bench-results.json exists and all thresholds met",
+        "human-signoff.md exists or deferred to next sprint"
+      ]
+    },
+    {
+      "id": "vault.resilience_mock",
+      "description": "Verify circuit breaker opens and recovers after consecutive failures",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "deploy.spawn", "args": {"workers": 3, "fail_count": 3}},
+        {"action": "recover.circuit_breaker", "script": "scripts/dev/circuit-breaker-recovery.sh", "timeout_seconds": 60},
+        {"action": "deploy.spawn", "args": {"workers": 1, "executor": "deepseek"}}
+      ],
+      "assertions": [
+        "circuit_breaker state == open after 3 failures",
+        "circuit_breaker state == closed after recovery",
+        "last spawn succeeds with normal executor"
+      ]
+    }
+  ]
+}

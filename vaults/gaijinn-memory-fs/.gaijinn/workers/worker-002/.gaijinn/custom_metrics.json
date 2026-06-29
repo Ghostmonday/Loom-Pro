@@ -1,0 +1,3104 @@
+{
+  "curvature_meta": {
+    "alpha": 0.7,
+    "beta": 0.3,
+    "edges": {
+      "aoc_supervisor/__init__.py->aoc_supervisor/aoc_supervisor/__init__.py": {
+        "curvature": 0.0,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.0,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.0,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "wasserstein_1": 1.0
+      },
+      "aoc_supervisor/aoc_supervisor/__init__.py->aoc_supervisor/aoc_supervisor/billing.py": {
+        "curvature": -0.8740031897926634,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.8740031897926634,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -0.8740031897926634,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/billing.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.8740031897926634
+      },
+      "aoc_supervisor/aoc_supervisor/__init__.py->aoc_supervisor/aoc_supervisor/enforcer.py": {
+        "curvature": -0.12599681020733655,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.12599681020733655,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": true,
+        "kappa": -0.12599681020733655,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.1259968102073366
+      },
+      "aoc_supervisor/aoc_supervisor/__init__.py->aoc_supervisor/aoc_supervisor/orchestrator.py": {
+        "curvature": 0.6172248803827751,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.6172248803827751,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.6172248803827751,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.6020671834625323
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.3979328165374677
+          }
+        ],
+        "wasserstein_1": 0.3827751196172249
+      },
+      "aoc_supervisor/aoc_supervisor/api.py->aoc_supervisor/__init__.py": {
+        "curvature": 0.0,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.0,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.0,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/api.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.0
+      },
+      "aoc_supervisor/aoc_supervisor/billing.py->aoc_supervisor/aoc_supervisor/complexity.py": {
+        "curvature": 1.0,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 1.0,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 1.0,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/billing.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/complexity.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 0.0
+      },
+      "aoc_supervisor/aoc_supervisor/orchestrate_session.py->aoc_supervisor/__init__.py": {
+        "curvature": 0.0,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.0,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.0,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.0
+      },
+      "aoc_supervisor/aoc_supervisor/orchestrator.py->aoc_supervisor/aoc_supervisor/billing.py": {
+        "curvature": -0.7958656330749352,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.7958656330749352,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -0.7958656330749352,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.6020671834625323
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.3979328165374677
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/billing.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.7958656330749352
+      },
+      "aoc_supervisor/aoc_supervisor/orchestrator.py->aoc_supervisor/aoc_supervisor/enforcer.py": {
+        "curvature": -0.2041343669250646,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.2041343669250646,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": true,
+        "kappa": -0.2041343669250646,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.6020671834625323
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.3979328165374677
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.2041343669250646
+      },
+      "aoc_supervisor/aoc_supervisor/prompt_coverage.py->aoc_supervisor/aoc_supervisor/intent_blueprint.py": {
+        "curvature": -1.0,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": 1.0,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -1.0,
+        "risk_jump_shadow_bridge": true,
+        "source": "aoc_supervisor/aoc_supervisor/prompt_coverage.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 0.0
+      },
+      "aoc_supervisor/aoc_supervisor/ui_intent.py->aoc_supervisor/__init__.py": {
+        "curvature": -1.0588235294117645,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -1.0588235294117645,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -1.0588235294117645,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/ui_intent.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 0.4705882352941177
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+            "probability": 0.5294117647058824
+          }
+        ],
+        "target": "aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 2.0588235294117645
+      },
+      "aoc_supervisor/aoc_supervisor/ui_intent.py->aoc_supervisor/aoc_supervisor/repo_paths.py": {
+        "curvature": 0.05882352941176472,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.05882352941176472,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.05882352941176472,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/ui_intent.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 0.4705882352941177
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+            "probability": 0.5294117647058824
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 0.9411764705882353
+      },
+      "aoc_supervisor/aoc_supervisor/vault_links.py->aoc_supervisor/__init__.py": {
+        "curvature": 0.0,
+        "distance": 1.0,
+        "fragility": null,
+        "geometric_curvature": 0.0,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": false,
+        "kappa": 0.0,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/vault_links.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.0
+      }
+    },
+    "shadow_bridge_count": 6,
+    "shadow_bridges": [
+      {
+        "curvature": -0.8740031897926634,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.8740031897926634,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -0.8740031897926634,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/billing.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.8740031897926634
+      },
+      {
+        "curvature": -0.12599681020733655,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.12599681020733655,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": true,
+        "kappa": -0.12599681020733655,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/__init__.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.3716108452950558
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.24561403508771928
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+            "probability": 0.3827751196172249
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.1259968102073366
+      },
+      {
+        "curvature": -0.7958656330749352,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.7958656330749352,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -0.7958656330749352,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.6020671834625323
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.3979328165374677
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/billing.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/complexity.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.7958656330749352
+      },
+      {
+        "curvature": -0.2041343669250646,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -0.2041343669250646,
+        "is_dark_bridge": false,
+        "is_shadow_bridge": true,
+        "kappa": -0.2041343669250646,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/billing.py",
+            "probability": 0.6020671834625323
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 0.3979328165374677
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/enforcer.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 1.2041343669250646
+      },
+      {
+        "curvature": -1.0,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": 1.0,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -1.0,
+        "risk_jump_shadow_bridge": true,
+        "source": "aoc_supervisor/aoc_supervisor/prompt_coverage.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+            "probability": 1.0
+          }
+        ],
+        "target": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 0.0
+      },
+      {
+        "curvature": -1.0588235294117645,
+        "distance": 1.0,
+        "fragility": "Shadow Bridge",
+        "geometric_curvature": -1.0588235294117645,
+        "is_dark_bridge": true,
+        "is_shadow_bridge": true,
+        "kappa": -1.0588235294117645,
+        "risk_jump_shadow_bridge": false,
+        "source": "aoc_supervisor/aoc_supervisor/ui_intent.py",
+        "source_distribution": [
+          {
+            "node": "aoc_supervisor/__init__.py",
+            "probability": 0.4705882352941177
+          },
+          {
+            "node": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+            "probability": 0.5294117647058824
+          }
+        ],
+        "target": "aoc_supervisor/__init__.py",
+        "target_distribution": [
+          {
+            "node": "aoc_supervisor/aoc_supervisor/__init__.py",
+            "probability": 1.0
+          }
+        ],
+        "wasserstein_1": 2.0588235294117645
+      }
+    ]
+  },
+  "gravity_meta": {
+    "automatic_rejection": true,
+    "hard_floor": 0.2,
+    "nodes": {
+      ".agents/codex-deepseek.toml.example": {
+        "automatic_rejection": true,
+        "capability_level": 0.625,
+        "gravity": 0.1875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      ".agents/hermes-deepseek.env.example": {
+        "automatic_rejection": true,
+        "capability_level": 0.9166666666666666,
+        "gravity": 0.06874999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": true
+      },
+      ".agents/vault.yaml": {
+        "automatic_rejection": false,
+        "capability_level": 0.875,
+        "gravity": 0.35000000000000003,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.25,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      ".cursorrules": {
+        "automatic_rejection": false,
+        "capability_level": 0.7916666666666666,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      ".obsidian/app.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      ".obsidian/appearance.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      ".obsidian/core-plugins.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      ".obsidian/graph.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      ".obsidian/workspace.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "000_Brain_MOC.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "00_Brain/invariants/INV-GAIJINN-BINDING.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "010_Protocols_MOC.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "020_Active_State_MOC.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "030_Cold_Memories_MOC.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/HERMES-DEVELOPMENT-ORDERS.md": {
+        "automatic_rejection": true,
+        "capability_level": 1.0,
+        "gravity": 0.075,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": true
+      },
+      "10_Operations/HERMES-MEMORY.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/HERMES-SPRINT-DIRECTIVE.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5833333333333334,
+        "gravity": 0.17500000000000002,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/VAULT-GEMINI-SHARE.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/agents/promoter/promote.sh": {
+        "automatic_rejection": false,
+        "capability_level": 0.375,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.25,
+        "raw_side_effect_score": 2.5,
+        "side_effect_score": 0.8333333333333334,
+        "sparse_high_capability": false
+      },
+      "10_Operations/agents/promoter/validate_promotion.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.9583333333333334,
+        "gravity": 0.3625,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.75,
+        "raw_side_effect_score": 1.5,
+        "side_effect_score": 0.5,
+        "sparse_high_capability": false
+      },
+      "10_Operations/knowledge-linter.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.7083333333333334,
+        "gravity": 0.2625,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.25,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "10_Operations/tasks/OBSIDIAN-RUN-16.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.6666666666666666,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.625,
+        "gravity": 0.225,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "10_Operations/tasks/topology-merges.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.0875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "10_Operations/tasks/topology-splits.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "20_Projects/deepseek-codex-setup.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.625,
+        "gravity": 0.1875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "20_Projects/deepseek-hermes-setup.md": {
+        "automatic_rejection": true,
+        "capability_level": 1.0,
+        "gravity": 0.075,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": true
+      },
+      "30_Decisions/ADR-002-dual-invariant-domains.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.6666666666666666,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/convergence-governance.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-convergence-semantics.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-cron-topology.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.7083333333333334,
+        "gravity": 0.2125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.25,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-development-program.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.18749999999999997,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-empty-spawn-crisis.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-executor-stack.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.7083333333333334,
+        "gravity": 0.2125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.25,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-handoff-bus.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-hermes-mandate.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-index.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.625,
+        "gravity": 0.1875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-infrastructure-incidents.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.15,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-merge-compounding.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-monorepo-state.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-operational-hazards.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-product-vision.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-protocol.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.19999999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-sprint-14w-arc.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.625,
+        "gravity": 0.1875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-ux-process-stage.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.75,
+        "gravity": 0.22499999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-vault-artifacts-shipped.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.7916666666666666,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/council-memory-vault-dogfood-arc.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/dual-ledger-bridge.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/event-sourcing-vault.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/hermes-cron-orchestration.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.16249999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/hermes-memory-vault.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/ingress-vault-civilization.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.25,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/knowledge-linter-architecture.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/linter-core-governance.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/linter-markdown-schema.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/linter-supervisor-api.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.625,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/memory-execution-loop.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.9583333333333334,
+        "gravity": 0.33749999999999997,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.75,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/metrics-convergence.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/metrics-dashboard.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.6666666666666666,
+        "gravity": 0.24999999999999997,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.0,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/metrics-gravity.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/metrics-linter.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.625,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/obsidian-city-neighborhoods.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/obsidian-vault-mapping.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.875,
+        "gravity": 0.3,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/promotion-pipeline.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/test-promotion-concept.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.375,
+        "gravity": 0.11249999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.25,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/vault-affairs.md": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.3875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/vault-filesystem.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.625,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.75,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/vault-gaijinn.md": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.3875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/vault-topology-and-density.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.16249999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      "AGENTS.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.7083333333333334,
+        "gravity": 0.25,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "CLAUDE.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.19999999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "Current_Context.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.175,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "README.md": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.3875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "_multi-agent/events.md": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.5,
+        "side_effect_score": 0.5,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/README.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.5,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.0,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/__init__.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.6666666666666666,
+        "gravity": 0.21526315789473682,
+        "in_degree": 0.042105263157894736,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 4.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/__init__.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.36105263157894735,
+        "in_degree": 0.010526315789473684,
+        "out_degree": 0.031578947368421054,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.0,
+        "side_effect_score": 0.3333333333333333,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/api.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.4526315789473684,
+        "in_degree": 0.0,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 3.0,
+        "side_effect_score": 1.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/billing.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.9583333333333334,
+        "gravity": 0.4464473684210526,
+        "in_degree": 0.021052631578947368,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 5.75,
+        "raw_side_effect_score": 3.0,
+        "side_effect_score": 1.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/complexity.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.34065789473684205,
+        "in_degree": 0.010526315789473684,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/enforcer.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.9166666666666666,
+        "gravity": 0.2813157894736842,
+        "in_degree": 0.021052631578947368,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/intent_blueprint.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.4531578947368421,
+        "in_degree": 0.010526315789473684,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 3.0,
+        "side_effect_score": 1.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/knowledge_linter.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.7916666666666666,
+        "gravity": 0.3125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.75,
+        "raw_side_effect_score": 1.5,
+        "side_effect_score": 0.5,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/orchestrate_session.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.4526315789473684,
+        "in_degree": 0.0,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 3.0,
+        "side_effect_score": 1.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/orchestrator.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.45842105263157895,
+        "in_degree": 0.010526315789473684,
+        "out_degree": 0.021052631578947368,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 3.0,
+        "side_effect_score": 1.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/preflight.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.22499999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 1.25,
+        "side_effect_score": 0.4166666666666667,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/prompt_coverage.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.2,
+        "in_degree": 0.0,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/repo_paths.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.75,
+        "gravity": 0.2281578947368421,
+        "in_degree": 0.010526315789473684,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/ui_intent.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.36776315789473685,
+        "in_degree": 0.0,
+        "out_degree": 0.021052631578947368,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.25,
+        "side_effect_score": 0.4166666666666667,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/vault_deploy.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.39999999999999997,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 2.0,
+        "side_effect_score": 0.6666666666666666,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/vault_links.py": {
+        "automatic_rejection": false,
+        "capability_level": 0.875,
+        "gravity": 0.3026315789473684,
+        "in_degree": 0.0,
+        "out_degree": 0.010526315789473684,
+        "raw_capability_level": 5.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "aoc_supervisor/aoc_supervisor/workflow_evaluator.py": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.33749999999999997,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "project.executor-profile.json": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.325,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.5,
+        "side_effect_score": 0.16666666666666666,
+        "sparse_high_capability": false
+      },
+      "raw/constitution-v0-section-xiii.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "ui/WU-004-deploy-path-validation.md": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.3875,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.75,
+        "side_effect_score": 0.5833333333333334,
+        "sparse_high_capability": false
+      },
+      "ui/vault-ui-intent-map.json": {
+        "automatic_rejection": false,
+        "capability_level": 1.0,
+        "gravity": 0.375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 1.5,
+        "side_effect_score": 0.5,
+        "sparse_high_capability": false
+      }
+    },
+    "rejected_nodes": [
+      ".agents/codex-deepseek.toml.example",
+      ".agents/hermes-deepseek.env.example",
+      ".obsidian/app.json",
+      ".obsidian/appearance.json",
+      ".obsidian/core-plugins.json",
+      ".obsidian/graph.json",
+      ".obsidian/workspace.json",
+      "000_Brain_MOC.md",
+      "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+      "010_Protocols_MOC.md",
+      "020_Active_State_MOC.md",
+      "030_Cold_Memories_MOC.md",
+      "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+      "10_Operations/HERMES-MEMORY.md",
+      "10_Operations/HERMES-SPRINT-DIRECTIVE.md",
+      "10_Operations/VAULT-GEMINI-SHARE.md",
+      "10_Operations/tasks/topology-merges.md",
+      "10_Operations/tasks/topology-splits.md",
+      "20_Projects/deepseek-codex-setup.md",
+      "20_Projects/deepseek-hermes-setup.md",
+      "40_Concepts/convergence-governance.md",
+      "40_Concepts/council-memory-convergence-semantics.md",
+      "40_Concepts/council-memory-development-program.md",
+      "40_Concepts/council-memory-empty-spawn-crisis.md",
+      "40_Concepts/council-memory-handoff-bus.md",
+      "40_Concepts/council-memory-hermes-mandate.md",
+      "40_Concepts/council-memory-index.md",
+      "40_Concepts/council-memory-infrastructure-incidents.md",
+      "40_Concepts/council-memory-merge-compounding.md",
+      "40_Concepts/council-memory-monorepo-state.md",
+      "40_Concepts/council-memory-operational-hazards.md",
+      "40_Concepts/council-memory-product-vision.md",
+      "40_Concepts/council-memory-protocol.md",
+      "40_Concepts/council-memory-sprint-14w-arc.md",
+      "40_Concepts/council-memory-vault-dogfood-arc.md",
+      "40_Concepts/dual-ledger-bridge.md",
+      "40_Concepts/event-sourcing-vault.md",
+      "40_Concepts/hermes-cron-orchestration.md",
+      "40_Concepts/hermes-memory-vault.md",
+      "40_Concepts/knowledge-linter-architecture.md",
+      "40_Concepts/linter-core-governance.md",
+      "40_Concepts/linter-markdown-schema.md",
+      "40_Concepts/metrics-convergence.md",
+      "40_Concepts/metrics-gravity.md",
+      "40_Concepts/obsidian-city-neighborhoods.md",
+      "40_Concepts/promotion-pipeline.md",
+      "40_Concepts/test-promotion-concept.md",
+      "40_Concepts/vault-topology-and-density.md",
+      "CLAUDE.md",
+      "Current_Context.md",
+      "raw/constitution-v0-section-xiii.md"
+    ]
+  },
+  "inferred_path": ".gaijinn/inferred.json",
+  "reflective_meta": {
+    "curvature_measurement": {
+      "shadowbridge_count": 0,
+      "shadowbridges": []
+    },
+    "intent_node_count": 33,
+    "layer": "reflective",
+    "schema_version": 1,
+    "shadowbridge_count": 0,
+    "shadowbridges": [],
+    "state_path_chaining": {
+      "dependency_contracts": [],
+      "edges": [],
+      "lifecycle_chains": [
+        {
+          "entry": "advance_phase_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "advance_phase_post",
+              "resulting_state": "advance_phase_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "advance_phase_post"
+          ],
+          "terminal": "advance_phase_post"
+        },
+        {
+          "entry": "analyze_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "analyze_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "analyze_get"
+          ],
+          "terminal": "analyze_get"
+        },
+        {
+          "entry": "analyze_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "analyze_post",
+              "resulting_state": "analyze_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "analyze_post"
+          ],
+          "terminal": "analyze_post"
+        },
+        {
+          "entry": "blueprint_viz_engine.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "blueprint_viz_engine.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "blueprint_viz_engine.js_get"
+          ],
+          "terminal": "blueprint_viz_engine.js_get"
+        },
+        {
+          "entry": "chat_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "chat_post",
+              "resulting_state": "chat_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "chat_post"
+          ],
+          "terminal": "chat_post"
+        },
+        {
+          "entry": "command_engine.css_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine.css_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine.css_get"
+          ],
+          "terminal": "command_engine.css_get"
+        },
+        {
+          "entry": "command_engine.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine.js_get"
+          ],
+          "terminal": "command_engine.js_get"
+        },
+        {
+          "entry": "command_engine_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine_get"
+          ],
+          "terminal": "command_engine_get"
+        },
+        {
+          "entry": "deliberate_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "deliberate_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "deliberate_get"
+          ],
+          "terminal": "deliberate_get"
+        },
+        {
+          "entry": "deliverable_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "deliverable_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "deliverable_get"
+          ],
+          "terminal": "deliverable_get"
+        },
+        {
+          "entry": "diff_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "diff_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "diff_get"
+          ],
+          "terminal": "diff_get"
+        },
+        {
+          "entry": "health_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "health_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "health_get"
+          ],
+          "terminal": "health_get"
+        },
+        {
+          "entry": "internal.css_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal.css_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal.css_get"
+          ],
+          "terminal": "internal.css_get"
+        },
+        {
+          "entry": "internal.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal.js_get"
+          ],
+          "terminal": "internal.js_get"
+        },
+        {
+          "entry": "internal_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal_get"
+          ],
+          "terminal": "internal_get"
+        },
+        {
+          "entry": "ledger_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "ledger_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "ledger_get"
+          ],
+          "terminal": "ledger_get"
+        },
+        {
+          "entry": "logs_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "logs_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "logs_get"
+          ],
+          "terminal": "logs_get"
+        },
+        {
+          "entry": "parse_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "parse_post",
+              "resulting_state": "parse_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "parse_post"
+          ],
+          "terminal": "parse_post"
+        },
+        {
+          "entry": "preflight_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "preflight_post",
+              "resulting_state": "preflight_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "preflight_post"
+          ],
+          "terminal": "preflight_post"
+        },
+        {
+          "entry": "quote_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "quote_post",
+              "resulting_state": "quote_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "quote_post"
+          ],
+          "terminal": "quote_post"
+        },
+        {
+          "entry": "say_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "say_post",
+              "resulting_state": "say_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "say_post"
+          ],
+          "terminal": "say_post"
+        },
+        {
+          "entry": "session_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "session_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "session_get"
+          ],
+          "terminal": "session_get"
+        },
+        {
+          "entry": "show_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "show_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "show_get"
+          ],
+          "terminal": "show_get"
+        },
+        {
+          "entry": "stream_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "stream_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "stream_get"
+          ],
+          "terminal": "stream_get"
+        },
+        {
+          "entry": "swarm_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "swarm_post",
+              "resulting_state": "swarm_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "swarm_post"
+          ],
+          "terminal": "swarm_post"
+        },
+        {
+          "entry": "telemetry_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "telemetry_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "telemetry_get"
+          ],
+          "terminal": "telemetry_get"
+        },
+        {
+          "entry": "terminal_ui_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "terminal_ui_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "terminal_ui_get"
+          ],
+          "terminal": "terminal_ui_get"
+        }
+      ]
+    },
+    "topological_boundary_scan": {
+      "capability_ceilings": [
+        {
+          "description": "No transition from advance_phase_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "advance_phase_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "advance_phase_post_completed"
+        },
+        {
+          "description": "No transition from analyze_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "analyze_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "analyze_post_completed"
+        },
+        {
+          "description": "No transition from chat_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "chat_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "chat_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "chat_post_completed"
+        },
+        {
+          "description": "No transition from merge_merged to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "merge_merged"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "merge_merged"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "merge_merged"
+        },
+        {
+          "description": "No transition from parse_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "parse_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "parse_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "parse_post_completed"
+        },
+        {
+          "description": "No transition from preflight_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "preflight_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "preflight_post_completed"
+        },
+        {
+          "description": "No transition from prepare_prepared to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "prepare_prepared"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "prepare_prepared"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "prepare_prepared"
+        },
+        {
+          "description": "No transition from purchase_purchased to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "purchase_purchased"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "purchase_purchased"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "purchase_purchased"
+        },
+        {
+          "description": "No transition from quote_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "quote_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "quote_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "quote_post_completed"
+        },
+        {
+          "description": "No transition from report_merged to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "report_merged"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "report_merged"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "report_merged"
+        },
+        {
+          "description": "No transition from say_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "say_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "say_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "say_post_completed"
+        },
+        {
+          "description": "No transition from spawn_spawned to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "spawn_spawned"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "spawn_spawned"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "spawn_spawned"
+        },
+        {
+          "description": "No transition from status_merged to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "status_merged"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "status_merged"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "status_merged"
+        },
+        {
+          "description": "No transition from swarm_post_completed to advance_phase_post_completed; retry requires starting a new lifecycle chain.",
+          "missing_recoveries": [
+            {
+              "missing_resulting_state": "advance_phase_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "analyze_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "chat_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "parse_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "preflight_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "quote_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "say_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            },
+            {
+              "missing_resulting_state": "swarm_post_completed",
+              "required_prior_state": "swarm_post_completed"
+            }
+          ],
+          "outgoing_states": [],
+          "terminal_state": "swarm_post_completed"
+        }
+      ],
+      "ceiling_count": 14
+    },
+    "topological_inference": {
+      "dependency_contracts": [],
+      "disconnected_lifecycle_gaps": [],
+      "gap_count": 0,
+      "lifecycle_chains": [
+        {
+          "entry": "advance_phase_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "advance_phase_post",
+              "resulting_state": "advance_phase_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "advance_phase_post"
+          ],
+          "terminal": "advance_phase_post"
+        },
+        {
+          "entry": "analyze_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "analyze_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "analyze_get"
+          ],
+          "terminal": "analyze_get"
+        },
+        {
+          "entry": "analyze_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "analyze_post",
+              "resulting_state": "analyze_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "analyze_post"
+          ],
+          "terminal": "analyze_post"
+        },
+        {
+          "entry": "blueprint_viz_engine.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "blueprint_viz_engine.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "blueprint_viz_engine.js_get"
+          ],
+          "terminal": "blueprint_viz_engine.js_get"
+        },
+        {
+          "entry": "chat_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "chat_post",
+              "resulting_state": "chat_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "chat_post"
+          ],
+          "terminal": "chat_post"
+        },
+        {
+          "entry": "command_engine.css_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine.css_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine.css_get"
+          ],
+          "terminal": "command_engine.css_get"
+        },
+        {
+          "entry": "command_engine.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine.js_get"
+          ],
+          "terminal": "command_engine.js_get"
+        },
+        {
+          "entry": "command_engine_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "command_engine_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "command_engine_get"
+          ],
+          "terminal": "command_engine_get"
+        },
+        {
+          "entry": "deliberate_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "deliberate_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "deliberate_get"
+          ],
+          "terminal": "deliberate_get"
+        },
+        {
+          "entry": "deliverable_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "deliverable_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "deliverable_get"
+          ],
+          "terminal": "deliverable_get"
+        },
+        {
+          "entry": "diff_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "diff_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "diff_get"
+          ],
+          "terminal": "diff_get"
+        },
+        {
+          "entry": "health_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "health_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "health_get"
+          ],
+          "terminal": "health_get"
+        },
+        {
+          "entry": "internal.css_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal.css_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal.css_get"
+          ],
+          "terminal": "internal.css_get"
+        },
+        {
+          "entry": "internal.js_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal.js_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal.js_get"
+          ],
+          "terminal": "internal.js_get"
+        },
+        {
+          "entry": "internal_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "internal_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "internal_get"
+          ],
+          "terminal": "internal_get"
+        },
+        {
+          "entry": "ledger_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "ledger_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "ledger_get"
+          ],
+          "terminal": "ledger_get"
+        },
+        {
+          "entry": "logs_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "logs_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "logs_get"
+          ],
+          "terminal": "logs_get"
+        },
+        {
+          "entry": "parse_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "parse_post",
+              "resulting_state": "parse_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "parse_post"
+          ],
+          "terminal": "parse_post"
+        },
+        {
+          "entry": "preflight_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "preflight_post",
+              "resulting_state": "preflight_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "preflight_post"
+          ],
+          "terminal": "preflight_post"
+        },
+        {
+          "entry": "quote_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "quote_post",
+              "resulting_state": "quote_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "quote_post"
+          ],
+          "terminal": "quote_post"
+        },
+        {
+          "entry": "say_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "say_post",
+              "resulting_state": "say_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "say_post"
+          ],
+          "terminal": "say_post"
+        },
+        {
+          "entry": "session_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "session_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "session_get"
+          ],
+          "terminal": "session_get"
+        },
+        {
+          "entry": "show_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "show_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "show_get"
+          ],
+          "terminal": "show_get"
+        },
+        {
+          "entry": "stream_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "stream_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "stream_get"
+          ],
+          "terminal": "stream_get"
+        },
+        {
+          "entry": "swarm_post",
+          "length": 1,
+          "states": [
+            {
+              "intent": "swarm_post",
+              "resulting_state": "swarm_post_completed",
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "swarm_post"
+          ],
+          "terminal": "swarm_post"
+        },
+        {
+          "entry": "telemetry_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "telemetry_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "telemetry_get"
+          ],
+          "terminal": "telemetry_get"
+        },
+        {
+          "entry": "terminal_ui_get",
+          "length": 1,
+          "states": [
+            {
+              "intent": "terminal_ui_get",
+              "resulting_state": null,
+              "valid_prior_state": null
+            }
+          ],
+          "steps": [
+            "terminal_ui_get"
+          ],
+          "terminal": "terminal_ui_get"
+        }
+      ],
+      "state_graph": {
+        "__start__": [
+          "advance_phase_post_completed",
+          "analyze_post_completed",
+          "chat_post_completed",
+          "parse_post_completed",
+          "preflight_post_completed",
+          "quote_post_completed",
+          "say_post_completed",
+          "swarm_post_completed"
+        ],
+        "merge_pending": [
+          "merge_merged"
+        ],
+        "prepare_pending": [
+          "prepare_prepared"
+        ],
+        "purchase_pending": [
+          "purchase_purchased"
+        ],
+        "report_pending": [
+          "report_merged"
+        ],
+        "spawn_pending": [
+          "spawn_spawned"
+        ],
+        "status_pending": [
+          "status_merged"
+        ]
+      },
+      "state_path_edges": []
+    },
+    "type_flow_analysis": {
+      "puncture_count": 0,
+      "shadowbridge_count": 0,
+      "shadowbridges": []
+    }
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,54 @@
+<!-- Drift Monitor — Workspace Content Fragment -->
+
+<div class="flex flex-col h-full relative">
+
+  <!-- HUD Badges -->
+  <div class="flex gap-stack-md mb-stack-lg">
+    <div class="glass-popover px-stack-lg py-stack-md rounded-lg">
+      <span class="font-label-caps text-label-caps text-on-surface-variant/70">METRIC TYPE</span>
+      <div class="font-title-md text-title-md text-primary">Delta-Kappa Drift</div>
+    </div>
+    <div class="glass-popover px-stack-lg py-stack-md rounded-lg">
+      <span class="font-label-caps text-label-caps text-on-surface-variant/70">SYSTEM STATUS</span>
+      <div class="font-title-md text-title-md text-secondary flex items-center gap-unit">
+        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> Nominal Trace
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <button class="px-4 py-2 border border-outline-variant/30 text-on-surface font-label-caps rounded-xl hover:bg-surface-container-high active:scale-95 transition-all flex items-center gap-stack-sm">
+      <span class="material-symbols-outlined text-sm">calendar_today</span> Last 24 Hours
+    </button>
+  </div>
+
+  <!-- SVG Chart -->
+  <div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1 chart-grid relative overflow-hidden">
+    <svg class="w-full h-full" viewBox="0 0 800 300" preserveAspectRatio="none">
+      <!-- Threshold Zones -->
+      <rect x="0" y="0" width="200" height="300" fill="rgba(255,180,171,0.05)" />
+      <rect x="200" y="0" width="400" height="300" fill="rgba(255,184,104,0.03)" />
+      <rect x="600" y="0" width="200" height="300" fill="rgba(71,226,102,0.03)" />
+      <!-- Threshold Lines -->
+      <line x1="200" y1="0" x2="200" y2="300" stroke="#ffb868" stroke-width="1" stroke-dasharray="4,4" />
+      <line x1="400" y1="0" x2="400" y2="300" stroke="#ffb4ab" stroke-width="1" stroke-dasharray="4,4" />
+      <line x1="600" y1="0" x2="600" y2="300" stroke="#47e266" stroke-width="1" stroke-dasharray="4,4" />
+      <!-- Drift Lines -->
+      <path class="drift-line" d="M0,150 C100,120 200,180 300,140 C400,100 500,160 600,120 C700,80 750,100 800,90" stroke="#aac7ff" stroke-width="2" fill="none" />
+      <path class="drift-line" d="M0,200 C100,170 200,210 300,180 C400,160 500,190 600,150 C700,130 750,140 800,120" stroke="#ffb868" stroke-width="1.5" fill="none" style="animation-delay: 0.5s;" />
+    </svg>
+    <!-- Zone Labels -->
+    <div class="absolute bottom-2 left-0 right-0 flex justify-between px-4">
+      <span class="font-label-caps text-[10px] text-error/60">WARNING ZONE</span>
+      <span class="font-label-caps text-[10px] text-tertiary/60">LOCK ZONE</span>
+      <span class="font-label-caps text-[10px] text-secondary/60">NOMINAL</span>
+    </div>
+  </div>
+
+  <!-- Refactoring CTA -->
+  <div class="flex justify-center mt-gutter">
+    <button class="flex items-center gap-stack-md px-container-margin py-stack-lg bg-surface-container-high border border-outline-variant/30 rounded-xl hover:bg-white/5 active:scale-95 transition-all spring-transition group">
+      <span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform duration-500">construction</span>
+      <span class="font-body-lg text-body-lg text-on-surface">Open Automated Refactoring Panel</span>
+    </button>
+  </div>
+
+</div>

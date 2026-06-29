@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loom.local/schemas/orchestration-snapshot.schema.json",
+  "title": "Loom Projected Orchestration Snapshot",
+  "description": "A server-projected, mode-authorized snapshot used for initial load, reconnect, and sequence-gap recovery. Canonical state remains mode-independent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "session_id",
+    "effective_mode",
+    "policy_hash",
+    "state_hash",
+    "last_sequence",
+    "phase",
+    "topology",
+    "work_units",
+    "jurisdictions",
+    "workers",
+    "handoffs",
+    "governance"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "session_id": {"type": "string", "minLength": 1},
+    "effective_mode": {"enum": ["guided", "builder", "operator"]},
+    "policy_hash": {"type": "string", "minLength": 1},
+    "state_hash": {"type": "string", "minLength": 1},
+    "audit_head_hash": {"type": ["string", "null"]},
+    "last_sequence": {"type": "integer", "minimum": 0},
+    "phase": {
+      "enum": ["awaiting_intent", "blueprinting", "awaiting_swarm", "sprinting", "complete", "failed"]
+    },
+    "subphase": {"type": ["string", "null"]},
+    "geometry_status": {"enum": ["baseline", "unsafe_custom"]},
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intent_summary": {"type": ["string", "null"]},
+        "architectural_complexity_index": {"type": ["integer", "null"], "minimum": 0},
+        "complexity_class": {"type": ["string", "null"]},
+        "domain": {"enum": ["code", "vault", "mixed", "unknown"]}
+      }
+    },
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "welds", "gateways", "constraint_summary"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {"$ref": "orchestration-event.schema.json#/$defs/topologyNode"}
+        },
+        "edges": {
+          "type": "array",
+          "items": {"$ref": "orchestration-event.schema.json#/$defs/topologyEdge"}
+        },
+        "welds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["weld_id", "work_unit_id", "node_ids", "state"],
+            "properties": {
+              "weld_id": {"type": "string"},
+              "work_unit_id": {"type": "string"},
+              "node_ids": {"type": "array", "items": {"type": "string"}, "minItems": 2},
+              "state": {"enum": ["proposed", "compiled", "active", "complete", "failed"]}
+            }
+          }
+        },
+        "gateways": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["gateway_id", "source_scope", "target_scope", "state"],
+            "properties": {
+              "gateway_id": {"type": "string"},
+              "source_scope": {"type": "string"},
+              "target_scope": {"type": "string"},
+              "edge_ids": {"type": "array", "items": {"type": "string"}},
+              "state": {"enum": ["compiled", "available", "ticket_open", "synchronized", "failed"]}
+            }
+          }
+        },
+        "constraint_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["shadow_bridge_count", "dark_bridge_count", "weld_count", "gateway_count"],
+          "properties": {
+            "shadow_bridge_count": {"type": "integer", "minimum": 0},
+            "dark_bridge_count": {"type": "integer", "minimum": 0},
+            "weld_count": {"type": "integer", "minimum": 0},
+            "gateway_count": {"type": "integer", "minimum": 0},
+            "rejected_node_count": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "work_units": {
+      "type": "array",
+      "items": {"$ref": "orchestration-event.schema.json#/$defs/workUnit"}
+    },
+    "jurisdictions": {
+      "type": "array",
+      "items": {"$ref": "orchestration-event.schema.json#/$defs/givScope"}
+    },
+    "workers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["worker_id", "state", "work_unit_ids"],
+        "properties": {
+          "worker_id": {"type": "string"},
+          "state": {"enum": ["idle", "assigned", "running", "completed", "failed", "timed_out", "blocked"]},
+          "work_unit_ids": {"type": "array", "items": {"type": "string"}},
+          "model": {"type": ["string", "null"]},
+          "executor": {"type": ["string", "null"]},
+          "elapsed_seconds": {"type": ["number", "null"], "minimum": 0},
+          "gate_summary": {
+            "type": "object",
+            "additionalProperties": {"enum": ["pending", "pass", "fail", "not_applicable"]}
+          }
+        }
+      }
+    },
+    "handoffs": {
+      "type": "array",
+      "items": {"$ref": "orchestration-event.schema.json#/$defs/handoffTicket"}
+    },
+    "governance": {"$ref": "orchestration-event.schema.json#/$defs/governanceScore"},
+    "audit_tail": {
+      "type": "array",
+      "items": {"$ref": "orchestration-event.schema.json#/$defs/auditRecord"}
+    },
+    "available_actions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    }
+  }
+}

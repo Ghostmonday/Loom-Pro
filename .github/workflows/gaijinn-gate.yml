@@ -1,0 +1,56 @@
+name: Gaijinn Multi-Agent Governance Gate
+
+on:
+  pull_request:
+    branches: [integration, gaijinn/integration]
+
+jobs:
+  verify-convergence:
+    runs-on: ubuntu-latest
+    env:
+      GAIJINN_SUPERVISOR_URL: ${{ vars.GAIJINN_SUPERVISOR_URL || 'http://127.0.0.1:8000' }}
+
+    steps:
+      - name: Checkout Code Base
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch Local Audit Profiles
+        id: run_audit
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[api,dev]"
+          gaijinn audit . --json-only > audit_report.json
+          echo "GATEWAY_REQUIRED=$(jq -r '.efficiency_delta.gateway_recommended // false' audit_report.json)" >> "$GITHUB_ENV"
+          echo "READINESS_TIER=$(jq -r '.governance_profile.readiness_tier // "unknown"' audit_report.json)" >> "$GITHUB_ENV"
+
+      - name: Trigger REST Preflight Hook
+        env:
+          SESSION_ID: ${{ github.run_id }}
+          WORKER_ID: ${{ github.actor }}
+          GAIJINN_API_KEY: ${{ secrets.GAIJINN_API_KEY }}
+        run: |
+          set -euo pipefail
+          RESPONSE=$(curl -sS -X POST "${GAIJINN_SUPERVISOR_URL}/api/v1/preflight" \
+            -H "Content-Type: application/json" \
+            -H "X-Gaijinn-Api-Key: ${GAIJINN_API_KEY}" \
+            -d "{\"session_id\": \"${SESSION_ID}\", \"worker_id\": \"${WORKER_ID}\", \"project_path\": \"${{ github.workspace }}\"}")
+
+          ALLOW_MERGE=$(echo "$RESPONSE" | jq -r '.allow_merge')
+          STATUS=$(echo "$RESPONSE" | jq -r '.status_code')
+
+          echo "Gaijinn Preflight Response: $STATUS"
+          echo "Gateway recommended: ${GATEWAY_REQUIRED:-unknown}"
+          echo "Readiness tier: ${READINESS_TIER:-unknown}"
+
+          if [ "$ALLOW_MERGE" != "true" ]; then
+            echo "FATAL: Gaijinn Governance Gate failed. Trespass or unresolved transactions detected."
+            echo "$RESPONSE" | jq .
+            exit 1
+          fi

@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "system": "loom",
+  "legacy_product_name": "gaijinn",
+  "description": "Loom master Intent Mapping contract. Defines the canonical user journey from vision expression through adaptive interrogation, architectural teleology (Ollivier-Ricci curvature, dark-bridge minimization), mathematically grounded blueprint synthesis, and multi-agent execution. Human UI and AI mirror drivers MUST dispatch only actions declared here and in child maps.",
+  "intent_mapping_invention": {
+    "principle": "One JSON map is the source of truth for browser, CLI, API smoke tests, and autonomous agents. Same triggers → same handlers → same errors.",
+    "parity_target": "Mirror smoke tests without browser should achieve ≥99% behavioral parity with human flow.",
+    "implementer_rule": "Do not invent routes, skip phases, or bypass gates. Wire missing pieces; do not replace the pipeline with shortcuts."
+  },
+  "canonical_user_journey": {
+    "narrative": [
+      "Vision — user expresses idea in natural language",
+      "Canvas — Loom interrogates until readiness (adaptive Q&A, understanding panel)",
+      "Teleology — architectural deliberation streams (curvature, bridge detect, weld plan)",
+      "Blueprint — mathematically synthesized manifest (min dark bridges + LLM reasoning)",
+      "Swarm — sized from work units and teleological partition",
+      "Deploy — atomic multi-agent sprint",
+      "Merge — collect, validate, deliverable",
+      "Continuation branch — user attaches an existing repository; Loom ingests the graph, inherits prior blueprint lineage when available, and asks only for the delta",
+      "Launch or Evolution — present the runnable product; Genesis launches, Continuation shows the verified update, diff, and tests"
+    ],
+    "mandatory_gates": [
+      {"id": "gate.handoff_before_prepare", "require": "session_status == HANDED_OFF AND executable_projection present", "bypass_env": "GAIJINN_ALLOW_RAW_INTENT_PREPARE=1", "bypass_note": "Tests/local only — never production"},
+      {"id": "gate.teleology_before_freeze", "require": "teleology.subphases complete OR synthesis.teleology_skipped_reason documented", "brownfield": "required", "greenfield": "required_for_graph_mode"},
+      {"id": "gate.blueprint_approval", "require": "user confirms blueprint card OR auto_approve policy", "surface": "command-engine"},
+      {"id": "gate.continuation_graph_before_teleology", "require": ".gaijinn/graph.json valid for attached repository OR graph.bootstrap complete", "surface": "continuation"},
+      {"id": "gate.continuation_scope_before_handoff", "require": "MODIFY/ADD/DEPRECATE delta preview approved with matching blueprint_version", "surface": "continuation"}
+    ]
+  },
+  "surfaces": {
+    "vision_canvas": {
+      "route": "/",
+      "map": "ui/loom-intent-forge-intent-map.json",
+      "status": "contract_only",
+      "role": "Intent Forge — express vision, answer questions, readiness, handoff"
+    },
+    "command_engine": {
+      "route": "/command-engine",
+      "map": "ui/command-engine-ui-intent-map.json",
+      "status": "contract_only",
+      "role": "Teleology deliberation canvas + blueprint approval before terminal"
+    },
+    "terminal": {
+      "route": "/terminal",
+      "map": "ui/loom-ui-intent-map.json",
+      "status": "contract_only",
+      "role": "Sandbox frontend replacing old placeholder.html; rebuild contracts when dynamic UI lands"
+    },
+    "backend_pipeline": {
+      "map": "ui/loom-pipeline-intent-map.json",
+      "status": "contract_only",
+      "role": "Headless mirror spec for full backend — no browser required"
+    },
+    "continuation": {
+      "route": "/continuation",
+      "map": "ui/loom-continuation-intent-map.json",
+      "status": "contract_only",
+      "role": "Attach an existing repository, ingest its graph and lineage, capture the delta, and rejoin at teleology"
+    },
+    "deliverable_launch": {
+      "map": "ui/loom-deliverable-intent-map.json",
+      "status": "contract_only",
+      "role": "Present the merged product through terminal, web, or native launch and register future Continuation lineage"
+    }
+  },
+  "child_maps": [
+    "ui/loom-intent-forge-intent-map.json",
+    "ui/loom-pipeline-intent-map.json",
+    "ui/loom-continuation-intent-map.json",
+    "ui/loom-deliverable-intent-map.json",
+    "ui/loom-ui-intent-map.json",
+    "ui/command-engine-ui-intent-map.json",
+    "ui/process-stage-ux-map.json"
+  ],
+  "_ai_blueprint": {
+    "comment": "Implementation guide for Codex/Cursor/Grok. Each ticket is independently verifiable via smoke_scenarios in loom-pipeline-intent-map.json.",
+    "product_name": "Loom",
+    "proprietary_ip": [
+      "Adaptive interrogation with evidence-state reanalysis",
+      "Ollivier-Ricci curvature gravity floor (CURVATURE_HARD_FLOOR = -0.30)",
+      "Dark-bridge detection and weld vs HANDOFF gateway planning",
+      "Architectural teleology SSE deliberation phases",
+      "Executable projection from Q&A + graph synthesis fusion",
+      "Multi-agent swarm partition from teleological work units"
+    ],
+    "layers": {
+      "vision_intake": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.create_session",
+        "status": "shipped",
+        "gaps": ["UI deleted", "free tier bypasses adaptive", "answer ingestion not fully adaptive"]
+      },
+      "adaptive_interrogation": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "entrypoint": "AdaptiveQuestionEngine.select_next",
+        "status": "partial",
+        "gaps": ["Contract says analyze_next; code uses select_next", "ANALYZING state missing", "retry_analysis endpoint missing"]
+      },
+      "executable_projection": {
+        "module": "aoc_supervisor/workstream_planner.py",
+        "entrypoint": "project_executable_blueprint",
+        "status": "shipped",
+        "ticket": "ENG-101"
+      },
+      "handoff_compiler": {
+        "module": "aoc_supervisor/blueprint_compiler.py",
+        "entrypoint": "compile_executable_projection",
+        "status": "shipped",
+        "ticket": "ENG-101"
+      },
+      "ollivier_ricci_curvature": {
+        "module": "aoc-cli/aoc_cli/gravity.py",
+        "entrypoint": "compute_gravity_and_curvature",
+        "status": "shipped",
+        "ticket": "ENG-103",
+        "constants": {"CURVATURE_HARD_FLOOR": -0.30}
+      },
+      "dark_bridge_planner": {
+        "module": "aoc-cli/aoc_cli/blueprint.py",
+        "entrypoint": "generate_blueprint",
+        "status": "shipped",
+        "env_flag": "GAIJINN_HANDOFF_GATEWAYS=1",
+        "goal": "Minimize dark bridges; prefer welds over orphan HANDOFF traps"
+      },
+      "architectural_teleology": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "GET /api/v1/blueprint/deliberate",
+        "status": "shipped",
+        "subphases": ["intent_parse", "graph_ingest", "curvature_compute", "bridge_detect", "weld_plan", "partition", "blueprint_freeze"]
+      },
+      "blueprint_synthesizer": {
+        "module": "TBD — loom_blueprint_synthesizer.py",
+        "entrypoint": "synthesize_blueprint",
+        "status": "not_shipped",
+        "ticket": "LOOM-203",
+        "role": "Fuse HANDED_OFF executable_projection with gravity/curvature plan; output unified blueprint.json"
+      },
+      "orchestration": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.prepare",
+        "status": "partial",
+        "ticket": "ENG-104",
+        "gaps": ["Skips teleology on intent_forge path", "Runs full scan/analyze even when projection injected"]
+      },
+      "execution": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "POST /api/v1/grid/spawn",
+        "status": "shipped",
+        "mock_flag": "GAIJINN_MOCK_GRID"
+      },
+      "merge_pipeline": {
+        "module": "aoc-cli/aoc_cli/helpers/merge.py",
+        "entrypoint": "merge_pipeline_status",
+        "status": "shipped"
+      },
+      "mirror_driver": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "entrypoint": "UiIntentDriver.run_and_verify_scenario",
+        "status": "partial",
+        "gaps": ["No loom full-pipeline scenario", "Intent forge steps partial"]
+      }
+    },
+    "implementation_tickets": [
+      {
+        "id": "LOOM-201",
+        "title": "Mandatory handoff gate on orchestrate.prepare",
+        "priority": "P0",
+        "files": ["aoc_supervisor/api.py", "aoc_supervisor/orchestrate_session.py"],
+        "acceptance": "POST /orchestrate/prepare without intent_forge_session_id returns 409 in production; GAIJINN_ALLOW_RAW_INTENT_PREPARE=1 bypass for tests only",
+        "smoke": "flow.loom_reject_raw_prepare"
+      },
+      {
+        "id": "LOOM-202",
+        "title": "Adaptive answer ingestion on submit",
+        "priority": "P0",
+        "files": ["aoc_supervisor/intent_forge_service.py", "aoc_supervisor/adaptive_question_engine.py"],
+        "acceptance": "Each POST /answers runs evidence reanalysis before next question; no raw append-only path",
+        "smoke": "flow.loom_interrogation_adaptive_paid"
+      },
+      {
+        "id": "LOOM-203",
+        "title": "Blueprint synthesizer — forge + curvature fusion",
+        "priority": "P0",
+        "files": ["aoc_supervisor/loom_blueprint_synthesizer.py", "aoc-cli/aoc_cli/blueprint.py", "aoc_supervisor/workstream_planner.py"],
+        "acceptance": "HANDED_OFF session → synthesize → blueprint.json with projection_mode=loom_synthesis, dark_bridge_count minimized, teleology receipt attached",
+        "smoke": "flow.loom_synthesis_min_dark_bridges"
+      },
+      {
+        "id": "LOOM-204",
+        "title": "Teleology deliberation after handoff",
+        "priority": "P1",
+        "files": ["aoc_supervisor/api.py", "aoc_supervisor/orchestrate_session.py"],
+        "acceptance": "After accept_handoff, deliberate SSE runs against forge-enriched intent before prepare freezes blueprint",
+        "smoke": "flow.loom_teleology_after_handoff"
+      },
+      {
+        "id": "LOOM-205",
+        "title": "Prepare slim path for forge handoff",
+        "priority": "P1",
+        "files": ["aoc_supervisor/orchestrate_session.py"],
+        "acceptance": "When executable_blueprint provided, skip redundant init/scan/analyze; inject synthesis artifact directly",
+        "smoke": "flow.loom_prepare_slim_handoff"
+      },
+      {
+        "id": "LOOM-206",
+        "title": "Wire command-engine deliberate → prepare chain",
+        "priority": "P1",
+        "files": ["ui/command-engine-ui-intent-map.json", "aoc_supervisor/routers/static_ui.py"],
+        "acceptance": "/command-engine serves stepper; deliberate.start then orchestrate.prepare with intent_forge_session_id",
+        "smoke": "flow.loom_command_engine_handoff"
+      },
+      {
+        "id": "LOOM-207",
+        "title": "Vision canvas UI contract",
+        "priority": "P1",
+        "files": ["sandbox_frontend/index.html"],
+        "acceptance": "Map-driven Q&A surface at / with exactly_one question invariant",
+        "smoke": "flow.loom_vision_canvas_contract"
+      },
+      {
+        "id": "LOOM-208",
+        "title": "Terminal ingress receives forge session",
+        "priority": "P1",
+        "files": ["sandbox_frontend/", "ui/loom-ui-intent-map.json"],
+        "acceptance": "chat.submit_intent requires handoff_target query or stored forge session; prepare body includes intent_forge_session_id",
+        "smoke": "flow.loom_terminal_requires_handoff"
+      },
+      {
+        "id": "LOOM-209",
+        "title": "UiIntentDriver full Loom pipeline mirror",
+        "priority": "P0",
+        "files": ["aoc_supervisor/ui_intent.py", "aoc_supervisor/intent_mirror.py"],
+        "acceptance": "run_and_verify_scenario('flow.loom_full_pipeline_mock') passes with zero confusion",
+        "smoke": "flow.loom_full_pipeline_mock"
+      },
+      {
+        "id": "LOOM-210",
+        "title": "Continuation and Launch Intent Mapping contracts",
+        "priority": "P0",
+        "files": ["ui/loom-continuation-intent-map.json", "ui/loom-deliverable-intent-map.json", "ui/loom-system-intent-map.json"],
+        "acceptance": "Existing repositories attach without Genesis restart; graph-ready lineage can shorten or skip interrogation; continuation freezes delta_patch or refactor_partition scope; completed merges present terminal, web, or native launch and register lineage for reentry.",
+        "smoke": [
+          "flow.loom_continuation_attach_brownfield",
+          "flow.loom_continuation_v2_lineage",
+          "flow.loom_continuation_skip_interrogation",
+          "flow.loom_launch_terminal",
+          "flow.loom_launch_web",
+          "flow.loom_reentry_after_launch"
+        ]
+      }
+    ],
+    "verification": {
+      "loom_pipeline": ".venv/bin/python -m pytest tests/test_loom_pipeline_intent.py -q --no-cov",
+      "full": ".venv/bin/python -m pytest -q",
+      "contracts": "jq empty ui/loom-*.json ui/loom-ui-intent-map.json"
+    },
+    "codex_master": "docs/codex-tasks/loom/MASTER-loom-codex.md",
+    "codex_slices_completed": ["C01", "C02", "C03", "C04", "C09", "C12", "C05", "C10", "C13", "C17", "C06", "C07", "C08", "C11", "C14", "C18", "C15", "C16", "C19", "C20"],
+    "codex_slices": [
+      {"id": "C01", "ticket": "LOOM-201", "doc": "docs/codex-tasks/loom/task-loom-c01-prepare-gate.md", "wave": 1, "est_minutes": 30},
+      {"id": "C02", "ticket": "LOOM-209", "doc": "docs/codex-tasks/loom/task-loom-c02-mirror-forge-actions.md", "wave": 1, "est_minutes": 45},
+      {"id": "C03", "ticket": "LOOM-202", "doc": "docs/codex-tasks/loom/task-loom-c03-adaptive-answer-ingest.md", "wave": 1, "est_minutes": 60},
+      {"id": "C04", "ticket": "LOOM-203", "doc": "docs/codex-tasks/loom/task-loom-c04-synthesizer-scaffold.md", "wave": 1, "est_minutes": 30},
+      {"id": "C09", "ticket": "LOOM-204", "doc": "docs/codex-tasks/loom/task-loom-c09-teleology-mirror-receipt.md", "wave": 1, "est_minutes": 45},
+      {"id": "C12", "ticket": "LOOM-207", "doc": "docs/codex-tasks/loom/task-loom-c12-vision-canvas-shell.md", "wave": 1, "est_minutes": 30},
+      {"id": "C05", "ticket": "LOOM-203", "doc": "docs/codex-tasks/loom/task-loom-c05-synthesize-api-route.md", "wave": 2, "depends": ["C04"], "est_minutes": 30},
+      {"id": "C10", "ticket": "LOOM-205", "doc": "docs/codex-tasks/loom/task-loom-c10-slim-prepare-path.md", "wave": 2, "depends": ["C01"], "est_minutes": 45},
+      {"id": "C13", "ticket": "LOOM-207", "doc": "docs/codex-tasks/loom/task-loom-c13-vision-canvas-qa.md", "wave": 2, "depends": ["C12"], "est_minutes": 60},
+      {"id": "C17", "ticket": "LOOM-208", "doc": "docs/codex-tasks/loom/task-loom-c17-terminal-forge-gate.md", "wave": 2, "depends": ["C01"], "est_minutes": 30},
+      {"id": "C06", "ticket": "LOOM-203", "doc": "docs/codex-tasks/loom/task-loom-c06-synthesis-forge-input.md", "wave": 3, "depends": ["C04", "C05"], "est_minutes": 45},
+      {"id": "C07", "ticket": "LOOM-203", "doc": "docs/codex-tasks/loom/task-loom-c07-synthesis-gravity-fusion.md", "wave": 3, "depends": ["C06"], "est_minutes": 60},
+      {"id": "C08", "ticket": "LOOM-203", "doc": "docs/codex-tasks/loom/task-loom-c08-synthesis-dark-bridge-min.md", "wave": 3, "depends": ["C07"], "est_minutes": 60},
+      {"id": "C11", "ticket": "LOOM-204", "doc": "docs/codex-tasks/loom/task-loom-c11-teleology-after-handoff.md", "wave": 3, "depends": ["C09", "C03"], "est_minutes": 45},
+      {"id": "C14", "ticket": "LOOM-207", "doc": "docs/codex-tasks/loom/task-loom-c14-vision-canvas-handoff.md", "wave": 3, "depends": ["C13", "C02"], "est_minutes": 45},
+      {"id": "C18", "ticket": "LOOM-209", "doc": "docs/codex-tasks/loom/task-loom-c18-mirror-handoff-prepare.md", "wave": 3, "depends": ["C02", "C01"], "est_minutes": 45},
+      {"id": "C15", "ticket": "LOOM-207", "doc": "docs/codex-tasks/loom/task-loom-c15-serve-vision-canvas.md", "wave": 4, "depends": ["C14"], "est_minutes": 20},
+      {"id": "C16", "ticket": "LOOM-206", "doc": "docs/codex-tasks/loom/task-loom-c16-command-engine-deliberate.md", "wave": 4, "depends": ["C09", "C18"], "est_minutes": 60},
+      {"id": "C19", "ticket": "LOOM-209", "doc": "docs/codex-tasks/loom/task-loom-c19-mirror-full-pipeline.md", "wave": 4, "depends": ["C06", "C07", "C08", "C11", "C18"], "est_minutes": 90},
+      {"id": "C20", "ticket": null, "doc": "docs/codex-tasks/loom/task-loom-c20-contract-status-flip.md", "wave": 4, "depends": ["C19"], "est_minutes": 15},
+      {"id": "C21", "ticket": "LOOM-210", "doc": "docs/codex-tasks/loom/task-loom-c21-continuation-launch-intent-map.md", "wave": 0, "est_minutes": 60}
+    ],
+    "ui_deferred_until": "flow.loom_full_pipeline_mock mirror green",
+    "codex_parallel_wave_1": ["C01", "C02", "C03", "C04", "C09"],
+    "codex_ui_slices_deferred": ["C12", "C13", "C14", "C15", "C16", "C17"],
+    "codex_exec": "codex exec --full-auto \"$(cat docs/codex-tasks/loom/task-loom-cNN-*.md)\""
+  },
+  "global_phases": [
+    "vision_intake",
+    "interrogating",
+    "handoff_pending",
+    "teleology_deliberating",
+    "blueprint_synthesis",
+    "awaiting_swarm",
+    "sprinting",
+    "complete",
+    "failed"
+  ],
+  "state_machine": {
+    "transitions": [
+      {"from": "vision_intake", "action": "intake.start_session", "to": "interrogating"},
+      {"from": "interrogating", "action": "question.submit_answer", "to": "interrogating"},
+      {"from": "interrogating", "action": "handoff.confirm", "to": "handoff_pending"},
+      {"from": "handoff_pending", "action": "handoff.accept", "to": "teleology_deliberating"},
+      {"from": "teleology_deliberating", "action": "teleology.deliberate", "to": "blueprint_synthesis"},
+      {"from": "blueprint_synthesis", "action": "blueprint.synthesize", "to": "awaiting_swarm"},
+      {"from": "awaiting_swarm", "action": "orchestrate.prepare", "to": "awaiting_swarm", "note": "Loads synthesized blueprint"},
+      {"from": "awaiting_swarm", "action": "swarm.select", "to": "sprinting"},
+      {"from": "sprinting", "action": "grid.poll_status.terminal", "to": "complete"},
+      {"from": "complete", "action": "merge.run", "to": "complete"},
+      {"from": "*", "action": "pipeline.failure", "to": "failed"}
+    ],
+    "invariants": [
+      {"id": "loom.no_prepare_without_handoff", "when": "production", "require": "orchestrate.prepare body includes intent_forge_session_id OR explicit greenfield waiver"},
+      {"id": "loom.teleology_before_synthesis", "when": "blueprint_synthesis", "require": "teleology.receipt.present OR teleology.skipped_reason"},
+      {"id": "loom.min_dark_bridges", "when": "blueprint frozen", "require": "blueprint.dark_bridge_count == minimum over valid partitions OR documented conflict"},
+      {"id": "loom.question_exactly_one", "when": "interrogating", "require": "at most one current_question visible"}
+    ]
+  },
+  "reasoning_and_llm_roles": {
+    "interrogation": {
+      "module": "aoc_supervisor/reasoning_provider.py",
+      "role": "Select next question, extract claims, detect contradictions",
+      "env": ["GAIJINN_REASONING_URL", "GAIJINN_FAKE_REASONING"]
+    },
+    "projection": {
+      "module": "aoc_supervisor/workstream_planner.py",
+      "role": "Turn Q&A evidence into executable workstreams"
+    },
+    "teleology_narration": {
+      "module": "aoc_supervisor/api.py",
+      "role": "Stream human-readable teleology phases during deliberation"
+    },
+    "coding_execution": {
+      "module": "aoc_supervisor/api.py",
+      "entrypoint": "POST /api/v1/grid/spawn",
+      "role": "LLM agents execute partitioned work units with uniform model"
+    }
+  }
+}

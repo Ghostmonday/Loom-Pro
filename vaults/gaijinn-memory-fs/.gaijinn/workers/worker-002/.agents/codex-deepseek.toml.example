@@ -1,0 +1,21 @@
+# Copy relevant sections into ~/.codex/config.toml (user home — not this repo).
+# Requires: export DEEPSEEK_API_KEY="sk-..."
+# Gaijinn vault uses: codex exec --profile deepseek -m deepseek-v4-flash
+#
+# Merge compounding (2026-06-18): sprints consult completion-ledger.json;
+# zero-delta workers with matching content_hash become already_merged, not blocked.
+# See docs/codex-tasks/task-merge-compounding.md in monorepo Desktop/Gaijinn.
+#
+# Worker-002 atomic sprint (2026-06-19, WU-006): provenance header
+# — grid-spawn-1196463 — miniMax-M3 (orchestrator) + deepseek-v4-flash (grid).
+# This template is read by Codex CLI when spawning the deepseek-grid executor
+# profile (see project.executor-profile.json > profiles.deepseek-grid).
+
+[profiles.deepseek]
+model = "deepseek-v4-flash"
+model_provider = "ccx-bridge"
+
+[model_providers.ccx-bridge]
+name = "Local CCX Gateway"
+base_url = "http://localhost:3000/v1"
+env_key = "DEEPSEEK_API_KEY"

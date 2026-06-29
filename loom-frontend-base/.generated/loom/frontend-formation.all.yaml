@@ -1,0 +1,14 @@
+rule_set_version: 1.0.0
+action_registry: actions.registry.yaml
+knowledge_registry: knowledge.registry.yaml
+screens:
+- manifest: vision_canvas/screen.manifest.yaml
+  html: vision_canvas/index.html
+- manifest: command_engine/screen.manifest.yaml
+  html: command_engine/index.html
+- manifest: terminal/screen.manifest.yaml
+  html: terminal/index.html
+- manifest: continuation/screen.manifest.yaml
+  html: continuation/index.html
+- manifest: deliverable_launch/screen.manifest.yaml
+  html: deliverable_launch/index.html

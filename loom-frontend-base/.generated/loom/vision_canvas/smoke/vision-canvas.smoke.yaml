@@ -1,0 +1,31 @@
+scenario: loom.vision_canvas.smoke-1
+screen: loom.vision_canvas
+steps:
+- kind: assert_initial_state
+  target: vision-feedback
+  expected:
+    present: true
+- kind: perform_interaction
+  target: vision-start-btn
+- kind: assert_intermediate_feedback
+  target: vision-feedback
+  expected:
+    state: pending
+- kind: assert_terminal_state
+  target: vision-feedback
+  expected:
+    any_of:
+    - succeeded
+    - failed
+- kind: assert_contract_projection
+  target: loom.vision.feedback
+  expected:
+    observable: true
+- kind: assert_accessibility_state
+  target: vision-start-btn
+  expected:
+    accessible_name: true
+- kind: assert_no_prohibited_side_effect
+  target: vision-start-btn
+  expected:
+    inline_handlers: false

@@ -1,0 +1,9 @@
+scenario: sandbox.broken.smoke
+screen: sandbox.other
+steps:
+  - kind: perform_interaction
+    target: status-box
+  - kind: assert_contract_projection
+    target: broken.unknown
+    expected:
+      observable: true

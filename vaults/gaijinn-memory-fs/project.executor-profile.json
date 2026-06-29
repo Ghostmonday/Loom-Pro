@@ -1,0 +1,230 @@
+{
+  "schema_version": 5,
+  "last_updated": "2026-06-19T23:30:00Z",
+  "sprint_acknowledgments": {
+    "grid_spawn_1196463": {
+      "started_at": "2026-06-19T23:30:02Z",
+      "worker_id": "worker-002",
+      "wu_ids": ["WU-002", "WU-004", "WU-006", "WU-008", "WU-010", "WU-012", "WU-014", "WU-016", "WU-018", "WU-020", "WU-022", "WU-024", "WU-026"],
+      "provenance": "worker-002 atomic sprint — provenance metadata embedded in each assigned file's last_updated or header"
+    }
+  },
+  "description": "Executor profiles for gaijinn-memory-fs vault — MiniMax-M3 primary (Token Plan) for grid workers and orchestration, with per-executor fallback chains and vault-specific resilience.",
+  "profiles": {
+    "minimax-grid": {
+      "executor": "hermes",
+      "model": "MiniMax-M3",
+      "provider": "minimax",
+      "command_template": "hermes -m {model} --provider {provider} --yolo",
+      "role": "grid_worker",
+      "default": true,
+      "model_metadata": {
+        "context_window": 1048576,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": false,
+        "capability_rating": 0.95,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": 5
+      },
+      "fallback_config": {
+        "timeout_seconds": 300,
+        "retry_count": 2,
+        "retry_delay_seconds": 5
+      },
+      "fallback_profile_chain": ["minimax-grid", "grok-grid", "codex-grid", "hermes-default"]
+    },
+    "minimax-orchestrator": {
+      "executor": "gaijinn",
+      "model": "MiniMax-M3",
+      "provider": "minimax",
+      "command_template": "gaijinn hermes",
+      "role": "orchestrator",
+      "default": true,
+      "model_metadata": {
+        "context_window": 1048576,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": false,
+        "capability_rating": 0.95,
+        "expected_throughput": "medium",
+        "supports_batch": false,
+        "supports_parallel_workers": 1
+      },
+      "fallback_config": {
+        "timeout_seconds": 600,
+        "retry_count": 3,
+        "retry_delay_seconds": 10
+      },
+      "fallback_profile_chain": ["minimax-orchestrator", "minimax-grid"]
+    },
+    "deepseek-grid": {
+      "executor": "deepseek",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek",
+      "command_template": "hermes -m {model} --provider {provider} --yolo",
+      "role": "grid_worker",
+      "default": false,
+      "model_metadata": {
+        "context_window": 131072,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": false,
+        "capability_rating": 0.95,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": 5
+      },
+      "fallback_config": {
+        "timeout_seconds": 300,
+        "retry_count": 2,
+        "retry_delay_seconds": 5
+      },
+      "fallback_profile_chain": ["deepseek-grid", "minimax-grid", "codex-grid", "grok-grid", "hermes-default"]
+    },
+    "deepseek-orchestrator": {
+      "executor": "gaijinn",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek",
+      "command_template": "gaijinn hermes",
+      "role": "orchestrator",
+      "default": false,
+      "model_metadata": {
+        "context_window": 131072,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": false,
+        "capability_rating": 0.95,
+        "expected_throughput": "medium",
+        "supports_batch": false,
+        "supports_parallel_workers": 1
+      },
+      "fallback_config": {
+        "timeout_seconds": 600,
+        "retry_count": 3,
+        "retry_delay_seconds": 10
+      },
+      "fallback_profile_chain": ["deepseek-orchestrator", "minimax-orchestrator", "deepseek-grid"]
+    },
+    "codex-grid": {
+      "executor": "codex",
+      "model": "codex-cli",
+      "provider": "openai",
+      "command_template": "codex --model {model}",
+      "role": "grid_worker",
+      "default": false,
+      "model_metadata": {
+        "context_window": 128000,
+        "max_tokens": 4096,
+        "supports_tools": true,
+        "supports_vision": true,
+        "capability_rating": 0.85,
+        "expected_throughput": "medium",
+        "supports_batch": false,
+        "supports_parallel_workers": 3
+      },
+      "fallback_config": {
+        "timeout_seconds": 300,
+        "retry_count": 1,
+        "retry_delay_seconds": 5
+      },
+      "fallback_profile_chain": ["codex-grid", "deepseek-grid", "hermes-default"]
+    },
+    "grok-grid": {
+      "executor": "grok",
+      "model": "grok-composer-2.5-fast",
+      "provider": "xai",
+      "command_template": "grok --build --model {model}",
+      "role": "grid_worker",
+      "default": false,
+      "model_metadata": {
+        "context_window": 131072,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": true,
+        "capability_rating": 0.90,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": 4
+      },
+      "fallback_config": {
+        "timeout_seconds": 300,
+        "retry_count": 2,
+        "retry_delay_seconds": 5
+      },
+      "fallback_profile_chain": ["grok-grid", "deepseek-grid", "codex-grid"]
+    },
+    "hermes-default": {
+      "executor": "hermes",
+      "model": "MiniMax-M3",
+      "provider": "minimax",
+      "command_template": "hermes chat -q",
+      "role": "interactive",
+      "default": false,
+      "model_metadata": {
+        "context_window": 131072,
+        "max_tokens": 8192,
+        "supports_tools": true,
+        "supports_vision": false,
+        "capability_rating": 0.80,
+        "expected_throughput": "low",
+        "supports_batch": false,
+        "supports_parallel_workers": 1
+      },
+      "fallback_config": {
+        "timeout_seconds": 120,
+        "retry_count": 1,
+        "retry_delay_seconds": 3
+      },
+      "fallback_profile_chain": ["hermes-default", "minimax-grid", "deepseek-grid"]
+    }
+  },
+  "global_fallback_chain": ["minimax-grid", "grok-grid", "codex-grid", "deepseek-grid", "hermes-default"],
+  "project_kind": "obsidian-vault",
+  "vault_constitution": "raw/constitution-v0-section-xiii.md",
+  "vault_specific_config": {
+    "acceptance_gate": "validate_promotion.py",
+    "linter": "10_Operations/knowledge-linter.py",
+    "promoter": "10_Operations/agents/promoter/promote.sh",
+    "convergence_threshold": 1.0,
+    "convergence_threshold_dry_run": 0.875,
+    "allowed_phases": ["learn", "act", "measure", "promote", "distill"],
+    "dual_ledger_paths": ["_multi-agent/events.md", ".gaijinn/bridge/council.md"],
+    "worker_work_dir": ".gaijinn/workers",
+    "resilience": {
+      "description": "Vault-specific resilience configuration for grid worker failures and three-gate deploy path",
+      "circuit_breaker": {
+        "failure_threshold": 3,
+        "recovery_timeout_seconds": 60,
+        "half_open_attempts": 1,
+        "description": "After 3 consecutive worker failures, circuit opens for 60s before attempting half-open recovery"
+      },
+      "retry_backoff": {
+        "base_delay_seconds": 2,
+        "max_delay_seconds": 30,
+        "multiplier": 2.0,
+        "jitter_percent": 0.1,
+        "description": "Exponential backoff with 10% jitter for retried worker spawns"
+      },
+      "health_check": {
+        "endpoint": "POST /api/v1/grid/health",
+        "interval_seconds": 30,
+        "timeout_seconds": 5,
+        "description": "Health check endpoint for grid worker health monitoring"
+      },
+      "graceful_degradation": {
+        "fallback_to_interactive": true,
+        "description": "When all grid workers fail, fall back to hermes-default interactive executor"
+      }
+    },
+    "convergence_thresholds": {
+      "dry_run": 0.875,
+      "simulated": 0.875,
+      "production": 1.0,
+      "description": "Per-environment convergence thresholds: dry-run/simulated at 0.875, production strict at 1.0"
+    }
+  },
+  "default_profile": "minimax-grid",
+  "default_orchestrator": "minimax-orchestrator"
+}

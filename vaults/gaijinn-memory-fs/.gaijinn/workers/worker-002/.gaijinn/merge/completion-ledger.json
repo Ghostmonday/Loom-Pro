@@ -1,0 +1,416 @@
+{
+  "entries": [
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "project.executor-profile.json"
+      ],
+      "content_hash": "c9e7c01c59e05d76593de3dd12599506eea4103c31df6ab2f8dde4d4c637c0ab",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-002",
+      "wu_id": "WU-02c430a8"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "ui/WU-004-deploy-path-validation.md"
+      ],
+      "content_hash": "fe51cff9b9d39cc73bc854a362824225a90e936b9b75d850782e2c93052e4254",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-016",
+      "wu_id": "WU-1614731d"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "000_Brain_MOC.md",
+        "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+        "010_Protocols_MOC.md",
+        "020_Active_State_MOC.md",
+        "030_Cold_Memories_MOC.md",
+        "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+        "10_Operations/HERMES-MEMORY.md",
+        "10_Operations/VAULT-GEMINI-SHARE.md",
+        "10_Operations/tasks/OBSIDIAN-RUN-16.md",
+        "10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md",
+        "20_Projects/deepseek-codex-setup.md",
+        "20_Projects/deepseek-hermes-setup.md",
+        "30_Decisions/ADR-002-dual-invariant-domains.md",
+        "40_Concepts/convergence-governance.md",
+        "40_Concepts/council-memory-convergence-semantics.md",
+        "40_Concepts/council-memory-cron-topology.md",
+        "40_Concepts/council-memory-development-program.md",
+        "40_Concepts/council-memory-empty-spawn-crisis.md",
+        "40_Concepts/council-memory-executor-stack.md",
+        "40_Concepts/council-memory-handoff-bus.md",
+        "40_Concepts/council-memory-hermes-mandate.md",
+        "40_Concepts/council-memory-index.md",
+        "40_Concepts/council-memory-infrastructure-incidents.md",
+        "40_Concepts/council-memory-merge-compounding.md",
+        "40_Concepts/council-memory-monorepo-state.md",
+        "40_Concepts/council-memory-operational-hazards.md",
+        "40_Concepts/council-memory-product-vision.md",
+        "40_Concepts/council-memory-protocol.md",
+        "40_Concepts/council-memory-sprint-14w-arc.md",
+        "40_Concepts/council-memory-ux-process-stage.md",
+        "40_Concepts/council-memory-vault-artifacts-shipped.md",
+        "40_Concepts/council-memory-vault-dogfood-arc.md",
+        "40_Concepts/dual-ledger-bridge.md",
+        "40_Concepts/event-sourcing-vault.md",
+        "40_Concepts/hermes-cron-orchestration.md",
+        "40_Concepts/hermes-memory-vault.md",
+        "40_Concepts/ingress-vault-civilization.md",
+        "40_Concepts/knowledge-linter-architecture.md",
+        "40_Concepts/linter-core-governance.md",
+        "40_Concepts/linter-markdown-schema.md",
+        "40_Concepts/linter-supervisor-api.md",
+        "40_Concepts/memory-execution-loop.md",
+        "40_Concepts/metrics-convergence.md",
+        "40_Concepts/metrics-dashboard.md",
+        "40_Concepts/metrics-gravity.md",
+        "40_Concepts/metrics-linter.md",
+        "40_Concepts/obsidian-city-neighborhoods.md",
+        "40_Concepts/obsidian-vault-mapping.md",
+        "40_Concepts/promotion-pipeline.md",
+        "40_Concepts/test-promotion-concept.md",
+        "40_Concepts/vault-affairs.md",
+        "40_Concepts/vault-filesystem.md",
+        "40_Concepts/vault-gaijinn.md",
+        "40_Concepts/vault-topology-and-density.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "Current_Context.md",
+        "_multi-agent/events.md",
+        "aoc_supervisor/README.md",
+        "pending/test-promotion-concept.md",
+        "raw/constitution-v0-section-xiii.md"
+      ],
+      "content_hash": "0a6d18d3232aff73859ebb83efb822276f95fb5b6099d9744e89d4164e254bee",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-017",
+      "wu_id": "WU-3bb7ad2c"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "README.md"
+      ],
+      "content_hash": "086dc148552dbe1105730751b4ac48366b43176c63c89ac3c2dabd04724c8b94",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-003",
+      "wu_id": "WU-3d9bdd1e"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "Untitled.base",
+        "Untitled.canvas"
+      ],
+      "content_hash": "3574f06b07d1b6483724b039fd4d03d02769ce2ffac8530cff1e5c5da9044e64",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-004",
+      "wu_id": "WU-4bee4dd7"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".agents/codex-deepseek.toml.example",
+        ".agents/hermes-deepseek.env.example"
+      ],
+      "content_hash": "379a649ef7ee2cf55d416de7ec655a0d269ba4a5c02240bb586ac7a18a0b5413",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-006",
+      "wu_id": "WU-5117f332"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/agents/promoter/promote.sh"
+      ],
+      "content_hash": "b61df2792db323f4ac60b36217d98117a54d6edc76f247da015438e2987cc543",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-012",
+      "wu_id": "WU-5b5300cd"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+        "40_Concepts/event-sourcing-vault.md"
+      ],
+      "content_hash": "65a52abc2d87d3a8450da8fef0ea30f9e2fca18382ed17a831d326a2d19c9420",
+      "merged_at": "2026-06-18T07:20:02Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "worker-002",
+      "wu_id": "WU-82c99d2b"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/preflight.py"
+      ],
+      "content_hash": "bae82a9c7d23eab7c8111a7ef92aa227b9070b067b1c4be12eddc4edd7bb8627",
+      "merged_at": "2026-06-18T07:20:02Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "worker-003",
+      "wu_id": "WU-90ed6cbb"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/agents/promoter/validate_promotion.py"
+      ],
+      "content_hash": "ffb203d0d7c920480984b5ecd8e97925e87fdb1b067b2251c6df3e3daa59a3a1",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-011",
+      "wu_id": "WU-a1a7ebb1"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "ui/vault-ui-intent-map.json"
+      ],
+      "content_hash": "fd51a6cd0f5e983a3debda30ffa9859c04825b009ee57304f440d9675eb5c80a",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-015",
+      "wu_id": "WU-a5689f06"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/knowledge-linter.py"
+      ],
+      "content_hash": "9a79dce88245a80268af59c5fb62c7cff6bfca8f1a109a8c7b8d9aa20da81599",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-010",
+      "wu_id": "WU-b5ccc9fa"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/api.py",
+        "aoc_supervisor/aoc_supervisor/billing.py",
+        "aoc_supervisor/aoc_supervisor/__init__.py"
+      ],
+      "content_hash": "66c5c170fd69ec2cad2ceed7f65ef2dcdc9d65eba977795c9d5d0e19472e3505",
+      "merged_at": "2026-06-18T07:20:02Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "worker-004",
+      "wu_id": "WU-d50925f6"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+        "aoc_supervisor/aoc_supervisor/prompt_coverage.py"
+      ],
+      "content_hash": "29399484609ac2bcd22e9453b1dda2e71a3997ca7a3cf30a87b00a19bb0ec2ff",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-001",
+      "wu_id": "WU-e26d9b31"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/tasks/topology-merges.md",
+        "10_Operations/tasks/topology-splits.md"
+      ],
+      "content_hash": "d0e14391716220f869861dfd84325123449b6569452e8be4ae895f0ea946b74e",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-013",
+      "wu_id": "WU-e748d0c8"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".cursorrules"
+      ],
+      "content_hash": "f6e1934296b795f533633eb2c30f3c776f1d2ec12f74be25a98b5b6180b1be9c",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-005",
+      "wu_id": "WU-eacc7320"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/HERMES-SPRINT-DIRECTIVE.md"
+      ],
+      "content_hash": "086947223c808f31cfa56a2265d2155e7e4b4ec4daad518889fdb7cc9bfaa221",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-009",
+      "wu_id": "WU-eb6865d2"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "20_Projects/deepseek-codex-setup.md"
+      ],
+      "content_hash": "f12deae455ab9303b533d25a9af152296ffbc0b2f0c21f57ec193b76a8802ad0",
+      "merged_at": "2026-06-18T07:20:02Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "worker-006",
+      "wu_id": "WU-ec692d62"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/__init__.py",
+        "aoc_supervisor/aoc_supervisor/__init__.py",
+        "aoc_supervisor/aoc_supervisor/api.py",
+        "aoc_supervisor/aoc_supervisor/billing.py",
+        "aoc_supervisor/aoc_supervisor/complexity.py",
+        "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+        "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "aoc_supervisor/aoc_supervisor/ui_intent.py",
+        "aoc_supervisor/aoc_supervisor/vault_deploy.py",
+        "aoc_supervisor/aoc_supervisor/vault_links.py",
+        "aoc_supervisor/aoc_supervisor/workflow_evaluator.py"
+      ],
+      "content_hash": "38df17a5f0533c5997c7483a0a353b6a4dcd235f4184b137c36136e5dfb7425f",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-018",
+      "wu_id": "WU-ec9c463c"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".agents/vault.yaml"
+      ],
+      "content_hash": "6b2304ee69ed01e7b832252950e69caff7c82cd15b85696b2f20e27850b1cbdc",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-007",
+      "wu_id": "WU-f36b9573"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".obsidian/app.json",
+        ".obsidian/appearance.json",
+        ".obsidian/core-plugins.json",
+        ".obsidian/graph.json",
+        ".obsidian/workspace.json"
+      ],
+      "content_hash": "a4fe7d68c47d8a9656c251ad6e1b5e762049f2f260097567414e011d42b72b80",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-008",
+      "wu_id": "WU-f7a02b16"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/knowledge_linter.py",
+        "aoc_supervisor/aoc_supervisor/preflight.py",
+        "aoc_supervisor/aoc_supervisor/repo_paths.py"
+      ],
+      "content_hash": "9528d42fae6584b18504eb674573af3bb936f82a7df911c10a8a34ba4c6b16ca",
+      "merged_at": "2026-06-19T00:19:22Z",
+      "source": "backfill-2026-06-19",
+      "worker_id": "blueprint-014",
+      "wu_id": "WU-faa9e6de"
+    },
+    {
+      "worker_id": "worker-001",
+      "completed_at": "2026-06-19T12:17:07Z",
+      "schema_version": 1,
+      "work_units": [
+        "WU-001",
+        "WU-003",
+        "WU-005",
+        "WU-007",
+        "WU-009",
+        "WU-011",
+        "WU-013",
+        "WU-015",
+        "WU-017",
+        "WU-019",
+        "WU-021",
+        "WU-023",
+        "WU-025"
+      ],
+      "total_files": 28,
+      "convergence_at_checkin": 0.6667,
+      "vault_linter": "PASS",
+      "shadow_bridges": 0,
+      "rejected_nodes": 13,
+      "status": "complete"
+    }
+  ],
+  "schema_version": 1
+}

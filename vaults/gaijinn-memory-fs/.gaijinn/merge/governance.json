@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "scored_at": "2026-06-19T21:27:53Z",
+  "structural_score": {
+    "atomic_weld_units": 2,
+    "blocked_workers": 0,
+    "conflict_free": true,
+    "conflicted_workers": 0,
+    "convergence": 0.5556,
+    "dry_run": false,
+    "handoff_isolation": false,
+    "invariants": {
+      "merge.handoff_isolation": false,
+      "merge.merged_work": false,
+      "merge.no_blocked": true,
+      "merge.no_conflicted": true,
+      "merge.not_dry_run": true,
+      "merge.order_valid": false,
+      "merge.phase_completed": true,
+      "merge.transaction_bus_synchronized": true,
+      "merge.validation_pass_rate_full": false
+    },
+    "merge_latency_ms": 1917000,
+    "merge_order": [],
+    "merge_order_valid": false,
+    "merged_workers": 0,
+    "transaction_bus_synchronized": true,
+    "validation_pass_rate": 0.0
+  }
+}

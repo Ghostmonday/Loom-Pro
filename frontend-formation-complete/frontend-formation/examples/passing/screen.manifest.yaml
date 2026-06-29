@@ -1,0 +1,34 @@
+screen: sandbox.ratification
+mission: Submit one completed blueprint for formal ratification.
+mission_id: formal-blueprint-ratification
+elements:
+- id: telemetry-drift-indicator
+  classification: display
+  contract_path: ratification.telemetry.drift_status
+  label: Status unavailable
+- id: risk-explanation-card
+  classification: display
+  contract_path: ratification.explanation.promotion_consequence
+  label: Submitting this blueprint promotes inferred telemetry parameters to permanent
+    fact baselines.
+  tag: section
+- id: ratify-submit-btn
+  classification: action_control
+  action: sandbox.ratification.submit
+  feedback_target: ratification-feedback
+  label: Submit Blueprint for Formal Ratification
+- id: ratification-feedback
+  classification: display
+  contract_path: ratification.submission.feedback
+  label: Ready for human authorization.
+  tag: output
+knowledge_bindings:
+  design_intent: sandbox.ratification.surface
+  behavioral: sandbox.ratification.consequence-warning
+  operational: sandbox.ratification.performance-budget
+  governance: sandbox.ratification.promotion-gate
+  institutional: sandbox.ratification.deployment-rules
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/ratification.smoke.yaml

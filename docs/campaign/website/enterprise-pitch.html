@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaijinn — Executive Briefing</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .deck { max-width: 920px; margin: 0 auto; padding: 100px 24px 60px; }
+    .slide {
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .slide-num { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+    .slide h1 { font-size: 28px; color: var(--text-bright); margin-bottom: 20px; line-height: 1.25; }
+    .slide ul { list-style: none; padding: 0; }
+    .slide li { font-size: 13px; color: var(--text); margin-bottom: 14px; padding-left: 16px; border-left: 2px solid var(--border); }
+    .slide li strong { color: var(--text-bright); }
+    .slide .metric-row { display: flex; gap: 24px; flex-wrap: wrap; margin: 20px 0; }
+    .slide .metric-box { background: var(--bg2); border: 1px solid var(--border); padding: 16px 20px; border-radius: var(--radius); min-width: 140px; }
+    .slide .metric-box .val { font-size: 28px; font-weight: 700; color: var(--green); }
+    .slide .metric-box .lbl { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    .slide .warn { color: #ff8a80; }
+    .slide .hook { font-size: 15px; border-left: 4px solid var(--accent2); padding: 16px 20px; color: var(--text-bright); margin-top: 20px; }
+    .deck-footer { font-size: 11px; color: var(--text-dim); text-align: center; padding: 32px 0; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">GAI<span>JINN</span></a>
+      <span class="nav-badge">Executive Briefing</span>
+    </div>
+  </nav>
+
+  <main class="deck">
+    <section class="slide">
+      <p class="slide-num">Slide 1</p>
+      <h1>The Multi-Agent Velocity Lie</h1>
+      <ul>
+        <li><strong>The Promise:</strong> AI swarms yield exponential feature velocity.</li>
+        <li><strong>The Reality:</strong> Agents are blind to hidden coupling — silent regressions, merge hell.</li>
+        <li><strong>The Cop-Out:</strong> Run agents sequentially. No crashes. Zero parallelism.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <p class="slide-num">Slide 2 — Legacy Weld</p>
+      <h1>The Economics of the Bottleneck</h1>
+      <div class="metric-row">
+        <div class="metric-box"><div class="val">171</div><div class="lbl">Code nodes</div></div>
+        <div class="metric-box"><div class="val">92</div><div class="lbl">Shadow bridges</div></div>
+        <div class="metric-box"><div class="val warn">40</div><div class="lbl">File weld block</div></div>
+        <div class="metric-box"><div class="val warn">1</div><div class="lbl">Worker / weld block</div></div>
+      </div>
+      <ul>
+        <li>Legacy mode: <strong>2 atomic welds</strong> · <strong>44 files</strong> serialized.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <p class="slide-num">Slide 3 — Gateway</p>
+      <h1>Shifting the Geometry</h1>
+      <div class="metric-row">
+        <div class="metric-box"><div class="val">0</div><div class="lbl">Atomic welds</div></div>
+        <div class="metric-box"><div class="val">44</div><div class="lbl">Files unlocked</div></div>
+        <div class="metric-box"><div class="val">47</div><div class="lbl">Max workers</div></div>
+      </div>
+      <ul>
+        <li>GIV sandboxes + Council Transaction Bus (TX-HT-*) replace blunt welding.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <p class="slide-num">Slide 4 — Phase 2 Telemetry</p>
+      <h1>Corporate Strain Proof</h1>
+      <div class="metric-row">
+        <div class="metric-box"><div class="val">0</div><div class="lbl">Trespass</div></div>
+        <div class="metric-box"><div class="val">1.0</div><div class="lbl">Validation</div></div>
+        <div class="metric-box"><div class="val">0.8889</div><div class="lbl">Convergence</div></div>
+        <div class="metric-box"><div class="val" style="font-size:14px;color:var(--accent)">TX-HT-6D0B24</div><div class="lbl">Bus resolved</div></div>
+      </div>
+      <ul>
+        <li>4 concurrent workers · 171-node dogfood · 0 merge conflicts.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <p class="slide-num">Slide 5 — Upstream Firewall</p>
+      <h1>Code Base Immunity</h1>
+      <ul>
+        <li><code>POST /api/v1/preflight</code> · GitHub Action gate.</li>
+        <li><strong>422 PREFLIGHT_REJECTED</strong> on trespass or unresolved TX-HT tickets.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <p class="slide-num">Slide 6 — Design Partner</p>
+      <h1>3 Exclusive Alpha Slots</h1>
+      <ul>
+        <li>Local Gaijinn/AOC runtime · topological audits · zero-trust CI guardrails.</li>
+        <li><a href="mailto:hello@neuraldraft.net">hello@neuraldraft.net</a></li>
+      </ul>
+      <p class="hook">"Your team is waiting on a 40-file serialization bottleneck. Gaijinn unlocks 44 files instantly, running 4 concurrent workers with 1.0 validation and 0 merge conflicts."</p>
+    </section>
+  </main>
+
+  <p class="deck-footer">Full script: ENTERPRISE-PITCH-DECK.md · Ledger: governance.json 2026-06-16</p>
+</body>
+</html>

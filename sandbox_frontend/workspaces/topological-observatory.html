@@ -1,0 +1,56 @@
+<!-- Topological Observatory — Workspace Content Fragment -->
+
+<div class="flex flex-col h-full relative">
+
+  <!-- Manifold Filters -->
+  <div class="flex gap-stack-md mb-stack-lg">
+    <div class="glass-popover px-stack-lg py-stack-md rounded-lg flex flex-col gap-stack-sm">
+      <span class="font-label-caps text-label-caps text-on-surface-variant/70">MANIFOLD FILTERS</span>
+      <div class="flex gap-stack-sm">
+        <label class="flex items-center gap-stack-sm cursor-pointer"><input type="checkbox" checked class="accent-primary"/> <span class="font-body-sm text-body-sm">Core</span></label>
+        <label class="flex items-center gap-stack-sm cursor-pointer"><input type="checkbox" checked class="accent-primary"/> <span class="font-body-sm text-body-sm">Boundary</span></label>
+        <label class="flex items-center gap-stack-sm cursor-pointer"><input type="checkbox" checked class="accent-primary"/> <span class="font-body-sm text-body-sm">Bridge</span></label>
+        <label class="flex items-center gap-stack-sm cursor-pointer"><input type="checkbox" class="accent-primary"/> <span class="font-body-sm text-body-sm">Isolated</span></label>
+      </div>
+    </div>
+    <div class="glass-popover px-stack-lg py-stack-md rounded-lg flex items-center gap-stack-md">
+      <span class="font-label-caps text-label-caps text-on-surface-variant/70">SCAN_PHASE</span>
+      <span class="font-title-md text-title-md text-secondary flex items-center gap-unit">
+        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> ACTIVE
+      </span>
+      <span class="w-px h-6 bg-outline-variant/30"></span>
+      <span class="font-label-caps text-label-caps text-on-surface-variant/70">LATENCY</span>
+      <span class="font-mono-precision text-mono-precision text-on-surface">12ms</span>
+    </div>
+  </div>
+
+  <!-- Graph Visualization -->
+  <div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1 relative overflow-hidden">
+    <div class="scanline"></div>
+    <svg class="w-full h-full" viewBox="0 0 800 400">
+      <!-- Edges -->
+      <line x1="400" y1="100" x2="200" y2="250" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="400" y1="100" x2="600" y2="250" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="200" y1="250" x2="400" y2="300" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="600" y1="250" x2="400" y2="300" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Nodes -->
+      <circle cx="400" cy="100" r="18" fill="#aac7ff" stroke="#3e90ff" stroke-width="2" class="node-pulse" style="cursor:pointer;"/>
+      <text x="400" y="105" text-anchor="middle" fill="#000" font-size="8" font-family="monospace">FRG_1</text>
+      <circle cx="200" cy="250" r="14" fill="#47e266" stroke="#09bf49" stroke-width="2" style="cursor:pointer;"/>
+      <text x="200" y="255" text-anchor="middle" fill="#000" font-size="8" font-family="monospace">FRG_2</text>
+      <circle cx="600" cy="250" r="14" fill="#ffb868" stroke="#ce7f00" stroke-width="2" style="cursor:pointer;"/>
+      <text x="600" y="255" text-anchor="middle" fill="#000" font-size="8" font-family="monospace">FRG_3</text>
+      <circle cx="400" cy="300" r="12" fill="#ffb4ab" stroke="#ffb4ab" stroke-width="3" style="cursor:pointer;"/>
+      <text x="400" y="305" text-anchor="middle" fill="#000" font-size="7" font-family="monospace">FRG_4</text>
+    </svg>
+  </div>
+
+  <!-- Execute Global Mapping -->
+  <div class="flex justify-center mt-gutter">
+    <button class="px-container-margin py-stack-lg bg-primary text-on-primary font-bold rounded-xl shadow-[0_8px_32px_rgba(170,199,255,0.4)] active:scale-95 transition-all spring-transition flex items-center gap-stack-md">
+      <span class="material-symbols-outlined">travel_explore</span>
+      Execute Global Mapping
+    </button>
+  </div>
+
+</div>

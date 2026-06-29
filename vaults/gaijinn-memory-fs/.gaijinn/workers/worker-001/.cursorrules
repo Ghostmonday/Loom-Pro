@@ -1,0 +1,136 @@
+---
+id: ".cursorrules"
+type: "Concept"
+status: "active"
+scope: "vault-root"
+tags:
+  - Governance
+  - Cursor-Rules
+  - Gaijinn-Init
+  - Domain/Governance
+  - Vault-Entry
+links:
+  - "[[AGENTS]]"
+  - "[[CLAUDE]]"
+  - "[[README]]"
+  - "[[raw/constitution-v0-section-xiii]]"
+  - "[[30_Decisions/ADR-002-dual-invariant-domains]]"
+  - "[[00_Brain/invariants/INV-GAIJINN-BINDING]]"
+  - "[[_multi-agent/events]]"
+  - "[[.gaijinn/bridge/council]]"
+  - "[[.gaijinn/metrics_manifest]]"
+  - "[[.gaijinn/merge/governance]]"
+  - "[[.agents/vault]]"
+  - "[[ui/vault-ui-intent-map]]"
+  - "[[ui/WU-004-deploy-path-validation]]"
+  - "[[10_Operations/agents/promoter/promote]]"
+  - "[[10_Operations/agents/promoter/validate_promotion]]"
+---
+<!-- BEGIN GAIJINN INIT -->
+# Gaijinn Project Guidance
+
+**Vault:** gaijinn-memory-fs — Obsidian vault civilization with write-time compiled memory.
+**Governance:** Joint — Vault Law (semantic integrity) + Gaijinn Execution (worker isolation / merge correctness).
+**Executor profile:** DeepSeek V4 Flash (`deepseek-v4-flash` via DeepSeek provider).
+
+---
+
+## Vault Folder Taxonomy
+
+| Directory | Purpose |
+|-----------|---------|
+| `00_Brain/` | Permanent knowledge graph — invariants, concepts, cross-domain links |
+| `10_Operations/` | Active work — agents/, tasks/, workflows |
+| `20_Projects/` | Project specs and implementation guides |
+| `30_Decisions/` | ADRs — architectural decision records |
+| `40_Concepts/` | Promoted knowledge (from `/pending/` after validation) |
+| `50_Periodic/` | Scheduled reviews and sync snapshots |
+| `_multi-agent/` | Event ledger (semantic changes) |
+| `raw/` | Immutable constitutional documents |
+| `.agents/` | Agent configuration files (env, vault.yaml) |
+| `.gaijinn/` | Gaijinn runtime artifacts (blueprint, bridge, metrics) |
+
+---
+
+## Agent Obligations (per Section XIII + AGENTS.md)
+
+1. **Declare scope** before writing outside `10_Operations/agents/<your-id>/`. Reference the active WU and its GIV.
+2. **Dual validation** before promotion `/pending/` → `/40_Concepts/`: run vault knowledge linter + Gaijinn `validate-worker`.
+3. **No force-overwrites** on merge failure — OCC replay, then re-merge.
+4. **Dual logging** — material changes go to **both** `_multi-agent/events.md` (semantic) and Gaijinn Council (operational).
+5. **Separate metrics** — vault structural health (orphans, dead links, provenance) and Gaijinn execution health (convergence, pass rate) are NEVER substituted for one another.
+
+---
+
+## Gaijinn CLI Operations
+
+| Command | When |
+|---------|------|
+| `gaijinn compile-prompt` | After changing `.gaijinn/project.json` |
+| `gaijinn scan .` | Before graph analysis when source files change |
+| `gaijinn analyze` | Before creating worker directories |
+| `gaijinn run-grid --workers N` | To spawn isolated worker handoffs |
+| `gaijinn merge-grid --strategy sequential` | Weld workers; ledger-aware already_merged |
+| `gaijinn hermes` | Launch Gaijinn-backed Hermes session (council-aware) |
+| `gaijinn council say --as <author> "..."` | Post to council thread (user: `--as user`, cursor: `--as cursor`) |
+
+---
+
+## Council Protocol (Required)
+
+1. **Read** `.gaijinn/bridge/council.md` before any substantive action.
+2. **Post** after decisions, questions, or handoffs. Use `gaijinn council say`.
+3. **One shared thread** — never ask the human to relay messages between agents.
+
+---
+
+## Write Path Rules
+
+- Allowed writes are scoped by the assigned WU's GIV (see `.gaijinn/blueprint.json`).
+- Private scratch: `10_Operations/agents/<worker-id>/`
+- Promotion target: `/pending/` (stage) → `/40_Concepts/` (after dual validation)
+- Never write outside allowed paths or into sibling-owned files (HANDOFF_ONLY boundary).
+- On cross-boundary need: emit a structured Gaijinn Handoff Ticket (see worker protocol).
+
+---
+
+## Dual Governance Reference
+
+**Vault Law** (Sections III–VIII of Constitution):
+- Semantic integrity: wikilinks, YAML frontmatter, provenance, graph coherence
+- Canonical ledger: `_multi-agent/events.md`
+- Linter: `10_Operations/knowledge-linter.py` (15 checks — 13 core + 2 Section XIII: GIV allowlist enforcement + OCC compliance)
+
+**Gaijinn Execution** (Constitution Section XIII + ADR-002):
+- Execution integrity: work unit isolation, merge correctness, structural convergence
+- Canonical execution ledger: `.gaijinn/merge/governance.json`
+- Operational coordination ledger: `.gaijinn/bridge/council.md`
+- Metrics manifest: `.gaijinn/metrics_manifest.json` is the source of truth for rejected nodes, gravity floors, and Shadow Bridge counts.
+- Validation: `validate-worker` + `validate_promotion.py` (frontmatter, wikilinks, OCC, path validation, three-gates, strict mode)
+- Promotion gate: `promote.sh` with `--linter` flag and `--strict` mode (pre-promotion vault linter pass with strict warning enforcement)
+- Convergence thresholds: simulated 0.875, production 1.000
+- Resilience: circuit breaker (3 failures → 60s recovery), retry backoff (2s base, 2x multiplier, 10% jitter), graceful degradation with dual-ledger update
+- Disaster recovery: 5 procedures — worker_crash, merge_failure, vault_linter_violation, dual_ledger_desync, circuit_breaker_trip
+
+**Non-Substitution Invariant:** Success in one domain never waives failure in the other.
+
+---
+
+## Quick Reference
+
+- **Constitution:** `[[raw/constitution-v0-section-xiii]]`
+- **ADR-002:** `[[30_Decisions/ADR-002-dual-invariant-domains]]`
+- **Invariant binding:** `[[00_Brain/invariants/INV-GAIJINN-BINDING]]`
+- **Append-only event ledger:** `_multi-agent/events.md`
+- **Council bridge:** `.gaijinn/bridge/council.md`
+- **Metrics manifest:** `.gaijinn/metrics_manifest.json`
+- **Execution ledger:** `.gaijinn/merge/governance.json`
+- **Completion ledger:** `.gaijinn/merge/completion-ledger.json` (sprint compounding)
+- **Blueprint / WU assignments:** `.gaijinn/blueprint.json`
+- **Deploy path validation:** `ui/WU-004-deploy-path-validation.md`
+- **Promotion pipeline:** `10_Operations/agents/promoter/promote.sh`
+- **Promotion validator:** `10_Operations/agents/promoter/validate_promotion.py`
+- **Deploy path GUI:** `ui/vault-ui-intent-map.json`
+- **Event ledger:** `_multi-agent/events.md`
+- **Agent config:** `.agents/vault.yaml`
+<!-- END GAIJINN INIT -->

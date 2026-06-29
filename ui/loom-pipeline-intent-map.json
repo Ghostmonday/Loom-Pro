@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "system": "loom",
+  "surface": "loom-backend-pipeline",
+  "parent_spec": "ui/loom-system-intent-map.json",
+  "description": "Headless Loom backend pipeline — executable by UiIntentDriver mirror without browser. Defines the CORRECT order: vision → interrogation → handoff → teleology → synthesis → prepare → swarm → deploy → merge.",
+  "optimization_goal": "Zero confusion_count on flow.loom_full_pipeline_mock; dark_bridge_count minimized; no phase skips.",
+  "requires": {
+    "GAIJINN_MOCK_GRID": "1",
+    "GAIJINN_FAKE_REASONING": "1",
+    "GAIJINN_ALLOW_RAW_INTENT_PREPARE": "unset in production"
+  },
+  "phases": [
+    "vision_intake",
+    "interrogating",
+    "handoff_pending",
+    "teleology_deliberating",
+    "blueprint_synthesis",
+    "awaiting_swarm",
+    "sprinting",
+    "complete"
+  ],
+  "flow": [
+    {"phase": "vision_intake", "action": "intake.start_session", "api": ["POST /api/v1/intent-forge/sessions"]},
+    {"phase": "interrogating", "action": "question.submit_answer", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/answers"], "repeat_until": "readiness.can_handoff OR session_status == FINALIZED"},
+    {"phase": "handoff_pending", "action": "handoff.confirm", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=confirm"]},
+    {"phase": "handoff_pending", "action": "handoff.accept", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=accept"]},
+    {"phase": "teleology_deliberating", "action": "teleology.deliberate", "api": ["GET /api/v1/blueprint/deliberate"], "transport": "sse"},
+    {"phase": "blueprint_synthesis", "action": "blueprint.synthesize", "api": ["POST /api/v1/loom/blueprint/synthesize"], "status": "not_implemented"},
+    {"phase": "awaiting_swarm", "action": "orchestrate.prepare", "api": ["POST /api/v1/orchestrate/prepare"], "body_requires": ["intent", "intent_forge_session_id", "phases"]},
+    {"phase": "awaiting_swarm", "action": "orchestrate.swarm", "api": ["POST /api/v1/orchestrate/swarm"]},
+    {"phase": "sprinting", "action": "deploy.sprint", "api": ["POST /api/v1/quote", "POST /api/v1/blueprint/purchase", "POST /api/v1/grid/spawn"]},
+    {"phase": "sprinting", "action": "grid.poll_status", "api": ["GET /api/v1/grid/status"]},
+    {"phase": "complete", "action": "merge.run", "api": ["POST /api/v1/grid/merge"]},
+    {"phase": "complete", "action": "merge.poll_status", "api": ["GET /api/v1/grid/merge/status"]}
+  ],
+  "actions": {
+    "intake.start_session": {
+      "codex_slice": "C02",
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions", "body": {"prompt": "string", "tier": "paid|free"}},
+      "returns": ["session_id", "session_status", "current_question", "readiness"],
+      "postconditions": ["session_status in (QUESTIONING, ANALYZING, FINALIZED)"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.create_session",
+        "mode": "real"
+      },
+      "tier_semantics": {
+        "paid": "Full adaptive interrogation until readiness",
+        "free": "Provisional artifact — smoke only, not canonical Loom path"
+      }
+    },
+    "question.submit_answer": {
+      "codex_slice": "C03",
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/answers", "body": {"question_id": "string", "answer": "string", "idempotency_key": "string", "expected_blueprint_version": "integer"}},
+      "effects": ["evidence.reanalyze", "readiness.recompute", "next_question OR finalize"],
+      "postconditions": ["complete_state_reanalysis", "exactly_one_next_question_or_stop"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "entrypoint": "AdaptiveQuestionEngine.select_next",
+        "mode": "real",
+        "provider": "aoc_supervisor/reasoning_provider.py",
+        "fake_flag": "GAIJINN_FAKE_REASONING",
+        "ticket": "LOOM-202",
+        "gap": "Answer submit must call analyze on evidence before select_next"
+      }
+    },
+    "handoff.confirm": {
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff", "query": {"action": "confirm"}},
+      "effects": ["compile_executable_projection"],
+      "returns": ["executable_projection", "session_status"],
+      "postconditions": ["session_status == FINALIZED", "executable_projection.projection_mode == intent_forge"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/blueprint_compiler.py",
+        "entrypoint": "compile_executable_projection",
+        "mode": "real",
+        "ticket": "ENG-101"
+      }
+    },
+    "handoff.accept": {
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff", "query": {"action": "accept"}},
+      "postconditions": ["session_status == HANDED_OFF"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.accept_handoff",
+        "mode": "real"
+      }
+    },
+    "teleology.deliberate": {
+      "codex_slice": "C09",
+      "api": {"method": "GET", "path": "/api/v1/blueprint/deliberate", "query": {"intent": "string", "session_id": "string"}},
+      "transport": "sse",
+      "subphases": [
+        {"id": "intent_parse", "message_key": "telos — intent decomposed into capability streams and GIV contracts"},
+        {"id": "graph_ingest", "message_key": "context — scan maps structure so no node is purpose-orphaned"},
+        {"id": "curvature_compute", "message_key": "geometry — gravity floor + Ollivier-Ricci curvature on edges", "module": "aoc-cli/aoc_cli/gravity.py", "entrypoint": "compute_gravity_and_curvature"},
+        {"id": "bridge_detect", "message_key": "traps — shadow bridges where neighborhoods mismatch"},
+        {"id": "weld_plan", "message_key": "surgery — union-find welds vs handoff gateways", "module": "aoc-cli/aoc_cli/blueprint.py"},
+        {"id": "partition", "message_key": "partition — non-overlapping work units from teleological scope"},
+        {"id": "blueprint_freeze", "message_key": "freeze — blueprint manifest materialized"}
+      ],
+      "complete_when": "subphase == blueprint_freeze",
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "blueprint_deliberate",
+        "mode": "real",
+        "ticket": "LOOM-204",
+        "gap": "Not invoked automatically after HANDED_OFF today"
+      }
+    },
+    "blueprint.synthesize": {
+      "codex_slices": ["C04", "C05", "C06", "C07", "C08"],
+      "api": {"method": "POST", "path": "/api/v1/loom/blueprint/synthesize", "body": {"intent_forge_session_id": "string", "teleology_receipt": "object"}},
+      "status": "not_implemented",
+      "returns": ["blueprint", "dark_bridge_count", "projection_mode", "work_units"],
+      "postconditions": [
+        "projection_mode == loom_synthesis",
+        "dark_bridge_count <= graph_only_baseline",
+        "blueprint.work_units.length >= 1"
+      ],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/loom_blueprint_synthesizer.py",
+        "entrypoint": "synthesize_blueprint",
+        "mode": "real",
+        "ticket": "LOOM-203",
+        "inputs": [
+          {"source": "executable_projection", "module": "aoc_supervisor/workstream_planner.py"},
+          {"source": "gravity_plan", "module": "aoc-cli/aoc_cli/blueprint.py", "entrypoint": "generate_blueprint"},
+          {"source": "curvature_metrics", "module": "aoc-cli/aoc_cli/gravity.py"},
+          {"source": "llm_reasoning", "module": "aoc_supervisor/reasoning_provider.py", "optional": true}
+        ],
+        "optimization": "Minimize dark bridges subject to teleological partition constraints"
+      }
+    },
+    "orchestrate.prepare": {
+      "codex_slices": ["C01", "C10"],
+      "api": {"method": "POST", "path": "/api/v1/orchestrate/prepare", "body": {"intent": "string", "intent_forge_session_id": "string", "phases": ["backend"]}},
+      "preconditions": ["intent_forge_session_id present", "forge session_status == HANDED_OFF"],
+      "returns": ["session_id", "work_units", "recommended_swarm", "swarm_rationale", "blueprint_mode", "pipeline_plan"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.prepare",
+        "mode": "real",
+        "ticket": "LOOM-205",
+        "branches": {
+          "loom_synthesis": {"artifact": ".gaijinn/blueprint.json", "projection_mode": "loom_synthesis"},
+          "intent_forge_only": {"status": "shipped_today", "projection_mode": "intent_forge", "gap": "Skips curvature"},
+          "graph_default": {"module": "aoc-cli/aoc_cli/blueprint.py", "entrypoint": "generate_blueprint", "projection_mode": "graph"}
+        }
+      }
+    },
+    "orchestrate.swarm": {
+      "api": {"method": "POST", "path": "/api/v1/orchestrate/swarm", "body": {"session_id": "string", "workers": "integer"}},
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.assign_swarm",
+        "mode": "real"
+      }
+    },
+    "deploy.sprint": {
+      "api_sequence": ["quote", "purchase", "spawn"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "POST /api/v1/grid/spawn",
+        "mock_flag": "GAIJINN_MOCK_GRID"
+      }
+    },
+    "grid.poll_status": {
+      "complete_when": "all_workers_terminal"
+    },
+    "merge.run": {
+      "api": {"method": "POST", "path": "/api/v1/grid/merge", "body": {"session_id": "string"}},
+      "algorithm_binding": {"module": "aoc-cli/aoc_cli/helpers/merge.py", "entrypoint": "collect → validate-worker → merge-grid", "mode": "real"}
+    },
+    "merge.poll_status": {
+      "api": {"method": "GET", "path": "/api/v1/grid/merge/status"},
+      "complete_when": "merge_pipeline.phase == completed"
+    }
+  },
+  "mirror_extensions": {
+    "module": "aoc_supervisor/ui_intent.py",
+    "required_methods": [
+      "dispatch_loom_action",
+      "run_loom_pipeline_scenario",
+      "collect_teleology_receipt"
+    ],
+    "status": "partial — C18 implements dispatch_loom_action and run_loom_pipeline_scenario; teleology receipt collection is provided by C09",
+    "ticket": "LOOM-209"
+  },
+  "smoke_scenarios": [
+    {
+      "id": "flow.loom_reject_raw_prepare",
+      "description": "Production gate: prepare without forge session must fail",
+      "requires": {"GAIJINN_ALLOW_RAW_INTENT_PREPARE": "unset"},
+      "steps": [
+        {"api": "POST /api/v1/orchestrate/prepare", "body": {"intent": "Build an app", "phases": ["backend"]}, "expect_status": 409}
+      ],
+      "assertions": [],
+      "implementation_status": "implemented — LOOM-201 prepare gate enforced"
+    },
+    {
+      "id": "flow.loom_interrogation_adaptive_paid",
+      "description": "Paid tier: session → answer → reanalysis → next question",
+      "requires": {"GAIJINN_FAKE_REASONING": "1"},
+      "steps": [
+        {"api": "POST /api/v1/intent-forge/sessions", "body": {"prompt": "Build a secure API gateway with audit logging", "tier": "paid"}},
+        {"action": "question.submit_answer", "args": {"answer": "OAuth2 with scoped tokens for every endpoint."}},
+        {"api": "GET /api/v1/intent-forge/sessions/{session_id}"}
+      ],
+      "assertions": [
+        "session_status in QUESTIONING,FINALIZED",
+        "readiness.score >= 0",
+        "questions_and_answers.length >= 1"
+      ],
+      "implementation_status": "partial — mirror action dispatch not wired"
+    },
+    {
+      "id": "flow.loom_handoff_to_prepare",
+      "description": "Canonical path: forge handoff → prepare with session id",
+      "requires": {"GAIJINN_FAKE_REASONING": "1", "GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"api": "POST /api/v1/intent-forge/sessions", "body": {"prompt": "Build a tic-tac-toe game", "tier": "paid"}},
+        {"action": "handoff.confirm"},
+        {"action": "handoff.accept"},
+        {"action": "orchestrate.prepare", "args": {"intent": "Build a tic-tac-toe game", "phases": ["backend"]}}
+      ],
+      "assertions": [
+        "prepare.work_units >= 1",
+        "prepare.blueprint_mode in intent,graph,loom_synthesis"
+      ],
+      "implementation_status": "implemented — C18 mirror dispatch passes handed-off forge session id to prepare"
+    },
+    {
+      "id": "flow.loom_teleology_after_handoff",
+      "description": "SSE teleology streams all subphases after HANDED_OFF",
+      "requires": {"GAIJINN_FAKE_REASONING": "1"},
+      "steps": [
+        {"action": "intake.start_session", "args": {"prompt": "Build a notes app", "tier": "paid"}},
+        {"action": "handoff.confirm"},
+        {"action": "handoff.accept"},
+        {"action": "teleology.deliberate", "args": {"intent": "Build a notes app"}}
+      ],
+      "assertions": [
+        "teleology.subphases_completed contains blueprint_freeze",
+        "teleology.curvature_floor == -0.30"
+      ],
+      "implementation_status": "shipped — C09 teleology mirror receipt wired"
+    },
+    {
+      "id": "flow.loom_synthesis_min_dark_bridges",
+      "description": "Synthesizer fuses forge projection with gravity plan; minimizes dark bridges",
+      "requires": {"GAIJINN_FAKE_REASONING": "1"},
+      "steps": [
+        {"action": "handoff.accept"},
+        {"action": "teleology.deliberate"},
+        {"action": "blueprint.synthesize"}
+      ],
+      "assertions": [
+        "blueprint.projection_mode == loom_synthesis",
+        "blueprint.dark_bridge_count >= 0",
+        "blueprint.work_units.length >= 1"
+      ],
+      "implementation_status": "shipped — C04-C08 synthesis slices complete, C19 full pipeline passes"
+    },
+    {
+      "id": "flow.loom_full_pipeline_mock",
+      "description": "End-to-end Loom: vision → Q&A → handoff → teleology → synthesis → swarm → deploy → merge",
+      "requires": {"GAIJINN_MOCK_GRID": "1", "GAIJINN_FAKE_REASONING": "1"},
+      "greenfield": true,
+      "steps": [
+        {"action": "intake.start_session", "args": {"prompt": "Build a local-first personal knowledge manager for Linux that indexes PDFs, Markdown files, and audio transcripts, supports semantic search, and exposes a desktop UI. Must be offline-only and privacy-preserving.", "tier": "paid"}},
+        {"action": "question.submit_answer", "args": {"answer": "Desktop UI with offline SQLite index and semantic embeddings stored locally only."}, "repeat_until": "readiness.can_handoff"},
+        {"action": "handoff.confirm"},
+        {"action": "handoff.accept"},
+        {"action": "teleology.deliberate", "args": {"intent": "PKM"}},
+        {"action": "blueprint.synthesize"},
+        {"action": "orchestrate.prepare", "args": {"phases": ["backend"]}},
+        {"action": "orchestrate.swarm", "args": {"workers": 3}},
+        {"action": "deploy.sprint", "args": {"workers": 3, "timeout": 120}},
+        {"action": "grid.poll_status", "until": "completed"},
+        {"action": "merge.run"},
+        {"action": "merge.poll_status", "until": "completed"}
+      ],
+      "assertions": [
+        "prepare.blueprint_mode == loom_synthesis",
+        "prepare.work_units >= 2",
+        "prepare.swarm_rationale contains indexing",
+        "blueprint.dark_bridge_count <= baseline.dark_bridge_count",
+        "sprint.status == completed",
+        "merge_pipeline.phase == completed"
+      ],
+      "implementation_status": "shipped — C19 full pipeline mirror passes"
+    },
+    {
+      "id": "flow.loom_terminal_requires_handoff",
+      "description": "Terminal must reject raw intent without upstream handoff",
+      "steps": [
+        {"action": "chat.submit_intent", "args": {"text": "Build something"}, "expect_failure": true}
+      ],
+      "assertions": [],
+      "implementation_status": "shipped — C17 terminal forge gate implemented"
+    }
+  ],
+  "confusion_signals": [
+    "orchestrate.prepare called without HANDED_OFF forge session",
+    "blueprint_mode=graph on paid Loom path when synthesis expected",
+    "teleology skipped with no skipped_reason receipt",
+    "dark_bridge_count higher than graph-only baseline after synthesis",
+    "terminal accepts raw intent bypassing vision canvas",
+    "free tier used as canonical Loom path in production"
+  ]
+}

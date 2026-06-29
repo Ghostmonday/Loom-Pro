@@ -1,0 +1,6 @@
+rule_set_version: 1.0.0
+action_registry: actions.registry.yaml
+knowledge_registry: knowledge.registry.yaml
+screens:
+- manifest: screen.manifest.yaml
+  html: index.html

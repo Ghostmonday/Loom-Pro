@@ -1,0 +1,148 @@
+{
+  "worker-001": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_protocol": {
+        "passed": false,
+        "tickets": [],
+        "violations": [
+          "_multi-agent/events.md (sibling write forbidden \u2014 emit HANDOFF ticket instead)"
+        ]
+      },
+      "invariants": {
+        "passed": false,
+        "violations": [
+          "modified protected path: .gaijinn/blueprint.json",
+          "modified protected path: .gaijinn/blueprint.md",
+          "modified protected path: .gaijinn/bridge/council.jsonl",
+          "modified protected path: .gaijinn/bridge/council.md",
+          "modified protected path: .gaijinn/custom_metrics.json",
+          "modified protected path: .gaijinn/graph.json",
+          "modified protected path: .gaijinn/merge/collected.json",
+          "modified protected path: .gaijinn/merge/handoff-queue.json"
+        ]
+      },
+      "path_allowlist": {
+        "passed": false,
+        "trespasses": [
+          ".gaijinn/blueprint.json",
+          ".gaijinn/blueprint.md",
+          ".gaijinn/bridge/council.jsonl",
+          ".gaijinn/bridge/council.md",
+          ".gaijinn/custom_metrics.json",
+          ".gaijinn/graph.json",
+          ".gaijinn/merge/collected.json",
+          ".gaijinn/merge/handoff-queue.json",
+          "_multi-agent/events.md"
+        ]
+      },
+      "scope_isolation": {
+        "passed": false,
+        "violations": [
+          ".gaijinn/blueprint.json",
+          ".gaijinn/blueprint.md",
+          ".gaijinn/bridge/council.jsonl",
+          ".gaijinn/bridge/council.md",
+          ".gaijinn/custom_metrics.json",
+          ".gaijinn/graph.json",
+          ".gaijinn/merge/collected.json",
+          ".gaijinn/merge/handoff-queue.json",
+          "_multi-agent/events.md (OWNED BY SIBLING WORKER: _multi-agent/events.md)"
+        ]
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "=== vault_linter ===\nVAULT LINTER: PASS",
+        "passed": true,
+        "ran": true
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-19T13:00:42Z",
+      "handoff_tickets_raised": 0,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [],
+      "transaction_bus_synchronized": true
+    },
+    "passed": false,
+    "validated_at": "2026-06-19T13:00:42Z"
+  },
+  "worker-002": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 0,
+        "tickets": []
+      },
+      "invariants": {
+        "passed": false,
+        "violations": [
+          "modified protected path: .gaijinn/blueprint.json",
+          "modified protected path: .gaijinn/blueprint.md",
+          "modified protected path: .gaijinn/bridge/council.jsonl",
+          "modified protected path: .gaijinn/bridge/council.md",
+          "modified protected path: .gaijinn/custom_metrics.json",
+          "modified protected path: .gaijinn/graph.json",
+          "modified protected path: .gaijinn/merge/collected.json",
+          "modified protected path: .gaijinn/merge/handoff-queue.json"
+        ]
+      },
+      "path_allowlist": {
+        "passed": false,
+        "trespasses": [
+          ".gaijinn/blueprint.json",
+          ".gaijinn/blueprint.md",
+          ".gaijinn/bridge/council.jsonl",
+          ".gaijinn/bridge/council.md",
+          ".gaijinn/custom_metrics.json",
+          ".gaijinn/graph.json",
+          ".gaijinn/merge/collected.json",
+          ".gaijinn/merge/handoff-queue.json"
+        ]
+      },
+      "scope_isolation": {
+        "passed": false,
+        "violations": [
+          ".gaijinn/blueprint.json",
+          ".gaijinn/blueprint.md",
+          ".gaijinn/bridge/council.jsonl",
+          ".gaijinn/bridge/council.md",
+          ".gaijinn/custom_metrics.json",
+          ".gaijinn/graph.json",
+          ".gaijinn/merge/collected.json",
+          ".gaijinn/merge/handoff-queue.json"
+        ]
+      },
+      "tests": {
+        "awaiting_units": [
+          "WU-015"
+        ],
+        "awaiting_workers": [
+          "worker-001"
+        ],
+        "deferred": true,
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false,
+        "reason": "awaiting_sibling_merge"
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-19T13:00:42Z",
+      "handoff_tickets_raised": 0,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [],
+      "transaction_bus_synchronized": true
+    },
+    "passed": false,
+    "validated_at": "2026-06-19T13:00:42Z"
+  }
+}

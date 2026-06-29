@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://loom.internal/schemas/action-registry.schema.json",
+  "title": "Loom Action Registry",
+  "type": "object",
+  "required": ["actions"],
+  "properties": {
+    "actions": {
+      "type": "object",
+      "minProperties": 1,
+      "patternProperties": {
+        "^[a-z0-9]+(\\.[a-z0-9_-]+)+$": {
+          "type": "object",
+          "required": ["description", "lifecycle_states"],
+          "properties": {
+            "description": {"type": "string", "minLength": 1},
+            "lifecycle_states": {
+              "type": "array",
+              "items": {"enum": ["accepted", "pending", "succeeded", "rejected", "failed", "cancelled", "timed_out"]},
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "backend_endpoint": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

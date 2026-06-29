@@ -1,0 +1,17 @@
+bindings:
+  sandbox.ratification.surface:
+    domain: design_intent
+    description: Defines the ratification surface's structural goals and anti-goals.
+  sandbox.ratification.consequence-warning:
+    domain: behavioral
+    description: Requires a visible consequence explanation before submission.
+  sandbox.ratification.performance-budget:
+    domain: operational
+    description: Establishes rendering and interaction latency budgets.
+  sandbox.ratification.promotion-gate:
+    domain: governance
+    description: Requires authorization before promotion to permanent fact baselines.
+  sandbox.ratification.deployment-rules:
+    domain: institutional
+    description: Preserves deployment and architecture conventions for ratification
+      surfaces.

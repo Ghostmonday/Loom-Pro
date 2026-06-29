@@ -1,0 +1,29 @@
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": -0.5,
+  "nodeSizeMultiplier": 1.42708333333333,
+  "lineSizeMultiplier": 1.01875,
+  "collapse-forces": false,
+  "centerStrength": 0.5,
+  "repelStrength": 8,
+  "linkStrength": 1,
+  "linkDistance": 200,
+  "scale": 0.4682213077274794,
+  "close": false,
+  "_gaijinn_provenance": {
+    "sprint": "worker-002",
+    "grid_spawn_id": "1196463",
+    "wu_id": "WU-008",
+    "last_updated": "2026-06-19T23:30:00Z",
+    "intent": "Graph view tuned for the gaijinn-memory-fs vault — showOrphans true so workers can audit linking coverage; colorGroups intentionally empty until promotion-pipeline assigns tag families."
+  }
+}

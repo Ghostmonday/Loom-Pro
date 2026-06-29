@@ -1,0 +1,2222 @@
+{
+  "edges": [
+    [
+      "aoc_supervisor/__init__.py",
+      "aoc_supervisor/aoc_supervisor/__init__.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/__init__.py",
+      "aoc_supervisor/aoc_supervisor/billing.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/__init__.py",
+      "aoc_supervisor/aoc_supervisor/enforcer.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/__init__.py",
+      "aoc_supervisor/aoc_supervisor/orchestrator.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/api.py",
+      "aoc_supervisor/__init__.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/billing.py",
+      "aoc_supervisor/aoc_supervisor/complexity.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+      "aoc_supervisor/__init__.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/orchestrator.py",
+      "aoc_supervisor/aoc_supervisor/billing.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/orchestrator.py",
+      "aoc_supervisor/aoc_supervisor/enforcer.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/prompt_coverage.py",
+      "aoc_supervisor/aoc_supervisor/intent_blueprint.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/ui_intent.py",
+      "aoc_supervisor/__init__.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/ui_intent.py",
+      "aoc_supervisor/aoc_supervisor/repo_paths.py"
+    ],
+    [
+      "aoc_supervisor/aoc_supervisor/vault_links.py",
+      "aoc_supervisor/__init__.py"
+    ]
+  ],
+  "interaction_graph": [
+    {
+      "agent_intent": "advance_phase_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/orchestrate/advance-phase",
+      "query_params": [],
+      "resource_cluster": "advance_phase",
+      "resulting_state": "advance_phase_post_completed",
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1399,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "analyze_get",
+      "capability_level": 1.25,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [
+          {
+            "args_referenced": [
+              "response",
+              "telemetry"
+            ],
+            "call": "response.update",
+            "line": 834
+          }
+        ],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/analyze",
+      "query_params": [],
+      "resource_cluster": "analyze",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "update"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 818,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "analyze_post",
+      "capability_level": 2.75,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "POST",
+      "http_path": "/api/v1/analyze",
+      "query_params": [],
+      "resource_cluster": "analyze",
+      "resulting_state": "analyze_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "_write_payload_to_scratch"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 793,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "blueprint_viz_engine.js_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/blueprint-viz-engine.js",
+      "query_params": [],
+      "resource_cluster": "blueprint_viz_engine.js",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 764,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "chat_post",
+      "capability_level": 2.75,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [
+          {
+            "args_referenced": [
+              "ROOT_DIR",
+              "asyncio",
+              "hermes_cmd",
+              "str"
+            ],
+            "call": "asyncio.create_subprocess_exec",
+            "line": 1617
+          },
+          {
+            "args_referenced": [
+              "ROOT_DIR",
+              "load_executor_profile"
+            ],
+            "call": "load_executor_profile",
+            "line": 1610
+          }
+        ],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard ? None",
+        "guard",
+        "proc.returncode != 0"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/hermes/chat",
+      "query_params": [],
+      "resource_cluster": "chat",
+      "resulting_state": "chat_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "create_subprocess_exec"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1582,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "command_engine.css_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/command-engine.css",
+      "query_params": [],
+      "resource_cluster": "command_engine.css",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 750,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "command_engine.js_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/command-engine.js",
+      "query_params": [],
+      "resource_cluster": "command_engine.js",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 757,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "command_engine_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/command-engine",
+      "query_params": [],
+      "resource_cluster": "command_engine",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 742,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "deliberate_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "kind == 'error'",
+        "active_phase"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/blueprint/deliberate",
+      "query_params": [],
+      "resource_cluster": "deliberate",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 976,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "deliverable_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/deliverable",
+      "query_params": [],
+      "resource_cluster": "grid",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1503,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "diff_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/diff",
+      "query_params": [],
+      "resource_cluster": "grid",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1539,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "health_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/health",
+      "query_params": [],
+      "resource_cluster": "health",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "configuration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1191,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "internal.css_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/internal.css",
+      "query_params": [],
+      "resource_cluster": "internal.css",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 779,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "internal.js_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/internal.js",
+      "query_params": [],
+      "resource_cluster": "internal.js",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 786,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "internal_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/internal",
+      "query_params": [],
+      "resource_cluster": "internal",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 771,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "ledger_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/council/ledger",
+      "query_params": [],
+      "resource_cluster": "ledger",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "payments"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1310,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "logs_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/logs",
+      "query_params": [],
+      "resource_cluster": "logs",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 2061,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "merge_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/grid/merge",
+      "query_params": [],
+      "resource_cluster": "grid",
+      "resulting_state": "merge_merged",
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1418,
+      "valid_prior_state": "merge_pending"
+    },
+    {
+      "agent_intent": "parse_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/moat/parse",
+      "query_params": [],
+      "resource_cluster": "parse",
+      "resulting_state": "parse_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 845,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "preflight_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/preflight",
+      "query_params": [],
+      "resource_cluster": "preflight",
+      "resulting_state": "preflight_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1438,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "prepare_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/orchestrate/prepare",
+      "query_params": [],
+      "resource_cluster": "orchestrate",
+      "resulting_state": "prepare_prepared",
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1331,
+      "valid_prior_state": "prepare_pending"
+    },
+    {
+      "agent_intent": "purchase_post",
+      "capability_level": 2.75,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": [
+          "user_id"
+        ]
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/blueprint/purchase",
+      "query_params": [],
+      "resource_cluster": "purchase",
+      "resulting_state": "purchase_purchased",
+      "semantic": {
+        "domains": [
+          "payments"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "deduct_deployment_fee"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1257,
+      "valid_prior_state": "purchase_pending"
+    },
+    {
+      "agent_intent": "quote_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/quote",
+      "query_params": [],
+      "resource_cluster": "quote",
+      "resulting_state": "quote_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1236,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "report_get",
+      "capability_level": 1.25,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "report ? None"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/merge/report",
+      "query_params": [],
+      "resource_cluster": "report",
+      "resulting_state": "report_merged",
+      "semantic": {
+        "domains": [
+          "configuration",
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "merge_pipeline_status"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1518,
+      "valid_prior_state": "report_pending"
+    },
+    {
+      "agent_intent": "say_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/council/say",
+      "query_params": [],
+      "resource_cluster": "say",
+      "resulting_state": "say_post_completed",
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1553,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "session_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/orchestrate/session/{session_id}",
+      "query_params": [
+        "session_id"
+      ],
+      "resource_cluster": "session",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1390,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "show_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/council/show",
+      "query_params": [],
+      "resource_cluster": "show",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1300,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "spawn_post",
+      "capability_level": 3.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [
+          {
+            "description": "Data-flow puncture: load_executor_profile at line 1666 missing taint from ['user_id'].",
+            "line": 1666,
+            "missing_sources": [
+              "user_id"
+            ],
+            "sink": "load_executor_profile"
+          },
+          {
+            "description": "Data-flow puncture: asyncio.create_task at line 1869 missing taint from ['user_id'].",
+            "line": 1869,
+            "missing_sources": [
+              "user_id"
+            ],
+            "sink": "asyncio.create_task"
+          },
+          {
+            "description": "Data-flow puncture: resolve_grid_executor at line 1748 missing taint from ['user_id'].",
+            "line": 1748,
+            "missing_sources": [
+              "user_id"
+            ],
+            "sink": "resolve_grid_executor"
+          }
+        ],
+        "has_dataflow_puncture": true,
+        "mutation_sinks": [
+          {
+            "args_referenced": [
+              "ROOT_DIR",
+              "load_executor_profile"
+            ],
+            "call": "load_executor_profile",
+            "line": 1666
+          },
+          {
+            "args_referenced": [
+              "_monitor_sprint",
+              "asyncio",
+              "manifest_path",
+              "sprint_id",
+              "timeout"
+            ],
+            "call": "asyncio.create_task",
+            "line": 1869
+          },
+          {
+            "args_referenced": [
+              "executor",
+              "resolve_grid_executor"
+            ],
+            "call": "resolve_grid_executor",
+            "line": 1748
+          }
+        ],
+        "taint_sources": [
+          "user_id"
+        ]
+      },
+      "guard_conditions": [
+        "guard",
+        "guard",
+        "guard",
+        "guard ? workers"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/grid/spawn",
+      "query_params": [],
+      "resource_cluster": "grid",
+      "resulting_state": "spawn_spawned",
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "mutating",
+        "scope": "puncture_risk",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 1.0,
+      "side_effects": [
+        "_spawn_worker_command",
+        "create_task",
+        "deduct_deployment_fee",
+        "write"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1653,
+      "valid_prior_state": "spawn_pending"
+    },
+    {
+      "agent_intent": "status_get",
+      "capability_level": 1.25,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/merge/status",
+      "query_params": [],
+      "resource_cluster": "merge",
+      "resulting_state": "status_merged",
+      "semantic": {
+        "domains": [
+          "configuration",
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.25,
+      "side_effects": [
+        "merge_pipeline_status"
+      ],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1482,
+      "valid_prior_state": "status_pending"
+    },
+    {
+      "agent_intent": "stream_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/api/v1/grid/stream/{cell:path}",
+      "query_params": [
+        "cell:path"
+      ],
+      "resource_cluster": "stream",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1883,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "swarm_post",
+      "capability_level": 2.5,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard",
+        "guard"
+      ],
+      "http_method": "POST",
+      "http_path": "/api/v1/orchestrate/swarm",
+      "query_params": [],
+      "resource_cluster": "orchestrate",
+      "resulting_state": "swarm_post_completed",
+      "semantic": {
+        "domains": [
+          "orchestration"
+        ],
+        "impact": "mutating",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 1368,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "telemetry_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [],
+      "http_method": "GET",
+      "http_path": "/api/v1/project/telemetry",
+      "query_params": [],
+      "resource_cluster": "telemetry",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "configuration"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 864,
+      "valid_prior_state": null
+    },
+    {
+      "agent_intent": "terminal_ui_get",
+      "capability_level": 1.0,
+      "cli_command": null,
+      "context_params": [],
+      "dataflow": {
+        "dataflow_punctures": [],
+        "has_dataflow_puncture": false,
+        "mutation_sinks": [],
+        "taint_sources": []
+      },
+      "guard_conditions": [
+        "guard"
+      ],
+      "http_method": "GET",
+      "http_path": "/",
+      "query_params": [],
+      "resource_cluster": "terminal_ui_get",
+      "resulting_state": null,
+      "semantic": {
+        "domains": [
+          "general"
+        ],
+        "impact": "read_only",
+        "scope": "public",
+        "synthesis": "deterministic_moat"
+      },
+      "side_effect_score": 0.0,
+      "side_effects": [],
+      "source_file": "aoc_supervisor/aoc_supervisor/api.py",
+      "source_line": 729,
+      "valid_prior_state": null
+    }
+  ],
+  "layer1_reactive": {
+    "file_nodes": 96,
+    "intent_nodes": 33
+  },
+  "nodes": [
+    {
+      "capability_level": 3.75,
+      "extension": ".example",
+      "id": ".agents/codex-deepseek.toml.example",
+      "language": "unknown",
+      "line_count": 21,
+      "path": ".agents/codex-deepseek.toml.example",
+      "side_effect_score": 0.0,
+      "size_bytes": 942
+    },
+    {
+      "capability_level": 5.5,
+      "extension": ".example",
+      "id": ".agents/hermes-deepseek.env.example",
+      "language": "unknown",
+      "line_count": 184,
+      "path": ".agents/hermes-deepseek.env.example",
+      "side_effect_score": 0.0,
+      "size_bytes": 9138
+    },
+    {
+      "capability_level": 5.25,
+      "extension": ".yaml",
+      "id": ".agents/vault.yaml",
+      "language": "yaml",
+      "line_count": 376,
+      "path": ".agents/vault.yaml",
+      "side_effect_score": 1.75,
+      "size_bytes": 14600
+    },
+    {
+      "capability_level": 4.75,
+      "extension": "",
+      "id": ".cursorrules",
+      "language": "unknown",
+      "line_count": 136,
+      "path": ".cursorrules",
+      "side_effect_score": 0.0,
+      "size_bytes": 6250
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".json",
+      "id": ".obsidian/app.json",
+      "language": "json",
+      "line_count": 20,
+      "path": ".obsidian/app.json",
+      "side_effect_score": 0.5,
+      "size_bytes": 615
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".json",
+      "id": ".obsidian/appearance.json",
+      "language": "json",
+      "line_count": 16,
+      "path": ".obsidian/appearance.json",
+      "side_effect_score": 0.5,
+      "size_bytes": 433
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".json",
+      "id": ".obsidian/core-plugins.json",
+      "language": "json",
+      "line_count": 40,
+      "path": ".obsidian/core-plugins.json",
+      "side_effect_score": 0.5,
+      "size_bytes": 1028
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".json",
+      "id": ".obsidian/graph.json",
+      "language": "json",
+      "line_count": 29,
+      "path": ".obsidian/graph.json",
+      "side_effect_score": 0.5,
+      "size_bytes": 885
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".json",
+      "id": ".obsidian/workspace.json",
+      "language": "json",
+      "line_count": 198,
+      "path": ".obsidian/workspace.json",
+      "side_effect_score": 0.75,
+      "size_bytes": 5187
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "000_Brain_MOC.md",
+      "language": "markdown",
+      "line_count": 48,
+      "path": "000_Brain_MOC.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1338
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+      "language": "markdown",
+      "line_count": 26,
+      "path": "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 810
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "010_Protocols_MOC.md",
+      "language": "markdown",
+      "line_count": 22,
+      "path": "010_Protocols_MOC.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 712
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "020_Active_State_MOC.md",
+      "language": "markdown",
+      "line_count": 25,
+      "path": "020_Active_State_MOC.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 798
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "030_Cold_Memories_MOC.md",
+      "language": "markdown",
+      "line_count": 28,
+      "path": "030_Cold_Memories_MOC.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 790
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+      "language": "markdown",
+      "line_count": 203,
+      "path": "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 8073
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "10_Operations/HERMES-MEMORY.md",
+      "language": "markdown",
+      "line_count": 91,
+      "path": "10_Operations/HERMES-MEMORY.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3790
+    },
+    {
+      "capability_level": 3.5,
+      "extension": ".md",
+      "id": "10_Operations/HERMES-SPRINT-DIRECTIVE.md",
+      "language": "markdown",
+      "line_count": 48,
+      "path": "10_Operations/HERMES-SPRINT-DIRECTIVE.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1702
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "10_Operations/VAULT-GEMINI-SHARE.md",
+      "language": "markdown",
+      "line_count": 96,
+      "path": "10_Operations/VAULT-GEMINI-SHARE.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3411
+    },
+    {
+      "capability_level": 2.25,
+      "extension": ".sh",
+      "id": "10_Operations/agents/promoter/promote.sh",
+      "language": "shell",
+      "line_count": 314,
+      "path": "10_Operations/agents/promoter/promote.sh",
+      "side_effect_score": 2.5,
+      "size_bytes": 12320
+    },
+    {
+      "capability_level": 5.75,
+      "extension": ".py",
+      "id": "10_Operations/agents/promoter/validate_promotion.py",
+      "language": "python",
+      "line_count": 1106,
+      "path": "10_Operations/agents/promoter/validate_promotion.py",
+      "side_effect_score": 1.5,
+      "size_bytes": 40729
+    },
+    {
+      "capability_level": 4.25,
+      "extension": ".py",
+      "id": "10_Operations/knowledge-linter.py",
+      "language": "python",
+      "line_count": 1141,
+      "path": "10_Operations/knowledge-linter.py",
+      "side_effect_score": 1.0,
+      "size_bytes": 45778
+    },
+    {
+      "capability_level": 4.0,
+      "extension": ".md",
+      "id": "10_Operations/tasks/OBSIDIAN-RUN-16.md",
+      "language": "markdown",
+      "line_count": 62,
+      "path": "10_Operations/tasks/OBSIDIAN-RUN-16.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 2241
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md",
+      "language": "markdown",
+      "line_count": 81,
+      "path": "10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 3469
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "10_Operations/tasks/topology-merges.md",
+      "language": "markdown",
+      "line_count": 20,
+      "path": "10_Operations/tasks/topology-merges.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 723
+    },
+    {
+      "capability_level": 3.0,
+      "extension": ".md",
+      "id": "10_Operations/tasks/topology-splits.md",
+      "language": "markdown",
+      "line_count": 19,
+      "path": "10_Operations/tasks/topology-splits.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 640
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "20_Projects/deepseek-codex-setup.md",
+      "language": "markdown",
+      "line_count": 119,
+      "path": "20_Projects/deepseek-codex-setup.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3455
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "20_Projects/deepseek-hermes-setup.md",
+      "language": "markdown",
+      "line_count": 259,
+      "path": "20_Projects/deepseek-hermes-setup.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 11959
+    },
+    {
+      "capability_level": 4.0,
+      "extension": ".md",
+      "id": "30_Decisions/ADR-002-dual-invariant-domains.md",
+      "language": "markdown",
+      "line_count": 288,
+      "path": "30_Decisions/ADR-002-dual-invariant-domains.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 13882
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".md",
+      "id": "40_Concepts/convergence-governance.md",
+      "language": "markdown",
+      "line_count": 56,
+      "path": "40_Concepts/convergence-governance.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2450
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-convergence-semantics.md",
+      "language": "markdown",
+      "line_count": 43,
+      "path": "40_Concepts/council-memory-convergence-semantics.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1493
+    },
+    {
+      "capability_level": 4.25,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-cron-topology.md",
+      "language": "markdown",
+      "line_count": 74,
+      "path": "40_Concepts/council-memory-cron-topology.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2679
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-development-program.md",
+      "language": "markdown",
+      "line_count": 51,
+      "path": "40_Concepts/council-memory-development-program.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 1697
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-empty-spawn-crisis.md",
+      "language": "markdown",
+      "line_count": 52,
+      "path": "40_Concepts/council-memory-empty-spawn-crisis.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1900
+    },
+    {
+      "capability_level": 4.25,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-executor-stack.md",
+      "language": "markdown",
+      "line_count": 43,
+      "path": "40_Concepts/council-memory-executor-stack.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1459
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-handoff-bus.md",
+      "language": "markdown",
+      "line_count": 57,
+      "path": "40_Concepts/council-memory-handoff-bus.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2052
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-hermes-mandate.md",
+      "language": "markdown",
+      "line_count": 50,
+      "path": "40_Concepts/council-memory-hermes-mandate.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1796
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-index.md",
+      "language": "markdown",
+      "line_count": 83,
+      "path": "40_Concepts/council-memory-index.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3571
+    },
+    {
+      "capability_level": 2.5,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-infrastructure-incidents.md",
+      "language": "markdown",
+      "line_count": 52,
+      "path": "40_Concepts/council-memory-infrastructure-incidents.md",
+      "side_effect_score": 0.5,
+      "size_bytes": 1756
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-merge-compounding.md",
+      "language": "markdown",
+      "line_count": 46,
+      "path": "40_Concepts/council-memory-merge-compounding.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1549
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-monorepo-state.md",
+      "language": "markdown",
+      "line_count": 65,
+      "path": "40_Concepts/council-memory-monorepo-state.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2315
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-operational-hazards.md",
+      "language": "markdown",
+      "line_count": 64,
+      "path": "40_Concepts/council-memory-operational-hazards.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2939
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-product-vision.md",
+      "language": "markdown",
+      "line_count": 42,
+      "path": "40_Concepts/council-memory-product-vision.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1466
+    },
+    {
+      "capability_level": 3.25,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-protocol.md",
+      "language": "markdown",
+      "line_count": 41,
+      "path": "40_Concepts/council-memory-protocol.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 1655
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-sprint-14w-arc.md",
+      "language": "markdown",
+      "line_count": 76,
+      "path": "40_Concepts/council-memory-sprint-14w-arc.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2864
+    },
+    {
+      "capability_level": 4.5,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-ux-process-stage.md",
+      "language": "markdown",
+      "line_count": 74,
+      "path": "40_Concepts/council-memory-ux-process-stage.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 2862
+    },
+    {
+      "capability_level": 4.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-vault-artifacts-shipped.md",
+      "language": "markdown",
+      "line_count": 100,
+      "path": "40_Concepts/council-memory-vault-artifacts-shipped.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3638
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/council-memory-vault-dogfood-arc.md",
+      "language": "markdown",
+      "line_count": 49,
+      "path": "40_Concepts/council-memory-vault-dogfood-arc.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1726
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "40_Concepts/dual-ledger-bridge.md",
+      "language": "markdown",
+      "line_count": 40,
+      "path": "40_Concepts/dual-ledger-bridge.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1359
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "40_Concepts/event-sourcing-vault.md",
+      "language": "markdown",
+      "line_count": 41,
+      "path": "40_Concepts/event-sourcing-vault.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1568
+    },
+    {
+      "capability_level": 3.25,
+      "extension": ".md",
+      "id": "40_Concepts/hermes-cron-orchestration.md",
+      "language": "markdown",
+      "line_count": 36,
+      "path": "40_Concepts/hermes-cron-orchestration.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1276
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "40_Concepts/hermes-memory-vault.md",
+      "language": "markdown",
+      "line_count": 75,
+      "path": "40_Concepts/hermes-memory-vault.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3175
+    },
+    {
+      "capability_level": 3.25,
+      "extension": ".md",
+      "id": "40_Concepts/ingress-vault-civilization.md",
+      "language": "markdown",
+      "line_count": 55,
+      "path": "40_Concepts/ingress-vault-civilization.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 2400
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "40_Concepts/knowledge-linter-architecture.md",
+      "language": "markdown",
+      "line_count": 36,
+      "path": "40_Concepts/knowledge-linter-architecture.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1231
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/linter-core-governance.md",
+      "language": "markdown",
+      "line_count": 42,
+      "path": "40_Concepts/linter-core-governance.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1392
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/linter-markdown-schema.md",
+      "language": "markdown",
+      "line_count": 44,
+      "path": "40_Concepts/linter-markdown-schema.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1313
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "40_Concepts/linter-supervisor-api.md",
+      "language": "markdown",
+      "line_count": 40,
+      "path": "40_Concepts/linter-supervisor-api.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 1299
+    },
+    {
+      "capability_level": 5.75,
+      "extension": ".md",
+      "id": "40_Concepts/memory-execution-loop.md",
+      "language": "markdown",
+      "line_count": 85,
+      "path": "40_Concepts/memory-execution-loop.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 3643
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "40_Concepts/metrics-convergence.md",
+      "language": "markdown",
+      "line_count": 48,
+      "path": "40_Concepts/metrics-convergence.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1556
+    },
+    {
+      "capability_level": 4.0,
+      "extension": ".md",
+      "id": "40_Concepts/metrics-dashboard.md",
+      "language": "markdown",
+      "line_count": 41,
+      "path": "40_Concepts/metrics-dashboard.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 1356
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "40_Concepts/metrics-gravity.md",
+      "language": "markdown",
+      "line_count": 49,
+      "path": "40_Concepts/metrics-gravity.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1455
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "40_Concepts/metrics-linter.md",
+      "language": "markdown",
+      "line_count": 50,
+      "path": "40_Concepts/metrics-linter.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 1436
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".md",
+      "id": "40_Concepts/obsidian-city-neighborhoods.md",
+      "language": "markdown",
+      "line_count": 42,
+      "path": "40_Concepts/obsidian-city-neighborhoods.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1610
+    },
+    {
+      "capability_level": 5.25,
+      "extension": ".md",
+      "id": "40_Concepts/obsidian-vault-mapping.md",
+      "language": "markdown",
+      "line_count": 124,
+      "path": "40_Concepts/obsidian-vault-mapping.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 5029
+    },
+    {
+      "capability_level": 1.0,
+      "extension": ".md",
+      "id": "40_Concepts/promotion-pipeline.md",
+      "language": "markdown",
+      "line_count": 41,
+      "path": "40_Concepts/promotion-pipeline.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1937
+    },
+    {
+      "capability_level": 2.25,
+      "extension": ".md",
+      "id": "40_Concepts/test-promotion-concept.md",
+      "language": "markdown",
+      "line_count": 53,
+      "path": "40_Concepts/test-promotion-concept.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 1900
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "40_Concepts/vault-affairs.md",
+      "language": "markdown",
+      "line_count": 96,
+      "path": "40_Concepts/vault-affairs.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 5476
+    },
+    {
+      "capability_level": 3.75,
+      "extension": ".md",
+      "id": "40_Concepts/vault-filesystem.md",
+      "language": "markdown",
+      "line_count": 114,
+      "path": "40_Concepts/vault-filesystem.md",
+      "side_effect_score": 1.0,
+      "size_bytes": 5719
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "40_Concepts/vault-gaijinn.md",
+      "language": "markdown",
+      "line_count": 138,
+      "path": "40_Concepts/vault-gaijinn.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 7927
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "40_Concepts/vault-topology-and-density.md",
+      "language": "markdown",
+      "line_count": 65,
+      "path": "40_Concepts/vault-topology-and-density.md",
+      "side_effect_score": 0.5,
+      "size_bytes": 2488
+    },
+    {
+      "capability_level": 4.25,
+      "extension": ".md",
+      "id": "AGENTS.md",
+      "language": "markdown",
+      "line_count": 107,
+      "path": "AGENTS.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 5815
+    },
+    {
+      "capability_level": 3.25,
+      "extension": ".md",
+      "id": "CLAUDE.md",
+      "language": "markdown",
+      "line_count": 101,
+      "path": "CLAUDE.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 3451
+    },
+    {
+      "capability_level": 2.75,
+      "extension": ".md",
+      "id": "Current_Context.md",
+      "language": "markdown",
+      "line_count": 70,
+      "path": "Current_Context.md",
+      "side_effect_score": 0.75,
+      "size_bytes": 3441
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "README.md",
+      "language": "markdown",
+      "line_count": 105,
+      "path": "README.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 5103
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "_multi-agent/events.md",
+      "language": "markdown",
+      "line_count": 95,
+      "path": "_multi-agent/events.md",
+      "side_effect_score": 1.5,
+      "size_bytes": 20210
+    },
+    {
+      "capability_level": 3.0,
+      "extension": ".md",
+      "id": "aoc_supervisor/README.md",
+      "language": "markdown",
+      "line_count": 15,
+      "path": "aoc_supervisor/README.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 506
+    },
+    {
+      "capability_level": 4.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/__init__.py",
+      "language": "python",
+      "line_count": 9,
+      "path": "aoc_supervisor/__init__.py",
+      "side_effect_score": 0.0,
+      "size_bytes": 258
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/__init__.py",
+      "language": "python",
+      "line_count": 14,
+      "path": "aoc_supervisor/aoc_supervisor/__init__.py",
+      "side_effect_score": 1.0,
+      "size_bytes": 485
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/api.py",
+      "language": "python",
+      "line_count": 2080,
+      "path": "aoc_supervisor/aoc_supervisor/api.py",
+      "side_effect_score": 3.0,
+      "size_bytes": 78640
+    },
+    {
+      "capability_level": 5.75,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/billing.py",
+      "language": "python",
+      "line_count": 483,
+      "path": "aoc_supervisor/aoc_supervisor/billing.py",
+      "side_effect_score": 3.0,
+      "size_bytes": 17671
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/complexity.py",
+      "language": "python",
+      "line_count": 201,
+      "path": "aoc_supervisor/aoc_supervisor/complexity.py",
+      "side_effect_score": 0.75,
+      "size_bytes": 7392
+    },
+    {
+      "capability_level": 5.5,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/enforcer.py",
+      "language": "python",
+      "line_count": 118,
+      "path": "aoc_supervisor/aoc_supervisor/enforcer.py",
+      "side_effect_score": 0.0,
+      "size_bytes": 4623
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+      "language": "python",
+      "line_count": 375,
+      "path": "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+      "side_effect_score": 3.0,
+      "size_bytes": 12939
+    },
+    {
+      "capability_level": 4.75,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/knowledge_linter.py",
+      "language": "python",
+      "line_count": 400,
+      "path": "aoc_supervisor/aoc_supervisor/knowledge_linter.py",
+      "side_effect_score": 1.5,
+      "size_bytes": 15728
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+      "language": "python",
+      "line_count": 739,
+      "path": "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+      "side_effect_score": 3.0,
+      "size_bytes": 30574
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+      "language": "python",
+      "line_count": 232,
+      "path": "aoc_supervisor/aoc_supervisor/orchestrator.py",
+      "side_effect_score": 3.0,
+      "size_bytes": 8634
+    },
+    {
+      "capability_level": 3.25,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/preflight.py",
+      "language": "python",
+      "line_count": 216,
+      "path": "aoc_supervisor/aoc_supervisor/preflight.py",
+      "side_effect_score": 1.25,
+      "size_bytes": 8104
+    },
+    {
+      "capability_level": 2.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/prompt_coverage.py",
+      "language": "python",
+      "line_count": 67,
+      "path": "aoc_supervisor/aoc_supervisor/prompt_coverage.py",
+      "side_effect_score": 0.0,
+      "size_bytes": 2734
+    },
+    {
+      "capability_level": 4.5,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+      "language": "python",
+      "line_count": 28,
+      "path": "aoc_supervisor/aoc_supervisor/repo_paths.py",
+      "side_effect_score": 0.0,
+      "size_bytes": 1109
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/ui_intent.py",
+      "language": "python",
+      "line_count": 430,
+      "path": "aoc_supervisor/aoc_supervisor/ui_intent.py",
+      "side_effect_score": 1.25,
+      "size_bytes": 18082
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/vault_deploy.py",
+      "language": "python",
+      "line_count": 275,
+      "path": "aoc_supervisor/aoc_supervisor/vault_deploy.py",
+      "side_effect_score": 2.0,
+      "size_bytes": 9753
+    },
+    {
+      "capability_level": 5.25,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/vault_links.py",
+      "language": "python",
+      "line_count": 254,
+      "path": "aoc_supervisor/aoc_supervisor/vault_links.py",
+      "side_effect_score": 0.75,
+      "size_bytes": 10845
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".py",
+      "id": "aoc_supervisor/aoc_supervisor/workflow_evaluator.py",
+      "language": "python",
+      "line_count": 294,
+      "path": "aoc_supervisor/aoc_supervisor/workflow_evaluator.py",
+      "side_effect_score": 0.75,
+      "size_bytes": 12073
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".json",
+      "id": "project.executor-profile.json",
+      "language": "json",
+      "line_count": 230,
+      "path": "project.executor-profile.json",
+      "side_effect_score": 0.5,
+      "size_bytes": 8044
+    },
+    {
+      "capability_level": 1.75,
+      "extension": ".md",
+      "id": "raw/constitution-v0-section-xiii.md",
+      "language": "markdown",
+      "line_count": 58,
+      "path": "raw/constitution-v0-section-xiii.md",
+      "side_effect_score": 0.0,
+      "size_bytes": 3646
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".md",
+      "id": "ui/WU-004-deploy-path-validation.md",
+      "language": "markdown",
+      "line_count": 239,
+      "path": "ui/WU-004-deploy-path-validation.md",
+      "side_effect_score": 1.75,
+      "size_bytes": 13960
+    },
+    {
+      "capability_level": 6.0,
+      "extension": ".json",
+      "id": "ui/vault-ui-intent-map.json",
+      "language": "json",
+      "line_count": 589,
+      "path": "ui/vault-ui-intent-map.json",
+      "side_effect_score": 1.5,
+      "size_bytes": 28179
+    }
+  ],
+  "root": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs",
+  "schema_version": 1
+}

@@ -1,0 +1,31 @@
+scenario: loom.terminal.smoke-1
+screen: loom.terminal
+steps:
+- kind: assert_initial_state
+  target: terminal-feedback
+  expected:
+    present: true
+- kind: perform_interaction
+  target: terminal-assign-swarm-btn
+- kind: assert_intermediate_feedback
+  target: terminal-feedback
+  expected:
+    state: pending
+- kind: assert_terminal_state
+  target: terminal-feedback
+  expected:
+    any_of:
+    - succeeded
+    - failed
+- kind: assert_contract_projection
+  target: loom.terminal.feedback
+  expected:
+    observable: true
+- kind: assert_accessibility_state
+  target: terminal-assign-swarm-btn
+  expected:
+    accessible_name: true
+- kind: assert_no_prohibited_side_effect
+  target: terminal-assign-swarm-btn
+  expected:
+    inline_handlers: false

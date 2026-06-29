@@ -1,0 +1,525 @@
+<!-- Loom Blueprint Workbench - Packet Export -->
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Loom Blueprint Workbench - Packet Export</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@main/packages/next/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@main/packages/next/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #131315;
+            color: #e4e2e4;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .ghost-border {
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "on-secondary-fixed-variant": "#00531a",
+                "surface-container-highest": "#353437",
+                "tertiary": "#ffb868",
+                "on-tertiary-fixed-variant": "#673d00",
+                "error": "#ffb4ab",
+                "tertiary-fixed-dim": "#ffb868",
+                "tertiary-fixed": "#ffddbb",
+                "outline-variant": "#414754",
+                "on-secondary-container": "#004615",
+                "background": "#131315",
+                "secondary": "#47e266",
+                "on-tertiary": "#482900",
+                "tertiary-container": "#ce7f00",
+                "surface-variant": "#353437",
+                "surface": "#131315",
+                "on-error-container": "#ffdad6",
+                "inverse-primary": "#005db8",
+                "on-surface-variant": "#c0c6d6",
+                "on-secondary-fixed": "#002106",
+                "surface-container": "#1f1f21",
+                "on-primary": "#003064",
+                "on-primary-fixed": "#001b3e",
+                "on-primary-fixed-variant": "#00468d",
+                "inverse-surface": "#e4e2e4",
+                "primary-fixed": "#d6e3ff",
+                "surface-bright": "#39393b",
+                "surface-container-lowest": "#0e0e10",
+                "surface-container-low": "#1b1b1d",
+                "on-tertiary-container": "#3f2300",
+                "secondary-fixed-dim": "#47e266",
+                "error-container": "#93000a",
+                "outline": "#8b91a0",
+                "surface-container-high": "#2a2a2c",
+                "on-surface": "#e4e2e4",
+                "surface-tint": "#aac7ff",
+                "primary-container": "#3e90ff",
+                "inverse-on-surface": "#303032",
+                "on-primary-container": "#002957",
+                "secondary-fixed": "#6cff82",
+                "primary": "#aac7ff",
+                "on-background": "#e4e2e4",
+                "primary-fixed-dim": "#aac7ff",
+                "on-tertiary-fixed": "#2b1700",
+                "on-error": "#690005",
+                "surface-dim": "#131315",
+                "secondary-container": "#09bf49",
+                "on-secondary": "#003910"
+              },
+              "borderRadius": {
+                "DEFAULT": "12px",
+                "lg": "12px",
+                "xl": "16px",
+                "full": "9999px"
+              },
+              "spacing": {
+                "stack-sm": "4px",
+                "unit": "8px",
+                "panel-padding": "12px",
+                "stack-md": "8px",
+                "container-margin": "24px",
+                "stack-lg": "16px",
+                "gutter": "16px"
+              },
+              "fontFamily": {
+                "label-caps": ["Geist"],
+                "headline-lg": ["Geist"],
+                "body-sm": ["Geist"],
+                "display-lg": ["Geist"],
+                "body-lg": ["Geist"],
+                "title-md": ["Geist"],
+                "mono-precision": ["jetbrainsMono"],
+                "headline-lg-mobile": ["Geist"]
+              },
+              "fontSize": {
+                "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                "title-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "mono-precision": ["13px", {"lineHeight": "1", "letterSpacing": "0em", "fontWeight": "500"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="flex flex-col h-screen select-none">
+<!-- Top Navigation Bar -->
+<header class="bg-surface/80 backdrop-blur-xl text-primary font-body-lg text-body-lg docked full-width top-0 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-container-margin w-full h-16 z-50">
+<div class="flex items-center space-x-gutter">
+<span class="font-display-lg text-display-lg font-bold text-primary">Loom Blueprint Workbench</span>
+<nav class="flex space-x-6 items-center">
+<span class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer">Ingest</span>
+<span class="text-on-surface-variant opacity-30">/</span>
+<span class="text-on-surface-variant font-medium hover:text-primary transition-colors cursor-pointer">Drafts</span>
+<span class="text-on-surface-variant opacity-30">/</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1 cursor-default">Packet Export</span>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">search</span>
+</span>
+<input class="bg-surface-container-highest border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary w-64 text-on-surface" placeholder="Search workbench..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-2 active:scale-95">settings</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors p-2 active:scale-95">help</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Side Navigation (Left Rail) -->
+<aside class="bg-surface-container-low/80 backdrop-blur-xl text-secondary font-label-caps text-label-caps docked left-0 h-full w-[64px] bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 flat no shadows flex flex-col items-center py-stack-lg space-y-stack-md z-40">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-xl active:scale-90 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">near_me</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-xl active:scale-90 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">straighten</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl shadow-[0_0_15px_rgba(71,226,102,0.3)] active:scale-90 transition-all">
+<span class="material-symbols-outlined">architecture</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-xl active:scale-90 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">layers</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-xl active:scale-90 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<div class="flex-grow"></div>
+<div class="w-8 h-[1px] bg-outline-variant/30"></div>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high rounded-xl active:scale-90 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden relative">
+<!-- Split Pane View -->
+<div class="flex flex-1 overflow-hidden p-6 gap-6">
+<!-- Left Side: Allowed File Tree -->
+<div class="flex-1 glass-panel bg-primary/5 rounded-xl ghost-border flex flex-col overflow-hidden">
+<div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+<h2 class="font-title-md text-title-md text-on-surface">Allowed Buffer</h2>
+</div>
+<span class="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Write Access</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-2">
+<!-- Folder Example -->
+<div class="space-y-1">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80 group">
+<span class="material-symbols-outlined text-sm text-primary/60 group-hover:text-primary">expand_more</span>
+<span class="material-symbols-outlined text-sm text-primary">folder</span>
+<span class="text-body-sm font-body-sm">src</span>
+</div>
+<div class="pl-8 space-y-1 border-l border-primary/10 ml-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80 group">
+<span class="material-symbols-outlined text-sm text-primary/60 group-hover:text-primary">expand_more</span>
+<span class="material-symbols-outlined text-sm text-primary">folder</span>
+<span class="text-body-sm font-body-sm">components</span>
+</div>
+<div class="pl-8 space-y-1 border-l border-primary/10 ml-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-sm">javascript</span>
+<span class="text-body-sm font-body-sm">PacketExportController.js</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80">
+<span class="material-symbols-outlined text-sm text-primary/60">javascript</span>
+<span class="text-body-sm font-body-sm">BlueprintProtocol.js</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80">
+<span class="material-symbols-outlined text-sm text-primary/60">css</span>
+<span class="text-body-sm font-body-sm">MainLayout.css</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80 group">
+<span class="material-symbols-outlined text-sm text-primary/60 group-hover:text-primary">chevron_right</span>
+<span class="material-symbols-outlined text-sm text-primary">folder</span>
+<span class="text-body-sm font-body-sm">assets</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-on-surface/80">
+<span class="material-symbols-outlined text-sm text-primary/60">description</span>
+<span class="text-body-sm font-body-sm">README.md</span>
+</div>
+</div>
+</div>
+<!-- Right Side: Protected Files -->
+<div class="flex-1 glass-panel bg-surface-container-highest/30 rounded-xl ghost-border flex flex-col overflow-hidden">
+<div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant/50">lock</span>
+<h2 class="font-title-md text-title-md text-on-surface-variant">Protected Framework Core</h2>
+</div>
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Read-Only</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-2 opacity-60 grayscale-[0.5]">
+<div class="space-y-1">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-default text-on-surface-variant/80">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+<span class="material-symbols-outlined text-sm">folder</span>
+<span class="text-body-sm font-body-sm">kernel</span>
+</div>
+<div class="pl-8 space-y-1 border-l border-white/5 ml-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-on-surface-variant/80">
+<span class="material-symbols-outlined text-sm">security</span>
+<span class="text-body-sm font-body-sm">AuthManager.bin</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-on-surface-variant/80">
+<span class="material-symbols-outlined text-sm">memory</span>
+<span class="text-body-sm font-body-sm">SystemAllocation.sys</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-on-surface-variant/80">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="material-symbols-outlined text-sm">folder</span>
+<span class="text-body-sm font-body-sm">drivers</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-on-surface-variant/80">
+<span class="material-symbols-outlined text-sm">key</span>
+<span class="text-body-sm font-body-sm">license.key</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Bar / Primary Action -->
+<div class="absolute bottom-20 left-1/2 -translate-x-1/2 z-30">
+<button class="group relative flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-full font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden" id="export-button">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined">file_download</span>
+<span class="font-title-md text-title-md tracking-tight">Export Documented Implementation Packets</span>
+</button>
+</div>
+<!-- Bottom Console (Shared Component Mock) -->
+<footer class="bg-surface-container-high/90 backdrop-blur-2xl text-tertiary font-mono-precision text-mono-precision docked bottom-0 w-full rounded-t-xl bg-surface-container-high/90 backdrop-blur-2xl border-t border-outline-variant/30 shadow-[0_-8px_32px_rgba(0,0,0,0.5)] fixed bottom-0 left-0 w-full h-12 z-50 flex justify-center space-x-gutter items-center px-container-margin">
+<div class="flex-1 flex items-center space-x-6"><div class="text-on-surface-variant/70 flex flex-col items-center hover:text-primary transition-colors cursor-pointer group" onclick="document.getElementById('floating-dashboard').classList.toggle('translate-x-full')">
+<span class="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-[10px] uppercase">Pulse</span>
+</div>
+<div class="text-tertiary-fixed font-bold flex flex-col items-center cursor-pointer">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span class="text-[10px] uppercase">Logs</span>
+</div>
+<div class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+<span class="text-[10px] uppercase">Timeline</span>
+</div>
+<div class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">description</span>
+<span class="text-[10px] uppercase">Output</span>
+</div>
+<div class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">bug_report</span>
+<span class="text-[10px] uppercase">Debug</span>
+</div>
+</div>
+<div class="flex items-center space-x-4 text-[11px] opacity-60">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> System Ready</span>
+<span>UTF-8</span>
+<span>LN 128, COL 12</span>
+</div>
+</footer>
+</main>
+<!-- Inspector (Right Panel) -->
+<aside class="w-[320px] bg-surface-container-low/80 backdrop-blur-xl border-l border-outline-variant/30 flex flex-col z-40">
+<div class="p-container-margin border-b border-outline-variant/30">
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Inspector</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant/60">Active Export Node V4.2</p>
+</div>
+<div class="flex-1 overflow-y-auto p-panel-padding space-y-stack-lg custom-scrollbar">
+<!-- Data Visualization Card -->
+<div class="bg-surface-container-highest/40 rounded-xl p-4 ghost-border">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Export Integrity</span>
+<span class="text-secondary font-mono-precision">98.4%</span>
+</div>
+<div class="h-24 relative overflow-hidden rounded-lg bg-black/40">
+</div>
+</div>
+<!-- Input Fields -->
+<div class="space-y-4">
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block">Protocol Name</label>
+<input class="w-full bg-surface-container-highest/50 border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface font-mono-precision text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="Export_Echo_Alpha"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block">Constraint Mode</label>
+<select class="w-full bg-surface-container-highest/50 border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface font-mono-precision text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>HEURISTIC_STRICT</option>
+<option>HEURISTIC_LOOSE</option>
+<option>MANUAL_OVERRIDE</option>
+</select>
+</div>
+</div>
+<!-- Layers / Chips -->
+<div class="space-y-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1 block">Active Constraints</span>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 bg-secondary/10 text-secondary px-3 py-1 rounded-full ghost-border text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                            STABILITY_LOCK
+                        </div>
+<div class="flex items-center gap-2 bg-tertiary/10 text-tertiary px-3 py-1 rounded-full ghost-border text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                            REF_VALIDATION
+                        </div>
+<div class="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full ghost-border text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                            ASYNC_SYNC
+                        </div>
+</div>
+</div>
+<!-- Metadata Card -->
+<div class="bg-surface-container-highest/20 rounded-xl p-4 ghost-border text-[11px] font-mono-precision leading-relaxed opacity-60">
+<div class="flex justify-between border-b border-white/5 pb-2 mb-2">
+<span>CREATED</span>
+<span>2023.10.12:14:22</span>
+</div>
+<div class="flex justify-between border-b border-white/5 pb-2 mb-2">
+<span>MODIFIED</span>
+<span>2023.11.01:09:45</span>
+</div>
+<div class="flex justify-between">
+<span>HASH_SIG</span>
+<span>AX-982...F421</span>
+</div>
+</div>
+</div>
+<!-- Footer Action in Inspector -->
+<div class="p-4 bg-surface-container-low border-t border-outline-variant/30">
+<button class="w-full py-2 bg-white/5 hover:bg-white/10 text-on-surface rounded-lg font-bold text-sm ghost-border active:scale-95 transition-all">
+                    Reset Export Parameters
+                </button>
+</div>
+</aside>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Export Button Click Animation
+        const exportBtn = document.getElementById('export-button');
+        exportBtn.addEventListener('click', () => {
+            const icon = exportBtn.querySelector('.material-symbols-outlined');
+            const text = exportBtn.querySelector('span:last-child');
+            
+            icon.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            icon.style.transform = 'rotate(360deg)';
+            
+            text.innerText = 'Exporting...';
+            exportBtn.classList.add('bg-secondary');
+            exportBtn.classList.remove('bg-primary');
+
+            setTimeout(() => {
+                icon.style.transform = 'rotate(0deg)';
+                text.innerText = 'Packets Exported';
+                
+                setTimeout(() => {
+                    exportBtn.classList.add('bg-primary');
+                    exportBtn.classList.remove('bg-secondary');
+                    text.innerText = 'Export Documented Implementation Packets';
+                }, 2000);
+            }, 1000);
+        });
+
+        // Add custom styles for the spin
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-spin-slow {
+                animation: spin-slow 8s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<aside class="fixed top-0 right-0 h-screen w-[380px] z-[60] translate-x-full transition-transform duration-500 ease-in-out glass-panel bg-white/5 backdrop-blur-[24px] border-l border-white/10 flex flex-col shadow-2xl" id="floating-dashboard">
+<!-- Header -->
+<div class="p-6 border-b border-white/10 flex justify-between items-center">
+<div>
+<h2 class="font-headline-lg text-title-md text-on-surface">Architectural Pulse</h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-[10px] font-mono-precision text-secondary uppercase tracking-widest">System Nominal</span>
+</div>
+</div>
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="document.getElementById('floating-dashboard').classList.add('translate-x-full')">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+<!-- Critical Drift Section -->
+<section>
+<h3 class="font-label-caps text-on-surface-variant mb-4 uppercase tracking-widest">Critical Drift</h3>
+<div class="bg-white/5 rounded-xl p-4 border border-white/5">
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg text-[32px] text-error font-bold">1.24%</span>
+<span class="text-error text-body-sm">+0.05% today</span>
+</div>
+<div class="mt-3 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-error w-[65%] rounded-full"></div>
+</div>
+<p class="mt-2 text-[10px] text-on-surface-variant/60 italic">Threshold: 1.50%</p>
+</div>
+</section>
+<!-- Awaiting Ratification -->
+<section>
+<h3 class="font-label-caps text-on-surface-variant mb-4 uppercase tracking-widest">Awaiting Ratification</h3>
+<div class="space-y-3">
+<div class="bg-white/5 p-3 rounded-lg border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="flex justify-between text-[10px] font-mono-precision text-primary mb-1">
+<span>LOOM_MAINFRAME_B2</span>
+<span class="text-on-surface-variant">4h left</span>
+</div>
+<div class="text-body-sm font-medium">Structural Integrity Check</div>
+</div>
+<div class="bg-white/5 p-3 rounded-lg border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="flex justify-between text-[10px] font-mono-precision text-primary mb-1">
+<span>CORE_EXPANSION_P7</span>
+<span class="text-on-surface-variant">6h left</span>
+</div>
+<div class="text-body-sm font-medium">Resource Allocation Drift</div>
+</div>
+</div>
+</section>
+<!-- Contextual Activity -->
+<section>
+<h3 class="font-label-caps text-on-surface-variant mb-4 uppercase tracking-widest">Recent Activity</h3>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded-full bg-secondary/20 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+</div>
+<div>
+<p class="text-body-sm text-on-surface/90"><strong>Forge</strong> optimized Hyperion_V4 lattice.</p>
+<span class="text-[10px] text-on-surface-variant/50 uppercase">12m ago</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[14px]">enable</span>
+</div>
+<div>
+<p class="text-body-sm text-on-surface/90"><strong>Engine</strong> corrected sector 7G anomaly.</p>
+<span class="text-[10px] text-on-surface-variant/50 uppercase">45m ago</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<div class="p-6 bg-white/5 border-t border-white/10">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+            View Full Analytics
+        </button>
+</div>
+</aside></body></html>

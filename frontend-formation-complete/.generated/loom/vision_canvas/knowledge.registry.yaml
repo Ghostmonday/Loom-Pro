@@ -1,0 +1,103 @@
+bindings:
+  loom.vision.design_intent:
+    domain: design_intent
+    description: 'Preserves the single Vision Canvas mission: express intent, answer
+      one adaptive question at a time, and authorize handoff without exposing orchestration
+      controls.'
+  loom.vision.behavioral:
+    domain: behavioral
+    description: Requires complete state reanalysis after every answer, exactly one
+      next question or stop condition, and explicit confirm then accept handoff sequencing.
+  loom.vision.operational:
+    domain: operational
+    description: Uses the real Intent Forge session, version, idempotency, readiness,
+      and executable-projection contracts.
+  loom.vision.governance:
+    domain: governance
+    description: Forbids orchestrate.prepare from the Vision Canvas and blocks handoff
+      until readiness and projection requirements are satisfied.
+  loom.vision.institutional:
+    domain: institutional
+    description: Maintains browser, API, CLI, and autonomous-agent parity through
+      canonical Intent Mapping actions.
+  loom.command.design_intent:
+    domain: design_intent
+    description: Presents teleological deliberation, topology evidence, synthesized
+      work units, and the human blueprint approval boundary before execution.
+  loom.command.behavioral:
+    domain: behavioral
+    description: Orders deliberate, synthesize, and prepare without phase skips and
+      projects only action-specific state changes.
+  loom.command.operational:
+    domain: operational
+    description: Surfaces the seven teleology subphases, curvature floor, dark-bridge
+      plan, projection mode, and work-unit counts.
+  loom.command.governance:
+    domain: governance
+    description: Enforces handoff before teleology, teleology before synthesis, and
+      blueprint approval before preparation.
+  loom.command.institutional:
+    domain: institutional
+    description: Retains Loom architectural teleology as a first-class reviewable
+      authority record rather than a hidden implementation detail.
+  loom.terminal.design_intent:
+    domain: design_intent
+    description: Represents the manufacturing sequence from swarm sizing through atomic
+      sprint, worker monitoring, governed merge, and deliverable retrieval.
+  loom.terminal.behavioral:
+    domain: behavioral
+    description: Prevents deploy before preparation, merge before worker completion,
+      and deliverable retrieval before a clean merge.
+  loom.terminal.operational:
+    domain: operational
+    description: Projects recommended swarm, worker states, logs, merge counts, structural
+      score, and deliverable metadata from real pipeline contracts.
+  loom.terminal.governance:
+    domain: governance
+    description: Treats sprint launch and merge as high-risk controls and preserves
+      blocked and conflicted outcomes as distinct refusal states.
+  loom.terminal.institutional:
+    domain: institutional
+    description: Keeps the stage rail aligned with Loom manufacturing order and preserves
+      auditability of every worker and merge disposition.
+  loom.continuation.design_intent:
+    domain: design_intent
+    description: Lets an existing repository enter Loom through lineage and delta
+      capture rather than a forced Genesis restart.
+  loom.continuation.behavioral:
+    domain: behavioral
+    description: Uses rigid attach, lineage, graph, delta, scope, and handoff order
+      while allowing adaptive questioning only inside delta interrogation.
+  loom.continuation.operational:
+    domain: operational
+    description: Keys graph reuse to repository fingerprint and scan configuration,
+      and sorts approved work units by operation then stable path.
+  loom.continuation.governance:
+    domain: governance
+    description: Requires a valid graph before teleology and a version-matched MODIFY,
+      ADD, DEPRECATE scope approval before handoff.
+  loom.continuation.institutional:
+    domain: institutional
+    description: Preserves parent-session and blueprint lineage as immutable provenance
+      for each evolution session.
+  loom.deliverable.design_intent:
+    domain: design_intent
+    description: Makes the completed product, not the build machinery, the primary
+      post-merge experience while retaining diff and download access.
+  loom.deliverable.behavioral:
+    domain: behavioral
+    description: Detects runnable surfaces deterministically, exposes exactly one
+      primary launch action, and preserves failure recovery without invalidating the
+      merged artifact.
+  loom.deliverable.operational:
+    domain: operational
+    description: Projects surface descriptors, run command or URL, process status,
+      changelog summary, archive metadata, and continuation registration state.
+  loom.deliverable.governance:
+    domain: governance
+    description: Blocks surface detection before merge completion, launch before a
+      complete descriptor, and lineage registration without a merge receipt.
+  loom.deliverable.institutional:
+    domain: institutional
+    description: Registers the successful project and last launch surface so future
+      work re-enters through Continuation instead of Genesis.

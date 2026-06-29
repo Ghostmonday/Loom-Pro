@@ -1,0 +1,31 @@
+scenario: loom.continuation.smoke-1
+screen: loom.continuation
+steps:
+- kind: assert_initial_state
+  target: continuation-feedback
+  expected:
+    present: true
+- kind: perform_interaction
+  target: continuation-attach-btn
+- kind: assert_intermediate_feedback
+  target: continuation-feedback
+  expected:
+    state: pending
+- kind: assert_terminal_state
+  target: continuation-feedback
+  expected:
+    any_of:
+    - succeeded
+    - failed
+- kind: assert_contract_projection
+  target: loom.continuation.feedback
+  expected:
+    observable: true
+- kind: assert_accessibility_state
+  target: continuation-attach-btn
+  expected:
+    accessible_name: true
+- kind: assert_no_prohibited_side_effect
+  target: continuation-attach-btn
+  expected:
+    inline_handlers: false

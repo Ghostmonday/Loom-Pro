@@ -1,0 +1,13 @@
+<!-- BEGIN GAIJINN INIT -->
+# Gaijinn Project Guidance
+
+- **Status:** Phase 2 complete (2026-06-16) — 171-node monorepo dogfood, validation 1.0, TX-HT-6D0B24 synced, convergence 0.8889 (honest no-op detection). Shipped: case study v2, enterprise pitch deck, provisional patent spec draft (`main` a50d150).
+- **Layer 1 vs Layer 2:** Layer 1 = blueprint, intent map, GIV, preflight, governance (deterministic). Layer 2 = Grok cells, Hermes, terminal sprint. You GET Layer 2 FROM Layer 1 via `run-grid` → `grid-spawn`. If Layer 1 breaks, Layer 2 does not matter — verify `governance.json` invariants before declaring victory.
+- Keep generated Gaijinn artifacts under `.gaijinn/`.
+- Run `gaijinn compile-prompt` after changing `.gaijinn/project.json`.
+- Run `gaijinn scan .` before graph analysis when source files change.
+- Run `gaijinn analyze` before creating worker directories.
+- Run `gaijinn run-grid --workers 2` to create isolated worker handoffs.
+- **Council (required):** Read `.gaijinn/bridge/council.md` (project) or `~/.gaijinn/bridge/council.md` (global/Hermes). Post with `gaijinn council say --as cursor "..."` (user: `--as user`). One shared thread — never ask the human to relay messages between agents.
+- **Hermes:** `gaijinn hermes` or `gaijinn hermes -i` from terminal (council-backed).
+<!-- END GAIJINN INIT -->

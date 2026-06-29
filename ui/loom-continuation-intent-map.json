@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "system": "loom",
+  "surface": "loom-continuation",
+  "parent_spec": "ui/loom-system-intent-map.json",
+  "description": "Continuation intake contract for brownfield repositories, v2 work, hotfixes, and refactors. Existing graph structure is the source of truth; interrogation captures only the delta and rejoins the canonical Loom pipeline at teleology.",
+  "implementation_status": "contract_only",
+  "optimization_goal": "Attach any repository without forcing genesis restart; preserve lineage, minimize redundant questions, and produce deterministic delta_patch or refactor_partition scope.",
+  "session_kinds": [
+    "genesis",
+    "continuation",
+    "hotfix",
+    "v2",
+    "refactor"
+  ],
+  "entry_routes": {
+    "attach_existing_project": {
+      "route": "/continuation",
+      "action": "intake.attach_project",
+      "default_session_kind": "continuation",
+      "when": "repo_path supplied OR repository selected"
+    },
+    "start_fresh": {
+      "route": "/",
+      "surface": "loom-vision-canvas",
+      "map": "ui/loom-intent-forge-intent-map.json",
+      "session_kind": "genesis",
+      "when": "user has idea only and no repository"
+    }
+  },
+  "states": [
+    "DETACHED",
+    "ATTACHING",
+    "ATTACHED",
+    "GRAPH_BOOTSTRAPPING",
+    "GRAPH_READY",
+    "DELTA_QUESTIONING",
+    "SCOPE_REVIEW",
+    "FINALIZED",
+    "HANDED_OFF",
+    "FAILED"
+  ],
+  "ui_phases": [
+    "attach_project",
+    "inspect_lineage",
+    "graph_ingest",
+    "delta_interrogation",
+    "scope_confirmation",
+    "handoff"
+  ],
+  "determinism": {
+    "phase_order": "rigid",
+    "interrogation_path": "adaptive within delta_interrogation only",
+    "graph_math": "deterministic for identical repository snapshot, scan configuration, and GIV",
+    "scope_sort": "work units sorted by operation order MODIFY, ADD, DEPRECATE then stable path"
+  },
+  "elements": {
+    "continuation.repo_picker": {
+      "dom_id": "continuation-repo-picker",
+      "type": "path_picker",
+      "label": "Attach an existing project",
+      "required": true,
+      "accepts": ["absolute_directory_path"],
+      "triggers": "intake.attach_project"
+    },
+    "continuation.start_fresh": {
+      "dom_id": "continuation-start-fresh",
+      "type": "link",
+      "label": "Start fresh",
+      "route": "/",
+      "target_surface": "loom-vision-canvas"
+    },
+    "continuation.session_kind": {
+      "dom_id": "continuation-session-kind",
+      "type": "select",
+      "label": "What kind of evolution is this?",
+      "options": ["continuation", "hotfix", "v2", "refactor"],
+      "triggers": "intake.session_kind_select"
+    },
+    "continuation.parent_lineage": {
+      "dom_id": "continuation-parent-lineage",
+      "type": "region",
+      "label": "Project lineage",
+      "shows": ["parent_session_id", "blueprint_version", "projection_mode", "last_merge_status"],
+      "empty_state": "No Loom lineage found; graph bootstrap will attach this repository without restarting it."
+    },
+    "continuation.delta_goal": {
+      "dom_id": "continuation-delta-goal",
+      "type": "textarea",
+      "label": "What should change?",
+      "required": true
+    },
+    "continuation.interrogation_mode": {
+      "dom_id": "continuation-interrogation-mode",
+      "type": "status_chip",
+      "shows": ["full", "delta", "skip_if_graph_ready"],
+      "system_selected": true
+    },
+    "continuation.graph_status": {
+      "dom_id": "continuation-graph-status",
+      "type": "status_region",
+      "shows": ["graph_path", "repository_fingerprint", "scan_status", "analysis_status"]
+    },
+    "continuation.delta_scope": {
+      "dom_id": "continuation-delta-scope",
+      "type": "work_unit_preview",
+      "label": "Proposed evolution",
+      "groups": ["MODIFY", "ADD", "DEPRECATE"],
+      "invariant": "each work unit has exactly one operation"
+    },
+    "continuation.scope_confirm": {
+      "dom_id": "continuation-confirm-scope",
+      "type": "button",
+      "label": "Confirm evolution scope",
+      "triggers": "continuation.confirm_scope"
+    },
+    "question.text": {
+      "dom_id": "question-text",
+      "type": "heading",
+      "invariant": "exactly_one_visible_when_delta_questioning"
+    },
+    "question.answer": {
+      "dom_id": "answer-input",
+      "type": "textarea",
+      "autosave": true
+    },
+    "question.submit": {
+      "dom_id": "btn-submit-answer",
+      "type": "button",
+      "triggers": "question.submit_answer",
+      "no_auto_submit": true
+    },
+    "handoff.confirm": {
+      "dom_id": "btn-confirm-handoff",
+      "type": "button",
+      "triggers": "handoff.confirm"
+    },
+    "handoff.accept": {
+      "dom_id": "btn-accept-handoff",
+      "type": "button",
+      "triggers": "handoff.accept"
+    }
+  },
+  "flow": [
+    {
+      "order": 1,
+      "phase": "attach_project",
+      "action": "intake.attach_project",
+      "next": "inspect_lineage"
+    },
+    {
+      "order": 2,
+      "phase": "inspect_lineage",
+      "action": "intake.resume_session",
+      "conditional": true,
+      "when": "parent_session_id supplied OR registered lineage exists",
+      "next": "graph_ingest"
+    },
+    {
+      "order": 3,
+      "phase": "inspect_lineage",
+      "action": "intake.session_kind_select",
+      "next": "graph_ingest"
+    },
+    {
+      "order": 4,
+      "phase": "graph_ingest",
+      "action": "graph.bootstrap",
+      "skip_when": ".gaijinn/graph.json exists and repository_fingerprint matches",
+      "next": "delta_interrogation"
+    },
+    {
+      "order": 5,
+      "phase": "delta_interrogation",
+      "action": "interrogation.set_mode",
+      "next_by_result": {
+        "full": "delta_interrogation",
+        "delta": "delta_interrogation",
+        "skip_if_graph_ready": "scope_confirmation"
+      }
+    },
+    {
+      "order": 6,
+      "phase": "delta_interrogation",
+      "action": "question.submit_answer",
+      "repeat_until": "delta_readiness.can_scope OR session_status == FINALIZED",
+      "next": "scope_confirmation"
+    },
+    {
+      "order": 7,
+      "phase": "scope_confirmation",
+      "action": "continuation.confirm_scope",
+      "next": "handoff"
+    },
+    {
+      "order": 8,
+      "phase": "handoff",
+      "action": "handoff.confirm"
+    },
+    {
+      "order": 9,
+      "phase": "handoff",
+      "action": "handoff.accept",
+      "rejoins": {
+        "map": "ui/loom-pipeline-intent-map.json",
+        "phase": "teleology_deliberating",
+        "hero_subphase": "graph_ingest"
+      }
+    }
+  ],
+  "actions": {
+    "intake.attach_project": {
+      "api": {
+        "method": "POST",
+        "path": "/api/v1/loom/continuation/attach",
+        "status": "not_implemented",
+        "body": {
+          "repo_path": "string",
+          "parent_session_id": "string|null",
+          "session_kind": "genesis|continuation|hotfix|v2|refactor"
+        }
+      },
+      "preconditions": ["repo_path is an accessible directory"],
+      "returns": ["repository_fingerprint", "lineage", "graph_status", "suggested_session_kind"],
+      "effects": ["inspect .gaijinn metadata without mutating source files", "select continuation unless user explicitly starts fresh"],
+      "postconditions": ["state == ATTACHED", "repo_path retained as project source of truth"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.prepare",
+        "mode": "contract_only",
+        "gap": "No continuation attach endpoint or brownfield intake adapter exists; prepare currently blends paths after intake."
+      }
+    },
+    "intake.resume_session": {
+      "input": {
+        "repo_path": "string",
+        "session_id": "string"
+      },
+      "artifact": ".gaijinn/sessions/{id}/session.json",
+      "returns": ["parent_session", "blueprint_version", "projection_mode", "prior_delta"],
+      "postconditions": ["loaded session belongs to attached repository", "lineage is read-only until child session creation"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_session_store.py",
+        "entrypoint": "IntentSessionStore.load",
+        "mode": "contract_only",
+        "gap": "Session loading is not exposed as a continuation action and repository ownership validation must be defined."
+      }
+    },
+    "intake.session_kind_select": {
+      "input": {
+        "session_kind": "genesis|continuation|hotfix|v2|refactor"
+      },
+      "effects": ["set interrogation depth policy", "set blueprint scope policy", "set presentation copy mode"],
+      "postconditions": ["genesis redirects to vision canvas unless an explicit repository-backed genesis migration is approved"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.prepare",
+        "mode": "contract_only",
+        "gap": "Session kind is not a first-class persisted orchestration field."
+      }
+    },
+    "graph.bootstrap": {
+      "input": {
+        "repo_path": "string",
+        "force": "boolean=false"
+      },
+      "artifacts": [".gaijinn/graph.json", ".gaijinn/metrics.json"],
+      "idempotency": {
+        "key": "repository_fingerprint + scan_configuration",
+        "behavior": "reuse graph when fingerprint matches; otherwise scan then analyze once"
+      },
+      "effects": ["run scan when graph missing or stale", "run analyze when metrics missing or stale"],
+      "postconditions": ["graph.json exists", "graph repository_fingerprint matches attached repository snapshot"],
+      "algorithm_binding": {
+        "module": "aoc-cli/aoc_cli/commands/scan.py",
+        "entrypoint": "scan",
+        "mode": "real",
+        "secondary": {
+          "module": "aoc-cli/aoc_cli/commands/analyze_.py",
+          "entrypoint": "analyze"
+        },
+        "gap": "No single idempotent supervisor action coordinates scan and analyze for continuation intake."
+      }
+    },
+    "interrogation.set_mode": {
+      "input": {
+        "mode": "full|delta|skip_if_graph_ready",
+        "delta_goal": "string",
+        "session_kind": "genesis|continuation|hotfix|v2|refactor"
+      },
+      "selection_rules": [
+        {"when": "session_kind == genesis", "select": "full"},
+        {"when": "graph ready AND prior blueprint ready AND delta goal is bounded", "select": "skip_if_graph_ready"},
+        {"when": "session_kind in hotfix,continuation,v2,refactor", "select": "delta"}
+      ],
+      "postconditions": ["skip requires graph and prior blueprint lineage", "hotfix never defaults to full"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "entrypoint": "AdaptiveQuestionEngine.select_next",
+        "mode": "contract_only",
+        "gap": "Adaptive engine has no graph-readiness-aware full/delta/skip policy."
+      }
+    },
+    "question.submit_answer": {
+      "api": {
+        "method": "POST",
+        "path": "/api/v1/intent-forge/sessions/{session_id}/answers",
+        "body": {
+          "question_id": "string",
+          "answer": "string",
+          "idempotency_key": "string",
+          "expected_blueprint_version": "integer"
+        }
+      },
+      "effects": ["reanalyze delta evidence against graph and inherited blueprint", "select next delta question or scope preview"],
+      "postconditions": ["complete_state_reanalysis", "exactly_one_next_question_or_stop"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "entrypoint": "AdaptiveQuestionEngine.select_next",
+        "mode": "real",
+        "gap": "Existing answer flow does not yet bind graph context and inherited blueprint lineage."
+      }
+    },
+    "continuation.confirm_scope": {
+      "input": {
+        "expected_blueprint_version": "integer",
+        "approved_work_units": [
+          {
+            "operation": "MODIFY|ADD|DEPRECATE",
+            "paths": ["string"],
+            "intent": "string"
+          }
+        ]
+      },
+      "preconditions": ["graph ready", "delta scope preview is non-empty", "every work unit operation is explicit"],
+      "effects": ["lock delta boundary", "compile delta projection", "record user approval"],
+      "returns": ["scope_lock", "delta_projection", "next_blueprint_version"],
+      "postconditions": ["blueprint_scope in delta_patch,refactor_partition", "no greenfield_scaffold unless session_kind == genesis"],
+      "algorithm_binding": {
+        "module": "aoc-cli/aoc_cli/blueprint.py",
+        "entrypoint": "generate_blueprint",
+        "mode": "contract_only",
+        "gap": "Planner emits graph work units but does not expose MODIFY/ADD/DEPRECATE approval or lineage-aware delta scope lock."
+      }
+    },
+    "handoff.confirm": {
+      "api": {
+        "method": "POST",
+        "path": "/api/v1/intent-forge/sessions/{session_id}/handoff",
+        "query": {
+          "action": "confirm"
+        }
+      },
+      "effects": ["compile executable delta projection with lineage receipt"],
+      "postconditions": ["session_status == FINALIZED", "scope_lock present"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/blueprint_compiler.py",
+        "entrypoint": "compile_executable_projection",
+        "mode": "real",
+        "gap": "Compiler does not yet declare continuation lineage and delta scope modes."
+      }
+    },
+    "handoff.accept": {
+      "api": {
+        "method": "POST",
+        "path": "/api/v1/intent-forge/sessions/{session_id}/handoff",
+        "query": {
+          "action": "accept"
+        }
+      },
+      "effects": ["session_status HANDED_OFF", "route to teleology graph_ingest"],
+      "postconditions": ["session_status == HANDED_OFF", "graph receipt and parent lineage attached"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.accept_handoff",
+        "mode": "real",
+        "gap": "Accept handoff does not yet validate continuation graph receipt or parent lineage."
+      }
+    }
+  },
+  "gates": [
+    {
+      "id": "gate.continuation_repository_attached",
+      "before": "graph_ingest",
+      "require": "repo_path accessible AND repository_fingerprint present"
+    },
+    {
+      "id": "gate.continuation_graph_before_teleology",
+      "before": "teleology_deliberating",
+      "require": ".gaijinn/graph.json valid OR graph.bootstrap completed successfully"
+    },
+    {
+      "id": "gate.continuation_skip_interrogation",
+      "before": "scope_confirmation",
+      "require": "mode != skip_if_graph_ready OR (graph ready AND inherited blueprint valid AND delta goal bounded)"
+    },
+    {
+      "id": "gate.continuation_scope_approved",
+      "before": "handoff.confirm",
+      "require": "user approved MODIFY/ADD/DEPRECATE preview and expected_blueprint_version matches"
+    }
+  ],
+  "lineage": {
+    "artifact_sources": [
+      ".gaijinn/blueprint.json",
+      ".gaijinn/sessions/{parent_session_id}/session.json"
+    ],
+    "fields": {
+      "parent_session_id": {
+        "required_when": "registered Loom project or explicit parent selected",
+        "inheritance": "copy parent id into child session; never overwrite parent session"
+      },
+      "blueprint_version": {
+        "inheritance": "child expected_blueprint_version equals parent current version",
+        "increment": "increment exactly once when confirmed delta blueprint freezes"
+      },
+      "projection_mode": {
+        "allowed": ["loom_synthesis", "intent_forge", "graph", "delta_patch", "refactor_partition"],
+        "inheritance": "retain parent projection_mode as source_projection_mode; child projection_mode becomes delta_patch except refactor sessions become refactor_partition"
+      }
+    },
+    "non_loom_repository_rule": "Absence of .gaijinn lineage does not redirect to genesis; bootstrap graph and create first continuation lineage."
+  },
+  "blueprint_semantics": {
+    "genesis": {
+      "scope": "greenfield_scaffold",
+      "synthesis_input": ["forge projection"]
+    },
+    "continuation": {
+      "scope": "delta_patch",
+      "synthesis_input": ["forge delta projection", "existing .gaijinn/blueprint.json lineage", "current graph.json"]
+    },
+    "hotfix": {
+      "scope": "delta_patch",
+      "default_interrogation": "delta",
+      "question_budget": "minimal"
+    },
+    "v2": {
+      "scope": "delta_patch",
+      "requires": ["parent_session_id when available", "blueprint version increment"]
+    },
+    "refactor": {
+      "scope": "refactor_partition",
+      "requires": ["behavior preservation constraints", "graph partition receipt"]
+    }
+  },
+  "smoke_scenarios": [
+    {
+      "id": "flow.loom_continuation_attach_brownfield",
+      "description": "Attach the gaijinn repository, bootstrap or reuse its graph, capture a delta intent, confirm scope, and hand off to teleology.",
+      "steps": [
+        {"action": "intake.attach_project", "args": {"repo_path": "/workspace/gaijinn", "session_kind": "continuation"}},
+        {"action": "graph.bootstrap"},
+        {"action": "interrogation.set_mode", "args": {"mode": "delta", "delta_goal": "Add continuation launch contracts"}},
+        {"action": "question.submit_answer", "args": {"answer": "Keep backend behavior unchanged."}},
+        {"action": "continuation.confirm_scope"},
+        {"action": "handoff.confirm"},
+        {"action": "handoff.accept"}
+      ],
+      "assertions": [
+        "graph repository_fingerprint matches attached repository",
+        "blueprint_scope == delta_patch",
+        "session_status == HANDED_OFF",
+        "teleology hero_subphase == graph_ingest"
+      ],
+      "implementation_status": "spec_only"
+    },
+    {
+      "id": "flow.loom_continuation_v2_lineage",
+      "description": "Create a v2 child session from an existing parent and freeze a versioned delta blueprint without mutating the parent.",
+      "steps": [
+        {"action": "intake.attach_project", "args": {"repo_path": "/workspace/product", "parent_session_id": "session-v1", "session_kind": "v2"}},
+        {"action": "intake.resume_session", "args": {"session_id": "session-v1"}},
+        {"action": "graph.bootstrap"},
+        {"action": "interrogation.set_mode", "args": {"mode": "delta", "delta_goal": "Ship v2 reporting"}},
+        {"action": "continuation.confirm_scope"}
+      ],
+      "assertions": [
+        "child.parent_session_id == session-v1",
+        "child.blueprint_version == parent.blueprint_version + 1",
+        "child.blueprint_scope == delta_patch",
+        "parent session artifact unchanged"
+      ],
+      "implementation_status": "spec_only"
+    },
+    {
+      "id": "flow.loom_continuation_skip_interrogation",
+      "description": "A bounded change with a current graph and prior blueprint skips Q&A and proceeds directly to deterministic scope confirmation.",
+      "steps": [
+        {"action": "intake.attach_project", "args": {"repo_path": "/workspace/product", "session_kind": "hotfix"}},
+        {"action": "interrogation.set_mode", "args": {"mode": "skip_if_graph_ready", "delta_goal": "Pin dependency to patched version"}},
+        {"action": "continuation.confirm_scope"},
+        {"action": "handoff.confirm"},
+        {"action": "handoff.accept"}
+      ],
+      "assertions": [
+        "graph_status == ready",
+        "prior blueprint lineage valid",
+        "question.submit_answer dispatch_count == 0",
+        "teleology hero_subphase == graph_ingest"
+      ],
+      "implementation_status": "spec_only"
+    }
+  ],
+  "confusion_signals": [
+    {
+      "id": "confusion.continuation_genesis_for_registered_repo",
+      "detect": "genesis path selected automatically when attached repo contains .gaijinn/",
+      "resolution": "offer parent lineage and default to continuation"
+    },
+    {
+      "id": "confusion.continuation_non_loom_restart",
+      "detect": "non-Loom repository is told to restart from Vision Canvas",
+      "resolution": "bootstrap graph and create first continuation lineage"
+    },
+    {
+      "id": "confusion.continuation_hotfix_full_qa",
+      "detect": "hotfix receives full genesis question sequence",
+      "resolution": "select delta or skip_if_graph_ready based on graph and blueprint readiness"
+    },
+    {
+      "id": "confusion.continuation_scope_greenfield",
+      "detect": "continuation blueprint uses greenfield_scaffold",
+      "resolution": "require delta_patch or refactor_partition"
+    },
+    {
+      "id": "confusion.continuation_teleology_intent_first",
+      "detect": "continuation teleology hero begins with intent_parse instead of graph_ingest",
+      "resolution": "rejoin pipeline with graph_ingest as the first visible subphase"
+    }
+  ]
+}

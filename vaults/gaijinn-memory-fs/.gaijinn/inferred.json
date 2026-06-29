@@ -1,0 +1,452 @@
+{
+  "disconnected_gaps": [],
+  "layer": 2,
+  "layer0": {
+    "functional_domains": [
+      "general"
+    ],
+    "invariants": [
+      "no network calls",
+      "no secret exfiltration"
+    ],
+    "risk_flags": []
+  },
+  "project_prompt": "Build an Obsidian vault civilization with write-time compiled memory: folder taxonomy, YAML frontmatter, wikilinks, event ledger, and knowledge linter enforcing Section XIII joint governance.",
+  "schema_version": 1,
+  "shadowbridges": [],
+  "workflow_count": 27,
+  "workflows": [
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: advance_phase_post",
+      "entry": "advance_phase_post",
+      "id": "wf-001",
+      "name": "advance_phase",
+      "resource_clusters": [
+        "advance_phase"
+      ],
+      "steps": [
+        "advance_phase_post"
+      ],
+      "terminal": "advance_phase_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: analyze_get",
+      "entry": "analyze_get",
+      "id": "wf-002",
+      "name": "analyze",
+      "resource_clusters": [
+        "analyze"
+      ],
+      "steps": [
+        "analyze_get"
+      ],
+      "terminal": "analyze_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: analyze_post",
+      "entry": "analyze_post",
+      "id": "wf-003",
+      "name": "analyze",
+      "resource_clusters": [
+        "analyze"
+      ],
+      "steps": [
+        "analyze_post"
+      ],
+      "terminal": "analyze_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: blueprint_viz_engine.js_get",
+      "entry": "blueprint_viz_engine.js_get",
+      "id": "wf-004",
+      "name": "blueprint_viz_engine.js",
+      "resource_clusters": [
+        "blueprint_viz_engine.js"
+      ],
+      "steps": [
+        "blueprint_viz_engine.js_get"
+      ],
+      "terminal": "blueprint_viz_engine.js_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: chat_post",
+      "entry": "chat_post",
+      "id": "wf-005",
+      "name": "chat",
+      "resource_clusters": [
+        "chat"
+      ],
+      "steps": [
+        "chat_post"
+      ],
+      "terminal": "chat_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: command_engine.css_get",
+      "entry": "command_engine.css_get",
+      "id": "wf-006",
+      "name": "command_engine.css",
+      "resource_clusters": [
+        "command_engine.css"
+      ],
+      "steps": [
+        "command_engine.css_get"
+      ],
+      "terminal": "command_engine.css_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: command_engine.js_get",
+      "entry": "command_engine.js_get",
+      "id": "wf-007",
+      "name": "command_engine.js",
+      "resource_clusters": [
+        "command_engine.js"
+      ],
+      "steps": [
+        "command_engine.js_get"
+      ],
+      "terminal": "command_engine.js_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: command_engine_get",
+      "entry": "command_engine_get",
+      "id": "wf-008",
+      "name": "command_engine",
+      "resource_clusters": [
+        "command_engine"
+      ],
+      "steps": [
+        "command_engine_get"
+      ],
+      "terminal": "command_engine_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: deliberate_get",
+      "entry": "deliberate_get",
+      "id": "wf-009",
+      "name": "deliberate",
+      "resource_clusters": [
+        "deliberate"
+      ],
+      "steps": [
+        "deliberate_get"
+      ],
+      "terminal": "deliberate_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: deliverable_get",
+      "entry": "deliverable_get",
+      "id": "wf-010",
+      "name": "grid",
+      "resource_clusters": [
+        "grid"
+      ],
+      "steps": [
+        "deliverable_get"
+      ],
+      "terminal": "deliverable_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: diff_get",
+      "entry": "diff_get",
+      "id": "wf-011",
+      "name": "grid",
+      "resource_clusters": [
+        "grid"
+      ],
+      "steps": [
+        "diff_get"
+      ],
+      "terminal": "diff_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: health_get",
+      "entry": "health_get",
+      "id": "wf-012",
+      "name": "health",
+      "resource_clusters": [
+        "health"
+      ],
+      "steps": [
+        "health_get"
+      ],
+      "terminal": "health_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: internal.css_get",
+      "entry": "internal.css_get",
+      "id": "wf-013",
+      "name": "internal.css",
+      "resource_clusters": [
+        "internal.css"
+      ],
+      "steps": [
+        "internal.css_get"
+      ],
+      "terminal": "internal.css_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: internal.js_get",
+      "entry": "internal.js_get",
+      "id": "wf-014",
+      "name": "internal.js",
+      "resource_clusters": [
+        "internal.js"
+      ],
+      "steps": [
+        "internal.js_get"
+      ],
+      "terminal": "internal.js_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: internal_get",
+      "entry": "internal_get",
+      "id": "wf-015",
+      "name": "internal",
+      "resource_clusters": [
+        "internal"
+      ],
+      "steps": [
+        "internal_get"
+      ],
+      "terminal": "internal_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: ledger_get",
+      "entry": "ledger_get",
+      "id": "wf-016",
+      "name": "ledger",
+      "resource_clusters": [
+        "ledger"
+      ],
+      "steps": [
+        "ledger_get"
+      ],
+      "terminal": "ledger_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: logs_get",
+      "entry": "logs_get",
+      "id": "wf-017",
+      "name": "logs",
+      "resource_clusters": [
+        "logs"
+      ],
+      "steps": [
+        "logs_get"
+      ],
+      "terminal": "logs_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: parse_post",
+      "entry": "parse_post",
+      "id": "wf-018",
+      "name": "parse",
+      "resource_clusters": [
+        "parse"
+      ],
+      "steps": [
+        "parse_post"
+      ],
+      "terminal": "parse_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: preflight_post",
+      "entry": "preflight_post",
+      "id": "wf-019",
+      "name": "preflight",
+      "resource_clusters": [
+        "preflight"
+      ],
+      "steps": [
+        "preflight_post"
+      ],
+      "terminal": "preflight_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: quote_post",
+      "entry": "quote_post",
+      "id": "wf-020",
+      "name": "quote",
+      "resource_clusters": [
+        "quote"
+      ],
+      "steps": [
+        "quote_post"
+      ],
+      "terminal": "quote_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: say_post",
+      "entry": "say_post",
+      "id": "wf-021",
+      "name": "say",
+      "resource_clusters": [
+        "say"
+      ],
+      "steps": [
+        "say_post"
+      ],
+      "terminal": "say_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: session_get",
+      "entry": "session_get",
+      "id": "wf-022",
+      "name": "session",
+      "resource_clusters": [
+        "session"
+      ],
+      "steps": [
+        "session_get"
+      ],
+      "terminal": "session_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: show_get",
+      "entry": "show_get",
+      "id": "wf-023",
+      "name": "show",
+      "resource_clusters": [
+        "show"
+      ],
+      "steps": [
+        "show_get"
+      ],
+      "terminal": "show_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: stream_get",
+      "entry": "stream_get",
+      "id": "wf-024",
+      "name": "stream",
+      "resource_clusters": [
+        "stream"
+      ],
+      "steps": [
+        "stream_get"
+      ],
+      "terminal": "stream_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: swarm_post",
+      "entry": "swarm_post",
+      "id": "wf-025",
+      "name": "orchestrate",
+      "resource_clusters": [
+        "orchestrate"
+      ],
+      "steps": [
+        "swarm_post"
+      ],
+      "terminal": "swarm_post"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: telemetry_get",
+      "entry": "telemetry_get",
+      "id": "wf-026",
+      "name": "telemetry",
+      "resource_clusters": [
+        "telemetry"
+      ],
+      "steps": [
+        "telemetry_get"
+      ],
+      "terminal": "telemetry_get"
+    },
+    {
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor"
+      ],
+      "description": "Lifecycle chain: terminal_ui_get",
+      "entry": "terminal_ui_get",
+      "id": "wf-027",
+      "name": "terminal_ui_get",
+      "resource_clusters": [
+        "terminal_ui_get"
+      ],
+      "steps": [
+        "terminal_ui_get"
+      ],
+      "terminal": "terminal_ui_get"
+    }
+  ]
+}

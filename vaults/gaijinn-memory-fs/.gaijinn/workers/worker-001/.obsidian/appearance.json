@@ -1,0 +1,16 @@
+{
+  "baseFontSize": 16,
+  "translucency": false,
+  "theme": "obsidian",
+  "cssTheme": "moonstone",
+  "interfaceFontFamily": "",
+  "textFontFamily": "",
+  "monospaceFontFamily": "",
+  "_gaijinn_provenance": {
+    "sprint": "worker-002",
+    "grid_spawn_id": "1196463",
+    "wu_id": "WU-008",
+    "last_updated": "2026-06-19T23:30:00Z",
+    "intent": "Default Obsidian theme + size for the gaijinn-memory-fs vault civilization."
+  }
+}

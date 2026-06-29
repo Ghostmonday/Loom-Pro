@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "surface": "neural-draft-internal-ui",
+  "description": "Component-granular work units for UI swarms — one control point maps to one shippable component.",
+  "parent_spec": "ui/process-stage-ux-map.json",
+  "design_package": ".gaijinn/design/neural-draft-internal-ui/",
+  "stack": {
+    "api": "Python FastAPI (aoc_supervisor/api.py)",
+    "ui": "Vanilla HTML/CSS/ES modules (ui/neural-draft/)",
+    "deferred": "Tauri 2 + Rust desktop shell (optional, unrelated to daemon waker)"
+  },
+  "work_units": [
+    {
+      "id": "WU-nd-shell",
+      "control_point": null,
+      "component": "InternalShell",
+      "files": ["ui/neural-draft/index.html", "ui/neural-draft/console.css", "aoc_supervisor/aoc_supervisor/api.py", "aoc_supervisor/aoc_supervisor/repo_paths.py"],
+      "risk": "low",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-init-config",
+      "control_point": "init.project_configuration",
+      "component": "ProjectConfigPanel",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["chat.input", "chat.send", "load_context.panel"],
+      "risk": "low",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-phase-scope",
+      "control_point": "init.phase_scope_selection",
+      "component": "PhaseScopeChips",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["phases.selector", "stage.rail"],
+      "api": ["POST /api/v1/orchestrate/advance-phase"],
+      "risk": "low",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-model-params",
+      "control_point": "plan.model_parameter_control",
+      "component": "ModelParameterBar",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["controls.executor", "controls.model", "controls.sandbox"],
+      "risk": "low_medium",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-approval",
+      "control_point": "plan.blueprint_approval",
+      "component": "BlueprintApprovalGate",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["swarm.summary", "approval.toggle", "blueprint-viz-engine"],
+      "api": ["POST /api/v1/orchestrate/prepare"],
+      "risk": "medium",
+      "parallel_safe": false,
+      "blocks": ["WU-nd-sprint"]
+    },
+    {
+      "id": "WU-nd-preflight",
+      "control_point": "analysis.integrity_preflight",
+      "component": "IntegrityPreflightPanel",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["phase-topology", "status-chip"],
+      "api": ["POST /api/v1/preflight", "POST /api/v1/analyse"],
+      "risk": "medium",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-knowledge-linter",
+      "control_point": "analysis.knowledge_linter",
+      "component": "KnowledgeLinterDashboard",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["validation.dashboard"],
+      "api": [],
+      "cli_equivalent": ["python3 10_Operations/knowledge-linter.py --check"],
+      "vault_only": true,
+      "risk": "medium",
+      "parallel_safe": true,
+      "shipped": "deferred",
+      "gaps": ["Full validation dashboard — vault overlay WU"]
+    },
+    {
+      "id": "WU-nd-swarm-size",
+      "control_point": "execution.swarm_sizing",
+      "component": "SwarmSizingPicker",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["swarm.picker", "swarm.use_recommended", "swarm.summary"],
+      "api": ["POST /api/v1/orchestrate/swarm"],
+      "risk": "high",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-sprint",
+      "control_point": "execution.sprint_launch",
+      "component": "AtomicSprintLauncher",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["sprint.bar", "grid.container", "workflow.chip"],
+      "api": ["POST /api/v1/grid/spawn", "GET /api/v1/grid/status"],
+      "risk": "high",
+      "parallel_safe": false,
+      "depends_on": ["WU-nd-approval"]
+    },
+    {
+      "id": "WU-nd-wu-monitor",
+      "control_point": "execution.wu_monitoring",
+      "component": "WorkerGridMonitor",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["grid.container", "deliverable.worker_breakdown"],
+      "api": ["GET /api/v1/grid/status", "GET /api/v1/grid/stream/{cell}"],
+      "risk": "high",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-governance",
+      "control_point": "merge.governance_validation",
+      "component": "GovernanceAuditMatrix",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["deliverable.worker_breakdown", "deliverable.counts"],
+      "api": ["POST /api/v1/grid/merge", "GET /api/v1/grid/merge/status"],
+      "risk": "high",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-convergence",
+      "control_point": "merge.convergence_threshold",
+      "component": "ConvergenceGauge",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["status.pill", "convergence.gauge"],
+      "thresholds": {"simulated": 0.875, "production": 1.0},
+      "risk": "high",
+      "parallel_safe": true
+    },
+    {
+      "id": "WU-nd-deliverable",
+      "control_point": "merge.deliverable_retrieval",
+      "component": "DeliverablePanel",
+      "files": ["ui/neural-draft/console.js"],
+      "elements": ["deliverable.panel", "deliverable.download", "deliverable.view_diff"],
+      "api": ["GET /api/v1/grid/deliverable", "GET /api/v1/grid/diff"],
+      "risk": "medium",
+      "parallel_safe": true
+    }
+  ],
+  "swarm_policy": "One WU per worker cell; never assign two components that edit console.js in the same sprint without merge ordering."
+}

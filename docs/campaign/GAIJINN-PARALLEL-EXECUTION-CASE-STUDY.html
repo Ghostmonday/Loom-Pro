@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>GAIJINN-PARALLEL-EXECUTION-CASE-STUDY</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Gaijinn Parallel Execution Case Study</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#gaijinn-parallel-execution-case-study"
+id="toc-gaijinn-parallel-execution-case-study">Gaijinn Parallel
+Execution Case Study</a>
+<ul>
+<li><a href="#executive-summary" id="toc-executive-summary">Executive
+Summary</a></li>
+<li><a href="#section-1-the-parallel-agent-collision-problem"
+id="toc-section-1-the-parallel-agent-collision-problem">Section 1: The
+Parallel Agent Collision Problem</a></li>
+<li><a
+href="#section-2-technical-breakdown--exam-1-the-trespass-incident"
+id="toc-section-2-technical-breakdown--exam-1-the-trespass-incident">Section
+2: Technical Breakdown — Exam 1 (The Trespass Incident)</a></li>
+<li><a href="#section-3-the-gaijinn-solution"
+id="toc-section-3-the-gaijinn-solution">Section 3: The Gaijinn
+Solution</a></li>
+<li><a href="#section-4-empirical-results--the-final-exam"
+id="toc-section-4-empirical-results--the-final-exam">Section 4:
+Empirical Results — The Final Exam</a></li>
+<li><a href="#section-5-enterprise-monorepo-scaling-telemetry"
+id="toc-section-5-enterprise-monorepo-scaling-telemetry">Section 5:
+Enterprise Monorepo Scaling Telemetry</a></li>
+<li><a href="#architecture-closed-infrastructure-loop"
+id="toc-architecture-closed-infrastructure-loop">Architecture: Closed
+Infrastructure Loop</a></li>
+<li><a href="#what-this-means-for-engineering-leadership"
+id="toc-what-this-means-for-engineering-leadership">What This Means for
+Engineering Leadership</a></li>
+<li><a href="#reproduction" id="toc-reproduction">Reproduction</a></li>
+<li><a href="#appendix-a-artifact-index"
+id="toc-appendix-a-artifact-index">Appendix A: Artifact Index</a></li>
+<li><a href="#appendix-b-phase-3-roadmap"
+id="toc-appendix-b-phase-3-roadmap">Appendix B: Phase 3 Roadmap</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="gaijinn-parallel-execution-case-study">Gaijinn Parallel
+Execution Case Study</h1>
+<p><strong>Institutional Quality Gate for Multi-Agent Software
+Development</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Document version</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>2026-06-16</td>
+</tr>
+<tr>
+<td>Artifact class</td>
+<td>Technical case study / whitepaper</td>
+</tr>
+<tr>
+<td>Audience</td>
+<td>Engineering directors, CTOs, technical design partners</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Phase 1 + Phase 2 complete — tiny-service gateway lap + Gaijinn
+monorepo dogfood</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="executive-summary">Executive Summary</h2>
+<p>Multi-agent coding frameworks promise parallel velocity. In practice,
+they collide: autonomous workers modify overlapping functional surfaces,
+Git cannot see implicit coupling, and merge pipelines fail silently
+until a human untangles worktree history.</p>
+<p>Gaijinn closes this loop with four enforced layers:</p>
+<ol type="1">
+<li><strong>Topological guardrails</strong> — Ollivier-Ricci curvature
+on the import graph surfaces Dark Bridges (κ ≤ −0.30) that static DAGs
+miss.</li>
+<li><strong>GIV contract firewalls</strong> — per-worker write scopes in
+isolated git worktrees (<code>SCOPE_STRICT</code>,
+<code>HANDOFF_ONLY</code>).</li>
+<li><strong>Council Transaction Bus</strong> — cross-boundary mutations
+become immutable <code>TX-HT-*</code> tickets, not sibling
+trespasses.</li>
+<li><strong>Upstream CI gate</strong> —
+<code>POST /api/v1/preflight</code> blocks integration merges unless
+isolation is clean and <code>transaction_bus_synchronized</code> is
+true.</li>
+</ol>
+<p>On a controlled two-worker sprint against
+<code>tiny-python-service</code>, Gaijinn achieved <strong>1.0 merge
+convergence</strong>, <strong>zero merge conflicts</strong>, and
+<strong>zero blocked branches</strong> after gateway-mode handoff
+coordination—versus <strong>0.50 convergence</strong> when an
+unconstrained agent trespassed into a sibling path.</p>
+<p><strong>Phase 2 (this document, Section 5)</strong> dogfoods the same
+pipeline on the <strong>171-node Gaijinn monorepo</strong> with
+<strong>four concurrent copy-mode workers</strong>, <strong>92
+shadow-bridge handoff gateways</strong>, and a live cross-cutting ticket
+<strong><code>TX-HT-6D0B24</code></strong> (billing → preflight API).
+Result: <strong>validation pass rate 1.0 (4/4)</strong>, <strong>zero
+sibling trespass</strong>, <strong>transaction bus
+synchronized</strong>, and <strong>0.8889 structural
+convergence</strong>—an honest ledger that flags three no-op workers as
+<code>PREFLIGHT_BLOCKED</code> because their deltas were already
+integrated, not a vanity 1.0.</p>
+<hr />
+<h2 id="section-1-the-parallel-agent-collision-problem">Section 1: The
+Parallel Agent Collision Problem</h2>
+<h3 id="the-context">The context</h3>
+<p>Frameworks such as CrewAI, AutoGen, and naive LangGraph swarms
+partition tasks across concurrent LLM instances. Each worker receives a
+prompt, operates in a sandbox, and produces diffs. The economic thesis
+is simple: <em>N agents ⇒ ~N× throughput</em>.</p>
+<h3 id="why-git-is-structurally-blind">Why Git is structurally
+blind</h3>
+<p>Version control tracks file-level history. It does not model:</p>
+<ul>
+<li><strong>Hidden functional coupling</strong> — shared constants,
+implicit internal APIs, test-to-implementation contracts.</li>
+<li><strong>Runtime assumptions</strong> — import side effects,
+module-level initialization order.</li>
+<li><strong>Cross-directory dependencies</strong> — a test file that
+requires a service-layer constant the test worker cannot legally
+author.</li>
+</ul>
+<p>When two agents run simultaneously in isolated directories, they
+routinely satisfy local acceptance criteria by writing into each other's
+territory. Syntax passes. Linters pass. Merge fails—or worse, silently
+regresses behavior.</p>
+<h3 id="the-economic-failure-mode">The economic failure mode</h3>
+<p>In a naive swarm, a single trespass does not merely block one file.
+It forces a human engineer to:</p>
+<ol type="1">
+<li>Diff multiple worktrees against an integration base.</li>
+<li>Determine which mutation was authoritative.</li>
+<li>Re-run tests on a manually reconciled branch.</li>
+</ol>
+<p>The automation ROI collapses. Parallelism becomes <strong>negative
+leverage</strong>: you pay for agent tokens <em>and</em> senior engineer
+recovery time.</p>
+<hr />
+<h2
+id="section-2-technical-breakdown--exam-1-the-trespass-incident">Section
+2: Technical Breakdown — Exam 1 (The Trespass Incident)</h2>
+<h3 id="incident-profile">Incident profile</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target</td>
+<td><code>examples/tiny-python-service</code></td>
+</tr>
+<tr>
+<td>Workers</td>
+<td>2 (live Grok Build, <code>grok-composer-2.5-fast</code>)</td>
+</tr>
+<tr>
+<td>Mode</td>
+<td>Legacy weld partitioning (pre-gateway)</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>2026-06-16</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-happened">What happened</h3>
+<p><strong>Worker-001</strong> was assigned test-layer scope. To satisfy
+a localized dependency, it reached beyond its GIV-allowed paths and
+modified <code>tiny_service/service.py</code>—a file owned by the
+service work unit.</p>
+<p>The merge integrity harness (<code>collect</code> →
+<code>validate-worker</code> → <code>merge-grid</code>) detected the
+violation at merge time:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path_allowlist</code></td>
+<td><strong>FAILED</strong> — trespass on
+<code>tiny_service/service.py</code></td>
+</tr>
+<tr>
+<td><code>scope_isolation</code></td>
+<td><strong>FAILED</strong> — sibling write forbidden</td>
+</tr>
+<tr>
+<td>Merge eligibility</td>
+<td>Worker-001 <strong>BLOCKED</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="measured-outcome">Measured outcome</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Structural convergence (before remediation)</td>
+<td><strong>0.50</strong></td>
+</tr>
+<tr>
+<td>Merged workers</td>
+<td>1 of 2</td>
+</tr>
+<tr>
+<td>Blocked workers</td>
+<td>1 (trespass)</td>
+</tr>
+<tr>
+<td>Merge conflicts</td>
+<td>0 (blocked before contamination)</td>
+</tr>
+<tr>
+<td>Human recovery cost</td>
+<td>High — manual worktree archaeology</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> Gaijinn correctly <em>prevented</em>
+bad code from entering the integration branch. The 0.50 score is not a
+product failure—it is an honest accounting of partial compliance. In
+frameworks without GIV enforcement, the same trespass would have merged
+and produced a silent behavioral regression.</p>
+<hr />
+<h2 id="section-3-the-gaijinn-solution">Section 3: The Gaijinn
+Solution</h2>
+<h3 id="31-differential-geometry-as-a-partitioning-oracle">3.1
+Differential geometry as a partitioning oracle</h3>
+<p>Before any agent runs, Gaijinn executes:</p>
+<pre><code>gaijinn scan → gaijinn analyze → gaijinn plan</code></pre>
+<p>The analyze phase computes <strong>Ollivier-Ricci curvature</strong>
+(κ) on the repository import graph. Edges with κ ≤ −0.30 are classified
+as <strong>Dark Bridges</strong>—high-risk couplings invisible to flat
+module boundaries.</p>
+<p>On the Gaijinn monorepo itself (<code>gaijinn audit .</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Atomic weld blocks</th>
+<th>Largest weld (files)</th>
+<th>Max parallel workers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legacy (union-find weld)</td>
+<td>2</td>
+<td>40</td>
+<td>48</td>
+</tr>
+<tr>
+<td>Gateway (<code>GAIJINN_HANDOFF_GATEWAYS=1</code>)</td>
+<td>0</td>
+<td>—</td>
+<td>46</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parallel Efficiency Delta:</strong></p>
+<ul>
+<li>2 atomic weld blocks eliminated</li>
+<li>44 files unlocked from blunt serialization arrays</li>
+<li>92 handoff gateway edges identified</li>
+<li><code>efficiency_delta.gateway_recommended: true</code></li>
+</ul>
+<p>The audit command surfaces this as the <strong>Parallel Efficiency
+Matrix</strong>—a lead magnet that calculates structural debt before a
+single agent token is spent.</p>
+<h3 id="32-giv-contract-tokens--runtime-write-firewalls">3.2 GIV
+contract tokens — runtime write firewalls</h3>
+<p>Each worker receives a <strong>GIV (Governed Intent Vector)</strong>
+compiled from the blueprint:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;allowed_paths&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;tests/test_api.py&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;denied_paths&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;denied_commands&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;git push&quot;</span><span class="ot">,</span> <span class="st">&quot;git merge&quot;</span><span class="ot">,</span> <span class="er">...</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sibling_denied_paths&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;tiny_service/service.py&quot;</span><span class="ot">]</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Workers execute inside <strong>git worktrees</strong>—disposable
+branches with hard path boundaries. <code>validate-worker</code> calls
+<code>detect_trespasses()</code> against the GIV at merge time. Trespass
+is not advisory; it is <strong>merge-blocking</strong>.</p>
+<h3
+id="33-council-transaction-bus--asynchronous-cross-boundary-coordination">3.3
+Council Transaction Bus — asynchronous cross-boundary coordination</h3>
+<p>When <code>GAIJINN_HANDOFF_GATEWAYS=1</code>, Dark Bridge couplings
+become <strong>HANDOFF_ONLY</strong> gateways—not atomic welds that
+serialize 40-file blocks.</p>
+<p><strong>Protocol flow (Victory Lap Gateway, 2026-06-16):</strong></p>
+<pre><code>worker-001 (tests scope)
+  │
+  ├─ Adds test importing DONE_STATUS from tiny_service.service
+  ├─ Cannot edit tiny_service/service.py (GIV firewall)
+  └─ Emits HANDOFF_TRANSACTION_REQUEST → TX-HT-84348F
+         │
+         ▼
+Council Bus (append-only council.jsonl + handoff-queue.json)
+         │
+         ▼
+worker-002 (service scope)
+  │
+  ├─ Ingests HANDOFF INGEST block at grid-spawn
+  ├─ Adds DONE_STATUS = &quot;done&quot; to tiny_service/service.py
+  └─ Posts HANDOFF_TRANSACTION_RECEIPT → bus synchronized</code></pre>
+<p><strong>Ticket record (abbreviated):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ticket_id</code></td>
+<td><code>TX-HT-84348F</code></td>
+</tr>
+<tr>
+<td><code>source_worker_id</code></td>
+<td><code>worker-001</code></td>
+</tr>
+<tr>
+<td><code>target_work_unit_id</code></td>
+<td><code>WU-002</code></td>
+</tr>
+<tr>
+<td><code>target_file</code></td>
+<td><code>tiny_service/service.py</code></td>
+</tr>
+<tr>
+<td><code>required_mutation_context</code></td>
+<td>Add <code>DONE_STATUS = "done"</code> after imports</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-upstream-ci-gate--institutional-enforcement">3.4 Upstream CI
+gate — institutional enforcement</h3>
+<p><code>POST /api/v1/preflight</code> evaluates merge-pipeline
+artifacts before integration:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Source artifact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workspace isolation</td>
+<td><code>validated.json[worker_id].gates.path_allowlist.trespasses</code></td>
+</tr>
+<tr>
+<td>Transaction bus</td>
+<td><code>handoff-queue.json.transaction_bus_synchronized</code></td>
+</tr>
+<tr>
+<td>Pending tickets</td>
+<td><code>handoff-queue.json.pending_tickets</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>HTTP status</th>
+<th><code>status_code</code></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td><code>PREFLIGHT_CLEARED</code></td>
+<td>Safe to merge</td>
+</tr>
+<tr>
+<td>422</td>
+<td><code>PREFLIGHT_REJECTED</code></td>
+<td>Trespass or unresolved TX-HT tickets</td>
+</tr>
+</tbody>
+</table>
+<p>Plug-and-play GitHub Action:
+<code>.github/workflows/gaijinn-gate.yml</code></p>
+<hr />
+<h2 id="section-4-empirical-results--the-final-exam">Section 4:
+Empirical Results — The Final Exam</h2>
+<h3 id="victory-lap-gateway-tmpgaijinn-victory-lap-gateway">Victory Lap
+Gateway (<code>/tmp/gaijinn-victory-lap-gateway</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target</td>
+<td><code>examples/tiny-python-service</code></td>
+</tr>
+<tr>
+<td>Workers</td>
+<td>2 (live Grok Build)</td>
+</tr>
+<tr>
+<td>Mode</td>
+<td><code>GAIJINN_HANDOFF_GATEWAYS=1</code>, real agents (no mock
+grid)</td>
+</tr>
+<tr>
+<td>Model</td>
+<td><code>grok-composer-2.5-fast</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sprint-runtime">Sprint runtime</h3>
+<table>
+<thead>
+<tr>
+<th>Worker</th>
+<th>Scope</th>
+<th>Elapsed</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>worker-001</td>
+<td><code>tests/test_api.py</code></td>
+<td><strong>30.8s</strong></td>
+<td>completed</td>
+</tr>
+<tr>
+<td>worker-002</td>
+<td><code>tiny_service/service.py</code></td>
+<td><strong>34.6s</strong></td>
+<td>completed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="handoff-bus-telemetry">Handoff bus telemetry</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tickets raised</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Tickets resolved</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Pending tickets</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>transaction_bus_synchronized</code></td>
+<td><strong>true</strong></td>
+</tr>
+<tr>
+<td>Scaffold tickets dropped (parser hardening)</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="merge-governance-score">Merge governance score</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;convergence&quot;</span><span class="fu">:</span> <span class="fl">1.0</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;atomic_weld_units&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merged_workers&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;blocked_workers&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;conflicted_workers&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;handoff_isolation&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transaction_bus_synchronized&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merge_order&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;worker-002&quot;</span><span class="ot">,</span> <span class="st">&quot;worker-001&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merge_latency_ms&quot;</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;validation_pass_rate&quot;</span><span class="fu">:</span> <span class="fl">1.0</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="quality-harness">Quality harness</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit tests (repository)</td>
+<td><strong>241</strong> collected</td>
+</tr>
+<tr>
+<td>Preflight gate tests</td>
+<td>9 passed</td>
+</tr>
+<tr>
+<td>Merge conflicts</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Integration branch contamination</td>
+<td><strong>0</strong> (blocked at validation + CI gate)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="head-to-head-exam-1-vs-final-exam">Head-to-head: Exam 1 vs Final
+Exam</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Exam 1 (trespass)</th>
+<th>Final Exam (gateway)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cross-boundary strategy</td>
+<td>Direct sibling write</td>
+<td><code>TX-HT-84348F</code> handoff ticket</td>
+</tr>
+<tr>
+<td>Convergence</td>
+<td>0.50</td>
+<td><strong>1.0</strong></td>
+</tr>
+<tr>
+<td>Blocked workers</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Atomic weld blocks</td>
+<td>N/A (legacy)</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Human merge recovery</td>
+<td>Required</td>
+<td><strong>None</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="section-5-enterprise-monorepo-scaling-telemetry">Section 5:
+Enterprise Monorepo Scaling Telemetry</h2>
+<h3 id="phase-2-dogfood-profile">Phase 2 dogfood profile</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target</td>
+<td>Gaijinn monorepo (<code>gaijinn/integration</code>)</td>
+</tr>
+<tr>
+<td>Graph profile</td>
+<td><strong>171 code nodes</strong> · <strong>152 import edges</strong>
+· <strong>92 shadow bridges</strong> (κ ≤ −0.30)</td>
+</tr>
+<tr>
+<td>Audit mode</td>
+<td>Gateway recommended (<code>GAIJINN_HANDOFF_GATEWAYS=1</code>)</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td><strong>4</strong> concurrent
+(<code>worker-001</code>–<code>004</code>)</td>
+</tr>
+<tr>
+<td>Isolation mode</td>
+<td><strong>Filesystem copy fallback</strong> (no per-worker
+<code>.git</code>; hash/<code>filecmp</code> delta tracking)</td>
+</tr>
+<tr>
+<td>Model</td>
+<td><code>grok-composer-2.5-fast</code></td>
+</tr>
+<tr>
+<td>Sprint completion</td>
+<td><strong>4/4</strong> workers completed (~<strong>163s</strong> wall
+per worker)</td>
+</tr>
+<tr>
+<td>Work units</td>
+<td><code>WU-PH2-001</code> billing · <code>WU-PH2-002</code>
+api/preflight · <code>WU-PH2-003</code> handoff/merge helpers ·
+<code>WU-PH2-004</code> tests</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>2026-06-16</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parallel-efficiency-matrix-monorepo-self-audit">Parallel
+Efficiency Matrix (monorepo self-audit)</h3>
+<p><code>gaijinn audit .</code> on the production Gaijinn tree
+quantifies the <strong>40-file atomic serialization trap</strong> that
+naive union-find welding would impose:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Legacy (union-find weld)</th>
+<th>Gateway (<code>GAIJINN_HANDOFF_GATEWAYS=1</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atomic weld blocks</td>
+<td><strong>2</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Largest weld (files)</td>
+<td><strong>40</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Total files in atomic welds</td>
+<td><strong>44</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Files unlocked from welds</td>
+<td>—</td>
+<td><strong>44</strong></td>
+</tr>
+<tr>
+<td>Handoff gateway edges (shadow bridges)</td>
+<td>—</td>
+<td><strong>92</strong></td>
+</tr>
+<tr>
+<td>Max parallel workers</td>
+<td>49</td>
+<td>47</td>
+</tr>
+<tr>
+<td>Work units partitioned</td>
+<td>54</td>
+<td>54</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> Without gateway mode, two blunt
+atomic welds would serialize <strong>44 files</strong>—including a
+<strong>40-file cluster</strong>—forcing sequential agent execution
+across deeply coupled CLI, supervisor, and test surfaces. Gateway
+partitioning replaces those welds with <strong>92 HANDOFF_ONLY
+edges</strong>, preserving lane discipline while allowing four workers
+to sprint concurrently on billing, API, merge helpers, and tests.</p>
+<h3 id="cross-cutting-transaction-tx-ht-6d0b24">Cross-cutting
+transaction: <code>TX-HT-6D0B24</code></h3>
+<p>Worker-001 owned
+<code>aoc_supervisor/aoc_supervisor/billing.py</code> only. Preflight
+API extensions required sibling-owned paths (<code>api.py</code>,
+<code>preflight.py</code>). The worker emitted a structured handoff
+instead of trespassing:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ticket_id</code></td>
+<td><strong><code>TX-HT-6D0B24</code></strong></td>
+</tr>
+<tr>
+<td><code>source_worker_id</code></td>
+<td><code>worker-001</code></td>
+</tr>
+<tr>
+<td><code>target_work_unit_id</code></td>
+<td><code>WU-PH2-002</code></td>
+</tr>
+<tr>
+<td><code>target_file</code></td>
+<td><code>aoc_supervisor/aoc_supervisor/api.py</code></td>
+</tr>
+<tr>
+<td><code>required_mutation_context</code></td>
+<td>Import settlement localization APIs from <code>billing.py</code>;
+extend <code>POST /api/v1/preflight</code>; wire idempotent
+<code>deduct_deployment_fee()</code> at grid-spawn</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bus telemetry (final ledger):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tickets raised</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Tickets resolved</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Pending tickets</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Scaffold tickets dropped (regex hardening)</td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><code>transaction_bus_synchronized</code></td>
+<td><strong>true</strong></td>
+</tr>
+<tr>
+<td>Sibling trespass violations</td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The scaffold filter discarded four parser echoes from worker
+<code>output.log</code> streams—noise that would have polluted the
+transaction bus in a less hardened ingest path.</p>
+<h3 id="copy-mode-instrumentation-and-validation-hardening">Copy-mode
+instrumentation and validation hardening</h3>
+<p>Phase 2 exposed two copy-mode blind spots, both closed without
+re-spending agent tokens:</p>
+<ol type="1">
+<li><strong>Collect filesystem fallback</strong> — When worker sandboxes
+lack <code>.git</code>, <code>changed_files_filesystem()</code> compares
+scoped paths against the session baseline via hash/<code>filecmp</code>,
+feeding <code>collected.json</code> and the handoff queue.</li>
+<li><strong>Localized validation</strong> — <code>validate-worker</code>
+injects <code>GAIJINN_PROJECT_ROOT</code> and monorepo
+<code>PYTHONPATH</code> so pytest respects isolated sandboxes; scoped
+acceptance targets map each worker's <code>allowed_paths</code> to
+relevant test modules.</li>
+</ol>
+<h3 id="merge-governance-score-phase-2-final">Merge governance score
+(Phase 2 final)</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;convergence&quot;</span><span class="fu">:</span> <span class="fl">0.8889</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;validation_pass_rate&quot;</span><span class="fu">:</span> <span class="fl">1.0</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merged_workers&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;blocked_workers&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;conflicted_workers&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;handoff_isolation&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transaction_bus_synchronized&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merge.validation_pass_rate_full&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merge.no_blocked&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;merge_order&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;worker-003&quot;</span><span class="ot">]</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="why-08889-is-the-correct-enterprise-score">Why 0.8889 is the
+correct enterprise score</h3>
+<p>A lesser governance layer would pad convergence to
+<strong>1.0</strong> when validation is green. Gaijinn does not.</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Phase 2 value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validation_pass_rate</code></td>
+<td><strong>1.0</strong></td>
+<td>All four workers passed every gate (path allowlist, scope isolation,
+handoff protocol, scoped pytest)</td>
+</tr>
+<tr>
+<td><code>transaction_bus_synchronized</code></td>
+<td><strong>true</strong></td>
+<td><code>TX-HT-6D0B24</code> resolved; zero pending TX-HT tickets</td>
+</tr>
+<tr>
+<td><code>handoff_isolation</code></td>
+<td><strong>true</strong></td>
+<td>Zero sibling path writes across 171 nodes</td>
+</tr>
+<tr>
+<td><code>convergence</code></td>
+<td><strong>0.8889</strong></td>
+<td>Three workers returned
+<strong><code>PREFLIGHT_BLOCKED</code></strong> at merge—copy-mode
+workers with <strong>zero fresh filesystem deltas</strong> because
+billing, api/preflight, and test changes were <strong>already
+structurally integrated</strong> in earlier merge passes</td>
+</tr>
+</tbody>
+</table>
+<p>For a CTO, this distinction is the product proof: the gate is not a
+passive stamp. It evaluates the <strong>delta of every line</strong> in
+every isolation sandbox. Redundant merge attempts are flagged honestly
+rather than silently skipped.</p>
+<h3 id="phase-1-vs-phase-2-head-to-head">Phase 1 vs Phase 2
+head-to-head</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Phase 1 (tiny-service gateway)</th>
+<th>Phase 2 (Gaijinn monorepo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code nodes</td>
+<td>12 (example service)</td>
+<td><strong>171</strong></td>
+</tr>
+<tr>
+<td>Concurrent workers</td>
+<td>2</td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td>Handoff ticket</td>
+<td><code>TX-HT-84348F</code></td>
+<td><strong><code>TX-HT-6D0B24</code></strong></td>
+</tr>
+<tr>
+<td>Isolation</td>
+<td>Git worktree</td>
+<td><strong>Copy fallback + filesystem diff</strong></td>
+</tr>
+<tr>
+<td>Validation pass rate</td>
+<td>1.0</td>
+<td><strong>1.0</strong></td>
+</tr>
+<tr>
+<td>Convergence</td>
+<td>1.0 (fresh deltas)</td>
+<td><strong>0.8889</strong> (honest no-op detection)</td>
+</tr>
+<tr>
+<td>Trespass violations</td>
+<td>0</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Atomic weld blocks (audit)</td>
+<td>0 (gateway)</td>
+<td><strong>0</strong> (gateway)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="architecture-closed-infrastructure-loop">Architecture: Closed
+Infrastructure Loop</h2>
+<pre class="mermaid"><code>flowchart LR
+  subgraph upstream [Upstream Diagnostics]
+    A[gaijinn audit]
+    A --&gt; B[Parallel Efficiency Matrix]
+  end
+
+  subgraph runtime [Runtime Enforcement]
+    C[gaijinn plan + GIV]
+    D[git worktree workers]
+    E[Council Transaction Bus]
+    C --&gt; D
+    D --&gt; E
+  end
+
+  subgraph merge [Merge Integrity]
+    F[collect]
+    G[validate-worker]
+    H[merge-grid]
+    I[governance.json]
+    F --&gt; G --&gt; H --&gt; I
+  end
+
+  subgraph ci [CI Boundary]
+    J[POST /api/v1/preflight]
+    K[gaijinn-gate.yml]
+    J --&gt; K
+  end
+
+  B --&gt; C
+  E --&gt; F
+  I --&gt; J</code></pre>
+<hr />
+<h2 id="what-this-means-for-engineering-leadership">What This Means for
+Engineering Leadership</h2>
+<p>Gaijinn is not a prompt wrapper. It is a <strong>zero-trust
+gatekeeper policy</strong> for agent-generated code:</p>
+<ol type="1">
+<li><strong>Audit before spend</strong> — <code>gaijinn audit</code>
+quantifies parallel efficiency loss from atomic welds.</li>
+<li><strong>Enforce at runtime</strong> — GIV contracts block trespass
+before merge, not after production.</li>
+<li><strong>Coordinate asynchronously</strong> — handoff tickets replace
+sibling writes without serializing entire clusters.</li>
+<li><strong>Gate at CI</strong> — preflight hook prevents integration
+branch contamination upstream.</li>
+</ol>
+<p>An engineering director running hundreds of concurrent agent
+executions gets a mathematical guarantee: <strong>non-compliant worker
+output never merges</strong>. The convergence score is an honest ledger,
+not a marketing metric.</p>
+<hr />
+<h2 id="reproduction">Reproduction</h2>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Structural audit (lead magnet)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gaijinn</span> audit . <span class="at">--json-only</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Gateway victory lap (live agents — requires grok on PATH)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">GAIJINN_HANDOFF_GATEWAYS</span><span class="op">=</span>1 <span class="fu">bash</span> scripts/dev/victory-lap-tiny.sh</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CI preflight smoke test</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-X</span> POST http://127.0.0.1:8000/api/v1/preflight <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">&quot;Content-Type: application/json&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&#39;{&quot;session_id&quot;:&quot;victory&quot;,&quot;worker_id&quot;:&quot;worker-001&quot;,&quot;project_path&quot;:&quot;/tmp/gaijinn-victory-lap-gateway&quot;}&#39;</span> <span class="kw">|</span> <span class="ex">jq</span> .</span></code></pre></div>
+<hr />
+<h2 id="appendix-a-artifact-index">Appendix A: Artifact Index</h2>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Merge governance</td>
+<td><code>.gaijinn/merge/governance.json</code></td>
+</tr>
+<tr>
+<td>Handoff queue</td>
+<td><code>.gaijinn/merge/handoff-queue.json</code></td>
+</tr>
+<tr>
+<td>Per-worker validation</td>
+<td><code>.gaijinn/merge/validated.json</code></td>
+</tr>
+<tr>
+<td>Audit report</td>
+<td><code>.gaijinn/audit-report.json</code> (or stdout via
+<code>--json-only</code>)</td>
+</tr>
+<tr>
+<td>Council ledger</td>
+<td><code>.gaijinn/bridge/council.jsonl</code></td>
+</tr>
+<tr>
+<td>Preflight endpoint</td>
+<td><code>aoc_supervisor/aoc_supervisor/api.py</code> →
+<code>/api/v1/preflight</code></td>
+</tr>
+<tr>
+<td>GitHub gate</td>
+<td><code>.github/workflows/gaijinn-gate.yml</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-b-phase-3-roadmap">Appendix B: Phase 3 Roadmap</h2>
+<ul>
+<li>Worktree-first dogfood policy (eliminate copy-mode toolchain
+shadowing)</li>
+<li><code>ALREADY_MERGED</code> classification for zero-delta copy-mode
+workers (convergence semantics)</li>
+<li>Production supervisor URL wiring for enterprise CI
+(<code>GAIJINN_SUPERVISOR_URL</code>)</li>
+</ul>
+<hr />
+<p><em>Neural Draft LLC — Gaijinn. Council entries through #215. Trade
+secret notice applies to curvature partitioning and handoff gateway
+algorithms.</em></p>
+</body>
+</html>

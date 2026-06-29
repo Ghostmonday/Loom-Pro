@@ -1,0 +1,91 @@
+[
+  {
+    "schema_version": 1,
+    "event_id": "evt_fixture_001",
+    "sequence": 0,
+    "emitted_at": "2026-06-18T22:00:00Z",
+    "session_id": "delib-fixture",
+    "correlation_id": "delib-fixture",
+    "causation_id": null,
+    "phase": "blueprinting",
+    "subphase": "intent_parse",
+    "classification": "guided",
+    "event_type": "phase.begin",
+    "data": {
+      "intent_summary": "harden auth middleware",
+      "mode": "architectural_teleology",
+      "layer1_timeout_s": 3600,
+      "provisional_session": true
+    }
+  },
+  {
+    "schema_version": 1,
+    "event_id": "evt_fixture_002",
+    "sequence": 1,
+    "emitted_at": "2026-06-18T22:00:01Z",
+    "session_id": "delib-fixture",
+    "correlation_id": "delib-fixture",
+    "causation_id": "evt_fixture_001",
+    "phase": "blueprinting",
+    "subphase": "graph_ingest",
+    "classification": "builder",
+    "event_type": "topology.node.upsert",
+    "data": {
+      "node_id": "aoc_supervisor/api.py",
+      "label": "api.py",
+      "path": "aoc_supervisor/api.py",
+      "node_kind": "file",
+      "gravity": 0.72,
+      "local_size": null,
+      "risk": "low",
+      "status": "discovered",
+      "work_unit_id": null,
+      "worker_id": null
+    }
+  },
+  {
+    "schema_version": 1,
+    "event_id": "evt_fixture_003",
+    "sequence": 2,
+    "emitted_at": "2026-06-18T22:00:02Z",
+    "session_id": "delib-fixture",
+    "correlation_id": "delib-fixture",
+    "causation_id": "evt_fixture_002",
+    "phase": "blueprinting",
+    "subphase": "curvature_compute",
+    "classification": "builder",
+    "event_type": "topology.edge.curvature",
+    "data": {
+      "edge_id": "a->b",
+      "source": "aoc_supervisor/api.py",
+      "target": "aoc_supervisor/preflight.py",
+      "kappa": -0.31,
+      "geometric_curvature": null,
+      "wasserstein_1": null,
+      "classification": "dark_bridge",
+      "risk_jump": true,
+      "source_distribution": null,
+      "target_distribution": null
+    }
+  },
+  {
+    "schema_version": 1,
+    "event_id": "evt_fixture_004",
+    "sequence": 3,
+    "emitted_at": "2026-06-18T22:00:03Z",
+    "session_id": "sess-fixture-final",
+    "correlation_id": "delib-fixture",
+    "causation_id": "evt_fixture_003",
+    "phase": "awaiting_swarm",
+    "subphase": "blueprint_freeze",
+    "classification": "guided",
+    "event_type": "phase.complete",
+    "data": {
+      "session_id": "sess-fixture-final",
+      "work_units": 4,
+      "high_risk_units": 1,
+      "recommended_swarm": 2,
+      "prepare": null
+    }
+  }
+]

@@ -1,0 +1,16 @@
+bindings:
+  sandbox.broken.surface:
+    domain: behavioral
+    description: Deliberately assigned to the wrong domain.
+  sandbox.broken.behavior:
+    domain: behavioral
+    description: Behavioral constraint.
+  sandbox.broken.operations:
+    domain: operational
+    description: Operational constraint.
+  sandbox.broken.governance:
+    domain: governance
+    description: Governance constraint.
+  sandbox.broken.institution:
+    domain: institutional
+    description: Institutional constraint.

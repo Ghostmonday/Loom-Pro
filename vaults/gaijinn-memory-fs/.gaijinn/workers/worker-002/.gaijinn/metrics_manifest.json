@@ -1,0 +1,3524 @@
+{
+  "curvature_meta": {
+    "alpha": 0.7,
+    "beta": 0.3,
+    "edges": {},
+    "shadow_bridge_count": 0,
+    "shadow_bridges": []
+  },
+  "gravity_meta": {
+    "automatic_rejection": true,
+    "hard_floor": 0.2,
+    "nodes": {
+      ".agents/hermes-deepseek.env.example": {
+        "automatic_rejection": false,
+        "capability_level": 0.75,
+        "gravity": 0.22499999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      ".agents/vault.yaml": {
+        "automatic_rejection": true,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.19999999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      ".cursorrules": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "00_Brain/invariants/INV-GAIJINN-BINDING.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/knowledge-linter.py": {
+        "automatic_rejection": true,
+        "capability_level": 0.4166666666666667,
+        "gravity": 0.125,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "10_Operations/tasks/OBSIDIAN-RUN-16.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5833333333333334,
+        "gravity": 0.17500000000000002,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "20_Projects/deepseek-hermes-setup.md": {
+        "automatic_rejection": true,
+        "capability_level": 1.0,
+        "gravity": 0.075,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 6.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": true
+      },
+      "30_Decisions/ADR-002-dual-invariant-domains.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.6666666666666666,
+        "gravity": 0.2375,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.0,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "40_Concepts/memory-execution-loop.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.3333333333333333,
+        "gravity": 0.09999999999999999,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "AGENTS.md": {
+        "automatic_rejection": false,
+        "capability_level": 0.7083333333333334,
+        "gravity": 0.25,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 4.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "CLAUDE.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5416666666666666,
+        "gravity": 0.19999999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.25,
+        "raw_side_effect_score": 0.75,
+        "side_effect_score": 0.25,
+        "sparse_high_capability": false
+      },
+      "README.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.875,
+        "gravity": 0.065625,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 5.25,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": true
+      },
+      "_multi-agent/events.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.5833333333333334,
+        "gravity": 0.17500000000000002,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 3.5,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "project.executor-profile.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.16666666666666666,
+        "gravity": 0.049999999999999996,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.0,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "raw/constitution-v0-section-xiii.md": {
+        "automatic_rejection": true,
+        "capability_level": 0.2916666666666667,
+        "gravity": 0.08750000000000001,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 1.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      },
+      "ui/vault-ui-intent-map.json": {
+        "automatic_rejection": true,
+        "capability_level": 0.4583333333333333,
+        "gravity": 0.13749999999999998,
+        "in_degree": 0.0,
+        "out_degree": 0.0,
+        "raw_capability_level": 2.75,
+        "raw_side_effect_score": 0.0,
+        "side_effect_score": 0.0,
+        "sparse_high_capability": false
+      }
+    },
+    "rejected_nodes": [
+      ".agents/vault.yaml",
+      ".cursorrules",
+      "00_Brain/invariants/INV-GAIJINN-BINDING.md",
+      "10_Operations/knowledge-linter.py",
+      "10_Operations/tasks/OBSIDIAN-RUN-16.md",
+      "20_Projects/deepseek-hermes-setup.md",
+      "40_Concepts/memory-execution-loop.md",
+      "CLAUDE.md",
+      "README.md",
+      "_multi-agent/events.md",
+      "project.executor-profile.json",
+      "raw/constitution-v0-section-xiii.md",
+      "ui/vault-ui-intent-map.json"
+    ]
+  },
+  "inferred_path": ".gaijinn/inferred.json",
+  "merge_governance": {
+    "latest": {
+      "schema_version": 1,
+      "scored_at": "2026-06-19T21:27:53Z",
+      "structural_score": {
+        "atomic_weld_units": 2,
+        "blocked_workers": 0,
+        "conflict_free": true,
+        "conflicted_workers": 0,
+        "convergence": 0.5556,
+        "dry_run": false,
+        "handoff_isolation": false,
+        "invariants": {
+          "merge.handoff_isolation": false,
+          "merge.merged_work": false,
+          "merge.no_blocked": true,
+          "merge.no_conflicted": true,
+          "merge.not_dry_run": true,
+          "merge.order_valid": false,
+          "merge.phase_completed": true,
+          "merge.transaction_bus_synchronized": true,
+          "merge.validation_pass_rate_full": false
+        },
+        "merge_latency_ms": 1917000,
+        "merge_order": [],
+        "merge_order_valid": false,
+        "merged_workers": 0,
+        "transaction_bus_synchronized": true,
+        "validation_pass_rate": 0.0
+      }
+    },
+    "runs": [
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:17:33Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:17:43Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:17:48Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:17:58Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:51:51Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:52:00Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T20:52:05Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T21:42:37Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 2,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.4
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T21:44:46Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 2,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.4
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T21:53:37Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 2,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.4
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T21:54:12Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 2,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 36000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.4
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:10:14Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 5,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:10:46Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 3,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.8889,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-002",
+            "worker-005"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:43:13Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.8889,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 5000,
+          "merge_order": [
+            "worker-003",
+            "worker-005"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.4
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:44:52Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 22000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-004"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 3,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:45:02Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.7778,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:48:11Z",
+        "structural_score": {
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.8889,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 67000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.5
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:53:02Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:53:11Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:53:16Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:53:26Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:15Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:25Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:31Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:32Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:41Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:42Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:47Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:54:57Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:57:46Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T22:57:51Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:01:00Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:01:09Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:01:14Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:01:24Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:02:58Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:08Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:14Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:22Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:25Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:31Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:37Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:03:47Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:01Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:07Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:15Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:24Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:30Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:04:39Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:10:32Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:10:41Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:10:47Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:10:57Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:28:34Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:28:43Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:28:48Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:28:58Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-17T23:56:50Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 3000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:01:17Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:02:29Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:02:38Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:02:48Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:03:52Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:04:01Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:04:12Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:04:36Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:04:46Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:04:56Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:05:02Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:05:12Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:05:23Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:05:45Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:05:54Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:06:04Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:07:42Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:07:51Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 2,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:08:01Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": true,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": false,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006",
+            "worker-007"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 7,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T01:21:19Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.8889,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 4000,
+          "merge_order": [
+            "worker-002",
+            "worker-003",
+            "worker-004"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 3,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.6
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T02:15:05Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 4,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 3000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.2857
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T02:45:03Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 14,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:21:28Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 14,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:30:47Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 0,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:30:50Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 3000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:31:32Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:31:51Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 3000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:32:05Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": false,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": false,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:32:21Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 3,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.8889,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-007",
+            "worker-010",
+            "worker-011",
+            "worker-012",
+            "worker-014",
+            "worker-008",
+            "worker-009",
+            "worker-013"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 11,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T03:32:28Z",
+        "structural_score": {
+          "atomic_weld_units": 1,
+          "blocked_workers": 14,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T06:47:09Z",
+        "structural_score": {
+          "already_merged_workers": 11,
+          "atomic_weld_units": 2,
+          "blocked_workers": 3,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.7778,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "ledger_entries_written": 0,
+          "merge_latency_ms": 11683000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T07:20:02Z",
+        "structural_score": {
+          "already_merged_workers": 0,
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "ledger_entries_written": 6,
+          "merge_latency_ms": 15000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005",
+            "worker-006"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 6,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T08:10:32Z",
+        "structural_score": {
+          "already_merged_workers": 0,
+          "atomic_weld_units": 1,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "ledger_entries_written": 5,
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 5,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T08:11:00Z",
+        "structural_score": {
+          "already_merged_workers": 0,
+          "atomic_weld_units": 0,
+          "blocked_workers": 5,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": false,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "ledger_entries_written": 0,
+          "merge_latency_ms": 2000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-18T10:15:02Z",
+        "structural_score": {
+          "already_merged_workers": 0,
+          "atomic_weld_units": 0,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 1.0,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": true,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": true,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": true
+          },
+          "ledger_entries_written": 0,
+          "merge_latency_ms": 1000,
+          "merge_order": [
+            "worker-001",
+            "worker-002",
+            "worker-003",
+            "worker-004",
+            "worker-005"
+          ],
+          "merge_order_valid": true,
+          "merged_workers": 5,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 1.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-19T10:42:40Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.6667,
+          "dry_run": false,
+          "handoff_isolation": true,
+          "invariants": {
+            "merge.handoff_isolation": true,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 1920000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-19T13:00:44Z",
+        "structural_score": {
+          "already_merged_workers": 0,
+          "atomic_weld_units": 3,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": false,
+          "invariants": {
+            "merge.handoff_isolation": false,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "ledger_entries_written": 0,
+          "merge_latency_ms": 3000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-19T18:47:55Z",
+        "structural_score": {
+          "atomic_weld_units": 3,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": false,
+          "invariants": {
+            "merge.handoff_isolation": false,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 20834000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.0
+        }
+      },
+      {
+        "schema_version": 1,
+        "scored_at": "2026-06-19T21:27:53Z",
+        "structural_score": {
+          "atomic_weld_units": 2,
+          "blocked_workers": 0,
+          "conflict_free": true,
+          "conflicted_workers": 0,
+          "convergence": 0.5556,
+          "dry_run": false,
+          "handoff_isolation": false,
+          "invariants": {
+            "merge.handoff_isolation": false,
+            "merge.merged_work": false,
+            "merge.no_blocked": true,
+            "merge.no_conflicted": true,
+            "merge.not_dry_run": true,
+            "merge.order_valid": false,
+            "merge.phase_completed": true,
+            "merge.transaction_bus_synchronized": true,
+            "merge.validation_pass_rate_full": false
+          },
+          "merge_latency_ms": 1917000,
+          "merge_order": [],
+          "merge_order_valid": false,
+          "merged_workers": 0,
+          "transaction_bus_synchronized": true,
+          "validation_pass_rate": 0.0
+        }
+      }
+    ],
+    "schema_version": 1
+  },
+  "reflective_meta": {
+    "curvature_measurement": {
+      "shadowbridge_count": 0,
+      "shadowbridges": []
+    },
+    "intent_node_count": 0,
+    "layer": "reflective",
+    "schema_version": 1,
+    "shadowbridge_count": 0,
+    "shadowbridges": [],
+    "state_path_chaining": {
+      "dependency_contracts": [],
+      "edges": [],
+      "lifecycle_chains": []
+    },
+    "topological_boundary_scan": {
+      "capability_ceilings": [],
+      "ceiling_count": 0
+    },
+    "topological_inference": {
+      "dependency_contracts": [],
+      "disconnected_lifecycle_gaps": [],
+      "gap_count": 0,
+      "lifecycle_chains": [],
+      "state_graph": {},
+      "state_path_edges": []
+    },
+    "type_flow_analysis": {
+      "puncture_count": 0,
+      "shadowbridge_count": 0,
+      "shadowbridges": []
+    }
+  },
+  "schema_version": 1
+}

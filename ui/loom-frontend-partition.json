@@ -1,0 +1,49 @@
+{
+  "packet.frontend.hub": [
+    "view.project-hub",
+    "control.hub.open_blueprint",
+    "control.hub.import_repo",
+    "control.hub.create_manifold",
+    "control.hub.resume_work",
+    "display.hub.recent_projects",
+    "display.hub.activity_feed",
+    "display.hub.drift_deviation",
+    "display.hub.ratification_list",
+    "display.hub.module_health"
+  ],
+  "packet.frontend.claims": [
+    "view.claims-ledger",
+    "display.claims.inferred",
+    "display.claims.confirmed",
+    "control.claims.reconcile"
+  ],
+  "packet.frontend.observatory": [
+    "view.topological-observatory",
+    "display.observatory.svg_canvas",
+    "display.observatory.node_inspector",
+    "control.observatory.telemetry_stream"
+  ],
+  "packet.frontend.curvature": [
+    "view.curvature-analysis",
+    "control.curvature.cohesion_slider",
+    "control.curvature.bridge_slider",
+    "display.curvature.telemetry_snapshot"
+  ],
+  "packet.frontend.ratification": [
+    "view.blueprint-ratification",
+    "control.ratify.worker_count",
+    "control.ratify.approve"
+  ],
+  "packet.frontend.packets": [
+    "view.packet-export",
+    "control.packets.file_filter",
+    "control.packets.spawn",
+    "display.packets.log_console",
+    "display.packets.download_links"
+  ],
+  "packet.frontend.forge": [
+    "view.intent-forge",
+    "control.forge.chat_input",
+    "display.forge.chat_messages"
+  ]
+}

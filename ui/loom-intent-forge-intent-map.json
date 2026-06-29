@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "surface": "loom-vision-canvas",
+  "system": "loom",
+  "parent_spec": "ui/loom-system-intent-map.json",
+  "route": "/",
+  "description": "Loom Vision Canvas — where the user expresses their idea and Loom interrogates until readiness. Isomorphic to UiIntentDriver intent-forge actions. After handoff, user proceeds to command-engine teleology or terminal.",
+  "implementation_status": "contract_only",
+  "handoff_target": "/command-engine?step=teleology&session_id={session_id}",
+  "alternate_handoff": "/terminal?forge_session_id={session_id}",
+  "api_prefix": "/api/v1/intent-forge",
+  "states": [
+    "CREATED",
+    "ANALYZING",
+    "QUESTIONING",
+    "PAUSED",
+    "CONFLICT_RESOLUTION",
+    "VALIDATING",
+    "FINAL_CONFIRMATION",
+    "FINALIZING",
+    "FINALIZED",
+    "HANDED_OFF"
+  ],
+  "ui_phases": ["idle", "analyzing", "questioning", "ready", "retry"],
+  "elements": {
+    "vision.prompt": {"dom_id": "prompt-input", "type": "textarea", "label": "Express your vision"},
+    "vision.start": {"dom_id": "btn-start-session", "type": "button", "triggers": "intake.start_session"},
+    "question.text": {"dom_id": "question-text", "type": "heading", "invariant": "exactly_one_visible"},
+    "question.why": {"dom_id": "question-why", "type": "region", "label": "Why Loom asks this"},
+    "question.default": {"dom_id": "question-default", "type": "region", "optional": true},
+    "question.answer": {"dom_id": "answer-input", "type": "textarea", "autosave": true},
+    "question.submit": {"dom_id": "btn-submit-answer", "type": "button", "no_auto_submit": true},
+    "question.undo_draft": {"dom_id": "btn-undo-draft", "type": "button"},
+    "question.finalize_now": {"dom_id": "btn-finalize-now", "type": "button", "advanced": true},
+    "understanding.list": {"dom_id": "understanding-list", "type": "list", "shows": ["confirmed", "inferred", "assumed", "contradicted"]},
+    "readiness.score": {"dom_id": "readiness-score", "type": "metric"},
+    "readiness.reason": {"dom_id": "readiness-reason", "type": "label"},
+    "readiness.can_handoff": {"dom_id": "readiness-gate", "type": "gate", "visible_when": "readiness.score >= threshold"},
+    "analysis.overlay": {"dom_id": "analysis-overlay", "type": "status_overlay"},
+    "handoff.confirm": {"dom_id": "btn-confirm-handoff", "type": "button"},
+    "handoff.accept": {"dom_id": "btn-accept-handoff", "type": "button"},
+    "canvas.brand": {"dom_id": "loom-brand", "type": "static_copy", "text": "Loom"},
+    "canvas.subtitle": {"dom_id": "loom-subtitle", "type": "static_copy", "text": "Canvas your vision before architecture is synthesized"}
+  },
+  "flow": [
+    {"phase": "idle", "action": "intake.start_session", "api": ["POST /api/v1/intent-forge/sessions"]},
+    {"phase": "questioning", "action": "question.submit_answer", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/answers"]},
+    {"phase": "questioning", "action": "question.revise_answer", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/revise"]},
+    {"phase": "ready", "action": "handoff.confirm", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=confirm"]},
+    {"phase": "ready", "action": "handoff.accept", "api": ["POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=accept"]},
+    {"phase": "handed_off", "orchestrator_says": "Vision canvased. Proceed to teleological deliberation."}
+  ],
+  "actions": {
+    "intake.start_session": {
+      "input": {"prompt": "string", "tier": "paid|free"},
+      "effects": ["api.createSession", "ws.connect", "panel.questioning"],
+      "postconditions": ["session_status in (QUESTIONING, ANALYZING)"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.create_session",
+        "mode": "real"
+      },
+      "loom_note": "tier=paid is canonical Loom path; free is provisional smoke only"
+    },
+    "question.submit_answer": {
+      "input": {"answer": "string", "input_provenance": {"source": "typed|voice_transcript"}},
+      "effects": ["ui.analyzing", "evidence.reanalyze", "api.submitAnswer"],
+      "postconditions": ["complete_state_reanalysis", "exactly_one_next_question_or_stop"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "entrypoint": "AdaptiveQuestionEngine.select_next",
+        "provider": "aoc_supervisor/reasoning_provider.py",
+        "mode": "real",
+        "ticket": "LOOM-202"
+      }
+    },
+    "handoff.confirm": {
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff", "query": {"action": "confirm"}},
+      "effects": ["compile_executable_projection"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/blueprint_compiler.py",
+        "entrypoint": "compile_executable_projection",
+        "mode": "real"
+      }
+    },
+    "handoff.accept": {
+      "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff", "query": {"action": "accept"}},
+      "effects": ["session_status HANDED_OFF", "redirect handoff_target"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_forge_service.py",
+        "entrypoint": "IntentForgeService.accept_handoff",
+        "mode": "real"
+      }
+    }
+  },
+  "invariants": [
+    {"id": "loom.question.exactly_one", "when": "session_status == QUESTIONING", "require": "question-text visible AND at most one current_question"},
+    {"id": "loom.readiness.not_checklist", "when": "panel == questioning", "require": "readiness-score present AND domain checklist absent"},
+    {"id": "loom.no_prepare_here", "when": "any", "require": "orchestrate.prepare NOT callable from vision canvas — handoff required"}
+  ],
+  "ui_implementation": {
+    "files": ["sandbox_frontend/index.html", "sandbox_frontend/workspaces/intent-forge.html"],
+    "served_at": "/",
+    "ticket": "LOOM-207",
+    "mirror": "aoc_supervisor/ui_intent.py",
+    "status": "sandbox",
+    "note": "index.html is the unified shell; intent-forge.html is the workspace fragment loaded dynamically"
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "policy_id": "loom.experience-policy.v1",
+  "description": "Deny-by-default projection and mutation policy for Guided, Builder, and Operator experiences over one canonical Loom state machine.",
+  "deny_by_default": true,
+  "canonical_sources": [
+    "aoc-cli/aoc_cli/blueprint.py",
+    "aoc-cli/aoc_cli/gravity.py",
+    "aoc_supervisor/aoc_supervisor/api.py",
+    "ui/loom-ui-intent-map.json",
+    "ui/process-stage-ux-map.json"
+  ],
+  "modes": {
+    "guided": {
+      "rank": 10,
+      "label": "Guided",
+      "intent": "Prompt-first, compiler-directed orchestration with simplified explanations and no structural mutation authority.",
+      "capabilities": [
+        "view.workflow.timeline",
+        "view.graph.macro",
+        "view.blueprint.summary",
+        "view.work_unit.summary",
+        "view.governance.summary",
+        "view.error.summary",
+        "execute.blueprint.approve",
+        "execute.swarm.recommended",
+        "execute.sprint.atomic",
+        "execute.merge.request",
+        "execute.deliverable.download"
+      ],
+      "event_projection": {
+        "allow_classes": ["public", "guided"],
+        "redact_fields": [
+          "data.allowed_paths",
+          "data.denied_paths",
+          "data.source_distribution",
+          "data.target_distribution",
+          "data.wasserstein_1",
+          "data.raw_ast",
+          "data.stack_trace",
+          "data.command_log"
+        ],
+        "aggregate_events": {
+          "topology.edge.curvature": "topology.constraints.summary",
+          "topology.bridge.detected": "topology.constraints.summary",
+          "giv.scope.bound": "work_unit.isolation.summary",
+          "validation.gate.updated": "governance.summary.updated"
+        }
+      },
+      "visual_projection": {
+        "node_detail": "macro_work_units",
+        "edge_detail": "collapsed_constraint_count",
+        "jurisdiction_detail": "implicit",
+        "handoff_detail": "status_only",
+        "logs": "milestone_summary",
+        "controls": "large_step_actions"
+      }
+    },
+    "builder": {
+      "rank": 20,
+      "label": "Builder",
+      "intent": "Graph-first inspection and safe customization without authority to bypass compiler geometry or GIV isolation.",
+      "inherits": "guided",
+      "capabilities": [
+        "view.graph.full",
+        "view.curvature.classification",
+        "view.bridge.detail",
+        "view.weld.detail",
+        "view.gateway.detail",
+        "view.giv.scope",
+        "view.work_unit.paths",
+        "view.validation.detail",
+        "view.error.trace",
+        "mutate.acceptance_checks",
+        "mutate.handoff_strategy.request",
+        "mutate.phase_scope",
+        "mutate.swarm_size",
+        "mutate.executor_profile"
+      ],
+      "forbidden_capabilities": [
+        "mutate.geometry.threshold",
+        "mutate.blueprint.raw_patch",
+        "mutate.giv.path_boundary",
+        "mutate.invariant.absolute"
+      ],
+      "event_projection": {
+        "allow_classes": ["public", "guided", "builder"],
+        "redact_fields": [
+          "data.raw_ast",
+          "data.stack_trace.locals",
+          "data.secret_values",
+          "data.command_environment"
+        ]
+      },
+      "visual_projection": {
+        "node_detail": "files_and_work_units",
+        "edge_detail": "curvature_classification",
+        "jurisdiction_detail": "full_scope_boundary",
+        "handoff_detail": "ticket_lifecycle",
+        "logs": "structured_trace",
+        "controls": "inspection_and_safe_mutations"
+      }
+    },
+    "operator": {
+      "rank": 30,
+      "label": "Operator",
+      "intent": "Full structural inspection and controlled override authority with mandatory simulation, explicit confirmation, and immutable audit evidence.",
+      "inherits": "builder",
+      "capabilities": [
+        "view.curvature.raw_transport",
+        "view.ast.extraction_diff",
+        "view.error.raw",
+        "view.audit.full",
+        "mutate.blueprint.raw_patch",
+        "mutate.giv.path_boundary",
+        "mutate.invariant.absolute",
+        "mutate.geometry.threshold.preview",
+        "mutate.geometry.threshold.commit",
+        "mutate.promotion.waiver"
+      ],
+      "event_projection": {
+        "allow_classes": ["public", "guided", "builder", "operator"],
+        "redact_fields": [
+          "data.secret_values",
+          "data.command_environment.secrets"
+        ]
+      },
+      "visual_projection": {
+        "node_detail": "source_ast_and_runtime",
+        "edge_detail": "raw_curvature_transport",
+        "jurisdiction_detail": "editable_with_gate",
+        "handoff_detail": "ticket_payload_and_receipts",
+        "logs": "raw_with_secret_redaction",
+        "controls": "split_pane_and_override_workbench"
+      }
+    }
+  },
+  "capability_rules": {
+    "mutate.acceptance_checks": {
+      "minimum_mode": "builder",
+      "risk": "medium",
+      "requires": ["session.prepared", "blueprint.not_frozen"],
+      "emits": ["work_unit.acceptance_checks.updated", "audit.record.created"]
+    },
+    "mutate.handoff_strategy.request": {
+      "minimum_mode": "builder",
+      "risk": "high",
+      "semantics": "Request only. The compiler may accept, reject, or replace the requested weld/handoff strategy. Builder mode never forces topology.",
+      "requires": ["session.prepared", "geometry.baseline_valid", "explicit_reason"],
+      "emits": ["topology.strategy.requested", "topology.strategy.resolved", "audit.record.created"]
+    },
+    "mutate.blueprint.raw_patch": {
+      "minimum_mode": "operator",
+      "risk": "high",
+      "requires": ["reauthenticated", "explicit_reason", "json_patch_valid", "blueprint.schema_valid", "giv.regenerated", "preflight.pass"],
+      "emits": ["blueprint.patch.applied", "giv.scope.rebound", "audit.record.created"]
+    },
+    "mutate.giv.path_boundary": {
+      "minimum_mode": "operator",
+      "risk": "critical",
+      "requires": ["reauthenticated", "explicit_reason", "non_overlapping_scope", "blueprint.schema_valid", "preflight.pass"],
+      "emits": ["giv.scope.rebound", "audit.record.created"]
+    },
+    "mutate.geometry.threshold.preview": {
+      "minimum_mode": "operator",
+      "risk": "critical",
+      "requires": ["reauthenticated", "explicit_reason", "baseline_geometry_hash"],
+      "effects": ["simulation_only", "no_canonical_state_change"],
+      "emits": ["geometry.override.previewed"]
+    },
+    "mutate.geometry.threshold.commit": {
+      "minimum_mode": "operator",
+      "risk": "critical",
+      "requires": [
+        "reauthenticated",
+        "explicit_reason",
+        "matching_preview_id",
+        "impact_acknowledged",
+        "two_step_confirmation",
+        "custom_geometry_hash"
+      ],
+      "effects": ["mark_session_unsafe_geometry", "invalidate_prior_partition", "recompile_blueprint", "regenerate_givs", "rerun_preflight"],
+      "emits": ["geometry.override.committed", "audit.record.created"]
+    }
+  },
+  "invariants": [
+    {
+      "id": "policy.mode_cannot_escalate_client_side",
+      "rule": "The server resolves effective_mode from authenticated account and organization policy. Client-supplied mode may only request an equal or lower projection."
+    },
+    {
+      "id": "policy.canonical_state_is_mode_independent",
+      "rule": "Changing experience mode never mutates blueprint, graph, metrics, GIV, sprint, handoff, merge, or governance state."
+    },
+    {
+      "id": "policy.builder_never_forces_geometry",
+      "rule": "Builder strategy controls create compiler requests, not direct topology mutations."
+    },
+    {
+      "id": "policy.override_is_hash_audited",
+      "rule": "Every committed geometry or path-boundary override stores baseline hash, proposed hash, resulting hash, actor, reason, preview id, timestamp, and parent audit hash."
+    },
+    {
+      "id": "policy.validation_and_convergence_are_distinct",
+      "rule": "The UI must never collapse validation_pass_rate and convergence into one score or infer one from the other."
+    },
+    {
+      "id": "policy.project_aci_is_not_node_mass",
+      "rule": "Architectural Complexity Index is project-level telemetry. Node mass uses local structural gravity and optional local size metadata."
+    },
+    {
+      "id": "policy.secrets_never_project",
+      "rule": "No mode may receive secret values, credentials, tokens, or unredacted command environments."
+    }
+  ],
+  "audit_record_required_fields": [
+    "audit_id",
+    "audit_type",
+    "session_id",
+    "actor_id",
+    "actor_mode",
+    "reason",
+    "created_at",
+    "baseline_hash",
+    "result_hash",
+    "parent_audit_hash",
+    "status"
+  ]
+}

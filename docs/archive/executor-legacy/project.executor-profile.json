@@ -1,0 +1,285 @@
+{
+  "schema_version": 4,
+  "description": "Executor profiles for Gaijinn grid spawn. Mirrors grid_executor.py resolution logic.",
+  "last_updated": "2026-06-17T23:30:00Z",
+  "default_executor": "auto",
+  "profiles": {
+    "codex": {
+      "description": "OpenAI Codex CLI — default for auto resolution when installed",
+      "command": "codex",
+      "args": ["--acp", "--stdio"],
+      "model_metadata": {
+        "capability_rating": 0.85,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": true
+      },
+      "fallback_chain": ["grok", "deepseek"],
+      "fallback_config": {
+        "strategy": "sequential",
+        "timeout_s": 300,
+        "on_failure": "fallback_to_next"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 3,
+          "recovery_timeout_s": 60,
+          "half_open_max_requests": 1
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 1,
+          "max_delay_s": 30,
+          "multiplier": 2.0,
+          "max_retries": 3
+        },
+        "health_check": {
+          "enabled": true,
+          "ping_interval_s": 30,
+          "timeout_s": 5
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "reduce_workers",
+          "reduction_factor": 0.5
+        }
+      }
+    },
+    "grok": {
+      "description": "xAI Grok Composer — fallback from codex or primary for auto when codex absent",
+      "command": "grok",
+      "args": [],
+      "model_metadata": {
+        "capability_rating": 0.80,
+        "expected_throughput": "medium",
+        "supports_batch": false,
+        "supports_parallel_workers": false
+      },
+      "fallback_chain": ["deepseek", "hermes"],
+      "fallback_config": {
+        "strategy": "sequential",
+        "timeout_s": 300,
+        "on_failure": "fallback_to_next"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 2,
+          "recovery_timeout_s": 90,
+          "half_open_max_requests": 1
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 2,
+          "max_delay_s": 60,
+          "multiplier": 2.0,
+          "max_retries": 2
+        },
+        "health_check": {
+          "enabled": true,
+          "ping_interval_s": 60,
+          "timeout_s": 10
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "single_worker",
+          "reduction_factor": 0.3
+        }
+      }
+    },
+    "minimax": {
+      "description": "MiniMax M3 via Hermes CLI — Token Plan coding partner",
+      "command": "hermes",
+      "args": ["-m", "MiniMax-M3", "--provider", "minimax", "--yolo"],
+      "model_metadata": {
+        "capability_rating": 0.95,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": true
+      },
+      "fallback_chain": ["grok", "deepseek", "hermes"],
+      "fallback_config": {
+        "strategy": "sequential",
+        "timeout_s": 600,
+        "on_failure": "fallback_to_next"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 5,
+          "recovery_timeout_s": 30,
+          "half_open_max_requests": 2
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 1,
+          "max_delay_s": 15,
+          "multiplier": 1.5,
+          "max_retries": 5
+        },
+        "health_check": {
+          "enabled": true,
+          "ping_interval_s": 15,
+          "timeout_s": 5
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "reduce_workers",
+          "reduction_factor": 0.7
+        }
+      }
+    },
+    "deepseek": {
+      "description": "DeepSeek V4 Flash via Hermes CLI — high-throughput reasoning",
+      "command": "hermes",
+      "args": ["-m", "deepseek-v4-flash", "--provider", "deepseek", "--yolo"],
+      "model_metadata": {
+        "capability_rating": 0.90,
+        "expected_throughput": "high",
+        "supports_batch": true,
+        "supports_parallel_workers": true
+      },
+      "fallback_chain": ["hermes", "codex"],
+      "fallback_config": {
+        "strategy": "sequential",
+        "timeout_s": 600,
+        "on_failure": "fallback_to_next"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 5,
+          "recovery_timeout_s": 30,
+          "half_open_max_requests": 2
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 1,
+          "max_delay_s": 15,
+          "multiplier": 1.5,
+          "max_retries": 5
+        },
+        "health_check": {
+          "enabled": true,
+          "ping_interval_s": 15,
+          "timeout_s": 5
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "reduce_workers",
+          "reduction_factor": 0.7
+        }
+      }
+    },
+    "hermes": {
+      "description": "Hermes Agent CLI — general-purpose fallback executor",
+      "command": "hermes",
+      "args": ["--yolo"],
+      "model_metadata": {
+        "capability_rating": 0.75,
+        "expected_throughput": "medium",
+        "supports_batch": false,
+        "supports_parallel_workers": false
+      },
+      "fallback_chain": ["codex", "grok"],
+      "fallback_config": {
+        "strategy": "sequential",
+        "timeout_s": 300,
+        "on_failure": "report_failure"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 3,
+          "recovery_timeout_s": 60,
+          "half_open_max_requests": 1
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 2,
+          "max_delay_s": 30,
+          "multiplier": 2.0,
+          "max_retries": 3
+        },
+        "health_check": {
+          "enabled": true,
+          "ping_interval_s": 30,
+          "timeout_s": 5
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "reduce_workers",
+          "reduction_factor": 0.5
+        }
+      }
+    },
+    "auto": {
+      "description": "Auto-resolution — tries codex first, falls through grok then deepseek then hermes",
+      "command": null,
+      "args": [],
+      "model_metadata": {
+        "capability_rating": null,
+        "expected_throughput": "adaptive",
+        "supports_batch": false,
+        "supports_parallel_workers": false
+      },
+      "fallback_chain": ["codex", "grok", "minimax", "deepseek", "hermes"],
+      "fallback_config": {
+        "strategy": "auto_resolve",
+        "timeout_s": 600,
+        "on_failure": "report_failure"
+      },
+      "vault_specific_config": {
+        "circuit_breaker": {
+          "enabled": true,
+          "failure_threshold": 5,
+          "recovery_timeout_s": 60,
+          "half_open_max_requests": 1
+        },
+        "retry_backoff": {
+          "enabled": true,
+          "initial_delay_s": 1,
+          "max_delay_s": 60,
+          "multiplier": 2.0,
+          "max_retries": 5
+        },
+        "health_check": {
+          "enabled": false,
+          "ping_interval_s": 0,
+          "timeout_s": 0
+        },
+        "graceful_degradation": {
+          "enabled": true,
+          "fallback_mode": "single_worker",
+          "reduction_factor": 0.3
+        }
+      }
+    }
+  },
+  "convergence_thresholds": {
+    "production": {
+      "min_convergence": 1.0,
+      "max_rejected_nodes": 0,
+      "max_shadow_bridges": 0
+    },
+    "staging": {
+      "min_convergence": 0.95,
+      "max_rejected_nodes": 1,
+      "max_shadow_bridges": 0
+    },
+    "development": {
+      "min_convergence": 0.875,
+      "max_rejected_nodes": 5,
+      "max_shadow_bridges": 1
+    }
+  },
+  "fallback_profile_chain": {
+    "codex": ["grok", "minimax", "deepseek", "hermes"],
+    "grok": ["minimax", "deepseek", "hermes", "codex"],
+    "minimax": ["grok", "deepseek", "hermes", "codex"],
+    "deepseek": ["minimax", "hermes", "codex", "grok"],
+    "hermes": ["minimax", "codex", "grok", "deepseek"],
+    "auto": ["codex", "grok", "minimax", "deepseek", "hermes"]
+  }
+}

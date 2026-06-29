@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<body>
+  <main data-screen="sandbox.wrong" data-mission="wrong-mission">
+    <button onclick="doThing()">Unclassified</button>
+    <div id="status-box" data-classification="presentation" data-contract-path="broken.status">Status</div>
+    <div id="status-box" data-classification="display" data-contract-path="broken.other">Duplicate status</div>
+    <button
+      id="submit-btn"
+      data-classification="action_control"
+      data-action="sandbox.broken.submit"
+      data-feedback-target="status-box"
+      tabindex="2"
+      aria-label=""
+    ></button>
+  </main>
+  <aside data-screen="sandbox.second" data-mission="second-flow"></aside>
+</body>
+</html>

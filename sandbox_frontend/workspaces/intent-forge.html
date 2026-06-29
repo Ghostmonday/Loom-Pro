@@ -1,0 +1,83 @@
+<!-- Intent Forge — Workspace Content Fragment -->
+<!-- Loaded dynamically by shell.js into #workspace-content -->
+
+<div class="max-w-4xl mx-auto space-y-stack-lg">
+
+  <!-- Hero -->
+  <section class="mb-gutter">
+    <h1 class="font-headline-lg text-headline-lg text-primary mb-stack-md">LooM</h1>
+    <p class="text-on-surface-variant font-body-lg opacity-80">Canvas your vision before architecture is synthesized</p>
+  </section>
+
+  <!-- Question Panel -->
+  <div class="glass-panel rounded-xl p-container-margin space-y-stack-lg">
+    <div id="question-text" class="font-title-md text-title-md text-on-surface min-h-[2rem]">
+      What software vision would you like to realize today?
+    </div>
+    <div id="question-why" class="font-body-sm text-body-sm text-on-surface-variant/70">
+      LooM needs a starting point to interrogate your intent.
+    </div>
+    <div id="question-default" class="font-body-sm text-body-sm text-tertiary hidden">
+    </div>
+    <textarea id="answer-input"
+              class="w-full min-h-[100px] bg-surface-container-high border border-outline-variant/30 rounded-xl p-stack-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary resize-y"
+              placeholder="Describe your project or answer the question above..."></textarea>
+    <div class="flex gap-stack-md">
+      <button id="btn-submit-answer"
+              class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition">
+        Submit
+      </button>
+      <button id="btn-finalize-now"
+              class="px-6 py-2 border border-outline-variant/30 text-on-surface font-medium rounded-xl hover:bg-surface-container-high active:scale-95 transition-all spring-transition hidden">
+        Finalize Now
+      </button>
+    </div>
+  </div>
+
+  <!-- Readiness Gate -->
+  <div class="glass-panel rounded-xl p-container-margin">
+    <div class="flex items-center justify-between">
+      <div>
+        <span class="font-label-caps text-label-caps text-on-surface-variant">READINESS SCORE</span>
+        <div class="flex items-baseline gap-stack-sm mt-stack-sm">
+          <span id="readiness-score" class="text-[2rem] font-bold text-on-surface">0.00</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">/ 1.00</span>
+        </div>
+        <p id="readiness-reason" class="font-body-sm text-body-sm text-on-surface-variant mt-stack-sm">
+          Awaiting initial intent.
+        </p>
+      </div>
+      <div>
+        <div id="readiness-gate" class="gate px-stack-lg py-stack-md rounded-xl border-2" data-can-handoff="false">
+          <span class="font-label-caps text-label-caps">Handoff Ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Understanding Panel -->
+  <div class="glass-panel rounded-xl p-container-margin">
+    <h3 class="font-title-md text-title-md text-on-surface mb-stack-md">Understanding</h3>
+    <ul id="understanding-list" class="space-y-stack-sm">
+      <li class="font-body-sm text-body-sm text-on-surface-variant py-stack-sm border-b border-outline-variant/20">No requirements yet captured.</li>
+    </ul>
+  </div>
+
+  <!-- Handoff Controls -->
+  <div class="flex gap-stack-md">
+    <button id="btn-confirm-handoff"
+           class="px-6 py-2 bg-secondary text-on-secondary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
+      Confirm Handoff
+    </button>
+    <button id="btn-accept-handoff"
+           class="px-6 py-2 border border-outline-variant/30 text-on-surface font-medium rounded-xl hover:bg-surface-container-high active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
+      Accept Handoff
+    </button>
+  </div>
+
+  <!-- Analysis Overlay (hidden by default) -->
+  <div id="analysis-overlay" class="glass-panel rounded-xl p-container-margin hidden" data-busy="false">
+    <span class="font-label-caps text-label-caps text-primary">Analyzing...</span>
+  </div>
+
+</div>

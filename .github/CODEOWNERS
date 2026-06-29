@@ -1,0 +1,17 @@
+# Neural Draft LLC — Gaijinn proprietary codebase
+# All changes require review by code owners (GitHub branch protection).
+
+* @Ghostmonday
+
+# Patent, trade secret, and legal collateral
+/docs/campaign/ @Ghostmonday
+/docs/campaign/legal/ @Ghostmonday
+/docs/campaign/PROVISIONAL-PATENT-TECHNICAL-SPECIFICATION.md @Ghostmonday
+/LICENSE @Ghostmonday
+
+# Core IP implementations (gravity, GIV, orchestration, billing)
+/aoc-cli/aoc_cli/gravity.py @Ghostmonday
+/aoc-cli/aoc_cli/helpers/audit.py @Ghostmonday
+/aoc_supervisor/aoc_supervisor/billing.py @Ghostmonday
+/aoc_supervisor/aoc_supervisor/complexity.py @Ghostmonday
+/aoc_supervisor/aoc_supervisor/orchestrator.py @Ghostmonday

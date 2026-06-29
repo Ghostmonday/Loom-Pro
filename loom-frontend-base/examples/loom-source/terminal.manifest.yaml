@@ -1,0 +1,75 @@
+screen: loom.terminal
+mission: Size the swarm, execute the approved blueprint, validate the merge, and retrieve
+  the deliverable.
+mission_id: loom-terminal
+elements:
+- id: terminal-assign-swarm-btn
+  classification: action_control
+  action: orchestrate.swarm
+  feedback_target: terminal-feedback
+  label: Assign Recommended Swarm
+- id: terminal-deploy-btn
+  classification: action_control
+  action: deploy.sprint
+  feedback_target: terminal-feedback
+  label: Launch Atomic Sprint
+- id: terminal-poll-grid-btn
+  classification: action_control
+  action: grid.poll_status
+  feedback_target: terminal-feedback
+  label: Poll Worker Status
+- id: terminal-merge-btn
+  classification: action_control
+  action: merge.run
+  feedback_target: terminal-feedback
+  label: Run Governed Merge
+- id: terminal-poll-merge-btn
+  classification: action_control
+  action: merge.poll_status
+  feedback_target: terminal-feedback
+  label: Poll Merge Status
+- id: terminal-download-btn
+  classification: action_control
+  action: deliverable.download
+  feedback_target: terminal-feedback
+  label: Download Deliverable
+- id: terminal-diff-btn
+  classification: action_control
+  action: deliverable.view_diff
+  feedback_target: terminal-feedback
+  label: View Merged Diff
+- id: terminal-phase-display
+  classification: display
+  contract_path: loom.terminal.phase
+  label: Awaiting prepared blueprint
+- id: terminal-swarm-display
+  classification: display
+  contract_path: loom.terminal.swarm
+  label: No swarm assigned
+- id: terminal-grid-display
+  classification: display
+  contract_path: loom.terminal.grid
+  label: No active workers
+- id: terminal-merge-display
+  classification: display
+  contract_path: loom.terminal.merge
+  label: Merge idle
+- id: terminal-deliverable-display
+  classification: display
+  contract_path: loom.terminal.deliverable
+  label: Deliverable unavailable
+- id: terminal-feedback
+  classification: display
+  contract_path: loom.terminal.feedback
+  label: Terminal initialized
+  tag: output
+knowledge_bindings:
+  design_intent: loom.terminal.design_intent
+  behavioral: loom.terminal.behavioral
+  operational: loom.terminal.operational
+  governance: loom.terminal.governance
+  institutional: loom.terminal.institutional
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/terminal.smoke.yaml

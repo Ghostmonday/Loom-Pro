@@ -1,0 +1,47 @@
+# Gaijinn Intent Constraints
+
+## Project Prompt
+
+Build an Obsidian vault civilization with write-time compiled memory: folder taxonomy, YAML frontmatter, wikilinks, event ledger, and knowledge linter enforcing Section XIII joint governance.
+
+# Agent Intent Vector
+
+Worker: project
+
+## Allowed Paths
+- .
+
+## Denied Paths
+- none
+
+## Allowed Commands
+- none
+
+## Denied Commands
+- git push
+
+## Capabilities
+- constitution
+- knowledge
+- metrics
+- vault
+
+## Prohibitions
+- no destructive cleanup outside workspace
+- no edits outside assigned paths
+- no git push
+- no network calls
+- no secret exfiltration
+
+## Invariants
+- deterministic output
+- preserve existing project.json compatibility
+- write generated Gaijinn artifacts under .gaijinn/
+
+## Structural Tokens
+- handoff_only: true
+- no_sibling_trespass: true
+- scope_strict: true
+
+## Sibling Denied Paths
+- none

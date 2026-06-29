@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaijinn.local/schemas/topology-output.schema.json",
+  "title": "Loom Topology Output",
+  "description": "Layer 2 structure artifact. Graph + partitions shaped by curvature analysis. Feeds Loom map generator.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "graph_ref",
+    "clusters",
+    "work_units",
+    "curvature_meta"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "session_id": { "type": "string" },
+    "graph_ref": { "type": "string", "description": "Path to .gaijinn/graph.json or inline hash" },
+    "clusters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "node_ids"],
+        "properties": {
+          "id": { "type": "string" },
+          "node_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "high_curvature_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "curvature"],
+        "properties": {
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "curvature": { "type": "number" },
+          "is_shadow_bridge": { "type": "boolean" }
+        }
+      }
+    },
+    "boundary_candidates": { "type": "array", "items": { "type": "string" } },
+    "isolation_zones": { "type": "array", "items": { "type": "string" } },
+    "work_units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "paths"],
+        "properties": {
+          "id": { "type": "string" },
+          "paths": { "type": "array", "items": { "type": "string" } },
+          "operation": { "type": "string", "enum": ["ADD", "MODIFY", "DEPRECATE"] }
+        }
+      }
+    },
+    "handoff_gateway_count": { "type": "integer", "minimum": 0 },
+    "curvature_meta": {
+      "type": "object",
+      "required": ["curvature_floor"],
+      "properties": {
+        "curvature_floor": { "type": "number", "const": -0.30 },
+        "module": { "type": "string", "const": "aoc_cli/gravity.py" },
+        "entrypoint": { "type": "string", "const": "compute_gravity_and_curvature" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

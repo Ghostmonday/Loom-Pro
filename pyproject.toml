@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loom"
+dynamic = ["version"]
+description = "Loom CLI — gravity engine and analysis commands."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "networkx",
+    "numpy",
+    "POT",
+    "rich",
+    "typer",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Build Tools",
+]
+
+[project.optional-dependencies]
+api = [
+    "fastapi",
+    "jsonschema",
+    "uvicorn",
+]
+dev = [
+    "httpx",
+    "jsonschema",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
+[project.scripts]
+loom = "aoc_cli.cli:app"
+
+[tool.setuptools]
+packages = ["aoc_cli", "aoc_cli.commands", "aoc_cli.helpers", "aoc_supervisor"]
+
+[tool.setuptools.package-dir]
+aoc_cli = "aoc-cli/aoc_cli"
+aoc_supervisor = "aoc_supervisor/aoc_supervisor"
+
+[tool.setuptools.dynamic]
+version = {attr = "aoc_cli.__version__"}
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+exclude = [
+    "vaults/gaijinn-memory-fs",
+    "apply_innovations.py",
+    "final_patch.py",
+    "fix_merge.py",
+    "patch_api.py",
+    "patch_script.py",
+    "patch_script_v2.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "N", "UP", "S", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S603", "S607"]
+"scripts/dev/*.py" = ["S603", "S607"]
+"examples/*/tests/*" = ["S101"]
+"aoc-cli/aoc_cli/cli.py" = ["S603", "S607"]
+"aoc-cli/aoc_cli/helpers/*.py" = ["S603", "S607"]
+"aoc-cli/aoc_cli/commands/*.py" = ["S603", "S607"]
+"aoc_supervisor/aoc_supervisor/api.py" = ["S104", "S603"]
+"aoc_supervisor/aoc_supervisor/preflight.py" = ["S108"]
+"tests/test_preflight.py" = ["S108"]
+"aoc-cli/aoc_cli/semantic_moat.py" = ["S310"]
+"aoc_supervisor/aoc_supervisor/orchestrate_session.py" = ["S603"]
+"aoc_supervisor/aoc_supervisor/billing.py" = ["N818"]
+"aoc_supervisor/aoc_supervisor/enforcer.py" = ["N818"]
+
+[tool.coverage.run]
+branch = true
+source = ["aoc_cli", "aoc_supervisor"]
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "def __repr__", "if __name__ == .__main__.:"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--cov=aoc_cli", "--cov=aoc_supervisor", "--cov-report=term-missing", "--cov-report=xml", "--cov-fail-under=70"]

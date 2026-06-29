@@ -1,0 +1,318 @@
+{
+  "tick": 37,
+  "last_phase": 7,
+  "phases": {
+    "scan": {
+      "at": "2026-06-19T22:15:52Z",
+      "exit": 0,
+      "summary": "Scanned 96 files and 33 intent nodes into .gaijinn/graph.json"
+    },
+    "compile_intent": {
+      "at": "2026-06-19T22:31:52Z",
+      "exit": 0,
+      "summary": "allowed paths: . | prohibitions: no destructive cleanup outside workspace, no edits outside assigned paths, no git push, no network calls, no secret exfiltration | risk flags: none"
+    },
+    "analyze": {
+      "at": "2026-06-19T22:47:52Z",
+      "exit": 0,
+      "summary": "grid_spawn_ready: False | grok_available: True | blocked: integrity floor tripped, 52 flagged file(s), 6 coupling review(s)"
+    },
+    "plan": {
+      "at": "2026-06-19T23:03:52Z",
+      "exit": 0,
+      "summary": "intended_workers: 2 | highest_risk: high | shadow_bridge_units: 1"
+    },
+    "run_grid": {
+      "at": "2026-06-19T23:19:52Z",
+      "exit": 0,
+      "summary": "Created 2 worker directories under .gaijinn/workers using copy"
+    },
+    "collect": {
+      "at": "2026-06-19T23:51:52Z",
+      "exit": 0,
+      "summary": "Collected 2 worker(s); 0 completed \u2192 .gaijinn/merge/collected.json | Handoff queue: 0/0 resolved; 0 pending; 2 scaffold dropped"
+    },
+    "validate": {
+      "at": "2026-06-20T00:07:52Z",
+      "exit": 2,
+      "summary": "\u256d\u2500 Error \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e | \u2502 No such option '--all'.                                                      \u2502 | \u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    "merge": {
+      "at": "2026-06-19T21:27:51Z",
+      "exit": 0,
+      "summary": "Merge complete: 0 merged, 0 blocked, 0 conflicted \u2192 .gaijinn/merge/report.json"
+    },
+    "linter": {
+      "at": "2026-06-19T21:43:51Z",
+      "exit": 0,
+      "summary": "(Non-substitutable per Section XIII \u00a71) | \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550"
+    },
+    "council_digest": {
+      "at": "2026-06-19T21:59:51Z",
+      "exit": 0,
+      "summary": "Posted [182] as hermes \u2192 /home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/.gaijinn/bridge/council.md"
+    }
+  },
+  "history": [
+    {
+      "tick": 1,
+      "phase": 1,
+      "name": "scan",
+      "time": "2026-06-19T08:50:38Z",
+      "exit": 0
+    },
+    {
+      "tick": 2,
+      "phase": 2,
+      "name": "compile_intent",
+      "time": "2026-06-19T09:06:38Z",
+      "exit": 0
+    },
+    {
+      "tick": 3,
+      "phase": 3,
+      "name": "analyze",
+      "time": "2026-06-19T09:22:38Z",
+      "exit": 0
+    },
+    {
+      "tick": 4,
+      "phase": 4,
+      "name": "plan",
+      "time": "2026-06-19T09:38:38Z",
+      "exit": 0
+    },
+    {
+      "tick": 5,
+      "phase": 5,
+      "name": "run_grid",
+      "time": "2026-06-19T09:54:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 6,
+      "phase": 6,
+      "name": "collect",
+      "time": "2026-06-19T10:10:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 7,
+      "phase": 7,
+      "name": "validate",
+      "time": "2026-06-19T10:26:39Z",
+      "exit": 2
+    },
+    {
+      "tick": 8,
+      "phase": 8,
+      "name": "merge",
+      "time": "2026-06-19T10:42:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 9,
+      "phase": 9,
+      "name": "linter",
+      "time": "2026-06-19T10:58:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 10,
+      "phase": 10,
+      "name": "council_digest",
+      "time": "2026-06-19T11:14:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 11,
+      "phase": 1,
+      "name": "scan",
+      "time": "2026-06-19T11:30:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 12,
+      "phase": 2,
+      "name": "compile_intent",
+      "time": "2026-06-19T11:46:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 13,
+      "phase": 3,
+      "name": "analyze",
+      "time": "2026-06-19T12:02:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 14,
+      "phase": 4,
+      "name": "plan",
+      "time": "2026-06-19T12:18:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 15,
+      "phase": 5,
+      "name": "run_grid",
+      "time": "2026-06-19T12:34:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 16,
+      "phase": 6,
+      "name": "collect",
+      "time": "2026-06-19T12:50:39Z",
+      "exit": 0
+    },
+    {
+      "tick": 17,
+      "phase": 7,
+      "name": "validate",
+      "time": "2026-06-19T18:31:54Z",
+      "exit": 2
+    },
+    {
+      "tick": 18,
+      "phase": 8,
+      "name": "merge",
+      "time": "2026-06-19T18:47:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 19,
+      "phase": 9,
+      "name": "linter",
+      "time": "2026-06-19T19:03:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 20,
+      "phase": 10,
+      "name": "council_digest",
+      "time": "2026-06-19T19:19:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 21,
+      "phase": 1,
+      "name": "scan",
+      "time": "2026-06-19T19:35:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 22,
+      "phase": 2,
+      "name": "compile_intent",
+      "time": "2026-06-19T19:51:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 23,
+      "phase": 3,
+      "name": "analyze",
+      "time": "2026-06-19T20:07:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 24,
+      "phase": 4,
+      "name": "plan",
+      "time": "2026-06-19T20:23:54Z",
+      "exit": 0
+    },
+    {
+      "tick": 25,
+      "phase": 5,
+      "name": "run_grid",
+      "time": "2026-06-19T20:39:55Z",
+      "exit": 0
+    },
+    {
+      "tick": 26,
+      "phase": 6,
+      "name": "collect",
+      "time": "2026-06-19T20:55:55Z",
+      "exit": 0
+    },
+    {
+      "tick": 27,
+      "phase": 7,
+      "name": "validate",
+      "time": "2026-06-19T21:11:55Z",
+      "exit": 2
+    },
+    {
+      "tick": 28,
+      "phase": 8,
+      "name": "merge",
+      "time": "2026-06-19T21:27:51Z",
+      "exit": 0
+    },
+    {
+      "tick": 29,
+      "phase": 9,
+      "name": "linter",
+      "time": "2026-06-19T21:43:51Z",
+      "exit": 0
+    },
+    {
+      "tick": 30,
+      "phase": 10,
+      "name": "council_digest",
+      "time": "2026-06-19T21:59:51Z",
+      "exit": 0
+    },
+    {
+      "tick": 31,
+      "phase": 1,
+      "name": "scan",
+      "time": "2026-06-19T22:15:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 32,
+      "phase": 2,
+      "name": "compile_intent",
+      "time": "2026-06-19T22:31:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 33,
+      "phase": 3,
+      "name": "analyze",
+      "time": "2026-06-19T22:47:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 34,
+      "phase": 4,
+      "name": "plan",
+      "time": "2026-06-19T23:03:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 35,
+      "phase": 5,
+      "name": "run_grid",
+      "time": "2026-06-19T23:19:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 36,
+      "phase": 6,
+      "name": "collect",
+      "time": "2026-06-19T23:51:52Z",
+      "exit": 0
+    },
+    {
+      "tick": 37,
+      "phase": 7,
+      "name": "validate",
+      "time": "2026-06-20T00:07:52Z",
+      "exit": 2
+    }
+  ],
+  "last_run": "2026-06-20T00:07:52Z"
+}

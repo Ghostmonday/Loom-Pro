@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+VM_ENV="${VM_ENV:-$HOME/VMs/minimax-sandbox/vm.env}"
+[[ -f "$VM_ENV" ]] || { echo "Missing $VM_ENV — run install.sh first" >&2; exit 1; }
+# shellcheck source=/dev/null
+source "$VM_ENV"
+
+DISK_PATH="${DISK_PATH:-$VM_ROOT/disk/system.qcow2}"
+ISO_PATH="${ISO_PATH:-$VM_ROOT/install/Win11_Eval_Enterprise.iso}"
+VIRTIO_ISO_PATH="${VIRTIO_ISO_PATH:-$VM_ROOT/install/virtio-win.iso}"
+OVMF_VARS_PATH="${OVMF_VARS_PATH:-$VM_ROOT/firmware/OVMF_VARS.fd}"
+TPM_DIR="${TPM_DIR:-$VM_ROOT/state/tpm}"
+SHARE_PATH="${SHARE_PATH:-$VM_ROOT/share}"
+RAM_MB="${RAM_MB:-8192}"
+VCPUS="${VCPUS:-4}"
+FIRST_BOOT="${FIRST_BOOT:-1}"
+
+[[ -f "$DISK_PATH" ]] || { echo "Missing disk: $DISK_PATH" >&2; exit 1; }
+
+OVMF_CODE=/usr/share/OVMF/OVMF_CODE_4M.ms.fd
+[[ -f "$OVMF_CODE" ]] || OVMF_CODE=/usr/share/OVMF/OVMF_CODE.fd
+[[ -f "$OVMF_CODE" ]] || { echo "Install ovmf package" >&2; exit 1; }
+[[ -f "$OVMF_VARS_PATH" ]] || { echo "Missing $OVMF_VARS_PATH" >&2; exit 1; }
+
+if ! command -v qemu-system-x86_64 >/dev/null 2>&1; then
+  echo "Install QEMU: bash ~/Desktop/Gaijinn/scripts/ops/minimax-windows-vm/install.sh" >&2
+  exit 1
+fi
+if ! command -v swtpm >/dev/null 2>&1; then
+  echo "Install swtpm: sudo apt install swtpm" >&2
+  exit 1
+fi
+
+mkdir -p "$VM_ROOT/logs" "$TPM_DIR" "$SHARE_PATH"
+
+start_swtpm() {
+  if [[ -f "$TPM_DIR/swtpm.pid" ]] && kill -0 "$(cat "$TPM_DIR/swtpm.pid")" 2>/dev/null; then
+    return 0
+  fi
+  rm -f "$TPM_DIR/swtpm-sock" "$TPM_DIR/swtpm.pid"
+  swtpm socket \
+    --tpmstate "dir=$TPM_DIR" \
+    --ctrl "type=unixio,path=$TPM_DIR/swtpm-sock" \
+    --tpm2 \
+    --log "file=-,level=0" \
+    --daemon \
+    --pid "file=$TPM_DIR/swtpm.pid"
+  for _ in 1 2 3 4 5; do
+    [[ -S "$TPM_DIR/swtpm-sock" ]] && return 0
+    sleep 0.2
+  done
+  echo "ERROR: swtpm socket did not come up at $TPM_DIR/swtpm-sock" >&2
+  exit 1
+}
+
+stop_swtpm() {
+  if [[ -f "$TPM_DIR/swtpm.pid" ]]; then
+    kill "$(cat "$TPM_DIR/swtpm.pid")" 2>/dev/null || true
+    rm -f "$TPM_DIR/swtpm.pid" "$TPM_DIR/swtpm-sock"
+  fi
+}
+
+cleanup() {
+  stop_swtpm
+}
+trap cleanup EXIT INT TERM
+
+start_swtpm
+
+CDROM_ARGS=()
+BOOT_ARGS=(-boot "order=c,menu=on,splash-time=5000")
+if [[ "$FIRST_BOOT" == "1" ]]; then
+  BOOT_ARGS=(-boot "order=dc,menu=on,splash-time=5000")
+  if [[ -f "$ISO_PATH" ]]; then
+    CDROM_ARGS+=(
+      -drive "file=$ISO_PATH,media=cdrom,if=none,id=cdrom0,readonly=on"
+      -device "ide-cd,bus=ahci.0,drive=cdrom0"
+    )
+  else
+    echo "WARN: install ISO missing at $ISO_PATH" >&2
+  fi
+  if [[ -f "$VIRTIO_ISO_PATH" ]]; then
+    CDROM_ARGS+=(
+      -drive "file=$VIRTIO_ISO_PATH,media=cdrom,if=none,id=cdrom1,readonly=on"
+      -device "ide-cd,bus=ahci.1,drive=cdrom1"
+    )
+  else
+    echo "WARN: virtio-win ISO missing — Windows may not see the disk." >&2
+    echo "       Run: bash ~/Desktop/Gaijinn/scripts/ops/minimax-windows-vm/install.sh" >&2
+  fi
+fi
+
+LOG="$VM_ROOT/logs/qemu-$(date +%Y%m%d-%H%M%S).log"
+
+echo "==> Launching ${VM_NAME:-minimax-sandbox}"
+echo "    RAM: ${RAM_MB}MB  CPUs: $VCPUS  FIRST_BOOT=$FIRST_BOOT"
+echo "    TPM: $TPM_DIR"
+echo "    Share tag: hostshare → $SHARE_PATH"
+if [[ "$FIRST_BOOT" == "1" ]]; then
+  echo ""
+  echo "    Windows 11 install tips:"
+  echo "    1) UEFI boot menu → pick DVD/CD (Win11 ISO)"
+  echo "    2) At 'Where to install' → Load driver → virtio-win CD → viostor\\w11\\amd64"
+  echo "    3) After install: bash ~/Desktop/Gaijinn/scripts/ops/minimax-windows-vm/integrate.sh"
+  echo ""
+fi
+
+qemu-system-x86_64 \
+  -name "${VM_NAME:-minimax-sandbox}" \
+  -machine "type=q35,accel=kvm:tcg" \
+  -cpu host \
+  -smp "$VCPUS" \
+  -m "$RAM_MB" \
+  -drive "if=pflash,format=raw,readonly=on,file=$OVMF_CODE" \
+  -drive "if=pflash,format=raw,file=$OVMF_VARS_PATH" \
+  -chardev "socket,id=chrtpm,path=$TPM_DIR/swtpm-sock" \
+  -tpmdev "emulator,id=tpm0,chardev=chrtpm" \
+  -device "tpm-crb,tpmdev=tpm0" \
+  -device "ich9-ahci,id=ahci" \
+  -drive "file=$DISK_PATH,if=none,id=disk0,format=qcow2,cache=writeback,aio=threads,discard=unmap" \
+  -device "virtio-blk-pci,drive=disk0" \
+  "${CDROM_ARGS[@]}" \
+  -netdev "user,id=net0,hostfwd=tcp::3389-:3389" \
+  -device "virtio-net-pci,netdev=net0" \
+  -device "virtio-vga" \
+  -display "gtk,gl=off" \
+  -usb -device "usb-tablet" \
+  -audiodev "pa,id=audio0" -device "intel-hda" -device "hda-duplex,audiodev=audio0" \
+  -rtc "base=localtime,clock=host" \
+  -fsdev "local,id=fsdev0,path=$SHARE_PATH,security_model=mapped-xattr" \
+  -device "virtio-9p-pci,fsdev=fsdev0,mount_tag=hostshare" \
+  "${BOOT_ARGS[@]}" \
+  -D "$LOG" \
+  "$@"

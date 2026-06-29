@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "execution_mode": "Chromium set_content with generated HTML/CSS/JS inlined; localStorage polyfilled because network and file navigation are administrator-blocked in this environment.",
+  "checks": [
+    {
+      "name": "terminal rejects swarm before prepare",
+      "passed": true
+    },
+    {
+      "name": "vision keyboard activation",
+      "passed": true
+    },
+    {
+      "name": "vision contract metadata stable",
+      "passed": true
+    },
+    {
+      "name": "command action-specific progression",
+      "passed": true
+    },
+    {
+      "name": "command contract metadata stable",
+      "passed": true
+    },
+    {
+      "name": "terminal merge completes cleanly",
+      "passed": true
+    },
+    {
+      "name": "terminal contract metadata stable",
+      "passed": true
+    },
+    {
+      "name": "deliverable launch and lineage",
+      "passed": true
+    },
+    {
+      "name": "deliverable contract metadata stable",
+      "passed": true
+    },
+    {
+      "name": "continuation reaches handed off",
+      "passed": true
+    },
+    {
+      "name": "continuation contract metadata stable",
+      "passed": true
+    }
+  ],
+  "console_errors": [],
+  "page_errors": []
+}

@@ -1,0 +1,496 @@
+<!-- Loom Blueprint Workbench - Curvature Analysis -->
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Curvature Analysis | Loom Blueprint Workbench</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Geist';
+            src: url('https://cdn.jsdelivr.net/npm/geist@1.0.0/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/files/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+        }
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #131315;
+            color: #e4e2e4;
+            overflow: hidden;
+            height: 100vh;
+        }
+        .glass-panel {
+            background: rgba(28, 28, 30, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-popover {
+            background: rgba(44, 44, 46, 0.9);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #aac7ff;
+            border: 2px solid #003064;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(170, 199, 255, 0.4);
+            transition: transform 0.1s ease;
+        }
+        .custom-slider::-webkit-slider-thumb:active {
+            transform: scale(1.2);
+        }
+        .thin-bar {
+            width: 2px;
+            transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#00531a",
+                        "surface-container-highest": "#353437",
+                        "tertiary": "#ffb868",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb868",
+                        "tertiary-fixed": "#ffddbb",
+                        "outline-variant": "#414754",
+                        "on-secondary-container": "#004615",
+                        "background": "#131315",
+                        "secondary": "#47e266",
+                        "on-tertiary": "#482900",
+                        "tertiary-container": "#ce7f00",
+                        "surface-variant": "#353437",
+                        "surface": "#131315",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#005db8",
+                        "on-surface-variant": "#c0c6d6",
+                        "on-secondary-fixed": "#002106",
+                        "surface-container": "#1f1f21",
+                        "on-primary": "#003064",
+                        "on-primary-fixed": "#001b3e",
+                        "on-primary-fixed-variant": "#00468d",
+                        "inverse-surface": "#e4e2e4",
+                        "primary-fixed": "#d6e3ff",
+                        "surface-bright": "#39393b",
+                        "surface-container-lowest": "#0e0e10",
+                        "surface-container-low": "#1b1b1d",
+                        "on-tertiary-container": "#3f2300",
+                        "secondary-fixed-dim": "#47e266",
+                        "error-container": "#93000a",
+                        "outline": "#8b91a0",
+                        "surface-container-high": "#2a2a2c",
+                        "on-surface": "#e4e2e4",
+                        "surface-tint": "#aac7ff",
+                        "primary-container": "#3e90ff",
+                        "inverse-on-surface": "#303032",
+                        "on-primary-container": "#002957",
+                        "secondary-fixed": "#6cff82",
+                        "primary": "#aac7ff",
+                        "on-background": "#e4e2e4",
+                        "primary-fixed-dim": "#aac7ff",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-error": "#690005",
+                        "surface-dim": "#131315",
+                        "secondary-container": "#09bf49",
+                        "on-secondary": "#003910"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "4px",
+                        "unit": "8px",
+                        "panel-padding": "12px",
+                        "stack-md": "8px",
+                        "container-margin": "24px",
+                        "stack-lg": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "title-md": ["Geist"],
+                        "mono-precision": ["jetbrainsMono"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "mono-precision": ["13px", {"lineHeight": "1", "letterSpacing": "0em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-container-margin w-full h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 z-50 fixed top-0">
+<div class="flex items-center space-x-gutter">
+<span class="font-display-lg text-title-md font-bold text-primary">Loom Blueprint Workbench</span>
+<nav class="hidden md:flex space-x-stack-lg ml-gutter items-center">
+<span class="text-on-surface-variant font-medium font-body-lg text-body-lg">Ingest</span>
+<span class="material-symbols-outlined text-outline-variant text-sm">chevron_right</span>
+<span class="text-on-surface-variant font-medium font-body-lg text-body-lg">Models</span>
+<span class="material-symbols-outlined text-outline-variant text-sm">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1 font-body-lg text-body-lg">Curvature Analysis</span>
+</nav>
+</div>
+<div class="flex items-center space-x-stack-md">
+<div class="relative group">
+<span class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer text-on-surface-variant">search</span>
+</div>
+<span class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer text-on-surface-variant">settings</span>
+<span class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer text-on-surface-variant">help</span>
+</div>
+</header>
+<div class="flex flex-1 pt-16 overflow-hidden">
+<!-- SideNavBar (Left Tool Dock) -->
+<aside class="flex flex-col items-center py-stack-lg space-y-stack-md bg-surface-container-low/80 backdrop-blur-xl border-r border-outline-variant/30 h-full w-[64px] z-40">
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all">
+<span class="material-symbols-outlined">near_me</span>
+</button>
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all">
+<span class="material-symbols-outlined">straighten</span>
+</button>
+<button class="p-3 bg-secondary-container text-on-secondary-container rounded-xl shadow-[0_0_15px_rgba(71,226,102,0.3)] transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</button>
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all">
+<span class="material-symbols-outlined">layers</span>
+</button>
+<button class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</aside>
+<!-- Main Workspace Area -->
+<main class="flex-1 relative flex flex-col bg-black overflow-hidden">
+<!-- WebGL Content Placeholder (Dark Viewport) -->
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-lowest to-black opacity-40"></div>
+<div class="relative z-10 flex flex-col h-full p-gutter">
+<!-- Bimodal Curvature Distribution Card -->
+<div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex flex-col h-1/2">
+<div class="flex justify-between items-center mb-stack-lg">
+<div>
+<h2 class="font-headline-lg text-title-md text-on-surface">Curvature Geometry Map</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ollivier-Ricci evaluation of component dependencies to map isolated functional modules.</p>
+</div>
+<div class="flex space-x-stack-md">
+<div class="flex items-center space-x-2">
+<div class="w-3 h-3 rounded-full bg-[#3b82f6]"></div>
+<span class="font-label-caps text-label-caps">Internal Cohesion (&kappa; &gt; 0)</span>
+</div>
+<div class="flex items-center space-x-2">
+<div class="w-3 h-3 rounded-full bg-[#10b981]"></div>
+<span class="font-label-caps text-label-caps">Boundary Coupling (&kappa; &lt; 0)</span>
+</div>
+</div>
+</div>
+<!-- Chart Canvas Area -->
+<div class="flex-1 flex items-end justify-between space-x-[2px] pb-4 px-2" id="distribution-chart">
+<!-- Bars generated via JS for dynamic feel -->
+</div>
+<!-- Threshold Sliders -->
+<div class="grid grid-cols-2 gap-gutter mt-stack-lg border-t border-outline-variant/30 pt-stack-lg">
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-primary">Bridge Threshold (&theta;<sub>bridge</sub>)</label>
+<span class="font-mono-precision text-mono-precision text-primary" id="val-bridge">0.42</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-full appearance-none custom-slider transition-all hover:bg-primary-container/30" max="100" min="0" oninput="document.getElementById('val-bridge').innerText = (this.value/100).toFixed(2)" type="range" value="42"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-secondary">Cohesion Limit (&theta;<sub>cohesion</sub>)</label>
+<span class="font-mono-precision text-mono-precision text-secondary" id="val-cohesion">0.78</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-full appearance-none custom-slider transition-all hover:bg-secondary-container/30" max="100" min="0" oninput="document.getElementById('val-cohesion').innerText = (this.value/100).toFixed(2)" type="range" value="78"/>
+</div>
+</div>
+</div>
+<!-- Metric Deformation Timeline -->
+<div class="mt-gutter glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1 overflow-hidden flex flex-col">
+<h3 class="font-title-md text-body-lg text-on-surface mb-stack-md">Metric Deformation Timeline</h3>
+<div class="flex-1 flex flex-col space-y-stack-sm overflow-y-auto">
+<!-- Timeline Rows -->
+<div class="flex items-center space-x-gutter p-stack-md hover:bg-white/5 rounded-lg transition-colors border-b border-outline-variant/10">
+<span class="font-mono-precision text-mono-precision text-outline w-16">08:24:12</span>
+<span class="flex-1 font-body-sm text-body-sm">Global Manifold Optimization Cycle 44</span>
+<span class="font-mono-precision text-mono-precision text-secondary">-0.0024 Δ</span>
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[88%]"></div>
+</div>
+</div>
+<div class="flex items-center space-x-gutter p-stack-md hover:bg-white/5 rounded-lg transition-colors border-b border-outline-variant/10">
+<span class="font-mono-precision text-mono-precision text-outline w-16">08:22:05</span>
+<span class="flex-1 font-body-sm text-body-sm">Curvature Normalization (Layer 7)</span>
+<span class="font-mono-precision text-mono-precision text-primary">+0.0150 Δ</span>
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+</div>
+<div class="flex items-center space-x-gutter p-stack-md hover:bg-white/5 rounded-lg transition-colors border-b border-outline-variant/10">
+<span class="font-mono-precision text-mono-precision text-outline w-16">08:19:44</span>
+<span class="flex-1 font-body-sm text-body-sm">Topology Constraint Violation: Node #F2A</span>
+<span class="font-mono-precision text-mono-precision text-error">+0.8421 Δ</span>
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-error h-full w-[95%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Action Button (FAB Style but docked) -->
+<button class="fixed bottom-16 right-[344px] flex items-center space-x-stack-md bg-primary text-on-primary font-bold px-stack-lg py-stack-md rounded-full shadow-[0_8px_32px_rgba(170,199,255,0.4)] active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined">auto_graph</span>
+<span class="font-body-lg text-body-lg">Propose Partition Scheme</span>
+</button>
+</main>
+<!-- Right Inspector Panel -->
+<aside class="w-[320px] glass-panel border-l border-outline-variant/30 flex flex-col z-40">
+<div class="p-container-margin border-b border-outline-variant/30">
+<h3 class="font-title-md text-title-md text-on-surface">Inspector</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Loom V1.2.9 Engine</p>
+</div>
+<div class="flex-1 overflow-y-auto p-panel-padding space-y-gutter">
+<!-- Geometry Props Section -->
+<section>
+<button class="flex justify-between items-center w-full py-2 text-on-surface font-label-caps text-label-caps group">
+                        PROPERTIES
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div class="space-y-stack-md mt-stack-md">
+<div class="flex justify-between items-center glass-popover p-stack-md rounded-lg">
+<span class="font-body-sm text-on-surface-variant">Vertex Count</span>
+<span class="font-mono-precision text-mono-precision text-on-surface">1,424,092</span>
+</div>
+<div class="flex justify-between items-center glass-popover p-stack-md rounded-lg">
+<span class="font-body-sm text-on-surface-variant">Topology Gen</span>
+<span class="font-mono-precision text-mono-precision text-on-surface">B-Spline</span>
+</div>
+<div class="flex justify-between items-center glass-popover p-stack-md rounded-lg">
+<span class="font-body-sm text-on-surface-variant">Deformation</span>
+<span class="font-mono-precision text-mono-precision text-secondary">0.02% Low</span>
+</div>
+</div>
+</section>
+<!-- Constraint Section -->
+<section>
+<button class="flex justify-between items-center w-full py-2 text-on-surface font-label-caps text-label-caps">
+                        CONSTRAINTS
+                        <span class="material-symbols-outlined text-sm">add_circle</span>
+</button>
+<div class="flex flex-wrap gap-2 mt-stack-md">
+<span class="px-3 py-1 glass-popover rounded-full text-label-caps flex items-center gap-1 border border-secondary/20">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div> Fixed Normal
+                        </span>
+<span class="px-3 py-1 glass-popover rounded-full text-label-caps flex items-center gap-1 border border-primary/20">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div> Symmetry X
+                        </span>
+<span class="px-3 py-1 glass-popover rounded-full text-label-caps flex items-center gap-1 border border-tertiary/20">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div> Tangency
+                        </span>
+</div>
+</section>
+<!-- Preview Image -->
+<section class="mt-4">
+<div class="aspect-video rounded-xl overflow-hidden glass-panel border border-outline-variant/30 relative">
+<div class="bg-cover bg-center w-full h-full opacity-60 grayscale hover:grayscale-0 transition-all duration-500 cursor-zoom-in" data-alt="A highly detailed 3D CAD rendering of a complex aerodynamic engine component featuring smooth metallic surfaces, blue and green wireframe overlays showing curvature distribution, and glowing highlights on precision machined edges. The background is a deep charcoal engineering workspace with high-end glassmorphic UI elements floating in the periphery. Lighting is dramatic and professional, emphasizing the mathematical perfection of the geometric form." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6TQ6L8Um6Ikg1UPgtAcuPXMIftVdL5Ep5hY2Z1V78vAjIjk3dVz_CCQcjeMC1mnoDvZLwXfBrx3x0ZoIM_Iz1ghBbDgNI-LD4NOz-whfA2C_XExiX0xv3pWwUztd2UKD_m5FakyPEYZyGyCf1LbZEgxK4zAhGLGC5GOGNJRtccJtjJw1lBAk0yvVg6S_Vg94S3LJgGC4Wr2Bi0_Q-1QZD3sXV9UVJ1bfDBtcdhEHEMdwr-VCZZT7mia0uZMtUz0RByuqlpKEpGSY')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-stack-md">
+<span class="font-label-caps text-[10px] text-on-surface/80">LIVE PERSPECTIVE A-1</span>
+</div>
+</div>
+</section>
+</div>
+</aside>
+</div>
+<!-- BottomNavBar (Console) -->
+<footer class="fixed bottom-0 left-0 w-full h-12 z-50 flex justify-center space-x-gutter items-center px-container-margin bg-surface-container-high/90 backdrop-blur-2xl border-t border-outline-variant/30 shadow-[0_-8px_32px_rgba(0,0,0,0.5)] rounded-t-xl">
+<button class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors active:scale-98">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="font-mono-precision text-[10px] uppercase">Logs</span>
+</button>
+<button class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors active:scale-98">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span class="font-mono-precision text-[10px] uppercase">Timeline</span>
+</button>
+<button class="text-tertiary-fixed font-bold flex flex-col items-center hover:text-on-surface transition-colors active:scale-98">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span class="font-mono-precision text-[10px] uppercase">Output</span>
+</button>
+<button class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors active:scale-98">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+<span class="font-mono-precision text-[10px] uppercase">Debug</span>
+</button>
+<button class="text-on-surface-variant/70 flex flex-col items-center hover:text-on-surface transition-colors active:scale-98 ml-stack-lg border-l border-outline-variant/30 pl-stack-lg" onclick="document.getElementById('floating-dashboard').classList.toggle('translate-x-full')">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span class="font-mono-precision text-[10px] uppercase">Pulse</span>
+</button></footer>
+<script>
+        // Generate Bimodal Curvature Chart
+        const chart = document.getElementById('distribution-chart');
+        const barCount = 100;
+        
+        for (let i = 0; i < barCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'thin-bar rounded-t-full';
+            
+            // Generate bimodal distribution data
+            const x = i / barCount;
+            const mean1 = 0.3;
+            const std1 = 0.1;
+            const mean2 = 0.7;
+            const std2 = 0.12;
+            
+            const dist1 = Math.exp(-Math.pow(x - mean1, 2) / (2 * Math.pow(std1, 2)));
+            const dist2 = 0.8 * Math.exp(-Math.pow(x - mean2, 2) / (2 * Math.pow(std2, 2)));
+            const heightValue = (dist1 + dist2) * 80;
+            
+            bar.style.height = `${heightValue}%`;
+            
+            // Visual logic for Thresholds
+            if (i < 42) {
+                bar.style.backgroundColor = '#3b82f6'; // Blue for lower curvature
+                bar.style.opacity = '0.7';
+            } else if (i < 78) {
+                bar.style.backgroundColor = '#60a5fa'; // Lighter blue bridge
+                bar.style.opacity = '0.4';
+            } else {
+                bar.style.backgroundColor = '#10b981'; // Green for high curvature
+                bar.style.opacity = '0.8';
+            }
+            
+            chart.appendChild(bar);
+        }
+
+        // Add micro-interaction for chart bars
+        chart.addEventListener('mousemove', (e) => {
+            const bars = chart.querySelectorAll('.thin-bar');
+            const rect = chart.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const index = Math.floor((mouseX / rect.width) * bars.length);
+            
+            bars.forEach((b, idx) => {
+                if (idx === index) {
+                    b.style.transform = 'scaleY(1.1)';
+                    b.style.opacity = '1';
+                } else {
+                    b.style.transform = 'scaleY(1)';
+                }
+            });
+        });
+
+        chart.addEventListener('mouseleave', () => {
+            const bars = chart.querySelectorAll('.thin-bar');
+            bars.forEach(b => {
+                b.style.transform = 'scaleY(1)';
+                const opacity = b.style.backgroundColor.includes('16') ? '0.7' : '0.8';
+                b.style.opacity = b.style.backgroundColor.includes('96') ? '0.4' : opacity;
+            });
+        });
+    </script>
+<div class="fixed top-0 right-0 h-full w-[380px] z-[100] glass-panel border-l border-white/10 translate-x-full transition-transform duration-500 ease-in-out flex flex-col shadow-2xl" id="floating-dashboard" style="background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(24px);">
+<div class="p-container-margin border-b border-white/10 flex justify-between items-center">
+<div>
+<h3 class="font-headline-lg text-title-md text-on-surface">Architectural Pulse</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-[10px] font-label-caps text-secondary uppercase tracking-wider">System Nominal</span>
+</div>
+</div>
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="document.getElementById('floating-dashboard').classList.add('translate-x-full')">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-container-margin space-y-gutter custom-scrollbar">
+<!-- Critical Drift Section -->
+<section class="glass-popover p-panel-padding rounded-xl border border-error/20">
+<div class="flex justify-between items-center mb-2">
+<span class="text-label-caps text-on-surface-variant opacity-60">CRITICAL DRIFT</span>
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg text-[32px] text-error">1.24%</span>
+<span class="text-[10px] text-error font-mono-precision">+0.05% TODAY</span>
+</div>
+<div class="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-error w-[65%] rounded-full"></div>
+</div>
+</section>
+<!-- Awaiting Ratification -->
+<section>
+<h4 class="text-label-caps text-on-surface-variant mb-3">AWAITING RATIFICATION</h4>
+<div class="space-y-2">
+<div class="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="flex justify-between text-[10px] font-mono-precision text-primary mb-1">
+<span>LOOM_MAINFRAME_B2</span>
+<span class="text-on-surface-variant">4h left</span>
+</div>
+<div class="text-body-sm font-medium">Structural Integrity Check</div>
+</div>
+<div class="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="flex justify-between text-[10px] font-mono-precision text-primary mb-1">
+<span>CORE_EXPANSION_P7</span>
+<span class="text-on-surface-variant">6h left</span>
+</div>
+<div class="text-body-sm font-medium">Resource Allocation Drift</div>
+</div>
+</div>
+</section>
+<!-- Contextual Activity -->
+<section>
+<h4 class="text-label-caps text-on-surface-variant mb-3">RECENT ACTIVITY</h4>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded-full bg-secondary/20 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+</div>
+<div>
+<p class="text-body-sm text-on-surface">Forge Module optimized lattice.</p>
+<span class="text-[10px] text-on-surface-variant/60 uppercase">12m ago</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[14px]">enable</span>
+</div>
+<div>
+<p class="text-body-sm text-on-surface">Engine Core anomaly corrected.</p>
+<span class="text-[10px] text-on-surface-variant/60 uppercase">45m ago</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="p-container-margin border-t border-white/10">
+<button class="w-full py-2.5 bg-primary text-on-primary rounded-lg font-bold text-body-sm hover:opacity-90 transition-opacity">
+            Open Full Workbench
+        </button>
+</div>
+</div></body></html>

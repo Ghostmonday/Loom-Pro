@@ -1,0 +1,552 @@
+{
+  "schema_version": 5,
+  "system": "loom",
+  "legacy_product_name": "gaijinn",
+  "loom_master_spec": "ui/loom-system-intent-map.json",
+  "surface": "loom-terminal",
+  "intent_forge_surface": "intent-forge",
+  "description": "Contract intent map for the manufacturing pipeline. Browser implementation removed; UiIntentDriver replays actions.* for mirror smoke tests (no browser required). Supports microphone voice inputs and transcript corrections with push-to-talk control.",
+  "process_stage_ux_map": "ui/process-stage-ux-map.json",
+  "optimization_goal": "Minimize confusion_count (failed state invariants) per full Intent→Blueprint→Swarm→Deploy→Complete→Merge workflow.",
+  "_ai_blueprint": {
+    "comment": "Machine-readable guide for Codex/Cursor/Grok. Inline LOOM BLUEPRINT blocks in source mirror this.",
+    "phase_model": {
+      "canonical_order": ["backend", "frontend", "testing"],
+      "default": ["backend"],
+      "presets": [
+        {"label": "Backend only", "phases": ["backend"]},
+        {"label": "Frontend only", "phases": ["frontend"]},
+        {"label": "Testing only", "phases": ["testing"]},
+        {"label": "Backend + Frontend", "phases": ["backend", "frontend"]},
+        {"label": "Backend + Testing", "phases": ["backend", "testing"]},
+        {"label": "Frontend + Testing", "phases": ["frontend", "testing"]},
+        {"label": "Full stack", "phases": ["backend", "frontend", "testing"]}
+      ],
+      "semantics": {
+        "backend": "API/services/data layer sprint",
+        "frontend": "UI/client sprint; uses backend output as context when backend ran first",
+        "testing": "Automated test sprint against merged output; its own phase, not bundled into full stack only"
+      },
+      "validation": "Reject empty lists and unknown phase names; normalize valid phase names to canonical order."
+    },
+    "layers": {
+      "cli_graph_planner": {
+        "module": "aoc_cli/blueprint.py",
+        "status": "shipped",
+        "role": "Default greenfield + brownfield gaijinn plan (gravity/curvature)",
+        "ticket": "ENG-103"
+      },
+      "intent_planner": {
+        "module": "aoc_supervisor/intent_blueprint.py",
+        "status": "fallback",
+        "role": "Keyword STREAM_SPECS greenfield path only",
+        "env_flag": "GAIJINN_KEYWORD_GREENFIELD=1"
+      },
+      "intent_forge_projection": {
+        "module": "aoc_supervisor/workstream_planner.py",
+        "status": "shipped",
+        "role": "Q&A-aware executable_projection from Intent Forge handoff",
+        "ticket": "ENG-101"
+      },
+      "adaptive_interrogation": {
+        "module": "aoc_supervisor/adaptive_question_engine.py",
+        "status": "shipped",
+        "role": "HTTP reasoning provider at API startup; fake gated",
+        "env_flag": "GAIJINN_FAKE_REASONING=1",
+        "ticket": "ENG-102"
+      },
+      "orchestration": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "status": "shipped",
+        "role": "Session prepare/swarm/advance_phase with real re-blueprint",
+        "ticket": "ENG-104",
+        "gaps": ["failed phase UX", "session recovery"]
+      },
+      "api_gateway": {
+        "module": "aoc_supervisor/api.py",
+        "status": "shipped",
+        "role": "orchestrate + grid + billing + intent-forge API; serves sandbox_frontend/",
+        "gaps": ["structured deploy.failure"]
+      },
+      "terminal_ui": {
+        "module": "sandbox_frontend/",
+        "status": "contract_only",
+        "role": "Rebuild after Loom backend complete; mirror tests use UiIntentDriver only"
+      },
+      "mirror_driver": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "status": "shipped",
+        "role": "API replay for smoke_scenarios"
+      },
+      "evaluator": {
+        "module": "aoc_supervisor/workflow_evaluator.py",
+        "status": "partial",
+        "role": "confusion_count scoreboard for autonomous iteration",
+        "gaps": ["full invariant id coverage"]
+      },
+      "merge_pipeline": {
+        "module": "aoc_cli/helpers/merge.py",
+        "status": "shipped",
+        "role": "collect → validate → merge-grid after workers finish",
+        "gaps": ["real worker branch merge coverage beyond mock dry-run"]
+      }
+    },
+    "parallel_task_boundaries": "Maximize parallelism across layers above, not within same module. See docs/codex-tasks/.",
+    "verification": {
+      "full": ".venv/bin/python -m pytest -q",
+      "mirror_pkm": ".venv/bin/python -m pytest tests/test_workflow_evaluator.py::test_pkm_workflow_zero_confusion_mock -q",
+      "ui_smoke": "bash scripts/dev/ui-intent-smoke.sh",
+      "algorithm_wiring": "bash scripts/ci/algorithm-wiring.sh",
+      "non_production_flags": {
+        "GAIJINN_MOCK_GRID": "Mock grid spawn/status for local UI smoke — not production",
+        "GAIJINN_FAKE_REASONING": "Deterministic interrogation for tests/local only — not production"
+      }
+    }
+  },
+  "phases": [
+    "awaiting_intent",
+    "blueprinting",
+    "awaiting_swarm",
+    "sprinting",
+    "complete",
+    "failed"
+  ],
+  "subphases": [
+    "choosing_swarm",
+    "deploying_workers",
+    "workers_running",
+    "merging_output"
+  ],
+  "state_machine": {
+    "narrative": ["Intent", "Blueprint", "Swarm", "Deploy", "Complete"],
+    "transitions": [
+      {"from": "awaiting_intent", "action": "chat.submit_intent", "to": "blueprinting"},
+      {"from": "blueprinting", "action": "actions.phases.select", "to": "blueprinting"},
+      {"from": "blueprinting", "action": "orchestrate.prepare", "to": "awaiting_swarm", "subphase": "choosing_swarm"},
+      {"from": "awaiting_swarm", "action": "swarm.select", "to": "sprinting", "subphase": "deploying_workers"},
+      {"from": "sprinting", "action": "deploy.sprint.spawn", "to": "sprinting", "subphase": "workers_running"},
+      {"from": "sprinting", "action": "grid.poll_status.terminal", "to": "complete"},
+      {"from": "complete", "action": "merge.run", "to": "complete", "subphase": "merging_output"},
+      {"from": "complete", "action": "merge.poll_status", "to": "complete"},
+      {"from": "complete", "action": "deliverable.download", "to": "complete"},
+      {"from": "*", "action": "deploy.failure", "to": "failed"}
+    ],
+    "invariants": [
+      {"id": "grid.live_when_sprint_active", "when": "subphase in (deploying_workers, workers_running)", "require": "grid.empty hidden AND grid.container visible AND agent_cards == swarm_size"},
+      {"id": "grid.retained_after_completion", "when": "phase == complete AND swarm_size > 0", "require": "grid.empty hidden AND grid.container visible for review"},
+      {"id": "swarm.rationale_before_choice", "when": "subphase == choosing_swarm", "require": "swarm_rationale present AND recommended_swarm >= 1"},
+      {"id": "worker.status_matches_assignment", "when": "subphase == workers_running", "require": "idle workers show standby not finished; assigned workers show work"},
+      {"id": "swarm.warn_when_oversubscribed", "when": "workers > work_units", "require": "swarm_warning present"},
+      {"id": "merge.status_after_complete", "when": "merge triggered after complete", "require": "merge_pipeline.phase progresses idle → completed AND blocked == 0 AND conflicted == 0 on happy path"},
+      {"id": "deliverable.ready_after_merge", "when": "merge_pipeline.phase == completed AND blocked == 0 AND conflicted == 0", "require": "deliverable.panel visible AND download uses session_id"}
+    ],
+    "confusion_signals": [
+      "header says agents exist but grid.empty visible",
+      "worker log says awaiting dispatch while sprint live",
+      "recommended swarm contradicts work_stream count",
+      "mock grid PASS for idle workers"
+    ]
+  },
+  "elements": {
+    "chat.input": {"dom_id": "chatInput", "type": "text_input"},
+    "chat.send": {"dom_id": "chatSend", "type": "button"},
+    "chat.messages": {"dom_id": "chatMessages", "type": "message_list"},
+    "phases.selector": {"dom_id": "phaseSelector", "type": "button_group", "default": ["backend"], "options": ["backend", "frontend", "testing"]},
+    "orchestrator.prompt": {"type": "static_copy", "text": "What do you want to build?"},
+    "swarm.picker": {"dom_id": "swarmPicker", "type": "button_group", "dynamic": true},
+    "controls.executor": {"dom_id": "executorSelect", "type": "select", "default": "auto", "advanced": true},
+    "controls.model": {"dom_id": "modelSelect", "type": "select", "default": "grok-composer-2.5-fast", "advanced": true},
+    "controls.sandbox": {"dom_id": "sandboxSelect", "type": "select", "default": "default", "advanced": true},
+    "controls.reasoning": {"dom_id": "reasoningSelect", "type": "select", "default": "high", "advanced": true},
+    "controls.auto_approve": {"dom_id": "approveToggle", "type": "hidden_toggle", "default": true, "user_visible": false},
+    "status.pill": {"dom_id": "statusPill", "type": "status_indicator"},
+    "status.text": {"dom_id": "statusLabel", "type": "status_label"},
+    "sprint.bar": {"dom_id": "sprintBar", "type": "progress_bar"},
+    "sprint.status": {"dom_id": "sprintStatus", "type": "status_label"},
+    "grid.container": {"dom_id": "gridContainer", "type": "agent_grid"},
+    "grid.empty": {"dom_id": "gridEmpty", "type": "empty_state"},
+    "workflow.chip": {"dom_id": "workflowChip", "type": "badge", "labels": ["Awaiting intent", "Building blueprint", "Choose swarm size", "Deploying swarm", "Merging output", "Deliverable ready", "Merge blocked"]},
+    "grid.cell_count": {"dom_id": "agentChip", "type": "badge", "visible_when": "sprinting"},
+    "composer.hint": {"dom_id": "composerHint", "type": "hint"},
+    "deliverable.panel": {"dom_id": "deliverableCard", "type": "panel", "visible_when": "merge_pipeline.phase == completed AND blocked == 0 AND conflicted == 0"},
+    "deliverable.counts": {"type": "metric_group", "fields": ["merged", "blocked", "conflicted"]},
+    "deliverable.session_id": {"dom_id": "deliverableSessionId", "type": "metadata"},
+    "deliverable.project_path": {"dom_id": "deliverableProjectPath", "type": "metadata"},
+    "deliverable.download": {"dom_id": "deliverableDownload", "type": "button"},
+    "deliverable.view_diff": {"dom_id": "deliverableViewDiff", "type": "button"},
+    "deliverable.copy_path": {"dom_id": "deliverableCopyPath", "type": "button"},
+    "deliverable.start_new": {"dom_id": "deliverableStartNew", "type": "button"},
+    "deliverable.worker_breakdown": {"dom_id": "deliverableWorkers", "type": "list", "visible_when": "merge_pipeline.workers.length > 0"},
+    "swarm.use_recommended": {"dom_id": "swarm.use_recommended", "type": "button", "dynamic": true},
+    "swarm.choose_manually": {"dom_id": "swarm.choose_manually", "type": "button", "dynamic": true},
+    "stage.rail": {"dom_id": "stageRail", "type": "step_indicator"},
+    "diff.modal.close": {"dom_id": "diffModalClose", "type": "button"},
+    "load_context.panel": {"dom_id": "loadContextPanel", "type": "panel", "dynamic": true},
+    "orchestrate.advance_phase": {"type": "button", "dynamic": true}
+  },
+  "flow": [
+    {"phase": "awaiting_intent", "action": "chat.submit_intent", "api": []},
+    {"phase": "blueprinting", "action": "actions.phases.select", "api": []},
+    {"phase": "blueprinting", "action": "orchestrate.prepare", "api": ["POST /api/v1/orchestrate/prepare"]},
+    {"phase": "awaiting_swarm", "action": "swarm.select", "api": []},
+    {"phase": "sprinting", "action": "orchestrate.swarm", "api": ["POST /api/v1/orchestrate/swarm"]},
+    {"phase": "sprinting", "action": "deploy.sprint", "api": ["POST /api/v1/quote", "POST /api/v1/blueprint/purchase", "POST /api/v1/grid/spawn"]},
+    {"phase": "sprinting", "action": "grid.poll_status", "api": ["GET /api/v1/grid/status"]},
+    {"phase": "complete", "orchestrator_says": "MVP assembly complete."},
+    {"phase": "complete", "action": "merge.run", "api": ["POST /api/v1/grid/merge"]},
+    {"phase": "complete", "action": "merge.poll_status", "api": ["GET /api/v1/grid/merge/status"]},
+    {"phase": "complete", "action": "deliverable.download", "api": ["GET /api/v1/grid/deliverable"]},
+    {"phase": "complete", "action": "deliverable.view_diff", "api": ["GET /api/v1/grid/merge/report", "GET /api/v1/grid/diff"]},
+    {"phase": "complete", "action": "deliverable.copy_path", "api": []},
+    {"phase": "complete", "action": "deliverable.start_new", "api": []}
+  ],
+  "actions": {
+    "chat.submit_intent": {
+      "input": {"text": "string", "forge_session_id": "string"},
+      "preconditions": ["forge_session_id present from query or sessionStorage handoff"],
+      "effects": ["append_message:user", "council_say", "actions.phases.select", "orchestrate.prepare"],
+      "postconditions": [
+        "raw chat.submit_intent blocked before POST when forge_session_id missing",
+        "orchestrate.prepare body.intent_forge_session_id == forge_session_id"
+      ],
+      "implementation_status": "deleted — sandbox_frontend replaces old ui/ implementation"
+    },
+    "actions.phases.select": {
+      "input": {"phases": ["backend", "frontend", "testing"]},
+      "effects": ["state.phases = canonical_ordered_selection"],
+      "postconditions": ["phases.length >= 1", "current_phase == phases[0]"]
+    },
+    "orchestrate.prepare": {
+      "api": {"method": "POST", "path": "/api/v1/orchestrate/prepare", "body": {"intent": "string", "intent_forge_session_id": "string", "phases": ["backend"]}},
+      "returns": ["session_id", "work_units", "high_risk_units", "suggested_swarm", "recommended_swarm", "phases", "current_phase", "phase_count", "pipeline_plan", "loaded_context"],
+      "postconditions": ["phase.awaiting_swarm", "ui.blueprint_ready_card"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.prepare",
+        "mode": "real",
+        "branches": {
+          "executable_blueprint": {"module": "aoc_supervisor/workstream_planner.py", "entrypoint": "project_executable_blueprint", "mode": "real", "ticket": "ENG-101"},
+          "greenfield_default": {"module": "aoc_cli/blueprint.py", "entrypoint": "generate_blueprint", "mode": "real", "ticket": "ENG-103"},
+          "keyword_fallback": {"module": "aoc_supervisor/intent_blueprint.py", "entrypoint": "write_intent_blueprint", "mode": "keyword", "env_flag": "GAIJINN_KEYWORD_GREENFIELD=1"}
+        }
+      }
+    },
+    "orchestrate.advance_phase": {
+      "api": {"method": "POST", "path": "/api/v1/orchestrate/advance-phase", "body": {"session_id": "string"}},
+      "returns": ["session_id", "phase", "phases", "current_phase", "pipeline_plan", "message"],
+      "postconditions": ["pipeline_plan.current_index incremented", "current_phase == pipeline_plan.phases[current_index]", "phase.awaiting_swarm"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.advance_phase",
+        "mode": "real",
+        "pipeline": "_run_blueprint_pipeline",
+        "ticket": "ENG-104"
+      }
+    },
+    "swarm.select": {
+      "input": {"workers": "integer"},
+      "triggers": ["swarm.use_recommended", "swarm.choose_manually"],
+      "effects": ["append_message:user", "orchestrate.swarm", "deploy.sprint"]
+    },
+    "orchestrate.swarm": {
+      "api": {"method": "POST", "path": "/api/v1/orchestrate/swarm", "body": {"session_id": "string", "workers": "integer"}},
+      "postconditions": ["workers_ready > 0"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/orchestrate_session.py",
+        "entrypoint": "OrchestrateSessionStore.assign_swarm",
+        "mode": "real",
+        "cli": "gaijinn run-grid"
+      }
+    },
+    "deploy.sprint": {
+      "api_sequence": ["quote", "purchase", "spawn"],
+      "spawn_body": ["workers", "executor", "model", "sandbox", "reasoning", "always_approve", "sprint_token", "task", "session_id"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "POST /api/v1/grid/spawn",
+        "mode": "real",
+        "mock_flag": "GAIJINN_MOCK_GRID",
+        "mock_mode": "mock"
+      }
+    },
+    "grid.poll_status": {
+      "complete_when": "all_workers_terminal"
+    },
+    "merge.run": {
+      "api": {"method": "POST", "path": "/api/v1/grid/merge", "body": {"session_id": "string"}},
+      "effects": ["merge.collect", "merge.validate_worker", "merge.merge_grid"],
+      "postconditions": ["merge_pipeline.phase == completed on happy path"]
+    },
+    "merge.poll_status": {
+      "api": {"method": "GET", "path": "/api/v1/grid/merge/status", "query": {"session_id": "string"}},
+      "complete_when": "merge_pipeline.phase == completed OR blocked > 0 OR conflicted > 0"
+    },
+    "deliverable.download": {
+      "api": {"method": "GET", "path": "/api/v1/grid/deliverable", "query": {"session_id": "string"}},
+      "returns": ["application/zip"],
+      "preconditions": ["session_id present", "merge_pipeline.phase == completed"]
+    },
+    "deliverable.view_diff": {
+      "api_sequence": [
+        {"method": "GET", "path": "/api/v1/grid/merge/report", "query": {"session_id": "string"}},
+        {"method": "GET", "path": "/api/v1/grid/diff", "query": {"session_id": "string"}}
+      ],
+      "effects": ["diff_modal.visible"]
+    },
+    "deliverable.copy_path": {
+      "effects": ["clipboard.write(project_path)"]
+    },
+    "deliverable.start_new": {
+      "effects": ["state.reset", "phase.awaiting_intent"]
+    }
+  },
+  "intent_forge": {
+    "surface": "/",
+    "implementation_status": "contract_only",
+    "api_service": "aoc_supervisor/intent_forge_service.py",
+    "mirror": "aoc_supervisor/ui_intent.py",
+    "api_prefix": "/api/v1/intent-forge",
+    "states": [
+      "CREATED",
+      "ANALYZING",
+      "QUESTIONING",
+      "PAUSED",
+      "CONFLICT_RESOLUTION",
+      "VALIDATING",
+      "FINAL_CONFIRMATION",
+      "FINALIZING",
+      "FINALIZED",
+      "HANDED_OFF"
+    ],
+    "ui_phases": ["idle", "analyzing", "retry"],
+    "handoff_target": "/command-engine?step=plan&session_id={session_id}",
+    "endpoints": [
+      "POST /api/v1/intent-forge/sessions",
+      "GET /api/v1/intent-forge/sessions/{session_id}",
+      "POST /api/v1/intent-forge/sessions/{session_id}/answers",
+      "POST /api/v1/intent-forge/sessions/{session_id}/revise",
+      "POST /api/v1/intent-forge/sessions/{session_id}/pause",
+      "POST /api/v1/intent-forge/sessions/{session_id}/resume",
+      "POST /api/v1/intent-forge/sessions/{session_id}/finalize",
+      "POST /api/v1/intent-forge/sessions/{session_id}/handoff"
+    ],
+    "future_endpoints": [
+      "POST /api/v1/intent-forge/sessions/{session_id}/retry-analysis"
+    ],
+    "elements": {
+      "intake.prompt": {"dom_id": "prompt-input", "type": "textarea"},
+      "intake.start_session": {"dom_id": "btn-start-session", "type": "button"},
+      "question.text": {"dom_id": "question-text", "type": "heading", "invariant": "exactly_one_visible"},
+      "question.why": {"dom_id": "question-why", "type": "region"},
+      "question.default": {"dom_id": "question-default", "type": "region", "optional": true},
+      "question.answer": {"dom_id": "answer-input", "type": "textarea", "autosave": true},
+      "question.submit": {"dom_id": "btn-submit-answer", "type": "button", "no_auto_submit": true},
+      "question.undo_draft": {"dom_id": "btn-undo-draft", "type": "button"},
+      "question.finalize_now": {"dom_id": "btn-finalize-now", "type": "button", "advanced": true},
+      "question.read_aloud": {"dom_id": "btn-read-aloud", "type": "button", "optional": true},
+      "question.stop_speech": {"dom_id": "btn-stop-speech", "type": "button"},
+      "understanding.list": {"dom_id": "understanding-list", "type": "list"},
+      "readiness.score": {"dom_id": "readiness-score", "type": "metric"},
+      "readiness.reason": {"dom_id": "readiness-reason", "type": "label"},
+      "answer.history": {"dom_id": "answer-history", "type": "list"},
+      "revise.panel": {"dom_id": "revise-panel", "type": "panel", "dynamic": true},
+      "analysis.overlay": {"dom_id": "analysis-overlay", "type": "status_overlay"},
+      "retry.banner": {"dom_id": "retry-banner", "type": "alert", "dynamic": true},
+      "voice.ptt": {"dom_id": "btn-mic-ptt", "type": "button", "mode": "push_to_talk"},
+      "voice.stop": {"dom_id": "btn-mic-stop", "type": "button"},
+      "voice.cancel": {"dom_id": "btn-mic-cancel", "type": "button"},
+      "voice.transcript": {"dom_id": "voice-transcript", "type": "live_region", "editable_before_submit": true},
+      "voice.state_badge": {"dom_id": "voice-state-badge", "type": "status_badge"},
+      "a11y.status": {"dom_id": "a11y-status", "type": "aria_live", "politeness": "assertive"},
+      "advanced.toggle": {"dom_id": "btn-toggle-advanced", "type": "disclosure"},
+      "handoff.confirm": {"dom_id": "btn-confirm-handoff", "type": "button"}
+    },
+    "claim_classes": ["confirmed", "inferred", "assumed", "contradicted", "unresolved", "defaulted"],
+    "voice_states": ["idle", "listening", "denied", "unsupported", "error"],
+    "actions": {
+      "intake.start_session": {
+        "input": {"prompt": "string", "tier": "paid|free"},
+        "effects": ["api.createSession", "ws.connect", "panel.questioning"],
+        "postconditions": ["session_status in (QUESTIONING, ANALYZING)"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/intent_forge_service.py",
+          "entrypoint": "IntentForgeService.create_session",
+          "mode": "real"
+        }
+      },
+      "question.submit_answer": {
+        "input": {"answer": "string", "input_provenance": {"source": "typed|voice_transcript", "voice_derived": "boolean"}},
+        "effects": ["ui.analyzing", "api.submitAnswer", "draft.clear"],
+        "postconditions": ["complete_state_reanalysis", "exactly_one_next_question_or_stop"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/adaptive_question_engine.py",
+          "entrypoint": "AdaptiveQuestionEngine.analyze_next",
+          "mode": "real",
+          "provider": "aoc_supervisor/reasoning_provider.py",
+          "fake_flag": "GAIJINN_FAKE_REASONING",
+          "ticket": "ENG-102"
+        }
+      },
+      "question.revise_answer": {
+        "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/revise"},
+        "effects": ["invalidate_dependent_claims", "ui.analyzing", "complete_state_reanalysis"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/intent_forge_service.py",
+          "entrypoint": "IntentForgeService.revise_answer",
+          "mode": "real"
+        }
+      },
+      "question.retry_analysis": {
+        "future_api": "POST /api/v1/intent-forge/sessions/{session_id}/retry-analysis",
+        "effects": ["preserve_draft", "ui.analyzing"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/intent_forge_service.py",
+          "entrypoint": "retry_analysis",
+          "mode": "real",
+          "status": "future_endpoint"
+        }
+      },
+      "handoff.confirm": {
+        "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff"},
+        "effects": ["compile_executable_projection"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/blueprint_compiler.py",
+          "entrypoint": "compile_executable_projection",
+          "mode": "real",
+          "ticket": "ENG-101"
+        }
+      },
+      "handoff.accept": {
+        "api": {"method": "POST", "path": "/api/v1/intent-forge/sessions/{session_id}/handoff"},
+        "effects": ["session_status HANDED_OFF"],
+        "algorithm_binding": {
+          "module": "aoc_supervisor/intent_forge_service.py",
+          "entrypoint": "IntentForgeService.accept_handoff",
+          "mode": "real",
+          "ticket": "ENG-101"
+        }
+      },
+      "voice.push_to_talk": {
+        "browser_api": "SpeechRecognition",
+        "effects": ["live_transcript", "merge_into_answer_input"],
+        "forbidden": ["auto_submit", "raw_audio_upload", "raw_audio_retention"],
+        "algorithm_binding": {
+          "module": "browser",
+          "entrypoint": "SpeechRecognition",
+          "mode": "real",
+          "implementation_status": "contract_only"
+        }
+      },
+      "voice.read_aloud": {
+        "browser_api": "speechSynthesis",
+        "interruptible": true,
+        "algorithm_binding": {
+          "module": "browser",
+          "entrypoint": "speechSynthesis",
+          "mode": "real",
+          "implementation_status": "contract_only"
+        }
+      }
+    },
+    "invariants": [
+      {"id": "question.exactly_one", "when": "session_status == QUESTIONING", "require": "question-text visible AND at most one current_question"},
+      {"id": "analysis.overlay_when_busy", "when": "ui_phase == analyzing OR session_status == ANALYZING", "require": "analysis-overlay visible OR footer indicates analyzing"},
+      {"id": "readiness.not_domain_checklist", "when": "panel == questioning", "require": "readiness-score present AND domain confidence checklist absent"},
+      {"id": "understanding.labels_present", "when": "confirmed OR inferred OR assumed claims exist", "require": "understanding-list shows claim class badges"},
+      {"id": "voice.no_auto_submit", "when": "voice_state == listening", "require": "btn-submit-answer not auto_triggered"},
+      {"id": "voice.transcript_editable", "when": "voice transcript non-empty", "require": "answer-input editable AND submit requires explicit click"},
+      {"id": "voice.fallback_typing", "when": "voice_state in (denied, unsupported, error)", "require": "answer-input enabled AND mic-btn disabled or shows fallback"},
+      {"id": "draft.preserved_on_error", "when": "retry.banner visible", "require": "answer-input retains last draft"},
+      {"id": "revise.triggers_reanalysis", "when": "revise.panel submitted", "require": "api.revise then analysis overlay or updated understanding"}
+    ],
+    "confusion_signals": [
+      "multiple questions visible at once",
+      "domain checklist shown instead of SPEC readiness",
+      "voice auto-submitted without explicit submit",
+      "typed answer cleared after microphone denial",
+      "analysis overlay stuck after successful response",
+      "understanding summary missing claim class labels",
+      "retry banner shown without preserved draft",
+      "read-aloud cannot be interrupted",
+      "raw audio upload implied in UI copy"
+    ]
+  },
+  "smoke_scenarios": [
+    {
+      "id": "flow.intent_forge_free_provisional",
+      "description": "Intent Forge free tier produces provisional artifact",
+      "steps": [
+        {"api": "POST /api/v1/intent-forge/sessions", "body": {"prompt": "Build a notes app", "tier": "free"}}
+      ],
+      "assertions": ["session_status == FINALIZED", "artifact.provisional == true"]
+    },
+    {
+      "id": "flow.intent_swarm_deploy_mock",
+      "description": "Full product flow: intent → prepare → swarm → mock deploy → complete",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "orchestrate.prepare", "args": {"intent": "Build a tic-tac-toe game"}},
+        {"action": "orchestrate.swarm", "args": {"workers": 2}},
+        {"action": "deploy.sprint", "args": {"workers": 2, "task": "Build a tic-tac-toe game"}},
+        {"action": "grid.poll_status", "until": "completed"},
+        {"action": "merge.run"},
+        {"action": "merge.poll_status", "until": "completed"}
+      ],
+      "assertions": [
+        "prepare.work_units >= 1",
+        "spawn.status == 200",
+        "sprint.status == completed",
+        "merge_pipeline.phase == completed",
+        "grid.view == live",
+        "grid.empty.hidden == true",
+        "grid.container.hidden == false"
+      ]
+    },
+    {
+      "id": "grid.view_consistency",
+      "description": "During active sprint, grid status workers align with swarm size",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "steps": [
+        {"action": "orchestrate.prepare", "args": {"intent": "Build a tic-tac-toe game"}},
+        {"action": "orchestrate.swarm", "args": {"workers": 3}},
+        {"action": "deploy.sprint", "args": {"workers": 3, "task": "Build a tic-tac-toe game", "timeout": 120}}
+      ],
+      "assertions": [
+        "spawn.workers.length == 3",
+        "grid_status.workers.length >= 3",
+        "grid_status.workers[0].assigned_work_units is list",
+        "grid_status.workers[2].status in spawned,running,completed"
+      ]
+    },
+    {
+      "id": "flow.pkm_greenfield_intent",
+      "description": "Stress: PKM intent must decompose into multiple streams, not tiny_service scan",
+      "requires": {"GAIJINN_MOCK_GRID": "1"},
+      "greenfield": true,
+      "steps": [
+        {"action": "orchestrate.prepare", "args": {"intent": "Build a local-first personal knowledge manager for Linux that indexes PDFs, Markdown files, and audio transcripts, supports semantic search, and exposes a desktop UI. Must be offline-only and privacy-preserving."}},
+        {"action": "orchestrate.swarm", "args": {"workers": 3}},
+        {"action": "deploy.sprint", "args": {"workers": 3, "task": "PKM", "timeout": 120}},
+        {"action": "grid.poll_status", "until": "completed"},
+        {"action": "merge.run"},
+        {"action": "merge.poll_status", "until": "completed"}
+      ],
+      "assertions": [
+        "prepare.blueprint_mode == graph",
+        "prepare.work_units >= 1",
+        "prepare.recommended_swarm >= 1",
+        "prepare.swarm_rationale contains indexing",
+        "swarm.no_idle_warning",
+        "sprint.status == completed",
+        "merge_pipeline.phase == completed"
+      ]
+    },
+    {
+      "id": "mock.legacy_spawn",
+      "description": "Direct spawn without session (backward compat)",
+      "steps": [
+        {"action": "deploy.sprint", "args": {"workers": 2, "task": "smoke", "session_id": null}}
+      ]
+    }
+  ]
+}

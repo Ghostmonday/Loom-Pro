@@ -1,0 +1,36 @@
+{
+  "allowed_commands": [],
+  "allowed_paths": [
+    "."
+  ],
+  "capabilities": [
+    "constitution",
+    "knowledge",
+    "metrics",
+    "vault"
+  ],
+  "denied_commands": [
+    "git push"
+  ],
+  "denied_paths": [],
+  "invariants": [
+    "deterministic output",
+    "preserve existing project.json compatibility",
+    "write generated Gaijinn artifacts under .gaijinn/"
+  ],
+  "prohibitions": [
+    "no destructive cleanup outside workspace",
+    "no edits outside assigned paths",
+    "no git push",
+    "no network calls",
+    "no secret exfiltration"
+  ],
+  "schema_version": 1,
+  "sibling_denied_paths": [],
+  "structural_tokens": {
+    "handoff_only": true,
+    "no_sibling_trespass": true,
+    "scope_strict": true
+  },
+  "worker_id": "project"
+}

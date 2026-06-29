@@ -1,0 +1,7 @@
+{
+  "append_command": "gaijinn council say --as <author> \"message\"",
+  "display_timezone": "America/Los_Angeles",
+  "purpose": "Gaijinn Council \u2014 intent map thread for all agents",
+  "read_path": ".gaijinn/bridge/council.md",
+  "schema_version": 1
+}

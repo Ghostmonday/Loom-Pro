@@ -1,0 +1,15 @@
+{
+  "base_ref": "gaijinn/integration",
+  "completed_at": "2026-06-19T21:27:53Z",
+  "dry_run": false,
+  "integration_branch": "gaijinn/integration",
+  "merge_order": [],
+  "strategy": "sequential",
+  "summary": {
+    "blocked": 0,
+    "conflicted": 0,
+    "merged": 0,
+    "total": 0
+  },
+  "workers": {}
+}

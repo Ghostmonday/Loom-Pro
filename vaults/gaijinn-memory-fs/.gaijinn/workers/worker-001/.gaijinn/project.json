@@ -1,0 +1,26 @@
+{
+  "activation_status": "active",
+  "artifacts": {
+    "blueprint_seed": ".gaijinn/GENERATE_BLUEPRINT.md",
+    "blueprint_template": ".gaijinn/blueprint.md",
+    "graph": ".gaijinn/graph.json",
+    "intent": ".gaijinn/intent.txt",
+    "metrics": ".gaijinn/metrics_manifest.json",
+    "workers": ".gaijinn/workers"
+  },
+  "blueprint_path": ".gaijinn/GENERATE_BLUEPRINT.md",
+  "capabilities": [
+    "vault",
+    "constitution",
+    "knowledge",
+    "metrics"
+  ],
+  "graph_path": ".gaijinn/graph.json",
+  "initialized_at": "2026-06-18T02:30:00Z",
+  "intent_path": ".gaijinn/intent.txt",
+  "metrics_path": ".gaijinn/custom_metrics.json",
+  "project_prompt": "Build an Obsidian vault civilization with write-time compiled memory: folder taxonomy, YAML frontmatter, wikilinks, event ledger, and knowledge linter enforcing Section XIII joint governance.",
+  "project_root": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs",
+  "schema_version": 1,
+  "workers_path": ".gaijinn/workers"
+}

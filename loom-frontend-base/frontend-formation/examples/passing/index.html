@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submit one completed blueprint for formal ratification.</title>
+  <link rel="stylesheet" href="screen.css">
+  <link rel="stylesheet" href="screen.custom.css">
+</head>
+<body>
+  <main
+    id="screen-root"
+    data-screen="sandbox.ratification"
+    data-mission="formal-blueprint-ratification"
+    class="workspace-shell"
+  >
+    <h1>Submit one completed blueprint for formal ratification.</h1>
+    <div id="telemetry-drift-indicator" data-classification="display" data-contract-path="ratification.telemetry.drift_status">Status unavailable</div>
+    <section id="risk-explanation-card" data-classification="display" data-contract-path="ratification.explanation.promotion_consequence">Submitting this blueprint promotes inferred telemetry parameters to permanent fact baselines.</section>
+    <button id="ratify-submit-btn" data-classification="action_control" data-action="sandbox.ratification.submit" data-feedback-target="ratification-feedback" aria-label="Submit Blueprint for Formal Ratification" aria-busy="false" type="button">Submit Blueprint for Formal Ratification</button>
+    <output id="ratification-feedback" data-classification="display" data-contract-path="ratification.submission.feedback" aria-live="polite" aria-atomic="true">Ready for human authorization.</output>
+  </main>
+  <script src="shell.js"></script>
+  <script src="screen.custom.js"></script>
+</body>
+</html>

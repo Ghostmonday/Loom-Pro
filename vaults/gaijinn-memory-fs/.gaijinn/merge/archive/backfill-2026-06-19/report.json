@@ -1,0 +1,94 @@
+{
+  "base_ref": "gaijinn/integration",
+  "completed_at": "2026-06-18T10:15:02Z",
+  "dry_run": false,
+  "integration_branch": "gaijinn/integration",
+  "merge_order": [
+    "worker-001",
+    "worker-002",
+    "worker-003",
+    "worker-004",
+    "worker-005"
+  ],
+  "strategy": "sequential",
+  "summary": {
+    "already_merged": 0,
+    "blocked": 0,
+    "conflicted": 0,
+    "ledger_entries_written": 0,
+    "merged": 5,
+    "total": 5
+  },
+  "workers": {
+    "worker-001": {
+      "applied_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "merge_commit": "copy-mode",
+      "status": "merged"
+    },
+    "worker-002": {
+      "applied_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "merge_commit": "copy-mode",
+      "status": "merged"
+    },
+    "worker-003": {
+      "applied_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "merge_commit": "copy-mode",
+      "status": "merged"
+    },
+    "worker-004": {
+      "applied_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "merge_commit": "copy-mode",
+      "status": "merged"
+    },
+    "worker-005": {
+      "applied_files": [
+        ".gaijinn/bridge/council.jsonl",
+        ".gaijinn/bridge/council.md",
+        "WORKER_INTENT.txt",
+        "WORK_UNIT.md",
+        "giv.json",
+        "intent.txt",
+        "metadata.json",
+        "output.log"
+      ],
+      "merge_commit": "copy-mode",
+      "status": "merged"
+    }
+  }
+}

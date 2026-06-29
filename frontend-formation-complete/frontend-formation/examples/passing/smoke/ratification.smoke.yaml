@@ -1,0 +1,31 @@
+scenario: sandbox.ratification.smoke-1
+screen: sandbox.ratification
+steps:
+- kind: assert_initial_state
+  target: ratification-feedback
+  expected:
+    present: true
+- kind: perform_interaction
+  target: ratify-submit-btn
+- kind: assert_intermediate_feedback
+  target: ratification-feedback
+  expected:
+    state: pending
+- kind: assert_terminal_state
+  target: ratification-feedback
+  expected:
+    any_of:
+    - succeeded
+    - failed
+- kind: assert_contract_projection
+  target: ratification.submission.feedback
+  expected:
+    observable: true
+- kind: assert_accessibility_state
+  target: ratify-submit-btn
+  expected:
+    accessible_name: true
+- kind: assert_no_prohibited_side_effect
+  target: ratify-submit-btn
+  expected:
+    inline_handlers: false

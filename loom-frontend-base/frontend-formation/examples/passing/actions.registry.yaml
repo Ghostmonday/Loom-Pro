@@ -1,0 +1,11 @@
+actions:
+  sandbox.ratification.submit:
+    description: Submit blueprint for formal ratification
+    lifecycle_states:
+    - accepted
+    - pending
+    - succeeded
+    - rejected
+    - failed
+    - cancelled
+    - timed_out

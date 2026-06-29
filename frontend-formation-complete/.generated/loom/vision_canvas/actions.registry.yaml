@@ -1,0 +1,127 @@
+actions:
+  intake.start_session:
+    description: Create a paid Intent Forge session from the user vision.
+    lifecycle_states: &id001
+    - accepted
+    - pending
+    - succeeded
+    - rejected
+    - failed
+    - cancelled
+    - timed_out
+    backend_endpoint: POST /api/v1/intent-forge/sessions
+  question.submit_answer:
+    description: Submit an answer and trigger complete evidence-state reanalysis before
+      selecting the next question.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/intent-forge/sessions/{session_id}/answers
+  question.revise_answer:
+    description: Revise a previous answer while preserving session version and idempotency
+      guarantees.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/intent-forge/sessions/{session_id}/revise
+  handoff.confirm:
+    description: Compile the executable projection and confirm that the session is
+      ready for handoff.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=confirm
+  handoff.accept:
+    description: Accept the confirmed handoff and move the session to HANDED_OFF.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/intent-forge/sessions/{session_id}/handoff?action=accept
+  teleology.deliberate:
+    description: Stream architectural teleology through intent parse, graph ingest,
+      curvature, bridge detection, weld planning, partition, and blueprint freeze.
+    lifecycle_states: *id001
+    backend_endpoint: GET /api/v1/blueprint/deliberate
+  blueprint.synthesize:
+    description: Fuse the Intent Forge executable projection with teleology and curvature
+      artifacts into the canonical Loom blueprint.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/loom/blueprint/synthesize
+  orchestrate.prepare:
+    description: Prepare an orchestration session from a handed-off Forge session
+      and approved synthesized blueprint.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/orchestrate/prepare
+  orchestrate.swarm:
+    description: Assign a worker count to a prepared orchestration session.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/orchestrate/swarm
+  deploy.sprint:
+    description: Quote, purchase, and atomically spawn the multi-agent sprint.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/quote -> POST /api/v1/blueprint/purchase -> POST
+      /api/v1/grid/spawn
+  grid.poll_status:
+    description: Poll worker state until every assigned worker reaches a terminal
+      status.
+    lifecycle_states: *id001
+    backend_endpoint: GET /api/v1/grid/status
+  merge.run:
+    description: Run collect, worker validation, and merge-grid governance.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/grid/merge
+  merge.poll_status:
+    description: Poll the merge pipeline until completed or blocked.
+    lifecycle_states: *id001
+    backend_endpoint: GET /api/v1/grid/merge/status
+  deliverable.download:
+    description: Retrieve the merged deliverable archive after a clean merge.
+    lifecycle_states: *id001
+    backend_endpoint: GET /api/v1/grid/deliverable
+  deliverable.view_diff:
+    description: Retrieve the merged project diff and merge report.
+    lifecycle_states: *id001
+    backend_endpoint: GET /api/v1/grid/diff and GET /api/v1/grid/merge/report
+  intake.attach_project:
+    description: Attach an existing repository for Continuation without restarting
+      Genesis.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: POST /api/v1/loom/continuation/attach'
+  intake.resume_session:
+    description: Load existing Loom lineage for the attached repository.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: IntentSessionStore.load'
+  intake.session_kind_select:
+    description: Select continuation, hotfix, v2, or refactor policy.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: continuation session policy'
+  graph.bootstrap:
+    description: Create or reuse graph and metric artifacts for the attached repository
+      snapshot.
+    lifecycle_states: *id001
+    backend_endpoint: aoc-cli scan -> analyze
+  interrogation.set_mode:
+    description: Select full, delta, or skip-if-graph-ready interrogation policy.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: adaptive interrogation policy'
+  continuation.confirm_scope:
+    description: Approve the version-matched MODIFY, ADD, and DEPRECATE delta scope.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: continuation scope approval'
+  deliverable.detect_surfaces:
+    description: Detect stable runnable terminal, web, and native launch descriptors.
+    lifecycle_states: *id001
+    backend_endpoint: CONTRACT ONLY over GET /api/v1/grid/deliverable
+  deliverable.present:
+    description: Select the primary launch or evolution presentation for the detected
+      surface.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: launch presentation dispatcher'
+  deliverable.open_terminal:
+    description: Expose and run the verified terminal launch command.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: host terminal launcher'
+  deliverable.open_browser:
+    description: Start a web server if needed, verify health, and open the URL.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: browser launch lifecycle'
+  deliverable.open_native:
+    description: Validate and open a native artifact through a host capability.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: native launch lifecycle'
+  project.register_for_continuation:
+    description: Persist project lineage for deterministic future Continuation sessions.
+    lifecycle_states: *id001
+    backend_endpoint: 'CONTRACT ONLY: .gaijinn/project-lineage.json'

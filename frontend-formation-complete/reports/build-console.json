@@ -1,0 +1,22 @@
+{
+  "generated_screens": [
+    "vision_canvas",
+    "command_engine",
+    "terminal",
+    "continuation",
+    "deliverable_launch"
+  ],
+  "validation": {
+    "checked_screens": 5,
+    "error_count": 0,
+    "passed": true,
+    "violations": [],
+    "warning_count": 0
+  },
+  "node_checks": 15,
+  "css": {
+    "checked_files": 10,
+    "errors": [],
+    "passed": true
+  }
+}

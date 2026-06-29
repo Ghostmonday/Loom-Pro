@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[api,dev]"
+
+      - name: Run tests
+        env:
+          GAIJINN_ALLOW_INSECURE_LOCAL: "1"
+        run: python -m pytest
+
+      - name: Validate orchestration schemas
+        run: bash scripts/ci/validate-orchestration-schemas.sh
+
+      - name: Run Ruff lint
+        run: python -m ruff check .
+
+      - name: Run Ruff format check
+        run: python -m ruff format --check .
+
+      - name: Run merge regression gate
+        run: bash scripts/ci/merge-regression.sh
+
+      - name: Run acceptance workflow
+        run: bash scripts/ci/acceptance.sh

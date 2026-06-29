@@ -1,0 +1,13 @@
+{
+  "dropped_scaffold_tickets": 5,
+  "handoff_tickets_raised": 0,
+  "handoff_tickets_resolved": 0,
+  "parse_stats": {
+    "dropped_scaffold": 5
+  },
+  "pending_tickets": [],
+  "receipts_emitted": 0,
+  "schema_version": 1,
+  "synced_at": "2026-06-18T10:15:01Z",
+  "transaction_bus_synchronized": true
+}

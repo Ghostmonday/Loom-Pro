@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "system": "loom",
+  "surface": "loom-deliverable-launch",
+  "parent_spec": "ui/loom-system-intent-map.json",
+  "description": "Launch Presentation contract after merge completion. Detects runnable terminal, web, or native surfaces; presents the primary launch moment; preserves download and diff retrieval; and registers lineage for future Continuation sessions.",
+  "implementation_status": "contract_only",
+  "phases": [
+    "merge_complete",
+    "presenting",
+    "running",
+    "evolution_complete"
+  ],
+  "flow": [
+    {
+      "order": 1,
+      "phase": "merge_complete",
+      "requires": "merge.poll_status complete",
+      "action": "deliverable.detect_surfaces",
+      "next": "presenting"
+    },
+    {
+      "order": 2,
+      "phase": "presenting",
+      "action": "deliverable.present",
+      "next": "running"
+    },
+    {
+      "order": 3,
+      "phase": "running",
+      "action_by_surface": {
+        "terminal": "deliverable.open_terminal",
+        "web": "deliverable.open_browser",
+        "native": "deliverable.open_native"
+      }
+    },
+    {
+      "order": 4,
+      "phase": "running",
+      "actions_always_available": ["deliverable.download", "deliverable.view_diff"]
+    },
+    {
+      "order": 5,
+      "phase": "evolution_complete",
+      "action": "project.register_for_continuation"
+    }
+  ],
+  "elements": {
+    "deliverable.launch_card": {
+      "dom_id": "deliverable-launch-card",
+      "type": "hero_card",
+      "shows": ["presentation_title", "presentation_summary", "primary_surface", "primary_action"],
+      "visible_when": "merge.poll_status complete"
+    },
+    "deliverable.surface_picker": {
+      "dom_id": "deliverable-surface-picker",
+      "type": "segmented_control",
+      "options": ["terminal", "web", "native"],
+      "options_source": "deliverable.detect_surfaces",
+      "hidden_when": "detected_surfaces.length == 1"
+    },
+    "deliverable.run_status": {
+      "dom_id": "deliverable-run-status",
+      "type": "status_region",
+      "shows": ["state", "command", "url", "pid", "exit_code", "path", "error"]
+    },
+    "deliverable.changelog_summary": {
+      "dom_id": "deliverable-changelog-summary",
+      "type": "summary_list",
+      "shows": ["added", "modified", "deprecated", "tests", "merge_receipt"]
+    },
+    "deliverable.primary_launch": {
+      "dom_id": "deliverable-primary-launch",
+      "type": "button",
+      "triggers": "deliverable.present"
+    },
+    "deliverable.download": {
+      "dom_id": "deliverable-download",
+      "type": "button",
+      "triggers": "deliverable.download",
+      "cross_ref": "ui/process-stage-ux-map.json#merge.deliverable_retrieval"
+    },
+    "deliverable.view_diff": {
+      "dom_id": "deliverable-view-diff",
+      "type": "button",
+      "triggers": "deliverable.view_diff",
+      "cross_ref": "ui/process-stage-ux-map.json#merge.deliverable_retrieval"
+    },
+    "deliverable.register_continuation": {
+      "dom_id": "deliverable-register-continuation",
+      "type": "system_effect",
+      "triggers": "project.register_for_continuation"
+    }
+  },
+  "surface_detection": {
+    "precedence": ["web", "native", "terminal"],
+    "default_by_session_kind": {
+      "genesis": "highest precedence runnable surface",
+      "continuation": "last successful surface, otherwise highest precedence",
+      "hotfix": "last successful surface, otherwise terminal",
+      "v2": "last successful surface, otherwise highest precedence",
+      "refactor": "terminal"
+    },
+    "terminal_indicators": ["blueprint.run.command", "artifact executable bit", "REPL entrypoint", "console_script"],
+    "web_indicators": ["blueprint.run.url", "ASGI or WSGI entrypoint", "package start script with served URL", "declared web port"],
+    "native_indicators": [".desktop", ".app bundle", "native executable", "installer artifact"]
+  },
+  "actions": {
+    "deliverable.detect_surfaces": {
+      "input": {
+        "session_id": "string",
+        "blueprint": "object",
+        "deliverable_manifest": "object"
+      },
+      "api": {
+        "method": "GET",
+        "path": "/api/v1/grid/deliverable",
+        "existing": true
+      },
+      "returns": ["detected_surfaces", "primary_surface", "launch_descriptors"],
+      "postconditions": ["detected surfaces are a stable ordered subset of terminal,web,native", "each detected surface has a launch descriptor"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "GET /api/v1/grid/deliverable",
+        "mode": "contract_only",
+        "gap": "Existing retrieval route does not infer runnable surfaces from blueprint artifacts."
+      }
+    },
+    "deliverable.present": {
+      "input": {
+        "surface": "terminal|web|native",
+        "session_kind": "genesis|continuation|hotfix|v2|refactor"
+      },
+      "preconditions": ["merge.poll_status complete", "selected surface detected or explicitly configured"],
+      "effects": ["render launch or evolution copy", "select matching open action", "keep download and diff secondary actions visible"],
+      "postconditions": ["phase == presenting", "exactly one primary launch action"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "entrypoint": "UiIntentDriver.dispatch_loom_action",
+        "mode": "contract_only",
+        "gap": "No deliverable presentation action or launch-surface dispatcher exists."
+      }
+    },
+    "deliverable.download": {
+      "api": {
+        "method": "GET",
+        "path": "/api/v1/grid/deliverable",
+        "existing": true
+      },
+      "cross_ref": "ui/process-stage-ux-map.json#merge.deliverable_retrieval",
+      "returns": ["archive", "filename", "checksum"],
+      "postconditions": ["download remains available for every detected surface"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "GET /api/v1/grid/deliverable",
+        "mode": "real",
+        "gap": "API exists; Launch Presentation binding and archive metadata contract are not implemented."
+      }
+    },
+    "deliverable.view_diff": {
+      "api": {
+        "method": "GET",
+        "path": "/api/v1/grid/diff",
+        "existing": true
+      },
+      "cross_ref": "ui/process-stage-ux-map.json#merge.deliverable_retrieval",
+      "returns": ["files_changed", "unified_diff", "summary"],
+      "postconditions": ["diff is secondary but always visible", "continuation summary groups MODIFY, ADD, DEPRECATE"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/api.py",
+        "entrypoint": "GET /api/v1/grid/diff",
+        "mode": "real",
+        "gap": "API exists; Launch Presentation diff grouping and changelog summary are not implemented."
+      }
+    },
+    "deliverable.open_terminal": {
+      "input": {
+        "command": "string",
+        "cwd": "string",
+        "environment": "object"
+      },
+      "effects": ["show copyable run command", "open terminal or REPL when host capability allows", "print served URL for uvicorn-like commands"],
+      "returns": ["state", "command", "pid", "url|null", "exit_code|null"],
+      "postconditions": ["command and cwd are visible before execution", "failure preserves retry and download actions"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "entrypoint": "UiIntentDriver.dispatch_loom_action",
+        "mode": "contract_only",
+        "gap": "Host-safe terminal launch capability and run-status transport are not implemented."
+      }
+    },
+    "deliverable.open_browser": {
+      "input": {
+        "url": "string",
+        "healthcheck_url": "string|null",
+        "start_command": "string|null"
+      },
+      "effects": ["start server when required", "wait for bounded healthcheck", "open default browser"],
+      "returns": ["state", "url", "pid|null", "healthcheck"],
+      "postconditions": ["browser opens only after URL is reachable or user chooses open anyway", "URL remains copyable"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "entrypoint": "UiIntentDriver.dispatch_loom_action",
+        "mode": "contract_only",
+        "gap": "No server lifecycle, healthcheck, or browser-open launch action exists."
+      }
+    },
+    "deliverable.open_native": {
+      "input": {
+        "artifact_path": "string",
+        "artifact_kind": "binary|desktop_entry|app_bundle"
+      },
+      "effects": ["validate artifact exists", "open binary, .desktop entry, or app bundle through host capability"],
+      "returns": ["state", "path", "pid|null", "error|null"],
+      "postconditions": ["artifact path shown", "launch failure does not invalidate merged deliverable"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/ui_intent.py",
+        "entrypoint": "UiIntentDriver.dispatch_loom_action",
+        "mode": "contract_only",
+        "gap": "No native artifact launcher or platform capability abstraction exists."
+      }
+    },
+    "project.register_for_continuation": {
+      "input": {
+        "repo_path": "string",
+        "session_id": "string",
+        "blueprint_version": "integer",
+        "projection_mode": "string",
+        "last_surface": "terminal|web|native"
+      },
+      "artifact": ".gaijinn/project-lineage.json",
+      "effects": ["write continuation lineage atomically", "associate latest successful merge and launch surface"],
+      "returns": ["project_id", "parent_session_id", "blueprint_version", "continuation_route"],
+      "postconditions": ["next entry defaults to Continuation rather than Genesis", "registration is idempotent for session_id and blueprint_version"],
+      "algorithm_binding": {
+        "module": "aoc_supervisor/intent_session_store.py",
+        "entrypoint": "IntentSessionStore.save",
+        "mode": "contract_only",
+        "gap": "No project lineage artifact or registration action exists."
+      }
+    }
+  },
+  "genesis_vs_continuation_copy": {
+    "shared_actions": [
+      "deliverable.detect_surfaces",
+      "deliverable.present",
+      "deliverable.download",
+      "deliverable.view_diff",
+      "deliverable.open_terminal",
+      "deliverable.open_browser",
+      "deliverable.open_native",
+      "project.register_for_continuation"
+    ],
+    "genesis": {
+      "moment": "Launch",
+      "title": "Your product is ready to launch",
+      "summary": "Loom built and merged the first complete version.",
+      "primary_action": {
+        "terminal": "Run it",
+        "web": "Open in browser",
+        "native": "Open app"
+      }
+    },
+    "continuation": {
+      "moment": "Evolution",
+      "title": "Your product has evolved",
+      "summary": "Loom applied the approved delta and verified the updated app.",
+      "primary_action": {
+        "terminal": "Run the update",
+        "web": "Open updated app",
+        "native": "Open updated app"
+      },
+      "secondary_emphasis": ["View diff", "Review tests", "Download"]
+    }
+  },
+  "gates": [
+    {
+      "id": "gate.deliverable_merge_complete",
+      "before": "deliverable.detect_surfaces",
+      "require": "merge_pipeline.phase == completed"
+    },
+    {
+      "id": "gate.deliverable_surface_runnable",
+      "before": "deliverable.present",
+      "require": "selected surface has a complete launch descriptor"
+    },
+    {
+      "id": "gate.deliverable_register_lineage",
+      "before": "evolution_complete",
+      "require": "session_id, repo_path, blueprint_version, projection_mode, and merge receipt present"
+    }
+  ],
+  "smoke_scenarios": [
+    {
+      "id": "flow.loom_launch_terminal",
+      "description": "After merge, detect a terminal entrypoint, present it as primary, and expose command and run status while retaining diff and download.",
+      "steps": [
+        {"action": "deliverable.detect_surfaces", "args": {"session_id": "loom-terminal"}},
+        {"action": "deliverable.present", "args": {"surface": "terminal", "session_kind": "genesis"}},
+        {"action": "deliverable.open_terminal"}
+      ],
+      "assertions": [
+        "primary_surface == terminal",
+        "run_status.command present",
+        "deliverable.download available",
+        "deliverable.view_diff available"
+      ],
+      "implementation_status": "spec_only"
+    },
+    {
+      "id": "flow.loom_launch_web",
+      "description": "Detect a web artifact, start its server, wait for readiness, and open the served URL in the browser.",
+      "steps": [
+        {"action": "deliverable.detect_surfaces", "args": {"session_id": "loom-web"}},
+        {"action": "deliverable.present", "args": {"surface": "web", "session_kind": "genesis"}},
+        {"action": "deliverable.open_browser"}
+      ],
+      "assertions": [
+        "primary_surface == web",
+        "run_status.url present",
+        "healthcheck reachable before browser open",
+        "presentation title == Your product is ready to launch"
+      ],
+      "implementation_status": "spec_only"
+    },
+    {
+      "id": "flow.loom_reentry_after_launch",
+      "description": "Register merged project lineage, then attach the same repository on return as Continuation with the prior session selected.",
+      "steps": [
+        {"action": "project.register_for_continuation", "args": {"repo_path": "/workspace/product", "session_id": "loom-v1", "blueprint_version": 1, "projection_mode": "loom_synthesis", "last_surface": "web"}},
+        {"map": "ui/loom-continuation-intent-map.json", "action": "intake.attach_project", "args": {"repo_path": "/workspace/product", "session_kind": "continuation"}}
+      ],
+      "assertions": [
+        "attach suggested_session_kind == continuation",
+        "attach lineage.parent_session_id == loom-v1",
+        "attach lineage.blueprint_version == 1",
+        "default surface == web"
+      ],
+      "implementation_status": "spec_only"
+    }
+  ],
+  "confusion_signals": [
+    {
+      "id": "confusion.deliverable_download_only",
+      "detect": "merge completion shows only an archive download",
+      "resolution": "present a runnable surface as the primary action and keep download secondary"
+    },
+    {
+      "id": "confusion.deliverable_launch_copy_for_continuation",
+      "detect": "continuation completion says first launch or newly built",
+      "resolution": "use Evolution copy with diff and tests emphasized"
+    },
+    {
+      "id": "confusion.deliverable_unregistered",
+      "detect": "returning merged project enters Genesis",
+      "resolution": "register lineage atomically after presentation and default reentry to Continuation"
+    }
+  ]
+}

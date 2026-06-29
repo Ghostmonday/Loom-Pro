@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "goal": "Tonight velocity: deliverable UI + 3-phase scope + multi-phase orchestration",
+  "phase_model": {
+    "canonical_order": ["backend", "frontend", "testing"],
+    "note": "Testing is always its own phase when selected — not implicit in full_stack only",
+    "presets": {
+      "backend_only": ["backend"],
+      "frontend_only": ["frontend"],
+      "testing_only": ["testing"],
+      "backend_frontend": ["backend", "frontend"],
+      "backend_testing": ["backend", "testing"],
+      "frontend_testing": ["frontend", "testing"],
+      "full_stack": ["backend", "frontend", "testing"]
+    },
+    "loaded_context": {
+      "rule": "When phases skip one stack end but include the other end + testing, the skipped end must already be loaded (not built in this run).",
+      "opposite_end": { "backend": "frontend", "frontend": "backend" },
+      "requires_loaded": {
+        "frontend_testing": { "load": "backend", "because": "UI tests need an API/backend to run against" },
+        "backend_testing": { "load": "frontend", "because": "integration tests need a client surface to exercise the API" },
+        "frontend_only": { "load": "backend", "optional": true },
+        "testing_only": { "load": ["backend", "frontend"], "because": "standalone test phase needs a built stack to verify" }
+      },
+      "load_sources": ["prior_session_id", "deliverable_zip_upload", "project_path"]
+    }
+  },
+  "sprints": [
+    {
+      "id": "sprint-1-merge-deliverable",
+      "status": "done",
+      "commit": "abecc82"
+    },
+    {
+      "id": "sprint-2-phase-selector",
+      "status": "done",
+      "commit": "3ea38e8",
+      "codex_task": "docs/codex-tasks/task-tonight-scope-selector.md",
+      "intent": "Add phase selector at terminal start: user picks which of backend, frontend, testing to run (7 presets or toggles). Store ordered phases[] in session via POST /api/v1/orchestrate/prepare. Show Phases: Backend → Testing on blueprint card. Testing is its own phase."
+    },
+    {
+      "id": "sprint-3-multi-phase",
+      "status": "done",
+      "commit": "aee8bb2",
+      "codex_task": "docs/codex-tasks/task-tonight-multi-phase.md",
+      "intent": "Multi-phase skeleton: advance-phase API after merge_complete moves through phases[] (backend→frontend→testing). Dynamic stage rail shows only selected phases. Stub blueprints per phase. Mock tests for all 7 presets."
+    },
+    {
+      "id": "sprint-3.5-deliverable-polish",
+      "status": "done",
+      "commit": "d1206c2",
+      "intent": "Deliverable panel polish: View diff, Copy path, Start new, per-worker validation breakdown."
+    },
+    {
+      "id": "sprint-4-geometry-partitioning",
+      "status": "done",
+      "commit": "5867010",
+      "codex_task": "docs/codex-tasks/task-geometry-conditioned-partitioning.md",
+      "intent": "Geometry-conditioned task isolation: Dark Bridge union-find atomic blocks, κ≥0 parallel contraction, stealth serialization logs."
+    }
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://loom.local/schemas/orchestration-event.schema.json",
+  "title": "Loom Orchestration Event",
+  "description": "Transport-neutral canonical event envelope. The same schema may be serialized over SSE, WebSocket, replay logs, or tests, then projected through ui/experience-policy.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "sequence",
+    "emitted_at",
+    "session_id",
+    "event_type",
+    "classification",
+    "phase",
+    "data"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "event_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 0},
+    "emitted_at": {"type": "string", "format": "date-time"},
+    "session_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": ["string", "null"]},
+    "causation_id": {"type": ["string", "null"]},
+    "phase": {
+      "enum": [
+        "awaiting_intent",
+        "blueprinting",
+        "awaiting_swarm",
+        "sprinting",
+        "complete",
+        "failed"
+      ]
+    },
+    "subphase": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "intent_parse",
+        "graph_ingest",
+        "curvature_compute",
+        "bridge_detect",
+        "weld_plan",
+        "partition",
+        "blueprint_freeze",
+        "intent_forge",
+        "choosing_swarm",
+        "deploying_workers",
+        "workers_running",
+        "merging_output"
+      ]
+    },
+    "classification": {
+      "description": "Minimum projection clearance required to receive the unaggregated event.",
+      "enum": ["public", "guided", "builder", "operator"]
+    },
+    "event_type": {
+      "enum": [
+        "session.snapshot",
+        "phase.begin",
+        "phase.progress",
+        "phase.complete",
+        "phase.failed",
+        "topology.node.upsert",
+        "topology.edge.curvature",
+        "topology.bridge.detected",
+        "topology.constraints.summary",
+        "topology.weld.created",
+        "topology.gateway.created",
+        "topology.strategy.requested",
+        "topology.strategy.resolved",
+        "work_unit.upsert",
+        "work_unit.acceptance_checks.updated",
+        "work_unit.isolation.summary",
+        "giv.scope.bound",
+        "giv.scope.rebound",
+        "worker.state.changed",
+        "handoff.ticket.opened",
+        "handoff.ticket.accepted",
+        "handoff.ticket.resolved",
+        "handoff.ticket.failed",
+        "validation.gate.updated",
+        "governance.summary.updated",
+        "governance.score.updated",
+        "merge.state.updated",
+        "blueprint.patch.applied",
+        "intent.session.created",
+        "intent.question.presented",
+        "intent.answer.recorded",
+        "intent.answer.revised",
+        "intent.session.paused",
+        "intent.session.resumed",
+        "blueprint.node.upsert",
+        "blueprint.edge.upsert",
+        "blueprint.confidence.updated",
+        "blueprint.contradiction.detected",
+        "blueprint.contradiction.resolved",
+        "blueprint.validation.completed",
+        "blueprint.finalized",
+        "blueprint.handoff.accepted",
+        "geometry.override.previewed",
+        "geometry.override.committed",
+        "audit.record.created",
+        "error.summary",
+        "error.detail",
+        "error.raw"
+      ]
+    },
+    "policy": {
+      "$ref": "#/$defs/policyMetadata"
+    },
+    "data": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "topology.node.upsert"}}},
+      "then": {"properties": {"data": {"$ref": "#/$defs/topologyNode"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": ["topology.edge.curvature", "topology.bridge.detected"]
+          }
+        }
+      },
+      "then": {"properties": {"data": {"$ref": "#/$defs/topologyEdge"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "work_unit.upsert"}}},
+      "then": {"properties": {"data": {"$ref": "#/$defs/workUnit"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {"enum": ["giv.scope.bound", "giv.scope.rebound"]}
+        }
+      },
+      "then": {"properties": {"data": {"$ref": "#/$defs/givScope"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": [
+              "handoff.ticket.opened",
+              "handoff.ticket.accepted",
+              "handoff.ticket.resolved",
+              "handoff.ticket.failed"
+            ]
+          }
+        }
+      },
+      "then": {"properties": {"data": {"$ref": "#/$defs/handoffTicket"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": ["governance.summary.updated", "governance.score.updated"]
+          }
+        }
+      },
+      "then": {"properties": {"data": {"$ref": "#/$defs/governanceScore"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "enum": ["geometry.override.previewed", "geometry.override.committed"]
+          }
+        }
+      },
+      "then": {"properties": {"data": {"$ref": "#/$defs/geometryOverride"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "audit.record.created"}}},
+      "then": {"properties": {"data": {"$ref": "#/$defs/auditRecord"}}}
+    }
+  ],
+  "$defs": {
+    "policyMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minimum_mode": {"enum": ["guided", "builder", "operator"]},
+        "aggregate_as": {"type": ["string", "null"]},
+        "redacted_fields": {
+          "type": "array",
+          "items": {"type": "string"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "topologyNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "label", "node_kind", "gravity", "status"],
+      "properties": {
+        "node_id": {"type": "string"},
+        "label": {"type": "string"},
+        "path": {"type": ["string", "null"]},
+        "node_kind": {"enum": ["file", "endpoint", "state", "work_unit", "worker", "gateway"]},
+        "gravity": {"type": "number", "minimum": 0},
+        "local_size": {"type": ["number", "null"], "minimum": 0},
+        "risk": {"enum": ["low", "medium", "high", "critical"]},
+        "status": {"enum": ["discovered", "accepted", "rejected", "assigned", "running", "complete", "failed"]},
+        "work_unit_id": {"type": ["string", "null"]},
+        "worker_id": {"type": ["string", "null"]}
+      }
+    },
+    "topologyEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "source", "target", "kappa", "classification"],
+      "properties": {
+        "edge_id": {"type": "string"},
+        "source": {"type": "string"},
+        "target": {"type": "string"},
+        "kappa": {"type": "number"},
+        "geometric_curvature": {"type": ["number", "null"]},
+        "wasserstein_1": {"type": ["number", "null"], "minimum": 0},
+        "classification": {"enum": ["positive", "flat", "shadow_bridge", "dark_bridge"]},
+        "risk_jump": {"type": "boolean"},
+        "source_distribution": {
+          "type": ["array", "null"],
+          "items": {"$ref": "#/$defs/distributionPoint"}
+        },
+        "target_distribution": {
+          "type": ["array", "null"],
+          "items": {"$ref": "#/$defs/distributionPoint"}
+        }
+      }
+    },
+    "distributionPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node", "probability"],
+      "properties": {
+        "node": {"type": "string"},
+        "probability": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "workUnit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_unit_id", "title", "risk", "allowed_path_count", "depends_on", "state"],
+      "properties": {
+        "work_unit_id": {"type": "string"},
+        "title": {"type": "string"},
+        "description": {"type": ["string", "null"]},
+        "risk": {"enum": ["low", "medium", "high"]},
+        "domain": {"enum": ["code", "vault"]},
+        "allowed_path_count": {"type": "integer", "minimum": 1},
+        "allowed_paths": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "denied_paths": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "acceptance_checks": {"type": "array", "items": {"type": "string"}},
+        "depends_on": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "strategy": {"enum": ["isolated", "atomic_weld", "governed_handoff"]},
+        "state": {"enum": ["proposed", "approved", "assigned", "running", "validated", "merged", "blocked", "failed"]}
+      }
+    },
+    "givScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["worker_id", "work_unit_ids", "scope_hash", "allowed_path_count", "denied_path_count"],
+      "properties": {
+        "worker_id": {"type": "string"},
+        "work_unit_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "scope_hash": {"type": "string"},
+        "allowed_path_count": {"type": "integer", "minimum": 0},
+        "denied_path_count": {"type": "integer", "minimum": 0},
+        "allowed_paths": {"type": "array", "items": {"type": "string"}},
+        "denied_paths": {"type": "array", "items": {"type": "string"}},
+        "capabilities": {"type": "array", "items": {"type": "string"}},
+        "prohibitions": {"type": "array", "items": {"type": "string"}},
+        "invariants": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "handoffTicket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ticket_id", "from_worker", "to_worker", "state", "requested_paths", "created_at"],
+      "properties": {
+        "ticket_id": {"type": "string"},
+        "from_worker": {"type": "string"},
+        "to_worker": {"type": "string"},
+        "from_work_unit": {"type": ["string", "null"]},
+        "to_work_unit": {"type": ["string", "null"]},
+        "requested_paths": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "reason": {"type": ["string", "null"]},
+        "state": {"enum": ["opened", "accepted", "resolved", "rejected", "failed"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "resolved_at": {"type": ["string", "null"], "format": "date-time"},
+        "receipt_hash": {"type": ["string", "null"]}
+      }
+    },
+    "governanceScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validation_pass_rate", "convergence", "transaction_bus_synchronized", "handoff_isolation"],
+      "properties": {
+        "validation_pass_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "convergence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "transaction_bus_synchronized": {"type": ["boolean", "null"]},
+        "handoff_isolation": {"type": ["boolean", "null"]},
+        "merged": {"type": "integer", "minimum": 0},
+        "blocked": {"type": "integer", "minimum": 0},
+        "conflicted": {"type": "integer", "minimum": 0},
+        "already_merged": {"type": "integer", "minimum": 0},
+        "promotion_threshold": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "promotion_eligible": {"type": ["boolean", "null"]}
+      }
+    },
+    "geometryOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["override_id", "state", "baseline_floor", "proposed_floor", "baseline_hash", "impact", "reason"],
+      "properties": {
+        "override_id": {"type": "string"},
+        "preview_id": {"type": ["string", "null"]},
+        "state": {"enum": ["previewed", "committed", "rejected"]},
+        "baseline_floor": {"type": "number"},
+        "proposed_floor": {"type": "number"},
+        "baseline_hash": {"type": "string"},
+        "custom_geometry_hash": {"type": ["string", "null"]},
+        "reason": {"type": "string", "minLength": 1},
+        "impact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["changed_edge_count", "changed_weld_count", "changed_gateway_count", "changed_work_unit_count"],
+          "properties": {
+            "changed_edge_count": {"type": "integer", "minimum": 0},
+            "changed_weld_count": {"type": "integer"},
+            "changed_gateway_count": {"type": "integer"},
+            "changed_work_unit_count": {"type": "integer"},
+            "newly_unsafe_edges": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "unsafe_geometry": {"type": "boolean"}
+      }
+    },
+    "auditRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_id",
+        "audit_type",
+        "session_id",
+        "actor_id",
+        "actor_mode",
+        "reason",
+        "created_at",
+        "baseline_hash",
+        "result_hash",
+        "parent_audit_hash",
+        "status"
+      ],
+      "properties": {
+        "audit_id": {"type": "string"},
+        "audit_type": {"type": "string"},
+        "session_id": {"type": "string"},
+        "actor_id": {"type": "string"},
+        "actor_mode": {"enum": ["guided", "builder", "operator", "system"]},
+        "reason": {"type": "string", "minLength": 1},
+        "created_at": {"type": "string", "format": "date-time"},
+        "baseline_hash": {"type": "string"},
+        "result_hash": {"type": "string"},
+        "parent_audit_hash": {"type": ["string", "null"]},
+        "status": {"enum": ["previewed", "accepted", "rejected", "committed", "rolled_back"]},
+        "metadata": {"type": "object"}
+      }
+    }
+  }
+}

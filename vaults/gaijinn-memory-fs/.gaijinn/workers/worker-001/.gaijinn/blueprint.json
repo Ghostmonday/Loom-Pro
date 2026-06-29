@@ -1,0 +1,527 @@
+{
+  "assumptions": [
+    "Allowed paths are write scopes; workers may read broader project context as needed.",
+    "Negative-curvature coupling welds are consolidated into atomic work units before parallel dispatch.",
+    "Optimizing pipeline: Consolidating local coupling reviews for execution stabilization.",
+    "Work units are generated from the scanned graph, integrity preflight, and scope lock."
+  ],
+  "dependencies": {
+    "WU-001": [],
+    "WU-002": [],
+    "WU-003": [],
+    "WU-004": [],
+    "WU-005": [],
+    "WU-006": [],
+    "WU-007": [],
+    "WU-008": [],
+    "WU-009": [],
+    "WU-010": [],
+    "WU-011": [],
+    "WU-012": [],
+    "WU-013": [],
+    "WU-014": [],
+    "WU-015": [],
+    "WU-016": [],
+    "WU-017": [],
+    "WU-018": [],
+    "WU-019": [],
+    "WU-020": [],
+    "WU-021": [],
+    "WU-022": [],
+    "WU-023": [],
+    "WU-024": [],
+    "WU-025": [],
+    "WU-026": [
+      "WU-022"
+    ]
+  },
+  "project_goal": "Deliver isolated work units for constitution, knowledge, metrics, vault while preserving GIV invariants.",
+  "risks": [
+    "6 coupling review edge(s) detected in preflight",
+    "One or more graph nodes are below the gravity hard floor",
+    "Optimizing pipeline: Consolidating local coupling reviews for execution stabilization.",
+    "WU-001: estimated high risk",
+    "WU-002: estimated high risk",
+    "WU-003: estimated high risk",
+    "WU-004: estimated medium risk",
+    "WU-005: estimated medium risk",
+    "WU-006: estimated high risk",
+    "WU-007: estimated high risk",
+    "WU-008: estimated high risk",
+    "WU-009: estimated high risk",
+    "WU-010: estimated high risk",
+    "WU-011: estimated medium risk",
+    "WU-012: estimated high risk",
+    "WU-013: estimated high risk",
+    "WU-014: estimated high risk",
+    "WU-015: estimated medium risk",
+    "WU-016: estimated high risk",
+    "WU-017: estimated medium risk",
+    "WU-018: estimated high risk",
+    "WU-019: estimated medium risk",
+    "WU-020: estimated high risk",
+    "WU-021: estimated medium risk",
+    "WU-022: estimated medium risk",
+    "WU-023: estimated high risk",
+    "WU-024: estimated high risk",
+    "WU-025: estimated high risk",
+    "WU-026: estimated high risk"
+  ],
+  "schema_version": 1,
+  "work_units": [
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/intent_blueprint.py",
+        "aoc_supervisor/aoc_supervisor/prompt_coverage.py"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Geometry-conditioned atomic block: coupling review weld binds aoc_supervisor/aoc_supervisor/intent_blueprint.py, aoc_supervisor/aoc_supervisor/prompt_coverage.py. Execute sequentially on one worker with strict scope lock.",
+      "estimated_risk": "high",
+      "id": "WU-001",
+      "title": "Consolidate coupling review block (2 files)"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "project.executor-profile.json"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the json files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-002",
+      "title": "json high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "000_Brain_MOC.md",
+        "010_Protocols_MOC.md",
+        "020_Active_State_MOC.md",
+        "030_Cold_Memories_MOC.md",
+        "CLAUDE.md",
+        "Current_Context.md",
+        "README.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-003",
+      "title": "markdown high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "AGENTS.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `.` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-004",
+      "title": "markdown medium-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".cursorrules"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `.` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-005",
+      "title": "unknown medium-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".agents/codex-deepseek.toml.example",
+        ".agents/hermes-deepseek.env.example"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `.agents` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-006",
+      "title": "unknown high-risk changes in .agents"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".agents/vault.yaml"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the yaml files grouped by directory `.agents` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-007",
+      "title": "yaml high-risk changes in .agents"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        ".obsidian/app.json",
+        ".obsidian/appearance.json",
+        ".obsidian/core-plugins.json",
+        ".obsidian/graph.json",
+        ".obsidian/workspace.json"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the json files grouped by directory `.obsidian` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-008",
+      "title": "json high-risk changes in .obsidian"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "00_Brain/invariants/INV-GAIJINN-BINDING.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `00_Brain/invariants` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-009",
+      "title": "markdown high-risk changes in 00_Brain/invariants"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/HERMES-DEVELOPMENT-ORDERS.md",
+        "10_Operations/HERMES-MEMORY.md",
+        "10_Operations/HERMES-SPRINT-DIRECTIVE.md",
+        "10_Operations/VAULT-GEMINI-SHARE.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `10_Operations` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-010",
+      "title": "markdown high-risk changes in 10_Operations"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/knowledge-linter.py"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `10_Operations` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-011",
+      "title": "python medium-risk changes in 10_Operations"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/agents/promoter/validate_promotion.py"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `10_Operations/agents/promoter` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-012",
+      "title": "python high-risk changes in 10_Operations/agents/promoter"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/agents/promoter/promote.sh"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the shell files grouped by directory `10_Operations/agents/promoter` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-013",
+      "title": "shell high-risk changes in 10_Operations/agents/promoter"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/tasks/topology-merges.md",
+        "10_Operations/tasks/topology-splits.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `10_Operations/tasks` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-014",
+      "title": "markdown high-risk changes in 10_Operations/tasks"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "10_Operations/tasks/OBSIDIAN-RUN-16.md",
+        "10_Operations/tasks/VAULT-TOPOLOGY-SWARM.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `10_Operations/tasks` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-015",
+      "title": "markdown medium-risk changes in 10_Operations/tasks"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "20_Projects/deepseek-codex-setup.md",
+        "20_Projects/deepseek-hermes-setup.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `20_Projects` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-016",
+      "title": "markdown high-risk changes in 20_Projects"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "30_Decisions/ADR-002-dual-invariant-domains.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `30_Decisions` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-017",
+      "title": "markdown medium-risk changes in 30_Decisions"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "40_Concepts/convergence-governance.md",
+        "40_Concepts/council-memory-convergence-semantics.md",
+        "40_Concepts/council-memory-development-program.md",
+        "40_Concepts/council-memory-empty-spawn-crisis.md",
+        "40_Concepts/council-memory-handoff-bus.md",
+        "40_Concepts/council-memory-hermes-mandate.md",
+        "40_Concepts/council-memory-index.md",
+        "40_Concepts/council-memory-infrastructure-incidents.md",
+        "40_Concepts/council-memory-merge-compounding.md",
+        "40_Concepts/council-memory-monorepo-state.md",
+        "40_Concepts/council-memory-operational-hazards.md",
+        "40_Concepts/council-memory-product-vision.md",
+        "40_Concepts/council-memory-protocol.md",
+        "40_Concepts/council-memory-sprint-14w-arc.md",
+        "40_Concepts/council-memory-vault-dogfood-arc.md",
+        "40_Concepts/dual-ledger-bridge.md",
+        "40_Concepts/event-sourcing-vault.md",
+        "40_Concepts/hermes-cron-orchestration.md",
+        "40_Concepts/hermes-memory-vault.md",
+        "40_Concepts/knowledge-linter-architecture.md",
+        "40_Concepts/linter-core-governance.md",
+        "40_Concepts/linter-markdown-schema.md",
+        "40_Concepts/memory-execution-loop.md",
+        "40_Concepts/metrics-convergence.md",
+        "40_Concepts/metrics-gravity.md",
+        "40_Concepts/obsidian-city-neighborhoods.md",
+        "40_Concepts/obsidian-vault-mapping.md",
+        "40_Concepts/promotion-pipeline.md",
+        "40_Concepts/test-promotion-concept.md",
+        "40_Concepts/vault-affairs.md",
+        "40_Concepts/vault-gaijinn.md",
+        "40_Concepts/vault-topology-and-density.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `40_Concepts` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-018",
+      "title": "markdown high-risk changes in 40_Concepts"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "40_Concepts/council-memory-cron-topology.md",
+        "40_Concepts/council-memory-executor-stack.md",
+        "40_Concepts/council-memory-ux-process-stage.md",
+        "40_Concepts/council-memory-vault-artifacts-shipped.md",
+        "40_Concepts/ingress-vault-civilization.md",
+        "40_Concepts/linter-supervisor-api.md",
+        "40_Concepts/metrics-dashboard.md",
+        "40_Concepts/metrics-linter.md",
+        "40_Concepts/vault-filesystem.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `40_Concepts` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-019",
+      "title": "markdown medium-risk changes in 40_Concepts"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "_multi-agent/events.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `_multi-agent` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-020",
+      "title": "markdown high-risk changes in _multi-agent"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/README.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `aoc_supervisor` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-021",
+      "title": "markdown medium-risk changes in aoc_supervisor"
+    },
+    {
+      "acceptance_checks": [
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/knowledge_linter.py",
+        "aoc_supervisor/aoc_supervisor/preflight.py",
+        "aoc_supervisor/aoc_supervisor/repo_paths.py"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `aoc_supervisor/aoc_supervisor` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-022",
+      "title": "python medium-risk changes in aoc_supervisor/aoc_supervisor"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "raw/constitution-v0-section-xiii.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `raw` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-023",
+      "title": "markdown high-risk changes in raw"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "ui/vault-ui-intent-map.json"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the json files grouped by directory `ui` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-024",
+      "title": "json high-risk changes in ui"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "ui/WU-004-deploy-path-validation.md"
+      ],
+      "denied_paths": [],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `ui` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-025",
+      "title": "markdown high-risk changes in ui"
+    },
+    {
+      "acceptance_checks": [
+        "review metrics manifest for rejected nodes or Shadow Bridges",
+        "vault_linter"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/__init__.py",
+        "aoc_supervisor/aoc_supervisor/__init__.py",
+        "aoc_supervisor/aoc_supervisor/api.py",
+        "aoc_supervisor/aoc_supervisor/billing.py",
+        "aoc_supervisor/aoc_supervisor/complexity.py",
+        "aoc_supervisor/aoc_supervisor/enforcer.py",
+        "aoc_supervisor/aoc_supervisor/orchestrate_session.py",
+        "aoc_supervisor/aoc_supervisor/orchestrator.py",
+        "aoc_supervisor/aoc_supervisor/ui_intent.py",
+        "aoc_supervisor/aoc_supervisor/vault_deploy.py",
+        "aoc_supervisor/aoc_supervisor/vault_links.py",
+        "aoc_supervisor/aoc_supervisor/workflow_evaluator.py"
+      ],
+      "denied_paths": [],
+      "depends_on": [
+        "WU-022"
+      ],
+      "description": "Import-cycle weld binds 3 work units and 12 file(s). Cycle-participating paths must execute on one worker.",
+      "estimated_risk": "high",
+      "id": "WU-026",
+      "title": "Dependency cycle atomic block (12 files)"
+    }
+  ]
+}

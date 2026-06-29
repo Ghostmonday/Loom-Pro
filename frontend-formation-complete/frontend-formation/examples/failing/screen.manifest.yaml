@@ -1,0 +1,32 @@
+screen: sandbox.broken
+mission: Exercise the failing validator fixture.
+mission_id: broken-flow
+elements:
+  - id: status-box
+    classification: display
+    contract_path: broken.status
+  - id: status-box
+    classification: display
+    contract_path: broken.status.duplicate
+  - id: submit-btn
+    classification: action_control
+    action: sandbox.broken.other
+    feedback_target: result-feedback
+  - id: result-feedback
+    classification: display
+    contract_path: broken.feedback
+  - id: ghost-control
+    classification: action_control
+    action: sandbox.broken.other
+    feedback_target: result-feedback
+knowledge_bindings:
+  design_intent: sandbox.broken.surface
+  behavioral: sandbox.broken.behavior
+  operational: sandbox.broken.operations
+  governance: sandbox.broken.missing-governance
+  institutional: sandbox.broken.institution
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+  - smoke/one.yaml
+  - smoke/two.yaml

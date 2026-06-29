@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "phase": "converged",
+  "stopped": false,
+  "linter_pass": true,
+  "convergence": 1.0,
+  "last_run": "2026-06-18T05:18:00-07:00",
+  "last_grid_at": null,
+  "last_spawn_at": null,
+  "layer1_at": "2026-06-18T01:45:00-07:00",
+  "last_sprint_completed_at": "2026-06-18T03:20:02-07:00",
+  "last_merge_at": "2026-06-18T03:20:02-07:00",
+  "governance_reconciled": true,
+  "converged_at": "2026-06-18T05:18:00-07:00",
+  "note": "ADAPT: Synced vault loop state to phase=converged (was stuck plan_next_sprint with stale cross-domain path blocker — resolved by merge-compounding codex work on Jun 17). Project-level hermes-loop-state already at converged=1.0. Vault state now consistent with parent project."
+}

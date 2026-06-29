@@ -1,0 +1,332 @@
+{
+  "worker-001": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_bus": {
+        "passed": false,
+        "pending_tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 0,
+        "tickets": []
+      },
+      "invariants": {
+        "passed": true,
+        "violations": []
+      },
+      "path_allowlist": {
+        "passed": true,
+        "trespasses": []
+      },
+      "scope_isolation": {
+        "passed": true,
+        "violations": []
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-18T10:19:17Z",
+      "handoff_tickets_raised": 1,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [
+        {
+          "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+          "source_worker_id": "worker-004",
+          "status": "pending",
+          "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+          "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+          "ticket_id": "TX-HT-F96084",
+          "timestamp": "2026-06-18T10:19:17Z"
+        }
+      ],
+      "transaction_bus_synchronized": false
+    },
+    "passed": false,
+    "validated_at": "2026-06-18T10:19:17Z"
+  },
+  "worker-002": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_bus": {
+        "passed": false,
+        "pending_tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 0,
+        "tickets": []
+      },
+      "invariants": {
+        "passed": true,
+        "violations": []
+      },
+      "path_allowlist": {
+        "passed": true,
+        "trespasses": []
+      },
+      "scope_isolation": {
+        "passed": true,
+        "violations": []
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-18T10:19:17Z",
+      "handoff_tickets_raised": 1,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [
+        {
+          "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+          "source_worker_id": "worker-004",
+          "status": "pending",
+          "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+          "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+          "ticket_id": "TX-HT-F96084",
+          "timestamp": "2026-06-18T10:19:17Z"
+        }
+      ],
+      "transaction_bus_synchronized": false
+    },
+    "passed": false,
+    "validated_at": "2026-06-18T10:19:17Z"
+  },
+  "worker-003": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_bus": {
+        "passed": false,
+        "pending_tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 0,
+        "tickets": []
+      },
+      "invariants": {
+        "passed": true,
+        "violations": []
+      },
+      "path_allowlist": {
+        "passed": true,
+        "trespasses": []
+      },
+      "scope_isolation": {
+        "passed": true,
+        "violations": []
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-18T10:19:17Z",
+      "handoff_tickets_raised": 1,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [
+        {
+          "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+          "source_worker_id": "worker-004",
+          "status": "pending",
+          "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+          "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+          "ticket_id": "TX-HT-F96084",
+          "timestamp": "2026-06-18T10:19:17Z"
+        }
+      ],
+      "transaction_bus_synchronized": false
+    },
+    "passed": false,
+    "validated_at": "2026-06-18T10:19:17Z"
+  },
+  "worker-004": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_bus": {
+        "passed": false,
+        "pending_tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 1,
+        "tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "invariants": {
+        "passed": true,
+        "violations": []
+      },
+      "path_allowlist": {
+        "passed": true,
+        "trespasses": []
+      },
+      "scope_isolation": {
+        "passed": true,
+        "violations": []
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-18T10:19:17Z",
+      "handoff_tickets_raised": 1,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [
+        {
+          "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+          "source_worker_id": "worker-004",
+          "status": "pending",
+          "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+          "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+          "ticket_id": "TX-HT-F96084",
+          "timestamp": "2026-06-18T10:19:17Z"
+        }
+      ],
+      "transaction_bus_synchronized": false
+    },
+    "passed": false,
+    "validated_at": "2026-06-18T10:19:17Z"
+  },
+  "worker-005": {
+    "gates": {
+      "denied_commands": {
+        "passed": true,
+        "violations": []
+      },
+      "handoff_bus": {
+        "passed": false,
+        "pending_tickets": [
+          {
+            "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+            "source_worker_id": "worker-004",
+            "status": "pending",
+            "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+            "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+            "ticket_id": "TX-HT-F96084",
+            "timestamp": "2026-06-18T10:19:17Z"
+          }
+        ]
+      },
+      "handoff_protocol": {
+        "passed": true,
+        "ticket_count": 0,
+        "tickets": []
+      },
+      "invariants": {
+        "passed": true,
+        "violations": []
+      },
+      "path_allowlist": {
+        "passed": true,
+        "trespasses": []
+      },
+      "scope_isolation": {
+        "passed": true,
+        "violations": []
+      },
+      "tests": {
+        "exit_code": 0,
+        "output_truncated": "",
+        "passed": true,
+        "ran": false
+      }
+    },
+    "handoff_integrity": {
+      "evaluated_at": "2026-06-18T10:19:17Z",
+      "handoff_tickets_raised": 1,
+      "handoff_tickets_resolved": 0,
+      "pending_tickets": [
+        {
+          "required_mutation_context": "Fix two issues: (1) Add YAML frontmatter per Section XIII \u00a76.1: id, type, status, scope, created timestamp, tags, links. (2) Change header from '# worker-005 Work Units' to '# Worker: Vault Orchestration \u2014 Vault Root Work Unit' or appropriate vault-wide descriptor. Content body should describe vault-wide sprint work (5 concurrent worker grid-spawn), not individual worker assignments. Current content is wrong on both structure and semantic intent. The plan-generator incorrectly creates per-worker WORK_UNIT.md at vault root instead of keeping it scoped to .gaijinn/workers/$WORKER_ID/.",
+          "source_worker_id": "worker-004",
+          "status": "pending",
+          "target_file": "/home/ghost-monday/Desktop/Gaijinn/vaults/gaijinn-memory-fs/WORK_UNIT.md",
+          "target_work_unit_id": "composer-or-hermes-merge-pipeline",
+          "ticket_id": "TX-HT-F96084",
+          "timestamp": "2026-06-18T10:19:17Z"
+        }
+      ],
+      "transaction_bus_synchronized": false
+    },
+    "passed": false,
+    "validated_at": "2026-06-18T10:19:17Z"
+  }
+}

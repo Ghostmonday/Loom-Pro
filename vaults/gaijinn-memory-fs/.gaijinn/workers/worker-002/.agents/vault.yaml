@@ -1,0 +1,376 @@
+# gaijinn-memory-fs vault configuration
+# Write-time compiled memory vault — joint governance under Section XIII + ADR-002
+# This file is the namespace enforcement source for vault write paths.
+# Path: .agents/vault.yaml
+# Owner: vault-admin
+# Last validated: 2026-06-17
+
+# ─────────────────────────────────────────────
+# Vault Metadata
+# ─────────────────────────────────────────────
+vault:
+  id: "gaijinn-memory-fs"
+  name: "Gaijinn Memory Vault"
+  version: "0.2.0"
+  mission: "Write-time compiled memory for the Gaijinn ecosystem — folder taxonomy, YAML frontmatter, wikilinks, event ledger, knowledge linter, and supervisor API enforcement enforcing Section XIII joint governance."
+  constitution_ref: "[[raw/constitution-v0-section-xiii]]"
+  adr_ref: "[[30_Decisions/ADR-002-dual-invariant-domains]]"
+  ratified: "2026-06-17"
+
+# ─────────────────────────────────────────────
+# Write Permissions — Execution layer enforces
+# via Gaijinn GIV per work unit. Agents may only
+# write to paths listed below via an assigned
+# work unit whose GIV explicitly permits them.
+# ─────────────────────────────────────────────
+permissions:
+  read_paths:
+    - "/"
+  write_paths:
+    - "10_Operations/agents/"
+    - "10_Operations/tasks/"
+    - "_multi-agent/"
+    - "pending/"
+    - "raw/"
+    - "aoc_supervisor/"
+    - "40_Concepts/"
+    - ".agents/"
+  read_only: false
+
+# ─────────────────────────────────────────────
+# Folder Taxonomy — vault civilization structure
+# Each directory has a purpose, allowed note types,
+# and frontmatter requirements.
+# ─────────────────────────────────────────────
+taxonomy:
+  directories:
+    - path: "00_Brain"
+      purpose: "Invariant records — hard constraints and binding truths"
+      subdirectories:
+        - "invariants/"
+      write_role: "orchestrator"
+      auto_generated: false
+      description: "Hard invariant pointers. Edits require council ratification."
+
+    - path: "10_Operations"
+      purpose: "Active operations — agent workspaces, tasks, artifacts"
+      subdirectories:
+        - "agents/"
+        - "tasks/"
+      write_role: "any_agent"
+      auto_generated: false
+      description: "Running-operations space. Agents write here during sprints."
+
+    - path: "20_Projects"
+      purpose: "Active project documentation — implementation notes and setup guides"
+      write_role: "any_agent"
+      auto_generated: false
+      description: "One note per active project. Tracks implementation intent."
+
+    - path: "30_Decisions"
+      purpose: "Architectural Decision Records — governance and design decisions"
+      write_role: "orchestrator"
+      auto_generated: false
+      description: "ADRs ratified by council. Immutable after acceptance."
+
+    - path: "40_Concepts"
+      purpose: "Promoted knowledge — matured concepts that survive beyond any sprint"
+      write_role: "promotion_target"
+      auto_generated: false
+      description: "Only vault-linter-clean notes promoted from /pending/."
+
+    - path: "pending"
+      purpose: "Staging area — notes awaiting linter validation and promotion"
+      write_role: "any_agent"
+      auto_generated: false
+      description: "Write here first. Promote to /40_Concepts/ when linter-clean."
+
+    - path: "raw"
+      purpose: "Immutable source documents — constitutions, charters, external references"
+      write_role: "orchestrator"
+      auto_generated: false
+      description: "Read-only for agents. Edits require council ratification."
+
+    - path: ".agents"
+      purpose: "Agent configuration — vault.yaml namespace enforcement and executor profile config"
+      write_role: "orchestrator"
+      auto_generated: false
+      description: "Vault configuration YAML and executor profile definitions. Only orchestrator-level agents may write here."
+
+    - path: "aoc_supervisor"
+      purpose: "Supervisor API — boundary gateway and billing enforcement for the Gaijinn grid"
+      subdirectories:
+        - "aoc_supervisor/"
+      write_role: "worker_supervisor"
+      auto_generated: false
+      description: "FastAPI gateway serving analyse, quote, purchase, orchestrate, and grid-spawn endpoints. Billing ledger at .aoc/billing/accounts.json."
+
+    - path: "_multi-agent"
+      purpose: "Cross-agent coordination — event ledger and ownership records"
+      write_role: "any_agent"
+      auto_generated: false
+      description: "Event log for multi-agent operations. Append-only by convention."
+
+# ─────────────────────────────────────────────
+# Frontmatter Schema — required YAML fields per
+# note type. All notes must have at minimum:
+#   id, type, status, tags[]
+# ─────────────────────────────────────────────
+frontmatter:
+  required_base_fields:
+    - name: "id"
+      type: "string"
+      required: true
+      description: "Unique note identifier, kebab-case"
+    - name: "type"
+      type: "enum"
+      required: true
+      values: ["Raw", "Decision", "Invariant", "Project", "Concept", "Task", "Event", "Agent"]
+      description: "Note type classification"
+    - name: "status"
+      type: "enum"
+      required: true
+      values: ["draft", "review", "accepted", "immutable", "completed"]
+      description: "Lifecycle status"
+    - name: "tags"
+      type: "list<string>"
+      required: true
+      description: "Classification tags, at least one"
+
+  type_schemas:
+    - type: "Raw"
+      required_fields:
+        - name: "source"
+          type: "string"
+          description: "Source document identifier"
+        - name: "ratified"
+          type: "date"
+          description: "Ratification date"
+      allowed_dirs: ["raw"]
+
+    - type: "Decision"
+      required_fields:
+        - name: "date_decided"
+          type: "date"
+          description: "Date of decision"
+        - name: "deciders"
+          type: "list<string>"
+          description: "Who decided"
+        - name: "supersedes"
+          type: "list<string>"
+          description: "References this ADR replaces"
+        - name: "superseded_by"
+          type: "string|null"
+          description: "If superseded, by which ADR"
+        - name: "linked_constitution"
+          type: "string|null"
+          description: "Wikilink to constitution section"
+        - name: "system_tier"
+          type: "string"
+          description: "Tier: governance, execution, or application"
+      allowed_dirs: ["30_Decisions"]
+
+    - type: "Invariant"
+      required_fields:
+        - name: "domain"
+          type: "string"
+          description: "Invariant domain (vault or gaijinn)"
+        - name: "severity"
+          type: "enum"
+          values: ["hard", "soft"]
+          description: "Hard = must pass, soft = warning"
+        - name: "enforcement_point"
+          type: "string"
+          description: "Where this invariant is checked"
+      allowed_dirs: ["00_Brain/invariants"]
+
+    - type: "Project"
+      required_fields:
+        - name: "start_date"
+          type: "date"
+          description: "Project start date"
+        - name: "executor"
+          type: "string"
+          description: "Executor profile or agent"
+      allowed_dirs: ["20_Projects"]
+
+    - type: "Concept"
+      required_fields:
+        - name: "promoted_from"
+          type: "string"
+          description: "Source pending note path"
+        - name: "promoted_by"
+          type: "string"
+          description: "Agent or worker that promoted this"
+        - name: "promotion_date"
+          type: "date"
+          description: "Promotion timestamp"
+        - name: "related_concepts"
+          type: "list<string>"
+          description: "Wikilinks to related concepts"
+      allowed_dirs: ["40_Concepts"]
+
+    - type: "Task"
+      required_fields:
+        - name: "assigned_to"
+          type: "string"
+          description: "Worker ID (e.g. worker-006)"
+        - name: "work_unit"
+          type: "string"
+          description: "Work unit reference (e.g. WU-006)"
+        - name: "deadline"
+          type: "date|null"
+          description: "Optional deadline"
+      allowed_dirs: ["10_Operations/tasks"]
+
+    - type: "Event"
+      required_fields:
+        - name: "event_type"
+          type: "string"
+          description: "Type: sprint_start, worker_complete, promotion, merge, handoff, error"
+        - name: "timestamp"
+          type: "datetime"
+          description: "ISO 8601 timestamp"
+        - name: "actor"
+          type: "string"
+          description: "Worker or agent that triggered the event"
+      allowed_dirs: ["_multi-agent"]
+
+    - type: "Agent"
+      required_fields:
+        - name: "worker_id"
+          type: "string"
+          description: "Worker identifier"
+        - name: "work_unit_ids"
+          type: "list<string>"
+          description: "Assigned WU IDs"
+        - name: "profile"
+          type: "string"
+          description: "Executor profile name"
+      allowed_dirs: ["10_Operations/agents"]
+
+# ─────────────────────────────────────────────
+# Knowledge Linter Configuration
+# Enforces vault-law invariant checks per
+# Section XIII: orphans, dead links, provenance.
+# ─────────────────────────────────────────────
+linter:
+  enabled: true
+  rules:
+    - id: "lint-no-orphan-notes"
+      description: "All notes must be reachable from at least one other note via wikilink"
+      severity: "error"
+      scope: "all"
+
+    - id: "lint-no-dead-wikilinks"
+      description: "All wikilinks [[path/to/note]] must resolve to an existing note"
+      severity: "error"
+      scope: "all"
+
+    - id: "lint-minimum-frontmatter"
+      description: "All notes must have required base frontmatter fields"
+      severity: "error"
+      scope: "all"
+
+    - id: "lint-type-specific-fields"
+      description: "Notes must have type-specific required frontmatter fields"
+      severity: "error"
+      scope: "all"
+
+    - id: "lint-no-orphan-tags"
+      description: "Tags must be from the defined taxonomy or prefixed with project/"
+      severity: "warning"
+      scope: "all"
+
+    - id: "lint-provenance-chain"
+      description: "Concepts in /40_Concepts/ must have a provenance chain back to a raw source"
+      severity: "error"
+      scope: "40_Concepts"
+
+    - id: "lint-promotion-gate"
+      description: "Notes promoted from pending/ to 40_Concepts/ must pass all linter checks"
+      severity: "error"
+      scope: "pending"
+
+    - id: "lint-no-force-overwrite"
+      description: "On merge conflict, agents must not force-overwrite — replay via OCC"
+      severity: "error"
+      scope: "_multi-agent"
+
+    - id: "lint-supervisor-api-imports"
+      description: "aoc_supervisor Python files must have valid imports and balance enforcement"
+      severity: "error"
+      scope: "aoc_supervisor"
+
+    - id: "lint-python-frontmatter"
+      description: "Python files in the vault must have docstring module headers"
+      severity: "error"
+      scope: "aoc_supervisor"
+
+    - id: "lint-billing-audit-completeness"
+      description: "aoc_supervisor billing module must export record_billing_event, query_audit_trail, get_account_summary, and clear_audit_log"
+      severity: "error"
+      scope: "aoc_supervisor/aoc_supervisor/billing.py"
+
+    - id: "lint-api-billing-endpoints"
+      description: "aoc_supervisor API module must expose POST /api/v1/billing/audit and GET /api/v1/billing/summary endpoints"
+      severity: "error"
+      scope: "aoc_supervisor/aoc_supervisor/api.py"
+
+    - id: "lint-docstring-consistency"
+      description: "All aoc_supervisor Python modules must have module-level docstrings explaining their purpose"
+      severity: "error"
+      scope: "aoc_supervisor"
+
+    - id: "lint-billing-ledger-integrity"
+      description: "Billing audit log (.aoc/billing/audit.jsonl) and ledger (.aoc/billing/accounts.json) must be valid JSON or JSONL with no corruption — audit log must be append-only sequence of valid JSON objects"
+      severity: "error"
+      scope: ".aoc/billing"
+
+# ─────────────────────────────────────────────
+# Promotion Gate Config
+# Controls the pending/ → 40_Concepts/ pipeline
+# ─────────────────────────────────────────────
+promotion:
+  source_dir: "pending/"
+  target_dir: "40_Concepts/"
+  required_checks:
+    - "vault: knowledge_linter clean"
+    - "gaijinn: validate-worker passed"
+  convergence_threshold:
+    simulated: 0.875
+    production: 1.0
+
+# ─────────────────────────────────────────────
+# Event Ledger Config
+# Coordination points specified in ADR-002
+# ─────────────────────────────────────────────
+coordination:
+  vault_semantic: "_multi-agent/events.md"
+  gaijinn_operational: ".gaijinn/bridge/council.md"
+  governance: ".gaijinn/merge/governance.json"
+
+# ─────────────────────────────────────────────
+# Tags Taxonomy
+# Allowed tags and their hierarchy
+# ─────────────────────────────────────────────
+tags:
+  domains:
+    - "Domain/Governance"
+    - "Domain/Execution"
+    - "Domain/Knowledge"
+    - "Domain/Infrastructure"
+    - "Domain/Project"
+  lifecycle:
+    - "Lifecycle/New"
+    - "Lifecycle/Active"
+    - "Lifecycle/Stable"
+    - "Lifecycle/Deprecated"
+    - "Lifecycle/Archived"
+  archetypes:
+    - "Archetype/Blueprint"
+    - "Archetype/ADR"
+    - "Archetype/Invariant"
+    - "Archetype/Metric"
+    - "Archetype/Task"
+    - "Archetype/Event"

@@ -1,0 +1,61 @@
+<!-- Packet Export — Workspace Content Fragment -->
+
+<div class="flex flex-col h-full">
+
+  <div class="flex justify-between items-center mb-stack-lg">
+    <h1 class="font-headline-lg text-headline-lg text-on-surface">Packet Export</h1>
+    <div class="flex items-center gap-stack-md">
+      <input class="bg-surface-container-high border border-outline-variant/30 rounded-xl px-4 py-1.5 text-body-sm text-on-surface w-48 focus:ring-1 focus:ring-primary" placeholder="Protocol Name" type="text" value="Export_Echo_Alpha"/>
+      <select class="bg-surface-container-high border border-outline-variant/30 rounded-xl px-3 py-1.5 text-body-sm text-on-surface focus:ring-1 focus:ring-primary">
+        <option>HEURISTIC_STRICT</option>
+        <option>HEURISTIC_LOOSE</option>
+        <option>MANUAL_OVERRIDE</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Split Pane -->
+  <div class="flex gap-gutter flex-1">
+    <!-- Allowed Buffer -->
+    <div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1">
+      <h3 class="font-title-md text-title-md text-secondary mb-stack-md">Allowed Buffer</h3>
+      <div class="space-y-stack-sm">
+        <div class="flex items-center gap-stack-sm p-stack-sm hover:bg-white/5 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">folder</span>
+          <span class="font-body-sm text-body-sm text-on-surface">src/</span>
+        </div>
+        <div class="flex items-center gap-stack-sm p-stack-sm hover:bg-white/5 rounded-lg cursor-pointer pl-8">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">folder</span>
+          <span class="font-body-sm text-body-sm text-on-surface">manifold/</span>
+        </div>
+        <div class="flex items-center gap-stack-sm p-stack-sm hover:bg-white/5 rounded-lg cursor-pointer pl-8">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">description</span>
+          <span class="font-body-sm text-body-sm text-on-surface">blueprint-v2.orc</span>
+        </div>
+      </div>
+    </div>
+    <!-- Protected Core -->
+    <div class="glass-panel rounded-xl p-stack-lg border border-outline-variant/20 flex-1">
+      <h3 class="font-title-md text-title-md text-tertiary mb-stack-md">Protected Framework Core</h3>
+      <div class="space-y-stack-sm">
+        <div class="flex items-center gap-stack-sm p-stack-sm hover:bg-white/5 rounded-lg cursor-pointer">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">folder</span>
+          <span class="font-body-sm text-body-sm text-on-surface">core/</span>
+        </div>
+        <div class="flex items-center gap-stack-sm p-stack-sm hover:bg-white/5 rounded-lg cursor-pointer pl-8 opacity-60">
+          <span class="material-symbols-outlined text-sm text-on-surface-variant">lock</span>
+          <span class="font-body-sm text-body-sm text-on-surface">kernel.sys</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Button -->
+  <div class="flex justify-center mt-gutter pt-stack-lg border-t border-outline-variant/20">
+    <button id="export-button" class="flex items-center gap-stack-md px-container-margin py-stack-lg bg-primary text-on-primary font-bold rounded-xl shadow-[0_8px_32px_rgba(170,199,255,0.4)] active:scale-95 transition-all spring-transition group">
+      <span class="material-symbols-outlined group-hover:rotate-180 transition-transform duration-500">file_download</span>
+      <span>Export Documented Implementation Packets</span>
+    </button>
+  </div>
+
+</div>

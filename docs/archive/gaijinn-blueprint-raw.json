@@ -1,0 +1,1127 @@
+{
+  "assumptions": [
+    "Allowed paths are write scopes; workers may read broader project context as needed.",
+    "Shadow Bridge files are isolated into single-file work units.",
+    "Work units are generated from the scanned graph, metrics manifest, and GIV profile."
+  ],
+  "dependencies": {
+    "WU-001": [],
+    "WU-002": [
+      "WU-007",
+      "WU-013",
+      "WU-015",
+      "WU-017"
+    ],
+    "WU-003": [
+      "WU-001",
+      "WU-029"
+    ],
+    "WU-004": [
+      "WU-003"
+    ],
+    "WU-005": [
+      "WU-003"
+    ],
+    "WU-006": [
+      "WU-003"
+    ],
+    "WU-007": [
+      "WU-003"
+    ],
+    "WU-008": [
+      "WU-011",
+      "WU-013",
+      "WU-015",
+      "WU-017",
+      "WU-018"
+    ],
+    "WU-009": [
+      "WU-002",
+      "WU-013",
+      "WU-015",
+      "WU-017"
+    ],
+    "WU-010": [
+      "WU-001",
+      "WU-004",
+      "WU-013"
+    ],
+    "WU-011": [
+      "WU-003",
+      "WU-004",
+      "WU-005",
+      "WU-006",
+      "WU-007",
+      "WU-032"
+    ],
+    "WU-012": [
+      "WU-011",
+      "WU-013",
+      "WU-015",
+      "WU-017"
+    ],
+    "WU-013": [
+      "WU-011"
+    ],
+    "WU-014": [
+      "WU-011",
+      "WU-013"
+    ],
+    "WU-015": [
+      "WU-011",
+      "WU-013",
+      "WU-017"
+    ],
+    "WU-016": [
+      "WU-011"
+    ],
+    "WU-017": [
+      "WU-011",
+      "WU-013"
+    ],
+    "WU-018": [
+      "WU-006",
+      "WU-013",
+      "WU-015"
+    ],
+    "WU-019": [
+      "WU-033"
+    ],
+    "WU-020": [
+      "WU-019",
+      "WU-021"
+    ],
+    "WU-021": [
+      "WU-019"
+    ],
+    "WU-022": [],
+    "WU-023": [],
+    "WU-024": [],
+    "WU-025": [],
+    "WU-026": [],
+    "WU-027": [],
+    "WU-028": [
+      "WU-005"
+    ],
+    "WU-029": [],
+    "WU-030": [],
+    "WU-031": [],
+    "WU-032": [
+      "WU-003"
+    ],
+    "WU-033": [
+      "WU-034",
+      "WU-045"
+    ],
+    "WU-034": [
+      "WU-019",
+      "WU-021"
+    ],
+    "WU-035": [],
+    "WU-036": [],
+    "WU-037": [],
+    "WU-038": [],
+    "WU-039": [],
+    "WU-040": [],
+    "WU-041": [
+      "WU-042"
+    ],
+    "WU-042": [],
+    "WU-043": [],
+    "WU-044": [],
+    "WU-045": [],
+    "WU-046": []
+  },
+  "project_goal": "Deliver isolated work units for frontend while preserving GIV invariants.",
+  "risks": [
+    "36 Shadow Bridge edge(s) require isolated handling",
+    "One or more graph nodes are below the gravity hard floor",
+    "WU-001: estimated high risk",
+    "WU-002: estimated high risk",
+    "WU-003: estimated high risk",
+    "WU-004: estimated high risk",
+    "WU-005: estimated high risk",
+    "WU-006: estimated high risk",
+    "WU-007: estimated high risk",
+    "WU-008: estimated high risk",
+    "WU-009: estimated high risk",
+    "WU-010: estimated high risk",
+    "WU-011: estimated high risk",
+    "WU-012: estimated high risk",
+    "WU-013: estimated high risk",
+    "WU-014: estimated high risk",
+    "WU-015: estimated high risk",
+    "WU-016: estimated high risk",
+    "WU-017: estimated high risk",
+    "WU-018: estimated high risk",
+    "WU-019: estimated high risk",
+    "WU-020: estimated high risk",
+    "WU-021: estimated high risk",
+    "WU-022: estimated high risk",
+    "WU-023: estimated high risk",
+    "WU-024: estimated medium risk",
+    "WU-025: estimated high risk",
+    "WU-026: estimated high risk",
+    "WU-027: estimated high risk",
+    "WU-028: estimated high risk",
+    "WU-029: estimated medium risk",
+    "WU-030: estimated high risk",
+    "WU-031: estimated high risk",
+    "WU-032: estimated medium risk",
+    "WU-033: estimated medium risk",
+    "WU-034: estimated high risk",
+    "WU-035: estimated high risk",
+    "WU-036: estimated high risk",
+    "WU-037: estimated high risk",
+    "WU-038: estimated high risk",
+    "WU-039: estimated high risk",
+    "WU-040: estimated high risk",
+    "WU-041: estimated high risk",
+    "WU-042: estimated medium risk",
+    "WU-043: estimated high risk",
+    "WU-044: estimated high risk",
+    "WU-045: estimated high risk",
+    "WU-046: estimated medium risk"
+  ],
+  "schema_version": 1,
+  "work_units": [
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/__init__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/__init__.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-001",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/__init__.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/blueprint.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-007",
+        "WU-013",
+        "WU-015",
+        "WU-017"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/blueprint.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-002",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/blueprint.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/cli.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-001",
+        "WU-029"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/cli.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-003",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/cli.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/analyze_.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/commands/analyze_.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-004",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/commands/analyze_.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/compile_prompt.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/commands/compile_prompt.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-005",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/commands/compile_prompt.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/init_.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/commands/init_.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-006",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/commands/init_.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/plan.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/commands/plan.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-007",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/commands/plan.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/errors.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011",
+        "WU-013",
+        "WU-015",
+        "WU-017",
+        "WU-018"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/errors.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-008",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/errors.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/giv.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-002",
+        "WU-013",
+        "WU-015",
+        "WU-017"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/giv.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-009",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/giv.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/gravity.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-001",
+        "WU-004",
+        "WU-013"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/gravity.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-010",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/gravity.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/__init__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003",
+        "WU-004",
+        "WU-005",
+        "WU-006",
+        "WU-007",
+        "WU-032"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/__init__.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-011",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/__init__.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/constants.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011",
+        "WU-013",
+        "WU-015",
+        "WU-017"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/constants.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-012",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/constants.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/diagnostics.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/diagnostics.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-013",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/diagnostics.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/git.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011",
+        "WU-013"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/git.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-014",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/git.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/io.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011",
+        "WU-013",
+        "WU-017"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/io.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-015",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/io.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/scan.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/scan.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-016",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/scan.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/helpers/workers.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-011",
+        "WU-013"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/helpers/workers.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-017",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/helpers/workers.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/state.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-006",
+        "WU-013",
+        "WU-015"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc-cli/aoc_cli/state.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-018",
+      "title": "Isolate Shadow Bridge file aoc-cli/aoc_cli/state.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/__init__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-033"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc_supervisor/aoc_supervisor/__init__.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-019",
+      "title": "Isolate Shadow Bridge file aoc_supervisor/aoc_supervisor/__init__.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/enforcer.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-019",
+        "WU-021"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc_supervisor/aoc_supervisor/enforcer.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-020",
+      "title": "Isolate Shadow Bridge file aoc_supervisor/aoc_supervisor/enforcer.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/orchestrator.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-019"
+      ],
+      "description": "Handle the Shadow Bridge endpoint `aoc_supervisor/aoc_supervisor/orchestrator.py` in isolation before broader grouped edits.",
+      "estimated_risk": "high",
+      "id": "WU-021",
+      "title": "Isolate Shadow Bridge file aoc_supervisor/aoc_supervisor/orchestrator.py"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "gaijinn-terminal.html"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the html files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-022",
+      "title": "html high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "PROJECT-REPORT.md",
+        "README.md",
+        "grok-build-terminal-design.md"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-023",
+      "title": "markdown high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "pyproject.toml"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the toml files grouped by directory `.` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-024",
+      "title": "toml medium-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        ".gitignore"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-025",
+      "title": "unknown high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        ".pre-commit-config.yaml"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the yaml files grouped by directory `.` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-026",
+      "title": "yaml high-risk changes in repository root"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        ".github/workflows/ci.yml"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the yaml files grouped by directory `.github/workflows` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-027",
+      "title": "yaml high-risk changes in .github/workflows"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/moat.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-005"
+      ],
+      "description": "Implement and validate the python files grouped by directory `aoc-cli/aoc_cli` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-028",
+      "title": "python high-risk changes in aoc-cli/aoc_cli"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/__main__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `aoc-cli/aoc_cli` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-029",
+      "title": "python medium-risk changes in aoc-cli/aoc_cli"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli.egg-info/PKG-INFO",
+        "aoc-cli/aoc_cli.egg-info/SOURCES.txt",
+        "aoc-cli/aoc_cli.egg-info/dependency_links.txt",
+        "aoc-cli/aoc_cli.egg-info/entry_points.txt",
+        "aoc-cli/aoc_cli.egg-info/requires.txt",
+        "aoc-cli/aoc_cli.egg-info/top_level.txt"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `aoc-cli/aoc_cli.egg-info` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-030",
+      "title": "unknown high-risk changes in aoc-cli/aoc_cli.egg-info"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/__init__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `aoc-cli/aoc_cli/commands` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-031",
+      "title": "python high-risk changes in aoc-cli/aoc_cli/commands"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "aoc-cli/aoc_cli/commands/activate.py",
+        "aoc-cli/aoc_cli/commands/doctor.py",
+        "aoc-cli/aoc_cli/commands/grid_spawn.py",
+        "aoc-cli/aoc_cli/commands/monitor.py",
+        "aoc-cli/aoc_cli/commands/run_grid.py",
+        "aoc-cli/aoc_cli/commands/scan.py",
+        "aoc-cli/aoc_cli/commands/status.py",
+        "aoc-cli/aoc_cli/commands/version.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-003"
+      ],
+      "description": "Implement and validate the python files grouped by directory `aoc-cli/aoc_cli/commands` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-032",
+      "title": "python medium-risk changes in aoc-cli/aoc_cli/commands"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/__init__.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-034",
+        "WU-045"
+      ],
+      "description": "Implement and validate the python files grouped by directory `aoc_supervisor` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-033",
+      "title": "python medium-risk changes in aoc_supervisor"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "aoc_supervisor/aoc_supervisor/api.py",
+        "aoc_supervisor/aoc_supervisor/billing.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-019",
+        "WU-021"
+      ],
+      "description": "Implement and validate the python files grouped by directory `aoc_supervisor/aoc_supervisor` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-034",
+      "title": "python high-risk changes in aoc_supervisor/aoc_supervisor"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "docs/cli-reference.md",
+        "docs/concepts.md",
+        "docs/product-readiness-audit.md",
+        "docs/troubleshooting.md"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `docs` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-035",
+      "title": "markdown high-risk changes in docs"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "docs/use-cases/01-the-wall.md",
+        "docs/use-cases/02-the-war-room.md",
+        "docs/use-cases/03-the-factory.md"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `docs/use-cases` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-036",
+      "title": "markdown high-risk changes in docs/use-cases"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/README.md"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the markdown files grouped by directory `examples/tiny-python-service` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-037",
+      "title": "markdown high-risk changes in examples/tiny-python-service"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/pyproject.toml"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the toml files grouped by directory `examples/tiny-python-service` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-038",
+      "title": "toml high-risk changes in examples/tiny-python-service"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/.gitignore"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `examples/tiny-python-service` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-039",
+      "title": "unknown high-risk changes in examples/tiny-python-service"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/tests/test_api.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `examples/tiny-python-service/tests` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-040",
+      "title": "python high-risk changes in examples/tiny-python-service/tests"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/tiny_service/service.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [
+        "WU-042"
+      ],
+      "description": "Implement and validate the python files grouped by directory `examples/tiny-python-service/tiny_service` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-041",
+      "title": "python high-risk changes in examples/tiny-python-service/tiny_service"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "examples/tiny-python-service/tiny_service/__init__.py",
+        "examples/tiny-python-service/tiny_service/api.py",
+        "examples/tiny-python-service/tiny_service/storage.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `examples/tiny-python-service/tiny_service` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-042",
+      "title": "python medium-risk changes in examples/tiny-python-service/tiny_service"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "gaijinn.egg-info/PKG-INFO",
+        "gaijinn.egg-info/SOURCES.txt",
+        "gaijinn.egg-info/dependency_links.txt",
+        "gaijinn.egg-info/entry_points.txt",
+        "gaijinn.egg-info/requires.txt",
+        "gaijinn.egg-info/top_level.txt"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the unknown files grouped by directory `gaijinn.egg-info` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-043",
+      "title": "unknown high-risk changes in gaijinn.egg-info"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "scripts/acceptance.sh",
+        "scripts/demo-local.sh"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the shell files grouped by directory `scripts` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-044",
+      "title": "shell high-risk changes in scripts"
+    },
+    {
+      "acceptance_checks": [
+        "pytest",
+        "review metrics manifest for rejected nodes or Shadow Bridges"
+      ],
+      "allowed_paths": [
+        "tests/conftest.py",
+        "tests/test_cli.py",
+        "tests/test_giv.py",
+        "tests/test_gravity.py",
+        "tests/test_moat.py",
+        "tests/test_supervisor.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `tests` and risk `high`.",
+      "estimated_risk": "high",
+      "id": "WU-045",
+      "title": "python high-risk changes in tests"
+    },
+    {
+      "acceptance_checks": [
+        "pytest"
+      ],
+      "allowed_paths": [
+        "tests/test_blueprint.py",
+        "tests/test_e2e_golden_path.py"
+      ],
+      "denied_paths": [
+        "aoc-cli/aoc_cli",
+        "tests"
+      ],
+      "depends_on": [],
+      "description": "Implement and validate the python files grouped by directory `tests` and risk `medium`.",
+      "estimated_risk": "medium",
+      "id": "WU-046",
+      "title": "python medium-risk changes in tests"
+    }
+  ]
+}

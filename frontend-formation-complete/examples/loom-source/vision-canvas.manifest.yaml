@@ -1,0 +1,65 @@
+screen: loom.vision_canvas
+mission: Express a software vision, resolve uncertainty, and authorize architectural
+  handoff.
+mission_id: loom-vision-canvas
+elements:
+- id: vision-start-btn
+  classification: action_control
+  action: intake.start_session
+  feedback_target: vision-feedback
+  label: Start Intent Forge Session
+- id: vision-submit-answer-btn
+  classification: action_control
+  action: question.submit_answer
+  feedback_target: vision-feedback
+  label: Submit Current Answer
+- id: vision-revise-answer-btn
+  classification: action_control
+  action: question.revise_answer
+  feedback_target: vision-feedback
+  label: Revise Previous Answer
+- id: vision-confirm-handoff-btn
+  classification: action_control
+  action: handoff.confirm
+  feedback_target: vision-feedback
+  label: Confirm Handoff Readiness
+- id: vision-accept-handoff-btn
+  classification: action_control
+  action: handoff.accept
+  feedback_target: vision-feedback
+  label: Accept Architectural Handoff
+- id: vision-prompt-display
+  classification: display
+  contract_path: loom.vision.prompt
+  label: Vision prompt fixture awaiting session start
+- id: vision-question-display
+  classification: display
+  contract_path: loom.vision.current_question
+  label: No current question
+- id: vision-understanding-display
+  classification: display
+  contract_path: loom.vision.understanding
+  label: Understanding evidence not yet established
+- id: vision-readiness-display
+  classification: display
+  contract_path: loom.vision.readiness
+  label: Readiness 0 percent
+- id: vision-handoff-display
+  classification: display
+  contract_path: loom.vision.handoff_state
+  label: Handoff locked
+- id: vision-feedback
+  classification: display
+  contract_path: loom.vision.feedback
+  label: Vision Canvas initialized
+  tag: output
+knowledge_bindings:
+  design_intent: loom.vision.design_intent
+  behavioral: loom.vision.behavioral
+  operational: loom.vision.operational
+  governance: loom.vision.governance
+  institutional: loom.vision.institutional
+accessibility:
+  profile: wcag-aa-strict
+smoke_scenarios:
+- smoke/vision-canvas.smoke.yaml

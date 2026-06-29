@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Size the swarm, execute the approved blueprint, validate the merge, and retrieve the deliverable.</title>
+  <link rel="stylesheet" href="screen.css">
+  <link rel="stylesheet" href="screen.custom.css">
+</head>
+<body>
+  <main
+    id="screen-root"
+    data-screen="loom.terminal"
+    data-mission="loom-terminal"
+    class="workspace-shell"
+  >
+    <h1>Size the swarm, execute the approved blueprint, validate the merge, and retrieve the deliverable.</h1>
+    <button id="terminal-assign-swarm-btn" data-classification="action_control" data-action="orchestrate.swarm" data-feedback-target="terminal-feedback" aria-label="Assign Recommended Swarm" aria-busy="false" type="button">Assign Recommended Swarm</button>
+    <button id="terminal-deploy-btn" data-classification="action_control" data-action="deploy.sprint" data-feedback-target="terminal-feedback" aria-label="Launch Atomic Sprint" aria-busy="false" type="button">Launch Atomic Sprint</button>
+    <button id="terminal-poll-grid-btn" data-classification="action_control" data-action="grid.poll_status" data-feedback-target="terminal-feedback" aria-label="Poll Worker Status" aria-busy="false" type="button">Poll Worker Status</button>
+    <button id="terminal-merge-btn" data-classification="action_control" data-action="merge.run" data-feedback-target="terminal-feedback" aria-label="Run Governed Merge" aria-busy="false" type="button">Run Governed Merge</button>
+    <button id="terminal-poll-merge-btn" data-classification="action_control" data-action="merge.poll_status" data-feedback-target="terminal-feedback" aria-label="Poll Merge Status" aria-busy="false" type="button">Poll Merge Status</button>
+    <button id="terminal-download-btn" data-classification="action_control" data-action="deliverable.download" data-feedback-target="terminal-feedback" aria-label="Download Deliverable" aria-busy="false" type="button">Download Deliverable</button>
+    <button id="terminal-diff-btn" data-classification="action_control" data-action="deliverable.view_diff" data-feedback-target="terminal-feedback" aria-label="View Merged Diff" aria-busy="false" type="button">View Merged Diff</button>
+    <div id="terminal-phase-display" data-classification="display" data-contract-path="loom.terminal.phase">Awaiting prepared blueprint</div>
+    <div id="terminal-swarm-display" data-classification="display" data-contract-path="loom.terminal.swarm">No swarm assigned</div>
+    <div id="terminal-grid-display" data-classification="display" data-contract-path="loom.terminal.grid">No active workers</div>
+    <div id="terminal-merge-display" data-classification="display" data-contract-path="loom.terminal.merge">Merge idle</div>
+    <div id="terminal-deliverable-display" data-classification="display" data-contract-path="loom.terminal.deliverable">Deliverable unavailable</div>
+    <output id="terminal-feedback" data-classification="display" data-contract-path="loom.terminal.feedback" aria-live="polite" aria-atomic="true">Terminal initialized</output>
+  </main>
+  <script src="mock-driver.js"></script>
+  <script src="shell.js"></script>
+  <script src="screen.custom.js"></script>
+</body>
+</html>

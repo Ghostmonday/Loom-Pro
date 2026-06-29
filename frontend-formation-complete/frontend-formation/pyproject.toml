@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loom-frontend-formation"
+version = "1.0.0"
+description = "Deterministic frontend formation validator and scaffold generator for Loom"
+requires-python = ">=3.10"
+dependencies = [
+  "beautifulsoup4>=4.12,<5",
+  "jsonschema>=4.20,<5",
+  "PyYAML>=6,<7"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+frontend-formation-validate = "validator.cli.main:main"
+frontend-formation-generate = "generator.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["validator*", "generator*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

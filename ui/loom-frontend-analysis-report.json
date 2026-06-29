@@ -1,0 +1,314 @@
+{
+  "edge_curvatures": {
+    "view.app-shell::view.project-hub": {
+      "curvature": -0.7333,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.app-shell::view.claims-ledger": {
+      "curvature": -0.5833,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.app-shell::view.topological-observatory": {
+      "curvature": -0.5833,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.app-shell::view.curvature-analysis": {
+      "curvature": -0.5833,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.app-shell::view.blueprint-ratification": {
+      "curvature": -0.5,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.app-shell::view.packet-export": {
+      "curvature": -0.6333,
+      "relation": "precondition_check",
+      "status": "observed"
+    },
+    "view.project-hub::control.hub.open_blueprint": {
+      "curvature": 0.1,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.project-hub::control.hub.import_repo": {
+      "curvature": 0.1,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.project-hub::control.hub.create_manifold": {
+      "curvature": 0.1,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.project-hub::control.hub.resume_work": {
+      "curvature": 0.1,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.project-hub::display.hub.recent_projects": {
+      "curvature": 0.1,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.project-hub::display.hub.activity_feed": {
+      "curvature": 0.1,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.project-hub::display.hub.drift_deviation": {
+      "curvature": 0.1,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.project-hub::display.hub.ratification_list": {
+      "curvature": 0.1,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.project-hub::display.hub.module_health": {
+      "curvature": 0.1,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.claims-ledger::display.claims.inferred": {
+      "curvature": 0.25,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.claims-ledger::display.claims.confirmed": {
+      "curvature": 0.25,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.claims-ledger::control.claims.reconcile": {
+      "curvature": 0.25,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.topological-observatory::display.observatory.svg_canvas": {
+      "curvature": 0.25,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.topological-observatory::display.observatory.node_inspector": {
+      "curvature": 0.25,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.topological-observatory::control.observatory.telemetry_stream": {
+      "curvature": 0.25,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.curvature-analysis::control.curvature.cohesion_slider": {
+      "curvature": 0.25,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.curvature-analysis::control.curvature.bridge_slider": {
+      "curvature": 0.25,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.curvature-analysis::display.curvature.telemetry_snapshot": {
+      "curvature": 0.25,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.blueprint-ratification::control.ratify.worker_count": {
+      "curvature": 0.3333,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.blueprint-ratification::control.ratify.approve": {
+      "curvature": 0.3333,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.packet-export::control.packets.file_filter": {
+      "curvature": 0.2,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.packet-export::control.packets.spawn": {
+      "curvature": 0.15,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.packet-export::display.packets.log_console": {
+      "curvature": 0.15,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.packet-export::display.packets.download_links": {
+      "curvature": 0.2,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "view.intent-forge::control.forge.chat_input": {
+      "curvature": 0.5,
+      "relation": "algorithm_binding",
+      "status": "observed"
+    },
+    "view.intent-forge::display.forge.chat_messages": {
+      "curvature": 0.5,
+      "relation": "data_dependency",
+      "status": "observed"
+    },
+    "display.claims.confirmed::control.claims.reconcile": {
+      "curvature": 0.75,
+      "relation": "effect",
+      "status": "observed"
+    },
+    "display.observatory.svg_canvas::control.observatory.telemetry_stream": {
+      "curvature": 0.75,
+      "relation": "effect",
+      "status": "observed"
+    },
+    "control.packets.spawn::display.packets.log_console": {
+      "curvature": 0.75,
+      "relation": "effect",
+      "status": "observed"
+    }
+  },
+  "structural_findings": [
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.project-hub",
+      "curvature": -0.7333
+    },
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.packet-export",
+      "curvature": -0.6333
+    },
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.claims-ledger",
+      "curvature": -0.5833
+    },
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.topological-observatory",
+      "curvature": -0.5833
+    },
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.curvature-analysis",
+      "curvature": -0.5833
+    },
+    {
+      "type": "recommended_boundary",
+      "edge": "view.app-shell::view.blueprint-ratification",
+      "curvature": -0.5
+    }
+  ],
+  "packet_quality": {
+    "packet.frontend.hub": {
+      "internal_edges": 9,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.1,
+      "avg_boundary_curvature": -0.7333,
+      "Q_packet_quality": 0.8333,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.claims": {
+      "internal_edges": 4,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.375,
+      "avg_boundary_curvature": -0.5833,
+      "Q_packet_quality": 0.9583,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.observatory": {
+      "internal_edges": 4,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.375,
+      "avg_boundary_curvature": -0.5833,
+      "Q_packet_quality": 0.9583,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.curvature": {
+      "internal_edges": 3,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.25,
+      "avg_boundary_curvature": -0.5833,
+      "Q_packet_quality": 0.8333,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.ratification": {
+      "internal_edges": 2,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.3333,
+      "avg_boundary_curvature": -0.5,
+      "Q_packet_quality": 0.8333,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.packets": {
+      "internal_edges": 5,
+      "boundary_edges": 1,
+      "avg_internal_curvature": 0.29,
+      "avg_boundary_curvature": -0.6333,
+      "Q_packet_quality": 0.9233,
+      "boundary_edges_violating_cohesion_threshold": 0
+    },
+    "packet.frontend.forge": {
+      "internal_edges": 2,
+      "boundary_edges": 0,
+      "avg_internal_curvature": 0.5,
+      "avg_boundary_curvature": 0.0,
+      "Q_packet_quality": 0.5,
+      "boundary_edges_violating_cohesion_threshold": 0
+    }
+  },
+  "recommended_communities": {
+    "view.app-shell": 0,
+    "control.hub.create_manifold": 1,
+    "display.hub.ratification_list": 1,
+    "display.hub.drift_deviation": 1,
+    "control.hub.open_blueprint": 1,
+    "display.hub.activity_feed": 1,
+    "display.hub.module_health": 1,
+    "view.project-hub": 1,
+    "control.hub.resume_work": 1,
+    "control.hub.import_repo": 1,
+    "display.hub.recent_projects": 1,
+    "display.claims.inferred": 2,
+    "display.claims.confirmed": 2,
+    "view.claims-ledger": 2,
+    "control.claims.reconcile": 2,
+    "display.observatory.node_inspector": 3,
+    "control.observatory.telemetry_stream": 3,
+    "display.observatory.svg_canvas": 3,
+    "view.topological-observatory": 3,
+    "control.curvature.bridge_slider": 4,
+    "control.curvature.cohesion_slider": 4,
+    "view.curvature-analysis": 4,
+    "display.curvature.telemetry_snapshot": 4,
+    "control.ratify.worker_count": 5,
+    "view.blueprint-ratification": 5,
+    "control.ratify.approve": 5,
+    "display.packets.log_console": 6,
+    "display.packets.download_links": 6,
+    "control.packets.spawn": 6,
+    "control.packets.file_filter": 6,
+    "view.packet-export": 6,
+    "display.forge.chat_messages": 7,
+    "view.intent-forge": 7,
+    "control.forge.chat_input": 7
+  },
+  "community_cut_threshold": -0.2,
+  "community_cut_edges": [
+    "view.app-shell::view.project-hub",
+    "view.app-shell::view.claims-ledger",
+    "view.app-shell::view.topological-observatory",
+    "view.app-shell::view.curvature-analysis",
+    "view.app-shell::view.blueprint-ratification",
+    "view.app-shell::view.packet-export"
+  ]
+}
