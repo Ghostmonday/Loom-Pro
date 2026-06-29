@@ -1,0 +1,7 @@
+{
+  "registry_id": "loom.overlay.registry.v2",
+  "version": "2.0.0",
+  "policy_id": "loom.overlay.policy.v2",
+  "policy_version": "2.0.0",
+  "overlays": {}
+}

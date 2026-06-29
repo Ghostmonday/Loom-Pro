@@ -33,6 +33,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from aoc_supervisor.overlay_system import validate_overlay_authority
+
 PERF_RESULTS_PATH = Path(".gaijinn/perf-bench-results.json")
 HUMAN_SIGNOFF_PATH = Path(".gaijinn/human-signoff.md")
 
@@ -380,10 +382,15 @@ def evaluate_workflow(
     workers_requested: int = 0,
     greenfield: bool = False,
     enforce_promotion_gates: bool = False,
+    enforce_overlay_authority: bool = True,
 ) -> WorkflowEvaluation:
     checks: list[InvariantResult] = []
     gate_mirror_passed = True
     promotion_passed = True
+    if enforce_overlay_authority:
+        overlay_report = validate_overlay_authority()
+        checks.extend(_check(name, ok, detail) for name, ok, detail in overlay_report.as_checks())
+
     if prepare is not None:
         prepare_checks = evaluate_prepare(prepare, intent=intent, greenfield=greenfield)
         checks.extend(prepare_checks)

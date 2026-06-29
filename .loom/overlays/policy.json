@@ -1,0 +1,36 @@
+{
+  "policy_id": "loom.overlay.policy.v2",
+  "version": "2.0.0",
+  "fail_closed": true,
+  "description": "Canonical Overlay System v2 authority for policy, validation, promotion, and drift detection.",
+  "required_overlay_fields": [
+    "overlay_id",
+    "version",
+    "provenance",
+    "authority",
+    "applicability",
+    "lifecycle",
+    "promotion",
+    "rejection",
+    "supersession"
+  ],
+  "allowed_authorities": ["loom.overlay.authority"],
+  "lifecycle": {
+    "allowed_statuses": ["draft", "registered", "validated", "promoting", "promoted", "rejected", "superseded"],
+    "active_statuses": ["registered", "validated", "promoting", "promoted"],
+    "terminal_statuses": ["promoted", "rejected", "superseded"]
+  },
+  "promotion_transitions": {
+    "register": {"from": ["draft"], "to": "registered", "reason_required": true},
+    "validate": {"from": ["registered"], "to": "validated", "reason_required": true},
+    "promote": {"from": ["validated", "promoting"], "to": "promoted", "reason_required": true},
+    "reject": {"from": ["draft", "registered", "validated", "promoting"], "to": "rejected", "reason_required": true},
+    "supersede": {"from": ["registered", "validated", "promoting", "promoted"], "to": "superseded", "reason_required": true}
+  },
+  "drift_detection": {
+    "registry_file_match_required": true,
+    "registry_policy_match_required": true,
+    "unknown_overlay_files_allowed": false,
+    "legacy_requires_explicit_migration_wrapper": true
+  }
+}
