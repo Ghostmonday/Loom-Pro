@@ -1,0 +1,8 @@
+- [x] Create `docs/guides/why-loom-exists.md` (engineering design tone)
+- [x] Create `docs/guides/how-loom-thinks.md` (end-to-end example walkthrough)
+- [x] Modify `docs/README.md` (renaming Gaijinn to Loom, inline layers definition, Honest Accounting narrative)
+- [x] Create `docs/guides/deterministic-authority.md` (LLM containment boundary, authority chain)
+- [x] Create `docs/architecture/onboarding-intake-map.md` (progressive disclosure onboarding map outline)
+- [x] Fix module object duplication/reload patching bugs globally in tests
+- [x] Align merge integrity mock edits with state machine invariants
+- [x] Achieve 100% green passing status across the entire 692-test suite
