@@ -38,6 +38,13 @@ def check(document, manifest_elements_by_id):
                 RULE_NAME, document.path,
             ))
 
+        if el.classification == "input_control" and not el.associated_label_text.strip():
+            violations.append(Violation(
+                "FFM-R006-07", "ERROR", el.ref,
+                "input_control requires an associated label element.",
+                RULE_NAME, document.path,
+            ))
+
         if el.classification == "action_control":
             if not el.accessible_name_present:
                 violations.append(Violation(

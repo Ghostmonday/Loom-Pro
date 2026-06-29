@@ -185,6 +185,18 @@
           return success(actionId, ["loom.vision.understanding", "loom.vision.readiness"], { revised: true }, "real_api_fixture");
         }
 
+        case "question.finalize": {
+          requireGate(screen === "loom.vision_canvas", actionId, "GATE_REFUSAL: finalization belongs to the Vision Canvas.");
+          requireGate(["QUESTIONING", "VALIDATING"].includes(state.vision.session_status) && state.vision.readiness >= 0.8, actionId, "GATE_REFUSAL: sufficient readiness is required before finalization.", ["loom.vision.handoff_state"]);
+          state.vision.session_status = "FINAL_CONFIRMATION";
+          state.vision.current_question = "Final confirmation requested; confirm handoff readiness.";
+          saveState(state);
+          return success(actionId, [
+            "loom.vision.current_question",
+            "loom.vision.handoff_state"
+          ], { session_status: state.vision.session_status }, "real_api_fixture");
+        }
+
         case "handoff.confirm": {
           if (screen === "loom.continuation") {
             requireGate(state.continuation.scope_confirmed, actionId, "GATE_REFUSAL: approve a version-matched delta scope before handoff.", ["loom.continuation.handoff_state"]);
@@ -192,7 +204,7 @@
             saveState(state);
             return success(actionId, ["loom.continuation.handoff_state"], { confirmed: true }, "contract_fixture");
           }
-          requireGate(state.vision.session_status === "FINALIZED" && state.vision.readiness >= 0.8, actionId, "GATE_REFUSAL: readiness and FINALIZED status are required before confirmation.", ["loom.vision.handoff_state"]);
+          requireGate(["FINAL_CONFIRMATION", "FINALIZED"].includes(state.vision.session_status) && state.vision.readiness >= 0.8, actionId, "GATE_REFUSAL: readiness and FINALIZED status are required before confirmation.", ["loom.vision.handoff_state"]);
           state.vision.handoff_confirmed = true;
           state.vision.executable_projection = true;
           saveState(state);

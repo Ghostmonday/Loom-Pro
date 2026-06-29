@@ -29,3 +29,12 @@ body {
 [data-classification="display"] {
   min-height: 1.5rem;
 }
+
+[data-classification="input_control"] {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+}
+
+textarea[data-classification="input_control"] {
+  min-height: 7rem;
+}

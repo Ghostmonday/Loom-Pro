@@ -4,7 +4,9 @@
   const bindings = {
   "loom.vision.prompt": "vision-prompt-display",
   "loom.vision.current_question": "vision-question-display",
-  "loom.vision.understanding": "vision-understanding-display",
+  "loom.vision.current_answer": "vision-answer-input",
+  "loom.vision.understanding": "vision-history-display",
+  "loom.vision.answer_revision": "vision-revision-editor",
   "loom.vision.readiness": "vision-readiness-display",
   "loom.vision.handoff_state": "vision-handoff-display"
 };

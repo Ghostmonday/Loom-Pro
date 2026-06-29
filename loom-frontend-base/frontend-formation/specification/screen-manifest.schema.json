@@ -40,12 +40,17 @@
       "required": ["id", "classification"],
       "properties": {
         "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_:-]*$"},
-        "classification": {"enum": ["action_control", "display", "presentation"]},
+        "classification": {"enum": ["action_control", "display", "presentation", "input_control"]},
         "action": {"type": "string", "pattern": "^[a-z0-9]+(\\.[a-z0-9_-]+)+$"},
         "contract_path": {"type": "string", "pattern": "^[a-z0-9]+(\\.[a-z0-9_-]+)+$"},
         "feedback_target": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_:-]*$"},
         "label": {"type": "string", "minLength": 1},
-        "tag": {"enum": ["button", "div", "section", "aside", "header", "footer", "p", "span", "output"]}
+        "tag": {"enum": ["button", "div", "section", "aside", "header", "footer", "p", "span", "output", "input", "textarea"]},
+        "placeholder": {"type": "string"},
+        "disabled": {"type": "boolean"},
+        "readonly": {"type": "boolean"},
+        "name": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_:-]*$"},
+        "type": {"enum": ["text", "email", "password", "search", "tel", "url", "number"]}
       },
       "additionalProperties": false,
       "allOf": [
@@ -56,6 +61,13 @@
         {
           "if": {"properties": {"classification": {"const": "display"}}, "required": ["classification"]},
           "then": {"required": ["contract_path"]}
+        },
+        {
+          "if": {"properties": {"classification": {"const": "input_control"}}, "required": ["classification"]},
+          "then": {
+            "required": ["contract_path", "tag", "label"],
+            "properties": {"tag": {"enum": ["input", "textarea"]}}
+          }
         },
         {
           "if": {"properties": {"classification": {"const": "presentation"}}, "required": ["classification"]},

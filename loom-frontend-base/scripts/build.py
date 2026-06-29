@@ -33,6 +33,12 @@ def run(cmd: list[str], *, cwd: Path = ROOT, capture: bool = True) -> subprocess
     return subprocess.run(cmd, cwd=cwd, env=env, text=True, capture_output=capture, check=True)
 
 
+def selected_driver_name() -> str:
+    env_val = os.environ.get("LOOM_ENV", "").strip().lower()
+    use_mock = os.environ.get("LOOM_USE_MOCK_DRIVER", "").strip().lower() in {"1", "true", "yes"} or env_val in {"test", "demo"}
+    return "mock-driver.js" if use_mock else "api-driver.js"
+
+
 def patch_scripts(html_path: Path) -> None:
     content = html_path.read_text(encoding='utf-8')
     needle = '  <script src="shell.js"></script>\n  <script src="screen.custom.js"></script>'
@@ -63,7 +69,7 @@ def main() -> int:
         result = run(cmd)
         generation_log.append({'screen': screen, 'stdout': result.stdout.strip(), 'stderr': result.stderr.strip()})
 
-        shutil.copy2(EXT / 'mock-driver.js', target / 'mock-driver.js')
+        shutil.copy2(EXT / selected_driver_name(), target / 'mock-driver.js')
         shutil.copy2(EXT / f'{screen}.custom.js', target / 'screen.custom.js')
         shutil.copy2(EXT / f'{screen}.custom.css', target / 'screen.custom.css')
         patch_scripts(target / 'index.html')

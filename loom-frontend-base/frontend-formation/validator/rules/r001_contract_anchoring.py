@@ -47,16 +47,21 @@ def check(document, action_registry):
                     RULE_NAME, document.path,
                 ))
 
-        elif el.classification == "display":
+        elif el.classification in {"display", "input_control"}:
             if not el.contract_path:
                 violations.append(Violation(
                     "FFM-R001-04", "ERROR", el.ref,
-                    "display has no data-contract-path.", RULE_NAME, document.path,
+                    f"{el.classification} has no data-contract-path.", RULE_NAME, document.path,
+                ))
+            if el.classification == "input_control" and el.tag not in {"input", "textarea"}:
+                violations.append(Violation(
+                    "FFM-R001-08", "ERROR", el.ref,
+                    "input_control must be rendered as input or textarea.", RULE_NAME, document.path,
                 ))
             if not el.dom_id:
                 violations.append(Violation(
                     "FFM-R001-07", "ERROR", el.ref,
-                    "display has no stable id for manifest and projection references.",
+                    f"{el.classification} has no stable id for manifest and projection references.",
                     RULE_NAME, document.path,
                 ))
 

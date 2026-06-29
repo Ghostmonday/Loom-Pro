@@ -3,51 +3,80 @@ mission: Express a software vision, resolve uncertainty, and authorize architect
   handoff.
 mission_id: loom-vision-canvas
 elements:
+- id: vision-prompt-input
+  classification: input_control
+  contract_path: loom.vision.prompt
+  tag: textarea
+  label: Express your software vision
+  placeholder: Describe the system you want Loom to architect.
+  name: vision_prompt
 - id: vision-start-btn
   classification: action_control
   action: intake.start_session
   feedback_target: vision-feedback
   label: Start Intent Forge Session
+- id: vision-prompt-display
+  classification: display
+  contract_path: loom.vision.prompt
+  label: Current Vision
+  tag: div
+- id: vision-question-display
+  classification: display
+  contract_path: loom.vision.current_question
+  label: Interrogation Question
+  tag: div
+- id: vision-answer-input
+  classification: input_control
+  contract_path: loom.vision.current_answer
+  tag: textarea
+  label: Your Answer
+  placeholder: Answer the active interrogation question.
+  name: vision_answer
 - id: vision-submit-answer-btn
   classification: action_control
   action: question.submit_answer
   feedback_target: vision-feedback
   label: Submit Current Answer
+- id: vision-history-display
+  classification: display
+  contract_path: loom.vision.understanding
+  label: Submitted Answers History
+  tag: div
+- id: vision-revision-editor
+  classification: input_control
+  contract_path: loom.vision.answer_revision
+  tag: textarea
+  label: Edit Answer for Revision
+  placeholder: Revise a previously submitted answer.
+  name: vision_answer_revision
 - id: vision-revise-answer-btn
   classification: action_control
   action: question.revise_answer
   feedback_target: vision-feedback
   label: Revise Previous Answer
+- id: vision-readiness-display
+  classification: display
+  contract_path: loom.vision.readiness
+  label: Readiness 0 percent
+- id: vision-finalize-btn
+  classification: action_control
+  action: question.finalize
+  feedback_target: vision-feedback
+  label: Request Finalization
 - id: vision-confirm-handoff-btn
   classification: action_control
   action: handoff.confirm
   feedback_target: vision-feedback
   label: Confirm Handoff Readiness
+- id: vision-handoff-display
+  classification: display
+  contract_path: loom.vision.handoff_state
+  label: Handoff locked
 - id: vision-accept-handoff-btn
   classification: action_control
   action: handoff.accept
   feedback_target: vision-feedback
   label: Accept Architectural Handoff
-- id: vision-prompt-display
-  classification: display
-  contract_path: loom.vision.prompt
-  label: Vision prompt fixture awaiting session start
-- id: vision-question-display
-  classification: display
-  contract_path: loom.vision.current_question
-  label: No current question
-- id: vision-understanding-display
-  classification: display
-  contract_path: loom.vision.understanding
-  label: Understanding evidence not yet established
-- id: vision-readiness-display
-  classification: display
-  contract_path: loom.vision.readiness
-  label: Readiness 0 percent
-- id: vision-handoff-display
-  classification: display
-  contract_path: loom.vision.handoff_state
-  label: Handoff locked
 - id: vision-feedback
   classification: display
   contract_path: loom.vision.feedback

@@ -20,7 +20,7 @@ def check(manifest, scenarios, manifest_elements_by_id):
     contract_paths = {
         item.get("contract_path")
         for item in manifest_elements_by_id.values()
-        if item.get("classification") == "display" and item.get("contract_path")
+        if item.get("classification") in {"display", "input_control"} and item.get("contract_path")
     }
 
     if not scenarios:

@@ -39,6 +39,8 @@ def _default_tag(element: dict[str, Any], feedback_targets: set[str]) -> str:
         return "output"
     if classification == "display":
         return "div"
+    if classification == "input_control":
+        return "textarea"
     return "section"
 
 
@@ -91,8 +93,24 @@ def render_html(manifest: dict[str, Any]) -> str:
             attrs.append(f'data-contract-path="{html.escape(element["contract_path"], quote=True)}"')
             if element_id in feedback_targets:
                 attrs.extend(['aria-live="polite"', 'aria-atomic="true"'])
+        elif classification == "input_control":
+            attrs.append(f'data-contract-path="{html.escape(element["contract_path"], quote=True)}"')
+            if element.get("placeholder") is not None:
+                attrs.append(f'placeholder="{html.escape(str(element["placeholder"]), quote=True)}"')
+            if element.get("disabled") is True:
+                attrs.append("disabled")
+            if element.get("readonly") is True:
+                attrs.append("readonly")
+            if element.get("name"):
+                attrs.append(f'name="{html.escape(element["name"], quote=True)}"')
+            if tag == "input":
+                attrs.append(f'type="{html.escape(element.get("type", "text"), quote=True)}"')
 
-        lines.append(f"    <{tag} {' '.join(attrs)}>{html.escape(label)}</{tag}>")
+        if classification == "input_control":
+            lines.append(f'    <label for="{html.escape(element_id, quote=True)}">{html.escape(label)}</label>')
+            lines.append(f"    <{tag} {' '.join(attrs)}></{tag}>")
+        else:
+            lines.append(f"    <{tag} {' '.join(attrs)}>{html.escape(label)}</{tag}>")
 
     lines.extend([
         "  </main>",
@@ -194,6 +212,15 @@ body {
 
 [data-classification="display"] {
   min-height: 1.5rem;
+}
+
+[data-classification="input_control"] {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+}
+
+textarea[data-classification="input_control"] {
+  min-height: 7rem;
 }
 '''
 

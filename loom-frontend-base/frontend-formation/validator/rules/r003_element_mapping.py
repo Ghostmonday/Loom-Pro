@@ -4,7 +4,7 @@ from validator.core import Violation
 from validator.parser.manifest_loader import element_id_counts
 
 RULE_NAME = "Strict Element Mapping"
-VALID_CLASSIFICATIONS = {"action_control", "display", "presentation"}
+VALID_CLASSIFICATIONS = {"action_control", "display", "presentation", "input_control"}
 
 
 def check(document, manifest, manifest_elements_by_id):
@@ -68,11 +68,17 @@ def check(document, manifest, manifest_elements_by_id):
                     f"DOM feedback target '{el.feedback_target}' does not match manifest feedback target '{manifest_el.get('feedback_target')}'.",
                     RULE_NAME, document.path,
                 ))
-        elif expected_class == "display":
+        elif expected_class in {"display", "input_control"}:
             if el.contract_path != manifest_el.get("contract_path"):
                 violations.append(Violation(
                     "FFM-R003-07", "ERROR", el.ref,
                     f"DOM contract path '{el.contract_path}' does not match manifest contract path '{manifest_el.get('contract_path')}'.",
+                    RULE_NAME, document.path,
+                ))
+            if expected_class == "input_control" and el.tag != manifest_el.get("tag"):
+                violations.append(Violation(
+                    "FFM-R003-11", "ERROR", el.ref,
+                    f"DOM tag '{el.tag}' does not match manifest tag '{manifest_el.get('tag')}'.",
                     RULE_NAME, document.path,
                 ))
 

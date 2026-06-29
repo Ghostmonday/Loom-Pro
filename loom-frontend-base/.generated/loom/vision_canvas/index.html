@@ -15,16 +15,23 @@
     class="workspace-shell"
   >
     <h1>Express a software vision, resolve uncertainty, and authorize architectural handoff.</h1>
+    <label for="vision-prompt-input">Express your software vision</label>
+    <textarea id="vision-prompt-input" data-classification="input_control" data-contract-path="loom.vision.prompt" placeholder="Describe the system you want Loom to architect." name="vision_prompt"></textarea>
     <button id="vision-start-btn" data-classification="action_control" data-action="intake.start_session" data-feedback-target="vision-feedback" aria-label="Start Intent Forge Session" aria-busy="false" type="button">Start Intent Forge Session</button>
+    <div id="vision-prompt-display" data-classification="display" data-contract-path="loom.vision.prompt">Current Vision</div>
+    <div id="vision-question-display" data-classification="display" data-contract-path="loom.vision.current_question">Interrogation Question</div>
+    <label for="vision-answer-input">Your Answer</label>
+    <textarea id="vision-answer-input" data-classification="input_control" data-contract-path="loom.vision.current_answer" placeholder="Answer the active interrogation question." name="vision_answer"></textarea>
     <button id="vision-submit-answer-btn" data-classification="action_control" data-action="question.submit_answer" data-feedback-target="vision-feedback" aria-label="Submit Current Answer" aria-busy="false" type="button">Submit Current Answer</button>
+    <div id="vision-history-display" data-classification="display" data-contract-path="loom.vision.understanding">Submitted Answers History</div>
+    <label for="vision-revision-editor">Edit Answer for Revision</label>
+    <textarea id="vision-revision-editor" data-classification="input_control" data-contract-path="loom.vision.answer_revision" placeholder="Revise a previously submitted answer." name="vision_answer_revision"></textarea>
     <button id="vision-revise-answer-btn" data-classification="action_control" data-action="question.revise_answer" data-feedback-target="vision-feedback" aria-label="Revise Previous Answer" aria-busy="false" type="button">Revise Previous Answer</button>
-    <button id="vision-confirm-handoff-btn" data-classification="action_control" data-action="handoff.confirm" data-feedback-target="vision-feedback" aria-label="Confirm Handoff Readiness" aria-busy="false" type="button">Confirm Handoff Readiness</button>
-    <button id="vision-accept-handoff-btn" data-classification="action_control" data-action="handoff.accept" data-feedback-target="vision-feedback" aria-label="Accept Architectural Handoff" aria-busy="false" type="button">Accept Architectural Handoff</button>
-    <div id="vision-prompt-display" data-classification="display" data-contract-path="loom.vision.prompt">Vision prompt fixture awaiting session start</div>
-    <div id="vision-question-display" data-classification="display" data-contract-path="loom.vision.current_question">No current question</div>
-    <div id="vision-understanding-display" data-classification="display" data-contract-path="loom.vision.understanding">Understanding evidence not yet established</div>
     <div id="vision-readiness-display" data-classification="display" data-contract-path="loom.vision.readiness">Readiness 0 percent</div>
+    <button id="vision-finalize-btn" data-classification="action_control" data-action="question.finalize" data-feedback-target="vision-feedback" aria-label="Request Finalization" aria-busy="false" type="button">Request Finalization</button>
+    <button id="vision-confirm-handoff-btn" data-classification="action_control" data-action="handoff.confirm" data-feedback-target="vision-feedback" aria-label="Confirm Handoff Readiness" aria-busy="false" type="button">Confirm Handoff Readiness</button>
     <div id="vision-handoff-display" data-classification="display" data-contract-path="loom.vision.handoff_state">Handoff locked</div>
+    <button id="vision-accept-handoff-btn" data-classification="action_control" data-action="handoff.accept" data-feedback-target="vision-feedback" aria-label="Accept Architectural Handoff" aria-busy="false" type="button">Accept Architectural Handoff</button>
     <output id="vision-feedback" data-classification="display" data-contract-path="loom.vision.feedback" aria-live="polite" aria-atomic="true">Vision Canvas initialized</output>
   </main>
   <script src="mock-driver.js"></script>

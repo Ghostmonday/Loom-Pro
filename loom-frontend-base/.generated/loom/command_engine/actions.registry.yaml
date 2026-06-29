@@ -125,3 +125,8 @@ actions:
     description: Persist project lineage for deterministic future Continuation sessions.
     lifecycle_states: *id001
     backend_endpoint: 'CONTRACT ONLY: .gaijinn/project-lineage.json'
+  question.finalize:
+    description: Validate the session blueprint state and request transition to FINAL_CONFIRMATION
+      status.
+    lifecycle_states: *id001
+    backend_endpoint: POST /api/v1/intent-forge/sessions/{session_id}/finalize
