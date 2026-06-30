@@ -517,11 +517,6 @@ class IntentForgeService:
         if force:
             strict_validation = validate_blueprint_state(state, finalize=True)
             overridden_blockers = list(strict_validation.blocking_items)
-            for item in state.get("unresolved_items", []):
-                if isinstance(item, dict) and item.get("blocking"):
-                    item["blocking"] = False
-        validation = validate_blueprint_state(state, finalize=not force)
-        if force:
             structural_errors: list[str] = []
             contradictions = [
                 c for c in state.get("contradictions", []) if isinstance(c, dict) and not c.get("resolved")
@@ -544,6 +539,10 @@ class IntentForgeService:
                 bump_blueprint_version(state)
                 self.store.save(session_id, state, expected_version=expected_blueprint_version)
                 return public_session_view(state)
+            for item in state.get("unresolved_items", []):
+                if isinstance(item, dict) and item.get("blocking"):
+                    item["blocking"] = False
+        validation = validate_blueprint_state(state, finalize=not force)
         if not validation.ok:
             if not force:
                 state["session_status"] = "QUESTIONING"

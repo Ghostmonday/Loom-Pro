@@ -961,6 +961,55 @@ def test_force_does_not_bypass_structural_corruption(forge_env) -> None:
     assert forced.json()["session_status"] != "FINAL_CONFIRMATION", f"structural corruption bypassed: {forced.json()}"
 
 
+def test_rejected_force_preserves_unresolved_blockers(forge_env) -> None:
+    """Rejected force-finalize attempts must not clear unresolved item blockers."""
+    client, service = forge_env
+    created = client.post(
+        "/api/v1/intent-forge/sessions",
+        json={"prompt": "Build a release approval workflow", "tier": "paid"},
+        headers=_headers(),
+    ).json()
+    sid = created["session_id"]
+    bv = created["blueprint_version"]
+
+    state = service.store.load(sid)
+    blocker_id = "BLOCKER-PRESERVE-001"
+    state.setdefault("unresolved_items", []).append(
+        {
+            "id": blocker_id,
+            "description": "Needs explicit audit policy decision.",
+            "blocking": True,
+        }
+    )
+    state.setdefault("contradictions", []).append(
+        {
+            "id": "CORRUPT-PRESERVE-001",
+            "description": "Simulated structural corruption",
+            "element_a_id": "REQ-A",
+            "element_b_id": "REQ-B",
+            "resolved": False,
+        }
+    )
+    state["blueprint_version"] = bv + 1
+    service.store.save(sid, state)
+    bv += 1
+
+    forced = client.post(
+        f"/api/v1/intent-forge/sessions/{sid}/finalize",
+        json={
+            "idempotency_key": "force-preserve-blocker-001",
+            "expected_blueprint_version": bv,
+            "force": True,
+        },
+        headers=_headers(),
+    )
+    assert forced.json()["session_status"] != "FINAL_CONFIRMATION"
+
+    persisted = service.store.load(sid)
+    blocker = next(item for item in persisted["unresolved_items"] if item.get("id") == blocker_id)
+    assert blocker["blocking"] is True
+
+
 def test_force_does_not_bypass_stale_graph_nodes(forge_env) -> None:
     """Stale dependency graph nodes must still block even with force."""
     client, service = forge_env
