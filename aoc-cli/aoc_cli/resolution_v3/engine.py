@@ -62,7 +62,7 @@ class Engine:
                     kind, payload = match
                     self._apply_local_rule(kind, payload)
                 # B2 is a global fallback and may run only after the local
-                # worklist drains; otherwise it can pre-empt cheaper local rules.
+                # worklist drains; otherwise it can pre-empt local rule priority.
                 elif not apply_b2(self.cg, self.worklist):
                     break
 
