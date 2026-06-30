@@ -31,9 +31,19 @@ class Engine:
         for index in range(len(self.cg.edges)):
             self.worklist.push(Locus.edge(index), NORMAL)
 
-        psi_previous = self.cg.psi()
-        trace = [(0, psi_previous)]
         step = 0
+        trace = []
+
+        try:
+            psi_previous = self.cg.psi()
+            trace.append((0, psi_previous))
+        except Exception as error:
+            return self._report(
+                EngineStatus.ENGINE_FAULT,
+                step,
+                trace,
+                fault_detail=f"engine exception: {type(error).__name__}: {error}",
+            )
 
         while step < max_steps:
             try:

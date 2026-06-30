@@ -2,6 +2,15 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
+
+@dataclass
+class _Frame:
+    node_id: str
+    neighbors: list[str]
+    next_neighbor: int = 0
+
 
 def tarjan_scc(adj: dict[str, list[str]], all_nodes: list[str]) -> list[frozenset[str]]:
     """Return maximal SCCs in deterministic Tarjan order."""
@@ -12,33 +21,46 @@ def tarjan_scc(adj: dict[str, list[str]], all_nodes: list[str]) -> list[frozense
     on_stack: set[str] = set()
     result: list[frozenset[str]] = []
 
-    def strongconnect(node_id: str) -> None:
+    def push_frame(node_id: str, frames: list[_Frame]) -> None:
         nonlocal index_counter
         index[node_id] = index_counter
         lowlink[node_id] = index_counter
         index_counter += 1
         stack.append(node_id)
         on_stack.add(node_id)
+        frames.append(_Frame(node_id=node_id, neighbors=sorted(adj.get(node_id, []))))
 
-        for neighbor in sorted(adj.get(node_id, [])):
-            if neighbor not in index:
-                strongconnect(neighbor)
-                lowlink[node_id] = min(lowlink[node_id], lowlink[neighbor])
-            elif neighbor in on_stack:
-                lowlink[node_id] = min(lowlink[node_id], index[neighbor])
-
-        if lowlink[node_id] == index[node_id]:
-            component: list[str] = []
-            while True:
-                member = stack.pop()
-                on_stack.remove(member)
-                component.append(member)
-                if member == node_id:
-                    break
-            result.append(frozenset(component))
+    def emit_component(node_id: str) -> None:
+        component: list[str] = []
+        while True:
+            member = stack.pop()
+            on_stack.remove(member)
+            component.append(member)
+            if member == node_id:
+                break
+        result.append(frozenset(component))
 
     for node_id in sorted(all_nodes):
         if node_id not in index:
-            strongconnect(node_id)
+            frames: list[_Frame] = []
+            push_frame(node_id, frames)
+
+            while frames:
+                frame = frames[-1]
+                if frame.next_neighbor < len(frame.neighbors):
+                    neighbor = frame.neighbors[frame.next_neighbor]
+                    frame.next_neighbor += 1
+                    if neighbor not in index:
+                        push_frame(neighbor, frames)
+                    elif neighbor in on_stack:
+                        lowlink[frame.node_id] = min(lowlink[frame.node_id], index[neighbor])
+                    continue
+
+                frames.pop()
+                if lowlink[frame.node_id] == index[frame.node_id]:
+                    emit_component(frame.node_id)
+                if frames:
+                    parent = frames[-1].node_id
+                    lowlink[parent] = min(lowlink[parent], lowlink[frame.node_id])
 
     return result

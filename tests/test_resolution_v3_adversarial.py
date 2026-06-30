@@ -1,5 +1,7 @@
 """Asserted adversarial regression suite for the Loom resolution engine v3."""
 
+import sys
+
 from loom_resolution_engine_v3 import (
     ACYCLIC_LAYERS,
     NORMAL,
@@ -328,6 +330,37 @@ def test_injected_engine_fault() -> None:
     assert result["status"] == EngineStatus.ENGINE_FAULT, result
     assert result["steps"] == 2, result
     assert result["fault_detail"] and "INJECTED" in result["fault_detail"]
+
+
+def test_initial_psi_exception_is_reported_as_engine_fault() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("Root", Status.KNOWN, "service", 1, root_permitted=True))
+
+    def broken_psi():
+        raise RuntimeError("initial psi unavailable")
+
+    cg.psi = broken_psi
+
+    result = resolve(cg)
+
+    assert result["status"] == EngineStatus.ENGINE_FAULT, result
+    assert result["steps"] == 0, result
+    assert result["psi_trace"] == []
+    assert result["fault_detail"] == "engine exception: RuntimeError: initial psi unavailable"
+
+
+def test_large_acyclic_layer_one_graph_resolves_without_recursion_fault() -> None:
+    cg = ConstraintGraph()
+    node_count = sys.getrecursionlimit() + 100
+    for index in range(node_count):
+        cg.add_node(Node(f"N{index:04d}", Status.KNOWN, "service", 1))
+    for index in range(node_count - 1):
+        cg.add_edge(Edge(f"N{index:04d}", f"N{index + 1:04d}", Modality.REQ, "calls"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=0)
+    assert result["fault_detail"] is None
 
 
 def test_clash_resolution_splits_scc() -> None:

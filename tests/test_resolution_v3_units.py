@@ -1,5 +1,7 @@
 """Focused unit tests for resolution v3 module seams."""
 
+import sys
+
 from aoc_cli.resolution_v3 import ConstraintGraph, Edge, Modality, Node, Status, Worklist, tarjan_scc
 from aoc_cli.resolution_v3.potential import cyclic_debt
 from aoc_cli.resolution_v3.rules import apply_b2
@@ -19,6 +21,18 @@ def test_tarjan_returns_maximal_components_deterministically() -> None:
         frozenset({"A", "B"}),
         frozenset({"E"}),
     ]
+
+
+def test_tarjan_handles_graph_deeper_than_python_recursion_limit() -> None:
+    node_count = sys.getrecursionlimit() + 100
+    nodes = [f"N{index:04d}" for index in range(node_count)]
+    adj = {nodes[index]: [nodes[index + 1]] for index in range(node_count - 1)}
+
+    result = tarjan_scc(adj, nodes)
+
+    assert len(result) == node_count
+    assert result[0] == frozenset({nodes[-1]})
+    assert result[-1] == frozenset({nodes[0]})
 
 
 def test_cyclic_debt_squares_violating_scc_size() -> None:
