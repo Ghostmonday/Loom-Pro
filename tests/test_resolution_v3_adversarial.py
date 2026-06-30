@@ -49,8 +49,9 @@ def test_original_regression() -> None:
     cg.add_edge(Edge("AuditLog", "OrderService", Modality.REQ, "flushes_to"))
 
     result = resolve(cg)
-    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=4)
+    assert_terminal(result, EngineStatus.STUCK, valid=False, stable=True, steps=4)
     assert result["psi_trace"][-1][1] == (0, 0, 0, 0)
+    assert any("incompatible type 'composite'" in error for error in result["diagnostics"])
 
 
 def test_two_disjoint_cycles() -> None:
@@ -326,6 +327,52 @@ def test_missing_source_is_stuck_not_canonical() -> None:
     result = resolve(cg)
     assert_terminal(result, EngineStatus.STUCK, valid=False, stable=True, steps=0)
     assert any("missing source" in error for error in result["diagnostics"])
+
+
+def test_known_node_missing_type_is_stuck_not_canonical() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("X", Status.KNOWN, None, 1, root_permitted=True))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.STUCK, valid=False, stable=True, steps=0)
+    assert any("known node 'X' lacks resolved type" in error for error in result["diagnostics"])
+
+
+def test_known_node_missing_layer_is_stuck_not_canonical() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("X", Status.KNOWN, "service", None, root_permitted=True))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.STUCK, valid=False, stable=True, steps=0)
+    assert any("known node 'X' lacks resolved layer" in error for error in result["diagnostics"])
+
+
+def test_active_edge_label_must_match_known_target_type() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("X", Status.KNOWN, "log_sink", 1))
+    cg.add_edge(Edge("A", "X", Modality.REQ, "calls"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.STUCK, valid=False, stable=True, steps=0)
+    assert any(
+        "active edge 0 label 'calls' targets 'X' with incompatible type 'log_sink'" in error
+        for error in result["diagnostics"]
+    )
+
+
+def test_valid_known_node_and_edge_types_remain_canonical() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("X", Status.KNOWN, "service", 1))
+    cg.add_edge(Edge("A", "X", Modality.REQ, "calls"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=0)
 
 
 def test_unpermitted_orphan_is_stuck() -> None:

@@ -32,6 +32,11 @@ def validation_errors(cg) -> list[str]:
         errors.append(f"rejected nodes remain in topology: {rejected}")
 
     for node_id, node in sorted(cg.nodes.items()):
+        if node.status == Status.KNOWN:
+            if node.type is None:
+                errors.append(f"known node '{node_id}' lacks resolved type")
+            if node.layer is None:
+                errors.append(f"known node '{node_id}' lacks resolved layer")
         if node.status == Status.LATENT_UNRESOLVED and not node.domain:
             undeclared = sorted(
                 {
@@ -44,6 +49,15 @@ def validation_errors(cg) -> list[str]:
                 errors.append(f"target '{node_id}' uses undeclared schema labels: {undeclared}")
             else:
                 errors.append(f"target '{node_id}' has contradictory required type domains")
+
+    for index, edge in enumerate(cg.edges):
+        if not edge.active or edge.label not in LABEL_TYPE_DOMAIN or edge.v not in cg.nodes:
+            continue
+        target = cg.nodes[edge.v]
+        if target.status == Status.KNOWN and target.type not in LABEL_TYPE_DOMAIN[edge.label]:
+            errors.append(
+                f"active edge {index} label '{edge.label}' targets '{edge.v}' with incompatible type '{target.type}'"
+            )
 
     degree: dict[str, int] = {node_id: 0 for node_id in cg.nodes}
     for edge in cg.active_edges():

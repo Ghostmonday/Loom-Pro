@@ -152,6 +152,19 @@ def test_parity_missing_source_is_stuck() -> None:
     _run_parity(build, "missing_source_is_stuck")
 
 
+def test_parity_edge_target_type_mismatch_is_stuck() -> None:
+    """Declared edge labels reject incompatible known target types on both import paths."""
+
+    def build(graph_cls, node_cls, edge_cls, modality, status):
+        cg = graph_cls()
+        cg.add_node(node_cls("A", status.KNOWN, "service", 1))
+        cg.add_node(node_cls("X", status.KNOWN, "log_sink", 1))
+        cg.add_edge(edge_cls("A", "X", modality.REQ, "calls"))
+        return cg
+
+    _run_parity(build, "edge_target_type_mismatch")
+
+
 def test_parity_singleton_prohibited_self_loop() -> None:
     """A singleton node with a self-loop REQ edge is still canonical."""
 
