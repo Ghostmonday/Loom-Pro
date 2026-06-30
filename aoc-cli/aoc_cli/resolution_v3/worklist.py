@@ -27,6 +27,8 @@ class Worklist:
         self._current: dict[Locus, tuple[int, int]] = {}
 
     def push(self, locus: Locus | str, priority: int = NORMAL) -> None:
+        # Compatibility accepts a plain string as a node locus only. Edge loci
+        # must remain typed so node IDs cannot collide with encoded edge names.
         locus = self._normalize(locus)
         current = self._current.get(locus)
         if current is None:
@@ -34,6 +36,7 @@ class Worklist:
             version = 1
         else:
             current_priority, current_version = current
+            # Promotion is monotone: pushing NORMAL can never downgrade URGENT.
             effective_priority = min(current_priority, priority)
             version = current_version + 1
 
@@ -47,6 +50,7 @@ class Worklist:
         while self._heap:
             entry = heapq.heappop(self._heap)
             current = self._current.get(entry.locus)
+            # Lazy deletion: superseded heap entries remain until encountered.
             if current == (entry.priority, entry.version):
                 del self._current[entry.locus]
                 return entry.locus
