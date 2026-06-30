@@ -72,6 +72,54 @@ def test_two_disjoint_cycles() -> None:
     ]
 
 
+def test_cycle_entirely_outside_acyclic_layer_is_not_welded() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 2))
+    cg.add_node(Node("B", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=0)
+    assert set(result["final_nodes"]) == {"A", "B"}
+    assert result["log"] == []
+
+
+def test_mixed_layer_cycle_without_layer_induced_cycle_is_not_welded() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("B", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=0)
+    assert set(result["final_nodes"]) == {"A", "B"}
+    assert result["log"] == []
+
+
+def test_mixed_layer_scc_with_layer_one_cycle_welds_layer_one_only() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("B", Status.KNOWN, "service", 1))
+    cg.add_node(Node("C", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+    cg.add_edge(Edge("B", "C", Modality.REQ, "bc"))
+    cg.add_edge(Edge("C", "A", Modality.REQ, "ca"))
+
+    result = resolve(cg)
+
+    assert_terminal(result, EngineStatus.CANONICAL, valid=True, stable=True, steps=1)
+    assert set(result["final_nodes"]) == {"C", "WELD[A|B]"}
+    assert result["final_edges"] == [
+        ("WELD[A|B]", "C", "REQ", "bc"),
+        ("C", "WELD[A|B]", "REQ", "ca"),
+    ]
+
+
 def test_overlapping_cycles_one_scc() -> None:
     cg = ConstraintGraph()
     for node_id in ["A", "B", "C", "D"]:

@@ -32,6 +32,42 @@ def test_cyclic_debt_squares_violating_scc_size() -> None:
     assert cyclic_debt(cg) == 9
 
 
+def test_cycle_entirely_outside_acyclic_layer_is_not_violating() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 2))
+    cg.add_node(Node("B", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+
+    assert cg.find_violating_sccs() == []
+    assert cyclic_debt(cg) == 0
+
+
+def test_mixed_layer_cycle_without_layer_induced_cycle_is_not_violating() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("B", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+
+    assert cg.find_violating_sccs() == []
+    assert cyclic_debt(cg) == 0
+
+
+def test_mixed_layer_scc_with_layer_one_induced_cycle_is_violating() -> None:
+    cg = ConstraintGraph()
+    cg.add_node(Node("A", Status.KNOWN, "service", 1))
+    cg.add_node(Node("B", Status.KNOWN, "service", 1))
+    cg.add_node(Node("C", Status.KNOWN, "service", 2))
+    cg.add_edge(Edge("A", "B", Modality.REQ, "ab"))
+    cg.add_edge(Edge("B", "A", Modality.REQ, "ba"))
+    cg.add_edge(Edge("B", "C", Modality.REQ, "bc"))
+    cg.add_edge(Edge("C", "A", Modality.REQ, "ca"))
+
+    assert cg.find_violating_sccs() == [frozenset({"A", "B"})]
+    assert cyclic_debt(cg) == 4
+
+
 def test_apply_b2_welds_only_one_maximal_scc_per_call() -> None:
     cg = ConstraintGraph()
     for node_id in ["A", "B", "C", "D"]:

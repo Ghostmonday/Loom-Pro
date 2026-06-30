@@ -17,28 +17,30 @@ def unresolved_debt(cg) -> int:
 
 
 def find_violating_sccs(cg) -> list[frozenset[str]]:
-    known_nodes = sorted(node_id for node_id, node in cg.nodes.items() if node.status == Status.KNOWN)
-    adj: dict[str, list[str]] = {}
-
-    for edge in cg.active_edges():
-        if edge.modality != Modality.REQ:
-            continue
-        if edge.u not in cg.nodes or edge.v not in cg.nodes:
-            continue
-        if cg.nodes[edge.u].status != Status.KNOWN or cg.nodes[edge.v].status != Status.KNOWN:
-            continue
-        adj.setdefault(edge.u, []).append(edge.v)
-
     violating: list[frozenset[str]] = []
-    for scc in tarjan_scc(adj, known_nodes):
-        has_self_loop = any(
-            edge.active and edge.modality == Modality.REQ and edge.u == edge.v and edge.u in scc for edge in cg.edges
-        )
-        if len(scc) == 1 and not has_self_loop:
-            continue
 
-        layers = {cg.nodes[node_id].layer for node_id in scc}
-        if layers & ACYCLIC_LAYERS:
+    for layer in sorted(ACYCLIC_LAYERS):
+        layer_nodes = sorted(
+            node_id for node_id, node in cg.nodes.items() if node.status == Status.KNOWN and node.layer == layer
+        )
+        layer_node_set = set(layer_nodes)
+        adj: dict[str, list[str]] = {}
+
+        for edge in cg.active_edges():
+            if edge.modality != Modality.REQ:
+                continue
+            if edge.u not in layer_node_set or edge.v not in layer_node_set:
+                continue
+            adj.setdefault(edge.u, []).append(edge.v)
+
+        for scc in tarjan_scc(adj, layer_nodes):
+            has_self_loop = any(
+                edge.active and edge.modality == Modality.REQ and edge.u == edge.v and edge.u in scc
+                for edge in cg.edges
+            )
+            if len(scc) == 1 and not has_self_loop:
+                continue
+
             violating.append(scc)
 
     return sorted(violating, key=lambda component: tuple(sorted(component)))
