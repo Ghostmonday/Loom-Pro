@@ -88,7 +88,7 @@ def test_grid_api_endpoints(tmp_path: Path, monkeypatch) -> None:
         root_ui = client.get("/")
         assert root_ui.status_code == 200
         assert "Blueprint" in root_ui.text
- 
+
         terminal = client.get("/terminal")
         assert terminal.status_code == 200
         assert "Blueprint" in terminal.text

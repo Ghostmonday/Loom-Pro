@@ -1,13 +1,10 @@
 from __future__ import annotations
 
 import json
-import re
 from html.parser import HTMLParser
 
 from aoc_supervisor.repo_paths import (
-    COMMAND_ENGINE_INTENT_MAP_PATH,
     FRONTEND_DIR,
-    INTENT_FORGE_HTML_PATH,
     LOOM_INTENT_FORGE_INTENT_MAP_PATH,
 )
 

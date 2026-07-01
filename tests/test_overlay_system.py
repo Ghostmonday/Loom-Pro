@@ -45,9 +45,13 @@ def _write_overlay(root: Path, registration_id: str = "overlay.test", **updates)
     registry["overlays"][registration_id] = {
         "path": f".loom/overlays/{registration_id}.json",
         "version": payload.get("version", "1.0.0"),
-        "source": payload.get("provenance", {}).get("source", "tests") if isinstance(payload.get("provenance"), dict) else "tests",
+        "source": payload.get("provenance", {}).get("source", "tests")
+        if isinstance(payload.get("provenance"), dict)
+        else "tests",
         "applicability": payload.get("applicability", {}),
-        "lifecycle_status": payload.get("lifecycle", {}).get("status", "validated") if isinstance(payload.get("lifecycle"), dict) else "validated",
+        "lifecycle_status": payload.get("lifecycle", {}).get("status", "validated")
+        if isinstance(payload.get("lifecycle"), dict)
+        else "validated",
     }
     registry_path.write_text(json.dumps(registry, indent=2), encoding="utf-8")
     return payload

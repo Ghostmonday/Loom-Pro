@@ -43,6 +43,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "ruff",
+    "tomli",
 ]
 
 [project.scripts]
@@ -80,6 +81,8 @@ select = ["E", "F", "I", "W", "N", "UP", "S", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S603", "S607"]
+"loom-frontend-base/scripts/create_sources.py" = ["E501"]
+"frontend-formation-complete/scripts/create_sources.py" = ["E501"]
 "scripts/dev/*.py" = ["S603", "S607"]
 "examples/*/tests/*" = ["S101"]
 "aoc-cli/aoc_cli/cli.py" = ["S603", "S607"]

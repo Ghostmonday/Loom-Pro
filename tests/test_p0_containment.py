@@ -57,11 +57,11 @@ def test_standby_worker_scoped_to_standby_marker() -> None:
 
 
 def test_validate_path_containment_success(tmp_path: Path) -> None:
-    from aoc_cli.moat_authority import set_allowed_roots, validate_path_containment, unpatch_file_operations
-    
+    from aoc_cli.moat_authority import set_allowed_roots, unpatch_file_operations, validate_path_containment
+
     allowed = tmp_path / "allowed"
     allowed.mkdir()
-    
+
     set_allowed_roots([allowed])
     try:
         # Should not raise
@@ -72,13 +72,18 @@ def test_validate_path_containment_success(tmp_path: Path) -> None:
 
 
 def test_validate_path_containment_failure(tmp_path: Path) -> None:
-    from aoc_cli.moat_authority import set_allowed_roots, validate_path_containment, unpatch_file_operations, MoatContainmentError
-    
+    from aoc_cli.moat_authority import (
+        MoatContainmentError,
+        set_allowed_roots,
+        unpatch_file_operations,
+        validate_path_containment,
+    )
+
     allowed = tmp_path / "allowed"
     allowed.mkdir()
     other = tmp_path / "other"
     other.mkdir()
-    
+
     set_allowed_roots([allowed])
     try:
         with pytest.raises(MoatContainmentError):
@@ -91,55 +96,56 @@ def test_validate_path_containment_failure(tmp_path: Path) -> None:
 
 def test_intercept_open_success(tmp_path: Path) -> None:
     from aoc_cli.moat_authority import patch_file_operations, unpatch_file_operations
-    
+
     allowed = tmp_path / "allowed"
     allowed.mkdir()
     file_path = allowed / "test.txt"
-    
+
     patch_file_operations([allowed])
     try:
         # Open for writing should succeed
         with open(file_path, "w", encoding="utf-8") as f:
             f.write("hello")
-        
+
         # Open for reading should succeed
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             assert f.read() == "hello"
     finally:
         unpatch_file_operations()
 
 
 def test_intercept_open_failure(tmp_path: Path) -> None:
-    from aoc_cli.moat_authority import patch_file_operations, unpatch_file_operations, MoatContainmentError
-    
+    from aoc_cli.moat_authority import MoatContainmentError, patch_file_operations, unpatch_file_operations
+
     allowed = tmp_path / "allowed"
     allowed.mkdir()
     other = tmp_path / "other"
     other.mkdir()
     forbidden_file = other / "secret.txt"
-    
+
     patch_file_operations([allowed])
     try:
-        with pytest.raises(MoatContainmentError):
-            open(forbidden_file, "w")
+        with pytest.raises(MoatContainmentError), open(forbidden_file, "w"):
+            pass
     finally:
         unpatch_file_operations()
 
 
 def test_intercept_subprocess_failure(tmp_path: Path) -> None:
-    from aoc_cli.moat_authority import patch_file_operations, unpatch_file_operations, MoatContainmentError
     import subprocess
-    
+
+    from aoc_cli.moat_authority import MoatContainmentError, patch_file_operations, unpatch_file_operations
+
     allowed = tmp_path / "allowed"
     allowed.mkdir()
     other = tmp_path / "other"
     other.mkdir()
-    
+
     patch_file_operations([allowed])
     try:
         with pytest.raises(MoatContainmentError):
             subprocess.run(["cat", str(other / "secret.txt")], capture_output=True)
-            
+
         with pytest.raises(MoatContainmentError):
             subprocess.Popen(["ls", str(other)])
     finally:

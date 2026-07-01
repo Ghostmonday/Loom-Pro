@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from aoc_supervisor.repo_paths import PLACEHOLDER_HTML_PATH, SANDBOX_PAGES, FRONTEND_DIR
+from aoc_supervisor.repo_paths import PLACEHOLDER_HTML_PATH
 from aoc_supervisor.ui_intent import UiIntentDriver, load_ui_intent_map
 
 
@@ -189,6 +189,7 @@ def test_advance_phase_api_reblueprints_without_stub(mock_grid_client, monkeypat
     store._active[session_id] = session_root
 
     import aoc_supervisor.api as api
+
     monkeypatch.setitem(
         api._session_store.advance_phase.__globals__,
         "_run_blueprint_pipeline",
