@@ -6,6 +6,8 @@ from aoc_cli.resolution_v3.model import LABEL_TYPE_DOMAIN, Locus, Modality, Stat
 
 
 def validation_errors(cg) -> list[str]:
+    # VALIDATION IS OBSERVATIONAL: never repair, infer, or mutate graph state here.
+    # A stable invalid graph is reported as STUCK by the engine, not ENGINE_FAULT.
     errors: list[str] = []
 
     if cg.growth_debt():
@@ -24,6 +26,7 @@ def validation_errors(cg) -> list[str]:
             errors.append(f"active edge {edge.u}->{edge.v} '{edge.label}' has missing source '{edge.u}'")
         if edge.v not in cg.nodes:
             errors.append(f"active edge {edge.u}->{edge.v} '{edge.label}' has missing target '{edge.v}'")
+        # B2 preserves internal FORBID obligations; validation makes them visible.
         if edge.u == edge.v and edge.modality == Modality.FORBID:
             errors.append(f"internal FORBID constraint remains on '{edge.u}' for label '{edge.label}'")
 
@@ -32,12 +35,15 @@ def validation_errors(cg) -> list[str]:
         errors.append(f"rejected nodes remain in topology: {rejected}")
 
     for node_id, node in sorted(cg.nodes.items()):
+        # KNOWN means fully resolved: both type and layer are mandatory.
         if node.status == Status.KNOWN:
             if node.type is None:
                 errors.append(f"known node '{node_id}' lacks resolved type")
             if node.layer is None:
                 errors.append(f"known node '{node_id}' lacks resolved layer")
         if node.status == Status.LATENT_UNRESOLVED and not node.domain:
+            # Preserve the distinction between schema absence and a contradiction
+            # among fully declared incoming target domains.
             undeclared = sorted(
                 {
                     edge.label
@@ -54,6 +60,7 @@ def validation_errors(cg) -> list[str]:
         if not edge.active or edge.label not in LABEL_TYPE_DOMAIN or edge.v not in cg.nodes:
             continue
         target = cg.nodes[edge.v]
+        # DIRECTIONAL SEMANTICS: declared labels constrain the KNOWN target type.
         if target.status == Status.KNOWN and target.type not in LABEL_TYPE_DOMAIN[edge.label]:
             errors.append(
                 f"active edge {edge.u}->{edge.v} label '{edge.label}' targets '{edge.v}' "
@@ -80,9 +87,11 @@ def is_valid(cg) -> bool:
 
 
 def is_stable(cg, engine) -> bool:
+    # STABILITY IS A DRY RUN: applicable_rule must remain side-effect free.
     loci = [Locus.node(node_id) for node_id in sorted(cg.nodes)]
     loci.extend(Locus.edge(index) for index in range(len(cg.edges)))
     for locus in loci:
         if engine.applicable_rule(locus) is not None:
             return False
+    # B2 is global, so SCC applicability must be checked separately.
     return not cg.find_violating_sccs()

@@ -23,9 +23,13 @@ class Engine:
         self.injected_fault = injected_fault
 
     def applicable_rule(self, locus: Locus):
+        # CONTRACT: rule checks are dry reads. Stability calls this path and
+        # therefore depends on every check_* function remaining side-effect free.
         return applicable_rule(self.cg, locus)
 
     def run(self, max_steps: int = 200) -> dict:
+        # DETERMINISM: seed the initial frontier canonically; never inherit dict
+        # insertion order for nodes. Edge indices are the graph's stable handles.
         for node_id in sorted(self.cg.nodes):
             self.worklist.push(Locus.node(node_id), NORMAL)
         for index in range(len(self.cg.edges)):
@@ -34,6 +38,8 @@ class Engine:
         step = 0
         trace = []
 
+        # FAULT BOUNDARY: even the initial potential calculation is untrusted.
+        # A raw exception must become a deterministic ENGINE_FAULT payload.
         try:
             psi_previous = self.cg.psi()
             trace.append((0, psi_previous))
@@ -55,12 +61,17 @@ class Engine:
                         continue
                     kind, payload = match
                     self._apply_local_rule(kind, payload)
+                # B2 is a global fallback and may run only after the local
+                # worklist drains; otherwise it can pre-empt local rule priority.
                 elif not apply_b2(self.cg, self.worklist):
                     break
 
                 step += 1
                 psi_new = self.cg.psi()
 
+                # TERMINATION PROOF: every applied rewrite must strictly lower
+                # the existing lexicographic Psi tuple. Do not weaken this check
+                # or patch Psi automatically to accommodate a new rule.
                 fault = self.injected_fault and step == 2
                 if fault or not (psi_new < psi_previous):
                     suffix = " [INJECTED]" if fault else ""
@@ -85,6 +96,10 @@ class Engine:
         valid = self.cg.is_valid()
         stable = self.cg.is_stable(self)
 
+        # STATUS CONTRACT:
+        # - CANONICAL: stable and valid.
+        # - STUCK: stable but invalid/unresolved input.
+        # - ENGINE_FAULT: instability or an internal contract failure.
         if valid and stable:
             status = EngineStatus.CANONICAL
         elif stable:
@@ -109,6 +124,8 @@ class Engine:
             raise RuntimeError(f"unknown rule kind: {kind}")
 
     def _report(self, status, steps: int, trace, valid=None, stable=None, fault_detail: str | None = None) -> dict:
+        # REPORTING MUST NOT MASK THE ORIGINAL FAILURE. Stability is best-effort
+        # here because this method is also used from exception paths.
         if stable is None:
             try:
                 stable = self.cg.is_stable(self)

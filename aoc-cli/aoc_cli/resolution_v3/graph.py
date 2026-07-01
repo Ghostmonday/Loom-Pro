@@ -14,6 +14,8 @@ if TYPE_CHECKING:
 class ConstraintGraph:
     def __init__(self) -> None:
         self.nodes: dict[str, Node] = {}
+        # Edge-array indices are stable handles used by loci and the watch index.
+        # Deactivate or rewire edges in place; do not compact this list mid-run.
         self.edges: list[Edge] = []
         self.log: list[str] = []
         self.watch = WatchIndex(self)
@@ -32,6 +34,8 @@ class ConstraintGraph:
     def active_edges(self) -> list[Edge]:
         return [edge for edge in self.edges if edge.active]
 
+    # These methods are thin graph-facing adapters. Local imports avoid module
+    # cycles without duplicating potential, validation, or stability semantics.
     def growth_debt(self) -> int:
         from aoc_cli.resolution_v3.potential import growth_debt
 
@@ -78,6 +82,7 @@ class ConstraintGraph:
         return is_stable(self, engine)
 
     def allocate_composite_id(self, members: list[str]) -> str:
+        # Members arrive sorted from B2, making the base ID deterministic.
         base = "WELD[" + "|".join(members) + "]"
         candidate = base
         suffix = 2

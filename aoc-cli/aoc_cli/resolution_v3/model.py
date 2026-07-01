@@ -37,6 +37,8 @@ class LocusKind(Enum):
 
 @dataclass(frozen=True)
 class Locus:
+    # Typed loci keep node identifiers such as "edge:0" distinct from edge
+    # indices. Never replace this with string-prefix parsing.
     kind: LocusKind
     identity: str | int
 
@@ -49,6 +51,7 @@ class Locus:
         return Locus(LocusKind.EDGE, index)
 
     def sort_key(self) -> tuple[int, str]:
+        # Nodes sort before edges; identity is stringified only for ordering.
         kind_order = 0 if self.kind == LocusKind.NODE else 1
         return (kind_order, str(self.identity))
 
@@ -74,6 +77,8 @@ class Edge:
     active: bool = True
 
 
+# SCHEMA AUTHORITY: each declared edge label constrains the type of target v.
+# Unknown labels remain explicit schema errors rather than unconstrained edges.
 LABEL_TYPE_DOMAIN: dict[str, set[str]] = {
     "writes_to": {"log_sink"},
     "calls": {"service"},
@@ -81,4 +86,5 @@ LABEL_TYPE_DOMAIN: dict[str, set[str]] = {
     "flushes_to": {"service", "log_sink"},
 }
 
+# Cycles are forbidden only inside the induced directed subgraph of these layers.
 ACYCLIC_LAYERS = {1}

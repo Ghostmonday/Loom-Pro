@@ -14,6 +14,7 @@ class _TargetDomain:
     undeclared_labels: tuple[str, ...]
 
 
+# PURE MATCHER: check_* functions are dry applicability queries used by stability.
 def check_a1(cg, locus: Locus):
     if locus.kind != LocusKind.EDGE:
         return None
@@ -40,6 +41,7 @@ def check_b1(cg, locus: Locus):
     if not (required.active and required.modality == Modality.REQ):
         return None
 
+    # Stable edge-index ordering prevents set iteration from selecting the clash.
     candidates = cg.watch.edges_touching(required.u) & cg.watch.edges_touching(required.v)
     for candidate_index in sorted(candidates):
         forbidden = cg.edges[candidate_index]
@@ -55,11 +57,15 @@ def check_b1(cg, locus: Locus):
 
 
 def applicable_rule(cg, locus: Locus):
+    # Rule priority is semantic: A1, then singleton instantiation, then B1.
     return check_a1(cg, locus) or check_a2_d1(cg, locus) or check_b1(cg, locus)
 
 
 def apply_a1(cg, worklist, edge) -> None:
+    # Aggregate atomically: a separate refinement rewrite would not lower Psi.
     target_domain = _aggregate_target_domain(cg, edge.v)
+
+    # Always materialize the target so growth debt falls, including STUCK cases.
     cg.add_node(Node(id=edge.v, status=Status.LATENT_UNRESOLVED, domain=target_domain.domain))
 
     if target_domain.undeclared_labels:
@@ -76,6 +82,7 @@ def apply_a1(cg, worklist, edge) -> None:
 
 
 def apply_a2_d1(cg, worklist, node) -> None:
+    # Only a singleton domain may become KNOWN; ambiguity is never guessed away.
     node.type = next(iter(node.domain))
     node.layer = 1
     node.status = Status.KNOWN
@@ -90,6 +97,7 @@ def apply_a2_d1(cg, worklist, node) -> None:
 
 def apply_b1(cg, worklist, required, forbidden) -> None:
     del forbidden
+    # Priority rule 5: FORBID remains active; deactivate only the matching REQ.
     required.active = False
     cg.log.append(
         f"[B1] clash on {required.u}->{required.v} '{required.label}' "
@@ -100,10 +108,12 @@ def apply_b1(cg, worklist, required, forbidden) -> None:
 
 
 def apply_b2(cg, worklist) -> bool:
+    # B2 consumes only SCCs already proven to violate an acyclic layer.
     violating = cg.find_violating_sccs()
     if not violating:
         return False
 
+    # One canonical SCC per rewrite keeps strict descent independently checkable.
     scc = violating[0]
     members = sorted(scc)
 
@@ -120,6 +130,7 @@ def apply_b2(cg, worklist) -> bool:
     external_out_req = any(
         edge.active and edge.modality == Modality.REQ and edge.u in scc and edge.v not in scc for edge in cg.edges
     )
+    # Preserve member authority flags across the weld.
     inherited_root = any(cg.nodes[member].root_permitted for member in members)
     inherited_sink = any(cg.nodes[member].sink_permitted for member in members)
 
@@ -135,6 +146,7 @@ def apply_b2(cg, worklist) -> bool:
         if changed:
             touched_indices.add(index)
 
+    # Absorb internal REQ only. PARTIAL and FORBID obligations remain visible.
     for index in touched_indices:
         edge = cg.edges[index]
         if edge.active and edge.u == composite_id and edge.v == composite_id and edge.modality == Modality.REQ:
@@ -154,6 +166,7 @@ def apply_b2(cg, worklist) -> bool:
         )
     )
 
+    # Endpoint rewrites invalidate the watch index before affected loci are used.
     cg.watch.rebuild()
     cg.log.append(f"[B2] welded SCC {members} (size={len(members)}) into '{composite_id}'")
 
@@ -185,15 +198,18 @@ def _remove_singleton_self_loop(cg, worklist, node_id: str) -> None:
 
 
 def _aggregate_target_domain(cg, target_id: str) -> _TargetDomain:
+    # Labels constrain target v. Only active incoming REQ edges participate.
     incoming = sorted(
         (
             (edge.u, edge.v, edge.label, index, edge)
             for index, edge in enumerate(cg.edges)
             if edge.active and edge.modality == Modality.REQ and edge.v == target_id
         ),
+        # Semantic fields lead; edge index is only the deterministic tie-breaker.
         key=lambda item: (item[0], item[1], item[2], item[3]),
     )
 
+    # Undeclared schema is distinct from contradictory declared domains.
     undeclared = sorted({edge.label for *_, edge in incoming if edge.label not in LABEL_TYPE_DOMAIN})
     if undeclared:
         return _TargetDomain(domain=set(), undeclared_labels=tuple(undeclared))
@@ -207,6 +223,7 @@ def _aggregate_target_domain(cg, target_id: str) -> _TargetDomain:
 
 
 def _requeue_target_closure(cg, worklist, target_id: str) -> None:
+    # Minimum closure: target enables A2/D1; touching edges may expose B1.
     worklist.push(Locus.node(target_id), NORMAL)
     for index, edge in enumerate(cg.edges):
         if edge.active and (edge.u == target_id or edge.v == target_id):
