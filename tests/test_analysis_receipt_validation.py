@@ -2,7 +2,7 @@
 
 import pytest
 
-from aoc_supervisor.aoc_supervisor.analysis_receipts import validate_receipt
+from aoc_supervisor.analysis_receipts import validate_receipt
 
 
 @pytest.fixture
