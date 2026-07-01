@@ -436,6 +436,200 @@ class UiIntentDriver:
         self.mirror.executable_projection = dict(data.get("executable_projection") or {})
         return data
 
+    def _dispatch_forge_intake_start_session(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        prompt = str(payload.get("prompt", payload.get("intent", "")))
+        tier = str(payload.get("tier", "paid"))
+        body = {"prompt": prompt, "tier": tier}
+        response = self.client.post(
+            "/api/v1/intent-forge/sessions",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge start_session failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_id = str(data.get("session_id", ""))
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", 1))
+        self.last_forge_action = "intake.start_session"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.current_question = dict(data.get("current_question") or {})
+        self.mirror.readiness = self._mirror_readiness(data)
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
+    def _dispatch_forge_question_submit_answer(self, sid: str, payload: Mapping[str, Any]) -> dict[str, Any]:
+        answer = str(payload.get("answer", ""))
+        question_id = str(payload.get("question_id", ""))
+        body = {
+            "answer": answer,
+            "question_id": question_id,
+            "idempotency_key": f"c02-{sid[-8:]}-{self.forge_blueprint_version}",
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/answers",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge submit_answer failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "question.submit_answer"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.current_question = dict(data.get("current_question") or {})
+        self.mirror.readiness = self._mirror_readiness(data)
+        return data
+
+    def _dispatch_forge_handoff_confirm(self, sid: str, payload: Mapping[str, Any]) -> dict[str, Any]:
+        confirmation = str(payload.get("confirmation", "Proceed"))
+        body = {
+            "action": "confirm",
+            "confirmation": confirmation,
+            "idempotency_key": "c02-confirm-" + sid[-8:],
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/handoff",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge confirm_handoff failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "handoff.confirm"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.artifact = dict(data.get("artifact") or {})
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
+    def _dispatch_forge_handoff_accept(self, sid: str) -> dict[str, Any]:
+        body = {
+            "action": "accept",
+            "idempotency_key": "c02-accept-" + sid[-8:],
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/handoff",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge accept_handoff failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "handoff.accept"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.readiness = self._mirror_readiness(data)
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
+    def _dispatch_forge_intake_start_session(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        prompt = str(payload.get("prompt", payload.get("intent", "")))
+        tier = str(payload.get("tier", "paid"))
+        body = {"prompt": prompt, "tier": tier}
+        response = self.client.post(
+            "/api/v1/intent-forge/sessions",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge start_session failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_id = str(data.get("session_id", ""))
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", 1))
+        self.last_forge_action = "intake.start_session"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.current_question = dict(data.get("current_question") or {})
+        self.mirror.readiness = self._mirror_readiness(data)
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
+    def _dispatch_forge_question_submit_answer(self, sid: str, payload: Mapping[str, Any]) -> dict[str, Any]:
+        answer = str(payload.get("answer", ""))
+        question_id = str(payload.get("question_id", ""))
+        body = {
+            "answer": answer,
+            "question_id": question_id,
+            "idempotency_key": f"c02-{sid[-8:]}-{self.forge_blueprint_version}",
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/answers",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge submit_answer failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "question.submit_answer"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.current_question = dict(data.get("current_question") or {})
+        self.mirror.readiness = self._mirror_readiness(data)
+        return data
+
+    def _dispatch_forge_handoff_confirm(self, sid: str, payload: Mapping[str, Any]) -> dict[str, Any]:
+        confirmation = str(payload.get("confirmation", "Proceed"))
+        body = {
+            "action": "confirm",
+            "confirmation": confirmation,
+            "idempotency_key": "c02-confirm-" + sid[-8:],
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/handoff",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge confirm_handoff failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "handoff.confirm"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.artifact = dict(data.get("artifact") or {})
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
+    def _dispatch_forge_handoff_accept(self, sid: str) -> dict[str, Any]:
+        body = {
+            "action": "accept",
+            "idempotency_key": "c02-accept-" + sid[-8:],
+            "expected_blueprint_version": self.forge_blueprint_version,
+        }
+        response = self.client.post(
+            f"/api/v1/intent-forge/sessions/{sid}/handoff",
+            json=body,
+            headers=self.headers,
+        )
+        if response.status_code >= 400:
+            raise RuntimeError(f"forge accept_handoff failed {response.status_code}: {response.text}")
+        data = response.json()
+        self.forge_session_status = str(data.get("session_status", ""))
+        self.forge_blueprint_version = int(data.get("blueprint_version", self.forge_blueprint_version))
+        self.last_forge_action = "handoff.accept"
+        self.mirror.session_status = self.forge_session_status
+        self.mirror.intent_forge = dict(data)
+        self.mirror.readiness = self._mirror_readiness(data)
+        self.mirror.executable_projection = dict(data.get("executable_projection") or {})
+        return data
+
     def dispatch_loom_forge_action(
         self,
         action: str,
