@@ -39,7 +39,8 @@
       sessionStatus: "CREATED",
       blueprintVersion: 0,
       currentQuestionId: null,
-      answers: []
+      answers: [],
+      latestSession: null
     };
     return window.LoomIntentForgeState;
   }
@@ -68,6 +69,7 @@
   }
   function render(data) {
     var s = state();
+    s.latestSession = data;
     if (data.session_id) s.sessionId = data.session_id;
     if (data.session_status) s.sessionStatus = data.session_status;
     if (typeof data.blueprint_version === "number") s.blueprintVersion = data.blueprint_version;
@@ -91,6 +93,7 @@
     var gate = $("readiness-gate");
     if (gate) gate.dataset.canHandoff = readiness.ready_to_finalize || data.session_status === "FINAL_CONFIRMATION" ? "true" : "false";
     renderUnderstanding(data);
+    renderClaimsLedger(data);
     syncButtons();
   }
   function updateStageLocks(data) {
@@ -128,6 +131,68 @@
       var qid = item.question_id || item.id || ("answer-" + index);
       li.innerHTML = '<button class="text-primary mr-2" data-revise-question-id="' + qid + '">Revise</button>' + answer;
       list.appendChild(li);
+    });
+  }
+  function text(value) {
+    return String(value == null ? "" : value);
+  }
+  function html(value) {
+    return text(value).replace(/[&<>"']/g, function (ch) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[ch];
+    });
+  }
+  function setText(id, value) {
+    var el = $(id);
+    if (el) el.textContent = value;
+  }
+  function gate(id, passed) {
+    var el = $(id);
+    if (!el) return;
+    el.textContent = passed ? "check_circle" : "radio_button_unchecked";
+    el.classList.toggle("text-secondary", !!passed);
+    el.classList.toggle("text-on-surface-variant", !passed);
+  }
+  function renderClaimsLedger(data) {
+    var rows = $("claims-ledger-rows");
+    if (!rows) return;
+    var ledger = data && data.claims_ledger ? data.claims_ledger : {};
+    var claims = Array.isArray(ledger.claims) ? ledger.claims : [];
+    var gates = ledger.promotion_gates || {};
+    setText("claims-ledger-status", claims.length ? "Session evidence loaded" : "Awaiting session evidence");
+    setText("claims-ledger-evidence-count", ledger.evidence_packet_count || 0);
+    setText("claims-ledger-evidence-note", claims.length ? "Evidence packets are session-backed." : "No Intent Forge session loaded.");
+    setText("claims-ledger-promoted-count", ledger.promoted_count || 0);
+    setText("claims-ledger-contradiction-count", ledger.contradiction_count || 0);
+    setText("claims-ledger-contradiction-note", ledger.contradiction_count ? "Blocking contradictions require resolution." : "No real conflicts detected.");
+    setText("claims-ledger-influence-state", gates.blueprint_influence_available ? "Open" : "Locked");
+    setText("claims-ledger-influence-note", gates.blueprint_influence_available ? "Promoted claims can inform projection." : "Only verified claims may cross.");
+    gate("claims-gate-evidence", gates.evidence_packet_received);
+    gate("claims-gate-extracted", gates.claims_extracted_with_provenance);
+    gate("claims-gate-contradictions", gates.contradictions_resolved_or_blocked);
+    gate("claims-gate-influence", gates.blueprint_influence_available);
+
+    var empty = $("claims-ledger-empty");
+    rows.classList.toggle("hidden", !claims.length);
+    if (empty) empty.classList.toggle("hidden", !!claims.length);
+    rows.innerHTML = "";
+    claims.forEach(function (claim) {
+      var row = document.createElement("div");
+      row.className = "grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-gutter px-stack-lg py-stack-md items-center";
+      var status = text(claim.promotion_status || "blocked");
+      row.innerHTML =
+        '<span class="font-body-sm text-body-sm text-on-surface">' + html(claim.text) + '</span>' +
+        '<span class="font-mono-precision text-mono-precision text-on-surface-variant">' + html((claim.evidence_refs && claim.evidence_refs[0] && claim.evidence_refs[0].source_kind) || "evidence") + '</span>' +
+        '<span class="font-mono-precision text-mono-precision text-on-surface-variant">' + html(claim.kind || "claim") + '</span>' +
+        '<span><span class="px-2 py-0.5 rounded text-[10px] font-mono-precision uppercase ' +
+        (status === "promoted" ? 'bg-secondary/10 text-secondary border border-secondary/30' : 'bg-tertiary/10 text-tertiary border border-tertiary/30') +
+        '">' + html(status) + '</span></span>';
+      rows.appendChild(row);
     });
   }
   function syncButtons() {
@@ -226,5 +291,8 @@
     window.LoomIntentForgeDriver = { mode: explicitMockEnabled() ? "mock" : "api", real: realDriver, mock: mockDriver };
   }
   document.addEventListener("workspace-loaded", function (event) { if (event.detail.id === "intent-forge") initIntentForge(); });
+  document.addEventListener("workspace-loaded", function (event) {
+    if (event.detail.id === "claims-ledger") renderClaimsLedger(state().latestSession || {});
+  });
   if (document.readyState !== "loading") initIntentForge(); else document.addEventListener("DOMContentLoaded", initIntentForge);
 })();

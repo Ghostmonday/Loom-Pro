@@ -99,6 +99,11 @@ def _merge_projection_context(
 ) -> dict[str, Any]:
     artifact = artifact if isinstance(artifact, dict) else {}
     session_state = session_state if isinstance(session_state, dict) else {}
+    claims_ledger = session_state.get("claims_ledger")
+    if not isinstance(claims_ledger, dict):
+        claims_ledger = artifact.get("claims_ledger")
+    if not isinstance(claims_ledger, dict):
+        claims_ledger = {}
     return {
         "product_definition": artifact.get("product_definition") or session_state.get("original_prompt", ""),
         "confirmed_requirements": session_state.get("confirmed_requirements")
@@ -110,6 +115,7 @@ def _merge_projection_context(
         "domain_coverage": session_state.get("domain_coverage") or artifact.get("domain_coverage") or {},
         "assumptions": artifact.get("assumptions") or session_state.get("assumptions") or [],
         "risks": artifact.get("risks") or session_state.get("risks") or [],
+        "claims_ledger": claims_ledger,
     }
 
 
@@ -146,6 +152,13 @@ def _build_projection_corpus(intent: str, context: dict[str, Any]) -> str:
     for decision in context.get("decisions", []):
         if isinstance(decision, dict) and not decision.get("superseded"):
             text = str(decision.get("text", "")).strip()
+            if text:
+                parts.append(text)
+    ledger = context.get("claims_ledger")
+    promoted = ledger.get("promoted_claims", []) if isinstance(ledger, dict) else []
+    for claim in promoted:
+        if isinstance(claim, dict):
+            text = str(claim.get("text", "")).strip()
             if text:
                 parts.append(text)
     return " ".join(part for part in parts if part)
@@ -207,6 +220,18 @@ def _domain_requirement_notes(context: dict[str, Any]) -> dict[str, list[str]]:
         if not domain or not answer:
             continue
         notes.setdefault(domain, []).append(answer)
+    ledger = context.get("claims_ledger")
+    promoted = ledger.get("promoted_claims", []) if isinstance(ledger, dict) else []
+    for claim in promoted:
+        if not isinstance(claim, dict):
+            continue
+        domain = str(claim.get("domain", "")).strip()
+        text = str(claim.get("text", "")).strip()
+        if not domain or not text:
+            continue
+        bucket = notes.setdefault(domain, [])
+        if text not in bucket:
+            bucket.append(text)
     return notes
 
 

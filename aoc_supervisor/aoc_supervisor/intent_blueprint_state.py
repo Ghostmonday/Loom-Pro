@@ -155,8 +155,11 @@ def normalize_blueprint_state(state: dict[str, Any]) -> dict[str, Any]:
 
 def public_session_view(state: dict[str, Any]) -> dict[str, Any]:
     """Safe API projection without internal idempotency bookkeeping."""
+    from aoc_supervisor.claims_ledger import build_claim_ledger
+
     payload = deepcopy(normalize_blueprint_state(state))
     payload.pop("processed_idempotency_keys", None)
+    payload["claims_ledger"] = build_claim_ledger(payload)
     return payload
 
 

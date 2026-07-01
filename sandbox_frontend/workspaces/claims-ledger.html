@@ -10,30 +10,30 @@
       </p>
     </div>
     <div class="rounded-xl border border-outline-variant/30 bg-white/5 px-stack-lg py-stack-md">
-      <span class="font-label-caps text-label-caps text-on-surface-variant">Awaiting session evidence</span>
+      <span id="claims-ledger-status" class="font-label-caps text-label-caps text-on-surface-variant">Awaiting session evidence</span>
     </div>
   </section>
 
   <section class="grid gap-stack-md lg:grid-cols-4">
     <div class="glass-panel rounded-xl p-stack-lg">
       <div class="inspector-label">Evidence packets</div>
-      <div class="text-[2rem] font-bold text-on-surface mt-stack-sm">0</div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">No Intent Forge session loaded.</p>
+      <div id="claims-ledger-evidence-count" class="text-[2rem] font-bold text-on-surface mt-stack-sm">0</div>
+      <p id="claims-ledger-evidence-note" class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">No Intent Forge session loaded.</p>
     </div>
     <div class="glass-panel rounded-xl p-stack-lg">
       <div class="inspector-label">Verified claims</div>
-      <div class="text-[2rem] font-bold text-primary mt-stack-sm">0</div>
+      <div id="claims-ledger-promoted-count" class="text-[2rem] font-bold text-primary mt-stack-sm">0</div>
       <p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">Claims require provenance.</p>
     </div>
     <div class="glass-panel rounded-xl p-stack-lg">
       <div class="inspector-label">Contradictions</div>
-      <div class="text-[2rem] font-bold text-tertiary mt-stack-sm">0</div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">No real conflicts detected.</p>
+      <div id="claims-ledger-contradiction-count" class="text-[2rem] font-bold text-tertiary mt-stack-sm">0</div>
+      <p id="claims-ledger-contradiction-note" class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">No real conflicts detected.</p>
     </div>
     <div class="glass-panel rounded-xl p-stack-lg">
       <div class="inspector-label">Blueprint influence</div>
-      <div class="text-[2rem] font-bold text-secondary mt-stack-sm">Locked</div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">Only verified claims may cross.</p>
+      <div id="claims-ledger-influence-state" class="text-[2rem] font-bold text-secondary mt-stack-sm">Locked</div>
+      <p id="claims-ledger-influence-note" class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">Only verified claims may cross.</p>
     </div>
   </section>
 
@@ -51,13 +51,14 @@
         <span>Authority</span>
         <span>Status</span>
       </div>
-      <div class="min-h-[300px] flex flex-col items-center justify-center text-center px-container-margin py-[56px]">
+      <div id="claims-ledger-empty" class="min-h-[300px] flex flex-col items-center justify-center text-center px-container-margin py-[56px]">
         <span class="material-symbols-outlined text-primary/70 text-[42px] mb-stack-md">fact_check</span>
         <h3 class="font-title-md text-title-md text-on-surface">No session-backed claims yet</h3>
         <p class="max-w-xl font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">
           The ledger is ready to show extracted claims, their source packets, contradiction state, and promotion status as soon as a real session emits them.
         </p>
       </div>
+      <div id="claims-ledger-rows" class="hidden divide-y divide-outline-variant/20"></div>
     </div>
 
     <div class="space-y-stack-lg">
@@ -65,19 +66,19 @@
         <h2 class="font-title-md text-title-md text-on-surface">Promotion Gates</h2>
         <div class="mt-stack-lg space-y-stack-md">
           <div class="flex items-center gap-stack-md">
-            <span class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
+            <span id="claims-gate-evidence" class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
             <span class="font-body-sm text-body-sm text-on-surface">Evidence packet received</span>
           </div>
           <div class="flex items-center gap-stack-md">
-            <span class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
+            <span id="claims-gate-extracted" class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
             <span class="font-body-sm text-body-sm text-on-surface">Claim extracted with provenance</span>
           </div>
           <div class="flex items-center gap-stack-md">
-            <span class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
+            <span id="claims-gate-contradictions" class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
             <span class="font-body-sm text-body-sm text-on-surface">Contradictions resolved or blocked</span>
           </div>
           <div class="flex items-center gap-stack-md">
-            <span class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
+            <span id="claims-gate-influence" class="material-symbols-outlined text-on-surface-variant">radio_button_unchecked</span>
             <span class="font-body-sm text-body-sm text-on-surface">Blueprint influence approved</span>
           </div>
         </div>

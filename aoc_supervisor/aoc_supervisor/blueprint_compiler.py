@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from aoc_supervisor.claims_ledger import build_claim_ledger
 from aoc_supervisor.intent_blueprint_state import REQUIRED_DOMAINS
 from aoc_supervisor.workstream_planner import project_executable_blueprint
 
@@ -60,6 +61,7 @@ def validate_blueprint_state(state: dict[str, Any], *, finalize: bool = False) -
 
 def compile_rich_artifact(state: dict[str, Any], *, provisional: bool = False) -> dict[str, Any]:
     intent = str(state.get("original_prompt", "")).strip()
+    claims_ledger = build_claim_ledger(state)
     return {
         "schema_version": 1,
         "provisional": provisional,
@@ -77,6 +79,7 @@ def compile_rich_artifact(state: dict[str, Any], *, provisional: bool = False) -
         "domain_coverage": state.get("domain_coverage", {}),
         "confidence_by_domain": state.get("confidence_by_domain", {}),
         "dependency_graph": state.get("blueprint_graph", {}),
+        "claims_ledger": claims_ledger,
         "forced_finalization": state.get("forced_finalization"),
         "validation": {
             "status": "provisional" if provisional else "complete",
@@ -88,4 +91,8 @@ def compile_rich_artifact(state: dict[str, Any], *, provisional: bool = False) -
 def compile_executable_projection(state: dict[str, Any]) -> dict[str, Any]:
     artifact = state.get("artifact") if isinstance(state.get("artifact"), dict) else None
     intent = str(state.get("original_prompt", "")).strip()
-    return project_executable_blueprint(intent=intent, artifact=artifact, session_state=state)
+    return project_executable_blueprint(
+        intent=intent,
+        artifact=artifact,
+        session_state={**state, "claims_ledger": build_claim_ledger(state)},
+    )
