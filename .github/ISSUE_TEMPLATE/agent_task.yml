@@ -1,0 +1,78 @@
+name: Agent task
+description: Assign a bounded task to Codex, DeepSeek, or another agent worktree.
+title: "[agent] "
+labels:
+  - agent-task
+body:
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Agent owner
+      options:
+        - Codex
+        - DeepSeek
+        - Copilot
+        - Human
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: worktree
+    attributes:
+      label: Worktree path
+      placeholder: /home/ghostmonday/Desktop/Loom-codex
+    validations:
+      required: true
+  - type: input
+    id: branch
+    attributes:
+      label: Branch
+      placeholder: codex/example-task
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: State the concrete deliverable.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Allowed scope
+      description: List files, directories, or modules the agent may touch.
+    validations:
+      required: true
+  - type: textarea
+    id: forbidden
+    attributes:
+      label: Do not touch
+      description: List files, directories, invariants, or behaviors that must remain unchanged.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Required verification
+      description: Include exact test, lint, format, and git checks expected before merge.
+      value: |
+        - git status --short --branch
+        - git diff --check
+        - ruff check / format check as applicable
+        - targeted tests:
+        - full suite:
+    validations:
+      required: true
+  - type: textarea
+    id: stop_conditions
+    attributes:
+      label: Stop conditions
+      description: Conditions where the agent must stop and report instead of continuing.
+      value: |
+        - wrong worktree or branch
+        - unexpected dirty files
+        - invariant violation
+        - test failure after one focused retry
+    validations:
+      required: true
