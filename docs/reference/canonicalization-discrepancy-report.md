@@ -21,7 +21,7 @@
 | `aoc_supervisor/aoc_supervisor/routers/static_ui.py` | canonical runtime authority | Static UI and contract routes. |
 | `aoc_supervisor/aoc_supervisor/repo_paths.py` | canonical runtime authority | Single path map for UI contracts and sandbox frontend. |
 | `ui/*.json` intent maps | canonical contract authority | Intent, workflow, UX, and contract maps. |
-| `ui/*.html` | inactive duplicate | Not served by `repo_paths.py`/`static_ui.py`; preserved for now, guarded against resurrection. |
+| `ui/*.html` | **removed** (2026-07-01) | Legacy HTML deleted; contracts stay in `ui/*.json`. Runtime is `sandbox_frontend/` only. |
 | `sandbox_frontend/` | canonical frontend runtime | Served shell, pages, shared assets, fragments. |
 | `loom-frontend-base/frontend-formation/` | canonical compiler authority | Active compiler/schema/validator/generator tree. |
 | `loom-frontend-base/examples/loom-source/` | canonical generated-input authority | Declarative source for generated screens. |

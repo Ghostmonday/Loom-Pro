@@ -1,52 +1,37 @@
-# Gaijinn UI contracts
+# Loom UI contracts
 
-Implementation was removed for a clean rebuild. **Contracts below are the source of truth** for the new frontend.
+**JSON only.** Runtime HTML/CSS/JS is served from `sandbox_frontend/` (see `aoc_supervisor/repo_paths.py`).
 
-## Retained build contracts
+## Contract files (source of truth)
 
 | File | Role |
 |------|------|
-| `gaijinn-ui-intent-map.json` | Primary surface: phases, elements, API actions, smoke scenarios |
+| `loom-ui-intent-map.json` | Primary surface: phases, elements, API actions, smoke scenarios |
+| `loom-system-intent-map.json` | Master journey, layers, LOOM tickets |
+| `loom-pipeline-intent-map.json` | Headless backend pipeline + mirror smoke scenarios |
+| `loom-intent-forge-intent-map.json` | Vision canvas / adaptive interrogation |
 | `command-engine-ui-intent-map.json` | Command engine stepper and controls |
 | `process-stage-ux-map.json` | Unified workflow steps across surfaces |
 | `blueprint-ui.json` | Neural-draft / internal UI blueprint linkage |
 | `experience-policy.json` | Deny-by-default capabilities, redaction, aggregation |
-| `orchestration-event.schema.json` | Canonical SSE/WebSocket event envelope |
-| `orchestration-snapshot.schema.json` | Reconnect/recovery projection |
-| `orchestration-visual-grammar.json` | Truthful visual semantics for assembly panel |
+| `orchestration-*.schema.json` | SSE/WebSocket event + snapshot contracts |
 
-Vault overlay: `vaults/gaijinn-memory-fs/ui/vault-ui-intent-map.json`
+Legacy `ui/*.html` pages were removed; do not re-add HTML here.
 
 ## Dev server
 
 ```bash
-cd /path/to/gaijinn && .venv/bin/pip install -e ".[api]"
+cd /home/ghostmonday/Desktop/Loom
+.venv/bin/pip install -e ".[api]"
 .venv/bin/uvicorn aoc_supervisor.api:app --reload --port 8080
-# http://127.0.0.1:8080/          — rebuild placeholder
-# http://127.0.0.1:8080/ui/contracts/gaijinn-ui-intent-map.json
+# http://127.0.0.1:8080/  — sandbox_frontend shell
 ```
 
 ## Verify without a browser
 
 ```bash
-./scripts/dev/ui-intent-smoke.sh
-./scripts/ci/algorithm-wiring.sh
-./scripts/ci/validate-orchestration-schemas.sh
+export PYTHONPATH="aoc-cli:aoc_supervisor:${PYTHONPATH}"
+.venv/bin/python -m pytest tests/test_loom_ui_contract.py tests/test_canonical_authority_registry.py -q --no-cov
 ```
 
-Paths are resolved from `aoc_supervisor.repo_paths`. API mirror tests use `UiIntentDriver` against the intent map — no HTML required.
-
-`algorithm-wiring.sh` runs `tests/test_algorithm_wiring.py` with production-like provider config (HTTP reasoning URL set; `GAIJINN_FAKE_REASONING` and `GAIJINN_MOCK_GRID` unset). Intent map `_ai_blueprint.verification.non_production_flags` documents those test-only env vars.
-
-### Reasoning provider env (API startup)
-
-Production interrogation uses the HTTP reasoning boundary wired in `aoc_supervisor.api` lifespan:
-
-| Variable | Default | Purpose |
-|----------|---------|---------|
-| `GAIJINN_REASONING_PROVIDER` | `http` | Provider kind (`http` in production) |
-| `GAIJINN_REASONING_URL` | *(required for prod)* | POST endpoint that accepts `{ "snapshot": ... }` and returns analysis JSON |
-| `GAIJINN_REASONING_TIMEOUT` | `60` | Request timeout in seconds |
-| `GAIJINN_FAKE_REASONING` | unset | Set to `1` for deterministic offline interrogation (tests/local only) |
-
-Do not set `GAIJINN_FAKE_REASONING=1` in production. Provider failures surface `analysis_recovery` retry state — there is no silent fallback to canned questions.
+Paths resolve from `aoc_supervisor.repo_paths`. Mirror tests use `UiIntentDriver` against intent maps.

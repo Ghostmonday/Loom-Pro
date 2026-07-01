@@ -38,6 +38,9 @@ htmlcov/
 !vaults/**/.agents/vault.yaml
 !vaults/**/.agents/codex-deepseek.toml.example
 
+# Sandbox markdown exports (HTML is canonical)
+sandbox_frontend/*.md
+
 # Local logs and scratch
 *.log
 error.log

@@ -3,14 +3,14 @@
   "blueprint_version": 2,
   "lifecycle_state": "graph_constructed",
   "derived_from": [
-    { "source": "ui/index.html", "type": "source_code", "claims_extracted": 12 },
-    { "source": "ui/project-hub.html", "type": "source_code", "claims_extracted": 15 },
-    { "source": "ui/claims-ledger.html", "type": "source_code", "claims_extracted": 8 },
-    { "source": "ui/topological-observatory.html", "type": "source_code", "claims_extracted": 9 },
-    { "source": "ui/curvature-analysis.html", "type": "source_code", "claims_extracted": 10 },
-    { "source": "ui/blueprint-ratification.html", "type": "source_code", "claims_extracted": 8 },
-    { "source": "ui/packet-export.html", "type": "source_code", "claims_extracted": 11 },
-    { "source": "ui/intent-forge.html", "type": "source_code", "claims_extracted": 9 }
+    { "source": "sandbox_frontend/index.html", "type": "source_code", "claims_extracted": 12 },
+    { "source": "sandbox_frontend/workspaces/hub.html", "type": "source_code", "claims_extracted": 15 },
+    { "source": "sandbox_frontend/claims-ledger.html", "type": "source_code", "claims_extracted": 8 },
+    { "source": "sandbox_frontend/topological-observatory.html", "type": "source_code", "claims_extracted": 9 },
+    { "source": "sandbox_frontend/curvature-analysis.html", "type": "source_code", "claims_extracted": 10 },
+    { "source": "sandbox_frontend/blueprint-ratification.html", "type": "source_code", "claims_extracted": 8 },
+    { "source": "sandbox_frontend/packet-export.html", "type": "source_code", "claims_extracted": 11 },
+    { "source": "sandbox_frontend/workspaces/intent-forge.html", "type": "source_code", "claims_extracted": 9 }
   ],
   "nodes": [
     {
@@ -18,56 +18,56 @@
       "kind": "transport",
       "status": "observed",
       "purpose": "Shared application layout container, sidebar navigation links, background canvas, and dynamic viewport routing controller",
-      "derived_from": ["ui/index.html"]
+      "derived_from": ["sandbox_frontend/index.html"]
     },
     {
       "id": "view.project-hub",
       "kind": "transport",
       "status": "observed",
       "purpose": "Dashboard landing page rendering recent projects, global system health, recent workbench activity feed, and metrics overview",
-      "derived_from": ["ui/project-hub.html"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html"]
     },
     {
       "id": "view.claims-ledger",
       "kind": "transport",
       "status": "observed",
       "purpose": "Ledger interface display rendering inferred requirements, user-confirmed invariants, and claims auto-reconciliation triggers",
-      "derived_from": ["ui/claims-ledger.html"]
+      "derived_from": ["sandbox_frontend/claims-ledger.html"]
     },
     {
       "id": "view.topological-observatory",
       "kind": "transport",
       "status": "observed",
       "purpose": "Geometric visualizer page rendering interactive SVGs of nodes, edges, and dependencies with telemetry details inspector",
-      "derived_from": ["ui/topological-observatory.html"]
+      "derived_from": ["sandbox_frontend/topological-observatory.html"]
     },
     {
       "id": "view.curvature-analysis",
       "kind": "transport",
       "status": "observed",
       "purpose": "Cohesion and bridge geometry slider control workspace displaying live telemetry snapshots and boundary quality scoring",
-      "derived_from": ["ui/curvature-analysis.html"]
+      "derived_from": ["sandbox_frontend/curvature-analysis.html"]
     },
     {
       "id": "view.blueprint-ratification",
       "kind": "transport",
       "status": "observed",
       "purpose": "Purchase and ratification gate view containing dynamic worker-to-cost quote calculations and phase-model selections",
-      "derived_from": ["ui/blueprint-ratification.html"]
+      "derived_from": ["sandbox_frontend/blueprint-ratification.html"]
     },
     {
       "id": "view.packet-export",
       "kind": "transport",
       "status": "observed",
       "purpose": "Swarm compilation cockpit, allowed/forbidden directory filters, real-time log terminal output, and deliverable packager",
-      "derived_from": ["ui/packet-export.html"]
+      "derived_from": ["sandbox_frontend/packet-export.html"]
     },
     {
       "id": "view.intent-forge",
       "kind": "transport",
       "status": "observed",
       "purpose": "Adaptive interrogation chatbot console wizard for requirement clarification and sequence validation",
-      "derived_from": ["ui/intent-forge.html"]
+      "derived_from": ["sandbox_frontend/workspaces/intent-forge.html"]
     },
 
     {
@@ -75,63 +75,63 @@
       "kind": "action",
       "status": "observed",
       "purpose": "Primary action card to load an existing blueprint package from local file storage",
-      "derived_from": ["ui/project-hub.html#L216-L224"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L216-L224"]
     },
     {
       "id": "control.hub.import_repo",
       "kind": "action",
       "status": "observed",
       "purpose": "Quick action card to parse project code repositories via git",
-      "derived_from": ["ui/project-hub.html#L225-L233"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L225-L233"]
     },
     {
       "id": "control.hub.create_manifold",
       "kind": "action",
       "status": "observed",
       "purpose": "Quick action card to build canvas from custom intent entries",
-      "derived_from": ["ui/project-hub.html#L234-L242"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L234-L242"]
     },
     {
       "id": "control.hub.resume_work",
       "kind": "action",
       "status": "observed",
       "purpose": "Quick action card to restore and jump into the latest active session",
-      "derived_from": ["ui/project-hub.html#L243-L251"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L243-L251"]
     },
     {
       "id": "display.hub.recent_projects",
       "kind": "data",
       "status": "observed",
       "purpose": "Dynamic list containing cards of recently modified blueprint maps and metrics",
-      "derived_from": ["ui/project-hub.html#L257-L316"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L257-L316"]
     },
     {
       "id": "display.hub.activity_feed",
       "kind": "data",
       "status": "observed",
       "purpose": "Recent events log monitoring curvature auto-corrections, claims, and build merges",
-      "derived_from": ["ui/project-hub.html#L317-L355"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L317-L355"]
     },
     {
       "id": "display.hub.drift_deviation",
       "kind": "data",
       "status": "observed",
       "purpose": "Glow-accented critical metrics card displaying architectural drift percentage",
-      "derived_from": ["ui/project-hub.html#L358-L372"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L358-L372"]
     },
     {
       "id": "display.hub.ratification_list",
       "kind": "data",
       "status": "observed",
       "purpose": "Items list tracking structural drafts waiting for manual ratification approval",
-      "derived_from": ["ui/project-hub.html#L373-L401"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L373-L401"]
     },
     {
       "id": "display.hub.module_health",
       "kind": "data",
       "status": "observed",
       "purpose": "Status grid displaying health values for Forge, Engine, and Sentinel modules",
-      "derived_from": ["ui/project-hub.html#L402-L429"]
+      "derived_from": ["sandbox_frontend/workspaces/hub.html#L402-L429"]
     },
 
     {
@@ -139,21 +139,21 @@
       "kind": "data",
       "status": "observed",
       "purpose": "Table displaying requirements inferred by adaptive questioning",
-      "derived_from": ["ui/claims-ledger.html"]
+      "derived_from": ["sandbox_frontend/claims-ledger.html"]
     },
     {
       "id": "display.claims.confirmed",
       "kind": "data",
       "status": "observed",
       "purpose": "Table displaying user-validated requirements and invariants",
-      "derived_from": ["ui/claims-ledger.html"]
+      "derived_from": ["sandbox_frontend/claims-ledger.html"]
     },
     {
       "id": "control.claims.reconcile",
       "kind": "action",
       "status": "observed",
       "purpose": "Reconciliation button triggering client-side claims resolution payload",
-      "derived_from": ["ui/claims-ledger.html"]
+      "derived_from": ["sandbox_frontend/claims-ledger.html"]
     },
 
     {
@@ -161,21 +161,21 @@
       "kind": "data",
       "status": "observed",
       "purpose": "SVG canvas rendering node groups and linking lines using coordinates from WebSocket updates",
-      "derived_from": ["ui/topological-observatory.html"]
+      "derived_from": ["sandbox_frontend/topological-observatory.html"]
     },
     {
       "id": "display.observatory.node_inspector",
       "kind": "data",
       "status": "observed",
       "purpose": "Detail drawer displaying properties, kinds, and status of selected nodes",
-      "derived_from": ["ui/topological-observatory.html"]
+      "derived_from": ["sandbox_frontend/topological-observatory.html"]
     },
     {
       "id": "control.observatory.telemetry_stream",
       "kind": "action",
       "status": "observed",
       "purpose": "WebSocket client listening to incoming real-time telemetry coordinates",
-      "derived_from": ["ui/topological-observatory.html"]
+      "derived_from": ["sandbox_frontend/topological-observatory.html"]
     },
 
     {
@@ -183,21 +183,21 @@
       "kind": "action",
       "status": "observed",
       "purpose": "Slider control input mapping changes to OVERRIDE_SYSTEM_INVARIANT",
-      "derived_from": ["ui/curvature-analysis.html"]
+      "derived_from": ["sandbox_frontend/curvature-analysis.html"]
     },
     {
       "id": "control.curvature.bridge_slider",
       "kind": "action",
       "status": "observed",
       "purpose": "Slider control input mapping changes to MUTATE_GEOMETRY_STRATEGY",
-      "derived_from": ["ui/curvature-analysis.html"]
+      "derived_from": ["sandbox_frontend/curvature-analysis.html"]
     },
     {
       "id": "display.curvature.telemetry_snapshot",
       "kind": "data",
       "status": "observed",
       "purpose": "Table displaying computed curvature percentiles and density attributes",
-      "derived_from": ["ui/curvature-analysis.html"]
+      "derived_from": ["sandbox_frontend/curvature-analysis.html"]
     },
 
     {
@@ -205,14 +205,14 @@
       "kind": "action",
       "status": "observed",
       "purpose": "Worker count selection trigger recalculating blueprint purchase quote",
-      "derived_from": ["ui/blueprint-ratification.html"]
+      "derived_from": ["sandbox_frontend/blueprint-ratification.html"]
     },
     {
       "id": "control.ratify.approve",
       "kind": "action",
       "status": "observed",
       "purpose": "Ratify button completing the purchase gate of the compiled blueprint",
-      "derived_from": ["ui/blueprint-ratification.html"]
+      "derived_from": ["sandbox_frontend/blueprint-ratification.html"]
     },
 
     {
@@ -220,28 +220,28 @@
       "kind": "action",
       "status": "observed",
       "purpose": "File filter checkboxes modifying visibility of allowed directories in tree",
-      "derived_from": ["ui/packet-export.html"]
+      "derived_from": ["sandbox_frontend/packet-export.html"]
     },
     {
       "id": "control.packets.spawn",
       "kind": "action",
       "status": "observed",
       "purpose": "Spawn Swarm button initiating parallel agent tasks in sandbox",
-      "derived_from": ["ui/packet-export.html"]
+      "derived_from": ["sandbox_frontend/packet-export.html"]
     },
     {
       "id": "display.packets.log_console",
       "kind": "data",
       "status": "observed",
       "purpose": "Log terminal panel rendering streaming output files from spawn stdout",
-      "derived_from": ["ui/packet-export.html"]
+      "derived_from": ["sandbox_frontend/packet-export.html"]
     },
     {
       "id": "display.packets.download_links",
       "kind": "data",
       "status": "observed",
       "purpose": "Action container displaying deliverable package downloads",
-      "derived_from": ["ui/packet-export.html"]
+      "derived_from": ["sandbox_frontend/packet-export.html"]
     },
 
     {
@@ -249,14 +249,14 @@
       "kind": "action",
       "status": "observed",
       "purpose": "Textarea input capturing user vision prompts and forwarding to intent-forge",
-      "derived_from": ["ui/intent-forge.html"]
+      "derived_from": ["sandbox_frontend/workspaces/intent-forge.html"]
     },
     {
       "id": "display.forge.chat_messages",
       "kind": "data",
       "status": "observed",
       "purpose": "Interactive message list displaying wizard interrogation dialogue",
-      "derived_from": ["ui/intent-forge.html"]
+      "derived_from": ["sandbox_frontend/workspaces/intent-forge.html"]
     }
   ],
   "edges": [

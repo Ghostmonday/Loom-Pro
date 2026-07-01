@@ -1,6 +1,6 @@
 # Loom full dev automation — work queue
 
-**Last reconciled:** 2026-07-01
+**Last reconciled:** 2026-07-01 (clean-room sweep on `cleanup/composer-parallel-sweep`)
 **For:** Director (gate) · Claw X-OPS + Codex (execution after green light)  
 **Session start:** `docs/operations/clawx-session-start.md` ← **read every time**
 
