@@ -493,7 +493,10 @@ def _process_is_running(entry: Mapping[str, Any]) -> bool:
         return False
     # Handle both subprocess.Popen and asyncio.subprocess.Process
     poll = getattr(proc, "poll", None)
-    exit_code = poll() if callable(poll) else getattr(proc, "returncode", None)
+    if callable(poll):
+        exit_code = poll()
+    else:
+        exit_code = getattr(proc, "returncode", None)
     if exit_code is None:
         return True
     status = str(entry.get("status", ""))

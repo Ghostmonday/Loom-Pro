@@ -166,6 +166,61 @@ patch_file(path,
 
 # 5. api.py
 path = "aoc_supervisor/aoc_supervisor/api.py"
+patch_file(path, "import shutil", "import shutil\nimport shlex")
+
+patch_file(path,
+    r"def _spawn_worker_command\(.*?\) -> list\[str\]:.*?full_prompt,?\s*\]",
+    r"""def _spawn_worker_command(
+    *,
+    worker_name: str,
+    worker_dir: Path,
+    full_prompt: str,
+    model: str,
+    has_assigned_work: bool = True,
+) -> list[str]:
+    mock_grid = os.environ.get("GAIJINN_MOCK_GRID", "").strip().lower() in {"1", "true", "yes", "on"}
+    if mock_grid:
+        if not has_assigned_work:
+            script = f"echo [{shlex.quote(worker_name)}] standby — no work assigned"
+            return ["bash", "-c", script]
+        script = (
+            f"echo === MOCK GRID: {shlex.quote(worker_name)} ===; "
+            "for step in 1 2 3 4 5; do "
+            f"echo \"[{shlex.quote(worker_name)}] working step $step\"; "
+            "sleep 0.4; "
+            "done; "
+            f"echo \"[{shlex.quote(worker_name)}] build PASS\";"
+        )
+        return ["bash", "-c", script]
+
+    codex_bin = shutil.which("codex") or "codex"
+    last_message = worker_dir / "codex-last-message.txt"
+    return [
+        codex_bin,
+        "exec",
+        "-C",
+        str(worker_dir.resolve()),
+        "-s",
+        "workspace-write",
+        "--output-last-message",
+        str(last_message),
+        "--",
+        full_prompt,
+    ]""",
+    flags=re.DOTALL
+)
+
+patch_file(path,
+    r"hermes_cmd: list\[str\] = \[\"hermes\"\].*?hermes_cmd\.extend\(\[\"-z\", prompt\]\)",
+    r"""hermes_bin = shutil.which("hermes") or "hermes"
+    hermes_cmd: list[str] = [hermes_bin]
+    if hermes_model:
+        hermes_cmd.extend(["-m", hermes_model])
+    hermes_cmd.extend(["--", "-z", prompt])""",
+    flags=re.DOTALL
+)
+
+path = "aoc_supervisor/aoc_supervisor/api.py"
 patch_file(path,
     r"def _worker_runtime_status\(.*?return \"failed\", exit_code",
     r"""def _worker_runtime_status(

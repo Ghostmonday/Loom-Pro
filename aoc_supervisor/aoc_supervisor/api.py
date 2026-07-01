@@ -12,6 +12,7 @@ import json
 import os
 import queue
 import shutil
+import shlex
 import subprocess
 import tempfile
 import threading
@@ -623,7 +624,10 @@ def _worker_runtime_status(
 
     # Handle both subprocess.Popen and asyncio.subprocess.Process
     poll = getattr(proc, "poll", None)
-    exit_code = poll() if callable(poll) else getattr(proc, "returncode", None)
+    if callable(poll):
+        exit_code = poll()
+    else:
+        exit_code = getattr(proc, "returncode", None)
 
     if exit_code is None:
         return "running", None
@@ -799,21 +803,22 @@ def _spawn_worker_command(
     mock_grid = os.environ.get("GAIJINN_MOCK_GRID", "").strip().lower() in {"1", "true", "yes", "on"}
     if mock_grid:
         if not has_assigned_work:
-            script = f"echo '[{worker_name}] standby — no work assigned';"
+            script = f"echo [{shlex.quote(worker_name)}] standby — no work assigned"
             return ["bash", "-c", script]
         script = (
-            f"echo '=== MOCK GRID: {worker_name} ==='; "
+            f"echo === MOCK GRID: {shlex.quote(worker_name)} ===; "
             "for step in 1 2 3 4 5; do "
-            f'echo "[{worker_name}] working step $step"; '
+            f"echo \"[{shlex.quote(worker_name)}] working step $step\"; "
             "sleep 0.4; "
             "done; "
-            f"echo '[{worker_name}] build PASS';"
+            f"echo \"[{shlex.quote(worker_name)}] build PASS\";"
         )
         return ["bash", "-c", script]
 
+    codex_bin = shutil.which("codex") or "codex"
     last_message = worker_dir / "codex-last-message.txt"
     return [
-        "codex",
+        codex_bin,
         "exec",
         "-C",
         str(worker_dir.resolve()),
@@ -821,6 +826,7 @@ def _spawn_worker_command(
         "workspace-write",
         "--output-last-message",
         str(last_message),
+        "--",
         full_prompt,
     ]
 
@@ -2411,10 +2417,11 @@ async def hermes_chat(request: Request) -> dict[str, Any]:
     )
 
     hermes_model = os.environ.get("HERMES_DEFAULT_MODEL", "").strip()
-    hermes_cmd: list[str] = ["hermes"]
+    hermes_bin = shutil.which("hermes") or "hermes"
+    hermes_cmd: list[str] = [hermes_bin]
     if hermes_model:
         hermes_cmd.extend(["-m", hermes_model])
-    hermes_cmd.extend(["-z", prompt])
+    hermes_cmd.extend(["--", "-z", prompt])
 
     try:
         proc = await asyncio.create_subprocess_exec(
@@ -2727,6 +2734,7 @@ async def grid_spawn(request: Request) -> dict[str, Any]:
                 lf.write("=" * 60 + "\n\n")
 
             if mock_grid:
+                if mock_grid:
                 with log_path.open("a", encoding="utf-8") as stdout_file:
                     proc = popen_worker_process(
                         cmd,

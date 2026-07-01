@@ -718,6 +718,53 @@ def _refine_grouped_blocks(
     return refined
 
 
+def _convex_hull_welding_threshold() -> int:
+    return int(os.environ.get("GAIJINN_CONVEX_HULL_THRESHOLD", "12"))
+
+
+def _refine_grouped_blocks(
+    grouped: dict[tuple[str, str, str], list[str]], graph: Mapping[str, Any]
+) -> list[tuple[tuple[str, str, str], list[str]]]:
+    \"\"\"Prevent Cascading Convex Hull Over-Welding by capping parallel group sizes while preserving cycles.\"\"\"
+    import networkx as nx
+
+    refined: list[tuple[tuple[str, str, str], list[str]]] = []
+    threshold = _convex_hull_welding_threshold()
+
+    # Build a dependency graph of only the files in the current group
+    group_edges = []
+    for raw_edge in graph.get("edges", []):
+        source, target = _edge_pair(raw_edge)
+        if source and target:
+            group_edges.append((source, target))
+
+    for key, paths in sorted(grouped.items()):
+        if len(paths) <= threshold:
+            refined.append((key, paths))
+            continue
+
+        # Find Strongly Connected Components (SCCs) to avoid slicing cycles
+        sub_g = nx.DiGraph()
+        sub_g.add_nodes_from(paths)
+        sub_g.add_edges_from([(s, t) for s, t in group_edges if s in paths and t in paths])
+
+        # Deterministic SCC order: sort by the first node in each component
+        sccs_raw = list(nx.strongly_connected_components(sub_g))
+        sccs = sorted([sorted(list(scc)) for scc in sccs_raw], key=lambda x: x[0])
+
+        current_chunk = []
+        for scc in sccs:
+            if len(current_chunk) + len(scc) > threshold and current_chunk:
+                refined.append((key, current_chunk))
+                current_chunk = list(scc)
+            else:
+                current_chunk.extend(scc)
+
+        if current_chunk:
+            refined.append((key, current_chunk))
+    return refined
+
+
 def _group_work_unit(
     index: int,
     directory: str,
