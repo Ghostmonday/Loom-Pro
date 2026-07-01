@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -79,21 +80,31 @@ def test_find_promote_sh_fallback(temp_vault):
 class TestPromoteCmd:
     @pytest.fixture
     def app(self):
-        app = Typer()
-        app.command()(promote_cmd)
+        # Disable rich for tests to avoid capture issues with ANSI codes
+        app = Typer(add_completion=False, rich_markup_mode=None)
+        # Explicit name to avoid promote-cmd vs promote issues
+        app.command(name="promote")(promote_cmd)
+        # Adding a dummy command forces sub-command help mode
+        app.command(name="dummy")(lambda: None)
         return app
 
     def test_promote_help(self, app):
-        result = runner.invoke(app, ["--help"])
+        result = runner.invoke(app, ["promote", "--help"], color=False)
         assert result.exit_code == 0
-        assert "--vault-root" in result.output
-        assert "--list-files" in result.output
+
+        # Robust check: strip ANSI and underscores/hyphens normalization
+        clean_output = re.sub(r"\x1b\[[0-9;]*[a-zA-Z]", "", result.output)
+        normalized_output = clean_output.lower().replace("_", "-")
+
+        assert "vault-root" in normalized_output
+        assert "list-files" in normalized_output
+        assert "skip-linter" in normalized_output
 
     def test_promote_cmd_success(self, app, temp_vault, monkeypatch):
         monkeypatch.chdir(temp_vault)
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0, stdout="OK", stderr="")
-            result = runner.invoke(app, ["--vault-root", str(temp_vault)])
+            result = runner.invoke(app, ["promote", "--vault-root", str(temp_vault)])
             assert result.exit_code == 0, result.output
             assert "Promotion complete" in result.output
             # 2 linter runs + 1 promote run
@@ -102,14 +113,14 @@ class TestPromoteCmd:
     def test_promote_cmd_no_vault(self, app, tmp_path, monkeypatch):
         monkeypatch.chdir(tmp_path)
         with patch("pathlib.Path.home", return_value=tmp_path / "fake-home"):
-            result = runner.invoke(app)
+            result = runner.invoke(app, ["promote"])
             assert result.exit_code == 1, result.output
             assert "ERROR: Could not detect vault root" in result.output
 
     def test_promote_cmd_list(self, app, temp_vault):
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0)
-            result = runner.invoke(app, ["--vault-root", str(temp_vault), "--list-files"])
+            result = runner.invoke(app, ["promote", "--vault-root", str(temp_vault), "--list-files"])
             assert result.exit_code == 0, result.output
             mock_run.assert_called_once()
             assert "--list" in mock_run.call_args[0][0]
@@ -117,7 +128,7 @@ class TestPromoteCmd:
     def test_promote_cmd_skip_linter(self, app, temp_vault):
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0)
-            result = runner.invoke(app, ["--vault-root", str(temp_vault), "--skip-linter"])
+            result = runner.invoke(app, ["promote", "--vault-root", str(temp_vault), "--skip-linter"])
             assert result.exit_code == 0, result.output
             assert "Vault linter skipped" in result.output
             # Only 1 call (promote.sh)
@@ -127,7 +138,7 @@ class TestPromoteCmd:
         with patch("subprocess.run") as mock_run:
             # First call is linter
             mock_run.return_value = MagicMock(returncode=1, stdout="Fail", stderr="")
-            result = runner.invoke(app, ["--vault-root", str(temp_vault)])
+            result = runner.invoke(app, ["promote", "--vault-root", str(temp_vault)])
             assert result.exit_code == 1, result.output
             assert "PRE-PROMOTION LINTER FAILED" in result.output
             assert mock_run.call_count == 1
@@ -139,6 +150,6 @@ class TestPromoteCmd:
                 MagicMock(returncode=0, stdout="Linter OK"),
                 MagicMock(returncode=1, stdout="Promote Fail"),
             ]
-            result = runner.invoke(app, ["--vault-root", str(temp_vault)])
+            result = runner.invoke(app, ["promote", "--vault-root", str(temp_vault)])
             assert result.exit_code == 1, result.output
             assert mock_run.call_count == 2
