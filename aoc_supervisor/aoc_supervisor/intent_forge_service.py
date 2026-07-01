@@ -88,9 +88,24 @@ class IntentForgeService:
         domain: str,
         conflict_resolution: bool = False,
     ) -> None:
-        from aoc_supervisor.adaptive_question_engine import get_default_engine
-        from aoc_supervisor.reasoning_provider import ProviderFailureError
+        self._record_question_answer(state, question_id=question_id, answer=answer, domain=domain)
 
+        claim_ids = self._run_analysis_and_merge_claims(
+            state, question_id=question_id, answer=answer, domain=domain
+        )
+
+        self._update_domain_metrics_and_graph(state, answer=answer, domain=domain, claim_ids=claim_ids)
+
+        if conflict_resolution:
+            self._resolve_contradictions(state, answer=answer)
+
+        self._record_acceptance_decisions(state, answer=answer, domain=domain)
+
+        state["current_question"] = None
+
+    def _record_question_answer(
+        self, state: dict[str, Any], *, question_id: str, answer: str, domain: str
+    ) -> None:
         current_q = state.get("current_question") or {}
         entry = {
             "question_id": question_id,
@@ -101,12 +116,18 @@ class IntentForgeService:
         }
         state.setdefault("questions_and_answers", []).append(entry)
 
+    def _run_analysis_and_merge_claims(
+        self, state: dict[str, Any], *, question_id: str, answer: str, domain: str
+    ) -> list[str]:
+        from aoc_supervisor.adaptive_question_engine import get_default_engine
+        from aoc_supervisor.reasoning_provider import ProviderFailureError
+
         # C03: evidence reanalysis — run provider.analyze() before selecting next question.
         # Set ANALYZING during reanalysis so it appears in the analysis snapshot.
         prev_status = state.get("session_status", "")
         state["session_status"] = "ANALYZING"
 
-        _claim_ids: list[str] = []
+        claim_ids: list[str] = []
 
         try:
             engine = get_default_engine()
@@ -141,13 +162,13 @@ class IntentForgeService:
                             "domain": claim.get("domain", domain),
                         }
                     )
-                    _claim_ids.append(rid)
+                    claim_ids.append(rid)
 
         except ProviderFailureError:
             # Analysis unavailable — fall through to raw-append fallback
             pass
 
-        if not _claim_ids:
+        if not claim_ids:
             # Fallback: raw-append raw answer if analysis produced no claims or failed
             rid = new_element_id("REQ")
             state.setdefault("confirmed_requirements", []).append(
@@ -159,54 +180,64 @@ class IntentForgeService:
                     "domain": domain,
                 }
             )
-            _claim_ids.append(rid)
+            claim_ids.append(rid)
 
         state["session_status"] = prev_status
+        return claim_ids
 
+    def _update_domain_metrics_and_graph(
+        self, state: dict[str, Any], *, answer: str, domain: str, claim_ids: list[str]
+    ) -> None:
         coverage = state.setdefault("domain_coverage", {})
         if isinstance(coverage, dict):
             coverage.setdefault(domain, {"addressed": True, "na": False})
             coverage[domain]["addressed"] = True
+
         confidence = state.setdefault("confidence_by_domain", {})
         if isinstance(confidence, dict):
             confidence[domain] = min(1.0, float(confidence.get(domain, 0.0)) + 0.2)
+
         graph = state.setdefault("blueprint_graph", {"version": 0, "nodes": [], "edges": []})
         if isinstance(graph, dict):
             graph.setdefault("nodes", []).append(
                 {
-                    "id": _claim_ids[0],
+                    "id": claim_ids[0],
                     "label": answer.strip()[:80],
                     "kind": "requirement",
                     "domain": domain,
                     "confidence": confidence.get(domain, 0.8) if isinstance(confidence, dict) else 0.8,
                 }
             )
-        if conflict_resolution:
-            contradictions = state.get("contradictions", [])
-            active = next(
-                (item for item in contradictions if isinstance(item, dict) and not item.get("resolved")),
-                None,
-            )
-            for contradiction in state.get("contradictions", []):
-                if isinstance(contradiction, dict):
-                    contradiction["resolved"] = True
-                    contradiction["resolution_text"] = answer.strip()
-            if isinstance(active, dict):
-                for element_id in (active.get("element_a_id"), active.get("element_b_id")):
-                    eid = str(element_id or "")
-                    if not eid:
-                        continue
-                    for req in state.get("confirmed_requirements", []):
-                        if isinstance(req, dict) and str(req.get("id", "")) == eid:
-                            req["stale"] = True
-                    for dec in state.get("decisions", []):
-                        if isinstance(dec, dict) and str(dec.get("id", "")) == eid:
-                            dec["superseded"] = True
-                    graph = state.setdefault("blueprint_graph", {"version": 0, "nodes": [], "edges": []})
-                    if isinstance(graph, dict):
-                        for node in graph.get("nodes", []):
-                            if isinstance(node, dict) and str(node.get("id", "")) == eid:
-                                node["stale"] = True
+
+    def _resolve_contradictions(self, state: dict[str, Any], *, answer: str) -> None:
+        contradictions = state.get("contradictions", [])
+        active = next(
+            (item for item in contradictions if isinstance(item, dict) and not item.get("resolved")),
+            None,
+        )
+        for contradiction in state.get("contradictions", []):
+            if isinstance(contradiction, dict):
+                contradiction["resolved"] = True
+                contradiction["resolution_text"] = answer.strip()
+
+        if isinstance(active, dict):
+            for element_id in (active.get("element_a_id"), active.get("element_b_id")):
+                eid = str(element_id or "")
+                if not eid:
+                    continue
+                for req in state.get("confirmed_requirements", []):
+                    if isinstance(req, dict) and str(req.get("id", "")) == eid:
+                        req["stale"] = True
+                for dec in state.get("decisions", []):
+                    if isinstance(dec, dict) and str(dec.get("id", "")) == eid:
+                        dec["superseded"] = True
+                graph = state.setdefault("blueprint_graph", {"version": 0, "nodes": [], "edges": []})
+                if isinstance(graph, dict):
+                    for node in graph.get("nodes", []):
+                        if isinstance(node, dict) and str(node.get("id", "")) == eid:
+                            node["stale"] = True
+
+    def _record_acceptance_decisions(self, state: dict[str, Any], *, answer: str, domain: str) -> None:
         lowered = answer.strip().lower()
         if domain == "testing_acceptance" and "validation window" in lowered:
             state.setdefault("decisions", []).append(
@@ -216,7 +247,6 @@ class IntentForgeService:
                     "rationale": "acceptance_policy",
                 }
             )
-        state["current_question"] = None
 
     def _seed_free_tier(self, state: dict[str, Any]) -> None:
         intent = str(state.get("original_prompt", "")).strip()
