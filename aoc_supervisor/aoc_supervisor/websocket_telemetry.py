@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import hashlib
 import json
 import time
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -45,20 +45,20 @@ _loaded_schema: dict[str, Any] | None = None
 
 class SequenceViolationError(RuntimeError):
     """Raised when a sequence regression is detected."""
+
     pass
 
 
 class SchemaComplianceError(ValueError):
     """Raised when an outgoing message fails schema validation."""
+
     pass
 
 
 def _validate_sequence_invariant(session_id: str, seq: int) -> None:
     last_seq = _session_sequences.get(session_id)
     if last_seq is not None and seq <= last_seq:
-        raise SequenceViolationError(
-            f"Sequence regression: proposed {seq} <= last {last_seq} for session {session_id}"
-        )
+        raise SequenceViolationError(f"Sequence regression: proposed {seq} <= last {last_seq} for session {session_id}")
     _session_sequences[session_id] = seq
 
 
@@ -72,6 +72,7 @@ def _validate_outgoing(msg: dict[str, Any]) -> None:
             raise SchemaComplianceError(f"Could not load schema from {schema_path}: {e}")
 
     from jsonschema import Draft202012Validator
+
     validator = Draft202012Validator(_loaded_schema)
     errors = list(validator.iter_errors(msg))
     if errors:

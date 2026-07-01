@@ -693,10 +693,6 @@ def _dark_bridge_block_work_unit(
     )
 
 
-
-
-
-
 def _convex_hull_welding_threshold() -> int:
     return int(os.environ.get("GAIJINN_CONVEX_HULL_THRESHOLD", "12"))
 

@@ -1,7 +1,6 @@
 """Focused unit tests for analysis receipt validation."""
 
 import pytest
-
 from aoc_supervisor.analysis_receipts import validate_receipt
 
 

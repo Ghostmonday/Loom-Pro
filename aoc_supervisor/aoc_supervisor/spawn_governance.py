@@ -493,10 +493,7 @@ def _process_is_running(entry: Mapping[str, Any]) -> bool:
         return False
     # Handle both subprocess.Popen and asyncio.subprocess.Process
     poll = getattr(proc, "poll", None)
-    if callable(poll):
-        exit_code = poll()
-    else:
-        exit_code = getattr(proc, "returncode", None)
+    exit_code = poll() if callable(poll) else getattr(proc, "returncode", None)
     if exit_code is None:
         return True
     status = str(entry.get("status", ""))
@@ -660,8 +657,8 @@ def classify_sprint_terminal_status(sprint: Mapping[str, Any]) -> str:
 
 def popen_worker_process(*args: Any, **kwargs: Any):
     """Start a worker subprocess in its own POSIX session when supported."""
-    import subprocess
     import shutil
+    import subprocess
 
     if args and isinstance(args[0], (list, tuple)) and args[0]:
         executable = args[0][0]

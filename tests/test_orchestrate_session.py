@@ -334,6 +334,7 @@ def test_slim_prepare_reports_loom_synthesis_projection_mode(
     meta = json.loads((snapshot.project_root / ".gaijinn" / "session.json").read_text(encoding="utf-8"))
     assert meta["blueprint_mode"] == "loom_synthesis"
 
+
 def test_validate_loaded_context_success_no_requirements() -> None:
     from aoc_supervisor.orchestrate_session import validate_loaded_context
 
@@ -395,7 +396,9 @@ def test_validate_loaded_context_invalid_end_structure() -> None:
 def test_validate_loaded_context_missing_source_keys() -> None:
     from aoc_supervisor.orchestrate_session import validate_loaded_context
 
-    with pytest.raises(ValueError, match="loaded_context.backend must include prior_session_id, zip_path, or project_path"):
+    with pytest.raises(
+        ValueError, match="loaded_context.backend must include prior_session_id, zip_path, or project_path"
+    ):
         validate_loaded_context(("backend",), {"backend": {"other": "value"}})
 
 
@@ -407,15 +410,13 @@ def test_validate_loaded_context_non_existent_path() -> None:
 
 
 def test_validate_loaded_context_unknown_phase_fallback() -> None:
-    from aoc_supervisor.orchestrate_session import validate_loaded_context
-
     # unknown_phase is not in PHASE_LABELS, should fall back to name
     # We need to force a requirement to see the error message
     # _required_loaded_ends returns () for unknown combinations,
     # but we can try to test the label join logic if we can trigger an error.
-
     # Mocking _required_loaded_ends to return something for our unknown phase
     import aoc_supervisor.orchestrate_session as orchestrate
+    from aoc_supervisor.orchestrate_session import validate_loaded_context
 
     original = orchestrate._required_loaded_ends
     orchestrate._required_loaded_ends = lambda phases: ("backend",) if "unknown_phase" in phases else original(phases)

@@ -741,6 +741,7 @@ def test_full_vertical_slice(tmp_path: Path) -> None:
 # State Matrix Invariant Transition Tests
 # =========================================================================
 
+
 def test_allowed_state_transitions() -> None:
     from aoc_cli.state import validate_worker_state_transition
 
@@ -755,8 +756,8 @@ def test_allowed_state_transitions() -> None:
 
 
 def test_forbidden_state_hops() -> None:
-    from aoc_cli.state import validate_worker_state_transition
     from aoc_cli.errors import StateError
+    from aoc_cli.state import validate_worker_state_transition
 
     # Attempting to bypass execution loops must fail closed
     with pytest.raises(StateError, match="Illegal state jump attempted"):
@@ -777,8 +778,8 @@ def test_forbidden_state_hops() -> None:
 
 
 def test_transition_worker_state_mutations(tmp_path: Path) -> None:
-    from aoc_cli.state import transition_worker_state
     from aoc_cli.errors import StateError
+    from aoc_cli.state import transition_worker_state
 
     manifest_path = tmp_path / "manifest.json"
     manifest_path.write_text(
@@ -786,9 +787,7 @@ def test_transition_worker_state_mutations(tmp_path: Path) -> None:
             {
                 "schema_version": 1,
                 "workers": ["worker-001"],
-                "worker_details": [
-                    {"worker_id": "worker-001", "status": "spawning"}
-                ],
+                "worker_details": [{"worker_id": "worker-001", "status": "spawning"}],
             }
         ),
         encoding="utf-8",
@@ -802,4 +801,3 @@ def test_transition_worker_state_mutations(tmp_path: Path) -> None:
     # Illegal transition: executing -> merged
     with pytest.raises(StateError, match="Illegal state jump attempted"):
         transition_worker_state(manifest_path, "worker-001", "merged")
-

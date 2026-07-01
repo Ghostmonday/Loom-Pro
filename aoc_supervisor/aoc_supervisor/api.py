@@ -13,7 +13,6 @@ import os
 import queue
 import shlex
 import shutil
-import shlex
 import subprocess
 import tempfile
 import threading
@@ -239,7 +238,6 @@ async def _app_lifespan(_app: FastAPI):
         clear_spawn_runtime(ROOT_DIR)
         release_supervisor_lease(_supervisor_lease_handle)
         _supervisor_lease_handle = None
-
 
 
 ALLOWED_MODELS = {
@@ -633,10 +631,7 @@ def _worker_runtime_status(
 
     # Handle both subprocess.Popen and asyncio.subprocess.Process
     poll = getattr(proc, "poll", None)
-    if callable(poll):
-        exit_code = poll()
-    else:
-        exit_code = getattr(proc, "returncode", None)
+    exit_code = poll() if callable(poll) else getattr(proc, "returncode", None)
 
     if exit_code is None:
         return "running", None
@@ -827,6 +822,7 @@ def _spawn_worker_command(
         return [bash_exe, "-c", script]
 
     codex_exe = shutil.which("codex") or "codex"
+    resolved_worker_dir = worker_dir.resolve()
     last_message = worker_dir / "codex-last-message.txt"
     return [
         codex_exe,
@@ -2443,13 +2439,12 @@ async def hermes_chat(request: Request) -> dict[str, Any]:
     hermes_cmd.extend(["-z", "--", prompt])
 
     try:
-        # Ensure ROOT_DIR is absolute and resolved
         safe_cwd = ROOT_DIR.resolve()
         proc = await asyncio.create_subprocess_exec(
             *hermes_cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
-            cwd=str(ROOT_DIR.resolve()),
+            cwd=str(safe_cwd),
         )
         stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=180.0)
     except TimeoutError as exc:
@@ -2513,8 +2508,8 @@ async def grid_spawn(request: Request) -> dict[str, Any]:
     if model not in ALLOWED_MODELS:
         model = "grok-composer-2.5-fast"
     if model not in ALLOWED_MODELS:
-         # Fallback to default if not in allowlist to prevent argument injection/abuse
-         model = "grok-composer-2.5-fast"
+        # Fallback to default if not in allowlist to prevent argument injection/abuse
+        model = "grok-composer-2.5-fast"
 
     task = body.get("task", "")
     session_id = str(body.get("session_id", "")).strip()

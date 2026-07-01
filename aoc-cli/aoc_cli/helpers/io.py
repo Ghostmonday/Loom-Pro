@@ -6,6 +6,7 @@ import importlib
 import json
 import shutil
 from collections.abc import Mapping
+from contextlib import suppress
 from pathlib import Path
 from typing import Any
 
@@ -29,22 +30,16 @@ def migrate_persisted_state_paths() -> None:
     old_local = Path(".gaijinn")
     new_local = Path(".loom")
     if old_local.is_dir() and not new_local.exists():
-        try:
+        with suppress(OSError):
             shutil.copytree(old_local, new_local, dirs_exist_ok=True)
-            (new_local / "migration.receipt").write_text(
-                "MIGRATION_PASS_01: SUCCESS\n", encoding="utf-8"
-            )
-        except OSError:
-            pass  # Graceful fallback — read-only fs or test mock
+            (new_local / "migration.receipt").write_text("MIGRATION_PASS_01: SUCCESS\n", encoding="utf-8")
 
     # 2. Global-level user state
     old_global = Path.home() / ".gaijinn"
     new_global = Path.home() / ".loom"
     if old_global.is_dir() and not new_global.exists():
-        try:
+        with suppress(OSError):
             shutil.copytree(old_global, new_global, dirs_exist_ok=True)
-        except OSError:
-            pass
 
 
 # ── I/O helpers ────────────────────────────────────────────────────────

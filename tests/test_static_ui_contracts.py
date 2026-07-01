@@ -50,7 +50,7 @@ def test_shell_loads_fragment_and_real_driver_by_default() -> None:
     driver = SANDBOX_SHARED_FILES["intent-forge-driver.js"].read_text(encoding="utf-8")
     assert "shared/shell.js" in shell
     assert "shared/intent-forge-driver.js" in shell
-    assert 'currentWorkspace: null' in SANDBOX_SHARED_FILES["shell.js"].read_text(encoding="utf-8")
+    assert "currentWorkspace: null" in SANDBOX_SHARED_FILES["shell.js"].read_text(encoding="utf-8")
     assert 'return qs.get("loom_driver") === "mock"' in driver
     assert 'mode: explicitMockEnabled() ? "mock" : "api"' in driver
     assert 'var API_PREFIX = "/api/v1/intent-forge"' in driver

@@ -1,5 +1,8 @@
 import json
 
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse, JSONResponse
+
 from aoc_supervisor.repo_paths import (
     BLUEPRINT_UI_PATH,
     COMMAND_ENGINE_HTML_PATH,
@@ -23,8 +26,6 @@ from aoc_supervisor.repo_paths import (
     SANDBOX_WORKSPACE_FRAGMENTS,
     TERMINAL_JS_PATH,
 )
-from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse, JSONResponse
 
 router = APIRouter()
 

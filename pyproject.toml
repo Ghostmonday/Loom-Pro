@@ -72,8 +72,6 @@ line-length = 120
 target-version = "py310"
 exclude = [
     "vaults/gaijinn-memory-fs",
-    "apply_innovations.py",
-    "final_patch.py",
 ]
 
 [tool.ruff.lint]

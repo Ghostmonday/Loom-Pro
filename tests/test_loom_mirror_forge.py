@@ -172,6 +172,7 @@ def test_full_pipeline_mock(
         run_gaijinn(root, *args, **kwargs)
 
     import aoc_supervisor.api as api
+
     monkeypatch.setitem(api._session_store.advance_phase.__globals__, "_run_gaijinn", run_pipeline_command)
 
     intent_map = json.loads(LOOM_PIPELINE_INTENT_MAP_PATH.read_text(encoding="utf-8"))

@@ -227,6 +227,7 @@ def _commit_worker_edit(worker_dir: Path, *, message: str, edits: dict[str, str]
     _git(worker_dir, "commit", "-m", message, check=True)
     (worker_dir / "output.log").write_text("build PASS\n", encoding="utf-8")
     from aoc_cli.state import transition_worker_state
+
     manifest_path = worker_dir.parent / "manifest.json"
     transition_worker_state(manifest_path, worker_dir.name, "completed")
 

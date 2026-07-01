@@ -109,11 +109,7 @@ def _check_api_key(headers: Any, query_params: Any) -> None:
     if not expected_key:
         raise HTTPException(status_code=401, detail="Invalid or missing API key")
 
-    provided_key = (
-        headers.get("X-Loom-Api-Key")
-        or headers.get("X-Gaijinn-Api-Key")
-        or ""
-    ).strip()
+    provided_key = (headers.get("X-Loom-Api-Key") or headers.get("X-Gaijinn-Api-Key") or "").strip()
     if not provided_key:
         provided_key = query_params.get("api_key", "").strip()
 

@@ -158,9 +158,7 @@ class TestSchemaValidation:
         assert message.count("; ") <= 2
         assert "orchestration event failed schema validation: " in message
         assert (
-            "is a required property" in message
-            or "is less than the minimum" in message
-            or "not equal to 1" in message
+            "is a required property" in message or "is less than the minimum" in message or "not equal to 1" in message
         )
 
     def test_validator_none_returns_early(self, valid_event):

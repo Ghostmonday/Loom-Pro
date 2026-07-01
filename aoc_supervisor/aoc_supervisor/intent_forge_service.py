@@ -90,9 +90,7 @@ class IntentForgeService:
     ) -> None:
         self._record_question_answer(state, question_id=question_id, answer=answer, domain=domain)
 
-        claim_ids = self._run_analysis_and_merge_claims(
-            state, question_id=question_id, answer=answer, domain=domain
-        )
+        claim_ids = self._run_analysis_and_merge_claims(state, question_id=question_id, answer=answer, domain=domain)
 
         self._update_domain_metrics_and_graph(state, answer=answer, domain=domain, claim_ids=claim_ids)
 
@@ -103,9 +101,7 @@ class IntentForgeService:
 
         state["current_question"] = None
 
-    def _record_question_answer(
-        self, state: dict[str, Any], *, question_id: str, answer: str, domain: str
-    ) -> None:
+    def _record_question_answer(self, state: dict[str, Any], *, question_id: str, answer: str, domain: str) -> None:
         current_q = state.get("current_question") or {}
         entry = {
             "question_id": question_id,
@@ -512,7 +508,11 @@ class IntentForgeService:
                 session_id,
                 "intent.question.presented",
                 state,
-                {"question_id": q["question_id"], "domain": q.get("domain"), "text": q.get("text")},
+                {
+                    "question_id": revision_id,
+                    "domain": domain,
+                    "text": original.get("text"),
+                },
             )
 
         telemetry = export_optional_telemetry(state)

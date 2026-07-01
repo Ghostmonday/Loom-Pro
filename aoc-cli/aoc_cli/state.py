@@ -291,10 +291,31 @@ def _formal_keys() -> set[str]:
 
 
 VALID_TRANSITIONS = {
-    None: {"pending", "initialized", "created", "completed", "failed", "timed_out", "merged", "already_merged", "blocked", "conflicted"},
+    None: {
+        "pending",
+        "initialized",
+        "created",
+        "completed",
+        "failed",
+        "timed_out",
+        "merged",
+        "already_merged",
+        "blocked",
+        "conflicted",
+    },
     "pending": {"spawning", "executing", "merged", "already_merged", "blocked", "conflicted"},
     "initialized": {"spawning"},
-    "created": {"spawning", "executing", "completed", "failed", "timed_out", "merged", "already_merged", "blocked", "conflicted"},
+    "created": {
+        "spawning",
+        "executing",
+        "completed",
+        "failed",
+        "timed_out",
+        "merged",
+        "already_merged",
+        "blocked",
+        "conflicted",
+    },
     "spawning": {"executing", "completed", "failed", "timed_out"},
     "executing": {"completed", "failed", "timed_out"},
     "completed": {"merged", "already_merged", "blocked", "conflicted"},
@@ -317,26 +338,19 @@ def validate_worker_state_transition(from_state: str | None, to_state: str) -> N
 
     allowed_next = VALID_TRANSITIONS.get(f_state, set())
     if t_state not in allowed_next:
-        raise StateError(
-            f"[STATE INVARIANT VIOLATION] Illegal state jump attempted: "
-            f"'{from_state}' -> '{to_state}'."
-        )
+        raise StateError(f"[STATE INVARIANT VIOLATION] Illegal state jump attempted: '{from_state}' -> '{to_state}'.")
 
 
 def transition_worker_state(manifest_path: Path, worker_id: str, new_status: str) -> None:
     """Transition a worker's status in the worker manifest file, validating the transition first."""
     if not manifest_path.exists():
         raise StateError(
-            f"Worker manifest not found at {manifest_path}",
-            cause="manifest.json must exist to transition worker state"
+            f"Worker manifest not found at {manifest_path}", cause="manifest.json must exist to transition worker state"
         )
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        raise StateError(
-            f"invalid JSON in worker manifest {manifest_path}",
-            cause=str(exc)
-        )
+        raise StateError(f"invalid JSON in worker manifest {manifest_path}", cause=str(exc))
 
     found = False
     for detail in manifest.get("worker_details", []):
@@ -352,14 +366,10 @@ def transition_worker_state(manifest_path: Path, worker_id: str, new_status: str
         if worker_id in workers_list or worker_id.startswith("worker-"):
             validate_worker_state_transition(None, new_status)
             worker_details = manifest.setdefault("worker_details", [])
-            worker_details.append({
-                "worker_id": worker_id,
-                "status": new_status
-            })
+            worker_details.append({"worker_id": worker_id, "status": new_status})
         else:
             raise StateError(
-                f"Worker {worker_id} not found in manifest",
-                cause="Only registered workers can transition state"
+                f"Worker {worker_id} not found in manifest", cause="Only registered workers can transition state"
             )
 
     temp_fd, temp_name = tempfile.mkstemp(
@@ -379,4 +389,3 @@ def transition_worker_state(manifest_path: Path, worker_id: str, new_status: str
     except Exception:
         temp_path.unlink(missing_ok=True)
         raise
-

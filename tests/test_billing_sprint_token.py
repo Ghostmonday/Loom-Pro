@@ -69,9 +69,7 @@ def test_validate_sprint_token_expired():
         token_record = issue_sprint_token("user1", worker_count=4, sprint_price="10.00", ttl_seconds=60)
         token = token_record["token"]
 
-    with patch("time.time", return_value=1100.0), pytest.raises(
-        SprintTokenException, match="sprint_token has expired"
-    ):
+    with patch("time.time", return_value=1100.0), pytest.raises(SprintTokenException, match="sprint_token has expired"):
         validate_sprint_token(token, user_id="user1")
 
 

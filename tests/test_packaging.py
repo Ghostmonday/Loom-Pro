@@ -3,6 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 if sys.version_info >= (3, 11):
     import tomllib
 else:
@@ -13,6 +15,7 @@ else:
 def test_supervisor_router_package_is_declared() -> None:
     if tomllib is None:
         import pytest
+
         pytest.skip("Neither tomllib nor tomli is available")
 
     pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))

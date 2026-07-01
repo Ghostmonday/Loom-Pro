@@ -1068,7 +1068,10 @@ def validate_path_containment(path: str | Path) -> None:
             continue
 
     if not is_contained:
-        error_msg = f"Containment breach: path {path} (resolved: {resolved_path}) escapes allowed workspace bounds {_allowed_roots}"
+        error_msg = (
+            f"Containment breach: path {path} (resolved: {resolved_path}) "
+            f"escapes allowed workspace bounds {_allowed_roots}"
+        )
         if "PYTEST_CURRENT_TEST" not in os.environ:
             sys.stderr.write(f"CONTAINMENT BREACH: {error_msg}\n")
             sys.stderr.flush()
@@ -1103,8 +1106,8 @@ def patch_file_operations(roots: Sequence[str | Path]) -> None:
                         validate_path_containment(arg_str)
                     except MoatContainmentError:
                         raise
-                    except Exception:
-                        pass
+                    except Exception:  # noqa: S112 - non-path argv fragments are ignored by the containment hook.
+                        continue
         return _original_popen(args, *pargs, **kwargs)
 
     subprocess.Popen = hooked_popen
@@ -1119,8 +1122,8 @@ def patch_file_operations(roots: Sequence[str | Path]) -> None:
                         validate_path_containment(arg_str)
                     except MoatContainmentError:
                         raise
-                    except Exception:
-                        pass
+                    except Exception:  # noqa: S112 - non-path argv fragments are ignored by the containment hook.
+                        continue
         return _original_run(args, *pargs, **kwargs)
 
     subprocess.run = hooked_run

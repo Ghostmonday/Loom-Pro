@@ -10,14 +10,13 @@ import re
 import threading
 import urllib.error
 import urllib.request
+from contextlib import suppress
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
 from aoc_supervisor.intent_blueprint_state import new_question_id
 from aoc_supervisor.reasoning_schema import AnswerMode, NextAction, Readiness, RiskLevel
 from aoc_supervisor.repo_paths import REPO_ROOT
-
 
 
 @dataclass
@@ -569,7 +568,7 @@ def compute_semantic_digest(snapshot: dict[str, Any]) -> str:
     """Compute a stable semantic sha256 digest, ignoring revisions, timestamps, and latest question claims."""
     # Deepcopy to avoid modifying the original snapshot
     snap = copy.deepcopy(snapshot)
-    
+
     # Remove metadata/revision/receipt fields
     snap.pop("analysis_revision", None)
     snap.pop("evidence_revision", None)
@@ -578,7 +577,7 @@ def compute_semantic_digest(snapshot: dict[str, Any]) -> str:
     snap.pop("latest_analysis", None)
     snap.pop("state_digest", None)
     snap.pop("digest", None)
-    
+
     # Get the latest question ID if there are any answers
     active_qas = snap.get("questions_and_answers", {})
     latest_question_id = None
@@ -592,24 +591,41 @@ def compute_semantic_digest(snapshot: dict[str, Any]) -> str:
         latest_qa = active_qas[-1]
         if isinstance(latest_qa, dict):
             latest_question_id = latest_qa.get("question_id")
-            
+
     # Remove any claims that were extracted for the current question
     # so call 1 (before extraction) and call 2 (after extraction) generate the same key.
     if latest_question_id:
-        for key in ("confirmed_requirements", "inferred_requirements", "assumptions", "constraints",
-                    "non_goals", "deferred_items", "unresolved_items", "decisions", "risks", "acceptance_criteria"):
+        for key in (
+            "confirmed_requirements",
+            "inferred_requirements",
+            "assumptions",
+            "constraints",
+            "non_goals",
+            "deferred_items",
+            "unresolved_items",
+            "decisions",
+            "risks",
+            "acceptance_criteria",
+        ):
             items = snap.get(key, [])
             if isinstance(items, list):
                 snap[key] = [
-                    item for item in items
-                    if not (isinstance(item, dict) and str(item.get("source_question_id", "")) == str(latest_question_id))
+                    item
+                    for item in items
+                    if not (
+                        isinstance(item, dict) and str(item.get("source_question_id", "")) == str(latest_question_id)
+                    )
                 ]
-                
+
         evidence = snap.get("evidence_items", [])
         if isinstance(evidence, list):
             snap["evidence_items"] = [
-                item for item in evidence
-                if not (isinstance(item, dict) and str(item.get("provenance", {}).get("source_id", "")) == str(latest_question_id))
+                item
+                for item in evidence
+                if not (
+                    isinstance(item, dict)
+                    and str(item.get("provenance", {}).get("source_id", "")) == str(latest_question_id)
+                )
             ]
 
     # Normalize json formatting and sort keys
@@ -630,7 +646,7 @@ class ReasoningCache:
     def _load(self) -> None:
         try:
             if self.cache_file.exists():
-                with open(self.cache_file, "r", encoding="utf-8") as f:
+                with open(self.cache_file, encoding="utf-8") as f:
                     self.data = json.load(f)
         except Exception:
             self.data = {}
@@ -642,12 +658,10 @@ class ReasoningCache:
     def set(self, key: str, value: dict[str, Any]) -> None:
         with self.lock:
             self.data[key] = copy.deepcopy(value)
-            try:
+            with suppress(Exception):
                 self.cache_dir.mkdir(parents=True, exist_ok=True)
                 with open(self.cache_file, "w", encoding="utf-8") as f:
                     json.dump(self.data, f, indent=2)
-            except Exception:
-                pass
 
 
 _REASONING_CACHE = ReasoningCache()
