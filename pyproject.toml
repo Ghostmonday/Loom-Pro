@@ -43,7 +43,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "ruff",
-    "tomli",
+    "tomli; python_version < '3.11'",
 ]
 
 [project.scripts]
