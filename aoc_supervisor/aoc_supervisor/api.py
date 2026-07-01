@@ -11,6 +11,8 @@ import io
 import json
 import os
 import queue
+import shlex
+import shlex
 import shutil
 import shlex
 import subprocess
@@ -239,6 +241,14 @@ async def _app_lifespan(_app: FastAPI):
         release_supervisor_lease(_supervisor_lease_handle)
         _supervisor_lease_handle = None
 
+
+
+ALLOWED_MODELS = {
+    "grok-composer-2.5-fast",
+    "grok-3",
+    "deepseek-v4-flash",
+    "hermes-3-llama-3.1-405b",
+}
 
 app = FastAPI(title="Gaijinn AOC Boundary Gateway", version="1.0.0", lifespan=_app_lifespan)
 
@@ -802,8 +812,10 @@ def _spawn_worker_command(
 ) -> list[str]:
     mock_grid = os.environ.get("GAIJINN_MOCK_GRID", "").strip().lower() in {"1", "true", "yes", "on"}
     if mock_grid:
+        bash_path = shutil.which("bash") or "/bin/bash"
         if not has_assigned_work:
-            return ["bash", "-c", 'echo "[$1] standby — no work assigned"', "--", worker_name]
+            script = 'echo "[$1] standby — no work assigned";'
+            return [bash_path, "-c", script, "--", worker_name]
         script = (
             'echo "=== MOCK GRID: $1 ==="; '
             "for step in 1 2 3 4 5; do "
@@ -812,25 +824,12 @@ def _spawn_worker_command(
             "done; "
             'echo "[$1] build PASS";'
         )
-        return ["bash", "-c", script, "--", worker_name]
+        return [bash_path, "-c", script, "--", worker_name]
 
-    # Security: resolve and validate worker_dir is under WORKERS_DIR
-    resolved_worker_dir = worker_dir.resolve()
-    resolved_workers_root = WORKERS_DIR.resolve()
-    if not str(resolved_worker_dir).startswith(str(resolved_workers_root)):
-        raise ValueError(f"Unsafe worker directory: {worker_dir}")
-
-    # Security: resolve and validate executor binary
-    executor_bin = shutil.which("codex")
-    if not executor_bin:
-        raise RuntimeError("codex executor not found on PATH")
-    executor_path = Path(executor_bin).resolve()
-    if executor_path.name != "codex":
-        raise RuntimeError(f"Invalid executor binary: {executor_path.name}")
-
-    last_message = resolved_worker_dir / "codex-last-message.txt"
+    codex_path = shutil.which("codex") or "codex"
+    last_message = worker_dir / "codex-last-message.txt"
     return [
-        str(executor_path),
+        codex_path,
         "exec",
         "-C",
         str(resolved_worker_dir),
@@ -2435,7 +2434,11 @@ async def hermes_chat(request: Request) -> dict[str, Any]:
     )
 
     hermes_model = os.environ.get("HERMES_DEFAULT_MODEL", "").strip()
-    hermes_cmd: list[str] = [str(hermes_path)]
+    if hermes_model and hermes_model not in ALLOWED_MODELS:
+        hermes_model = ""
+
+    hermes_path = shutil.which("hermes") or "hermes"
+    hermes_cmd: list[str] = [hermes_path]
     if hermes_model:
         hermes_cmd.extend(["-m", hermes_model])
     hermes_cmd.extend(["--", prompt])
@@ -2508,6 +2511,12 @@ async def grid_spawn(request: Request) -> dict[str, Any]:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
     model = str(body.get("model", "grok-composer-2.5-fast")).strip()
+    if model not in ALLOWED_MODELS:
+        model = "grok-composer-2.5-fast"
+    if model not in ALLOWED_MODELS:
+         # Fallback to default if not in allowlist to prevent argument injection/abuse
+         model = "grok-composer-2.5-fast"
+
     task = body.get("task", "")
     session_id = str(body.get("session_id", "")).strip()
     sprint_token = body.get("sprint_token")
@@ -2763,8 +2772,12 @@ async def grid_spawn(request: Request) -> dict[str, Any]:
                     )
             else:
                 stdout_file = log_path.open("a", encoding="utf-8")
+                executable = cmd[0]
+                if not os.path.isabs(executable):
+                    executable = shutil.which(executable) or executable
                 proc = await asyncio.create_subprocess_exec(
-                    *cmd,
+                    executable,
+                    *cmd[1:],
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.STDOUT,
                     cwd=str(worker_dir.resolve()),

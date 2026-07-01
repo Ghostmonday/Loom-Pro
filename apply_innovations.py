@@ -1,4 +1,6 @@
 import os
+import shlex
+import shutil
 import re
 
 
@@ -27,7 +29,7 @@ def patch_file(path, search_pattern, replacement, flags=0):
 
 # 1. complexity.py
 path = "aoc_supervisor/aoc_supervisor/complexity.py"
-patch_file(path, "import math", "import math\nimport os")
+patch_file(path, "import math", "import math\nimport os\nimport shlex\nimport shutil")
 patch_file(path,
     r"return sum\(values\) / len\(values\)",
     r"""return sum(values) / len(values)
@@ -93,8 +95,8 @@ patch_file(path,
 
 # 3. blueprint.py
 path = "aoc-cli/aoc_cli/blueprint.py"
-if "import os" not in open(path).read():
-    patch_file(path, "import math", "import math\nimport os")
+if "import os\nimport shlex\nimport shutil" not in open(path).read():
+    patch_file(path, "import math", "import math\nimport os\nimport shlex\nimport shutil")
 patch_file(path,
     r"def _group_work_unit\(",
     r"""def _convex_hull_welding_threshold() -> int:
@@ -265,8 +267,13 @@ if target_marker in content:
                     )
             else:
                 stdout_file = log_path.open("a", encoding="utf-8")
+                executable = cmd[0]
+                if not os.path.isabs(executable):
+                    executable = shutil.which(executable) or executable
+
                 proc = await asyncio.create_subprocess_exec(
-                    *cmd,
+                    executable,
+                    *cmd[1:],
                     stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.STDOUT,
                     cwd=str(worker_dir.resolve()),
@@ -274,7 +281,7 @@ if target_marker in content:
                 if proc.stdout:
                     asyncio.create_task(
                         _read_stream(sprint_id, worker_name, manifest_detail.get("domain"), proc.stdout, stdout_file)
-                    )\n\n"""
+                    )"""
     content = content[:start_idx] + new_spawn + content[end_idx:]
     with open(path, "w") as f: f.write(content)
     print(f"Patched grid_spawn loop in {path}")

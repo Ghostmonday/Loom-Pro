@@ -661,6 +661,16 @@ def classify_sprint_terminal_status(sprint: Mapping[str, Any]) -> str:
 def popen_worker_process(*args: Any, **kwargs: Any):
     """Start a worker subprocess in its own POSIX session when supported."""
     import subprocess
+    import shutil
+
+    if args and isinstance(args[0], (list, tuple)) and args[0]:
+        executable = args[0][0]
+        if not os.path.isabs(executable):
+            resolved = shutil.which(executable)
+            if resolved:
+                new_cmd = list(args[0])
+                new_cmd[0] = resolved
+                args = (new_cmd,) + args[1:]
 
     if os.name == "posix":
         kwargs.setdefault("start_new_session", True)
