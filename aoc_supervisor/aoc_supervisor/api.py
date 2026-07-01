@@ -12,6 +12,7 @@ import json
 import os
 import queue
 import shutil
+import shlex
 import subprocess
 import tempfile
 import threading
@@ -798,22 +799,25 @@ def _spawn_worker_command(
 ) -> list[str]:
     mock_grid = os.environ.get("GAIJINN_MOCK_GRID", "").strip().lower() in {"1", "true", "yes", "on"}
     if mock_grid:
+        bash_exe = shutil.which("bash") or "bash"
+        quoted_name = shlex.quote(worker_name)
         if not has_assigned_work:
-            script = f"echo '[{worker_name}] standby — no work assigned';"
-            return ["bash", "-c", script]
+            script = f"echo '[{quoted_name}] standby — no work assigned';"
+            return [bash_exe, "-c", script]
         script = (
-            f"echo '=== MOCK GRID: {worker_name} ==='; "
+            f"echo '=== MOCK GRID: {quoted_name} ==='; "
             "for step in 1 2 3 4 5; do "
-            f'echo "[{worker_name}] working step $step"; '
+            f'echo "[{quoted_name}] working step $step"; '
             "sleep 0.4; "
             "done; "
-            f"echo '[{worker_name}] build PASS';"
+            f"echo '[{quoted_name}] build PASS';"
         )
-        return ["bash", "-c", script]
+        return [bash_exe, "-c", script]
 
+    codex_exe = shutil.which("codex") or "codex"
     last_message = worker_dir / "codex-last-message.txt"
     return [
-        "codex",
+        codex_exe,
         "exec",
         "-C",
         str(worker_dir.resolve()),
@@ -821,6 +825,7 @@ def _spawn_worker_command(
         "workspace-write",
         "--output-last-message",
         str(last_message),
+        "--",
         full_prompt,
     ]
 
@@ -1678,11 +1683,12 @@ def _guard_session_access(session_id: str, user_id: str) -> None:
 def _safe_argv_for_log(cmd: list[str]) -> str:
     if not cmd:
         return ""
+    import shlex
     safe = list(cmd)
     if safe and len(safe[-1]) > 120:
         digest = hashlib.sha256(safe[-1].encode("utf-8")).hexdigest()[:16]
         safe[-1] = f"<prompt len={len(cmd[-1])} sha256={digest}>"
-    return " ".join(safe)
+    return " ".join(shlex.quote(arg) for arg in safe)
 
 
 def _prompt_digest(text: str) -> str:
@@ -2411,17 +2417,18 @@ async def hermes_chat(request: Request) -> dict[str, Any]:
     )
 
     hermes_model = os.environ.get("HERMES_DEFAULT_MODEL", "").strip()
-    hermes_cmd: list[str] = ["hermes"]
+    hermes_exe = shutil.which("hermes") or "hermes"
+    hermes_cmd: list[str] = [hermes_exe]
     if hermes_model:
         hermes_cmd.extend(["-m", hermes_model])
-    hermes_cmd.extend(["-z", prompt])
+    hermes_cmd.extend(["-z", "--", prompt])
 
     try:
         proc = await asyncio.create_subprocess_exec(
             *hermes_cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
-            cwd=str(ROOT_DIR),
+            cwd=str(ROOT_DIR.resolve()),
         )
         stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=180.0)
     except TimeoutError as exc:

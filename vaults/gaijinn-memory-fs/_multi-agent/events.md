@@ -94,3 +94,4 @@ Semantic intent and ownership changes. Operational handoffs go to Gaijinn Counci
 | 2026-06-19T22:15:52Z | hermes | vault_advance | gaijinn-memory-fs | vault_advance_start | tick=31 |
 | 2026-06-19T22:18:00Z | hermes | vault_heartbeat | gaijinn-memory-fs | files=65 concepts=41 pending=0 links=70 convergence=0.5556 linter=PASS graph=96n/13e shadow=6 rejected=52 wus=26 promoted= |
 | 2026-06-20T00:21:33Z | hermes | vault_refine | gaijinn-memory-fs | scan=96f integrity=1243 coupling=6 shadow=6 rejected=51 wus=26 |
+| 2026-07-01T14:01:26Z | jules | security_fix | aoc_supervisor | Hardened subprocess execution in api.py: resolved executables, quoted mock grid inputs, and added '--' separators to prevent option injection. Verified via standalone logic test. |
