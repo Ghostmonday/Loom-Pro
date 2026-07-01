@@ -28,12 +28,7 @@ class Engine:
         return applicable_rule(self.cg, locus)
 
     def run(self, max_steps: int = 200) -> dict:
-        # DETERMINISM: seed the initial frontier canonically; never inherit dict
-        # insertion order for nodes. Edge indices are the graph's stable handles.
-        for node_id in sorted(self.cg.nodes):
-            self.worklist.push(Locus.node(node_id), NORMAL)
-        for index in range(len(self.cg.edges)):
-            self.worklist.push(Locus.edge(index), NORMAL)
+        self._seed_worklist()
 
         step = 0
         trace = []
@@ -69,18 +64,9 @@ class Engine:
                 step += 1
                 psi_new = self.cg.psi()
 
-                # TERMINATION PROOF: every applied rewrite must strictly lower
-                # the existing lexicographic Psi tuple. Do not weaken this check
-                # or patch Psi automatically to accommodate a new rule.
-                fault = self.injected_fault and step == 2
-                if fault or not (psi_new < psi_previous):
-                    suffix = " [INJECTED]" if fault else ""
-                    return self._report(
-                        EngineStatus.ENGINE_FAULT,
-                        step,
-                        trace,
-                        fault_detail=f"Psi did not strictly decrease: {psi_previous} -> {psi_new}{suffix}",
-                    )
+                fault_detail = self._check_termination(step, psi_new, psi_previous)
+                if fault_detail:
+                    return self._report(EngineStatus.ENGINE_FAULT, step, trace, fault_detail=fault_detail)
 
                 trace.append((step, psi_new))
                 psi_previous = psi_new
@@ -95,23 +81,42 @@ class Engine:
 
         valid = self.cg.is_valid()
         stable = self.cg.is_stable(self)
-
-        # STATUS CONTRACT:
-        # - CANONICAL: stable and valid.
-        # - STUCK: stable but invalid/unresolved input.
-        # - ENGINE_FAULT: instability or an internal contract failure.
-        if valid and stable:
-            status = EngineStatus.CANONICAL
-        elif stable:
-            status = EngineStatus.STUCK
-        else:
-            status = EngineStatus.ENGINE_FAULT
+        status = self._evaluate_status(valid, stable)
 
         fault_detail = None
         if status == EngineStatus.ENGINE_FAULT and step >= max_steps:
             fault_detail = f"step budget exhausted at {max_steps} before stability"
 
         return self._report(status, step, trace, valid=valid, stable=stable, fault_detail=fault_detail)
+
+    def _seed_worklist(self) -> None:
+        # DETERMINISM: seed the initial frontier canonically; never inherit dict
+        # insertion order for nodes. Edge indices are the graph's stable handles.
+        for node_id in sorted(self.cg.nodes):
+            self.worklist.push(Locus.node(node_id), NORMAL)
+        for index in range(len(self.cg.edges)):
+            self.worklist.push(Locus.edge(index), NORMAL)
+
+    def _check_termination(self, step: int, psi_new: tuple, psi_previous: tuple) -> str | None:
+        # TERMINATION PROOF: every applied rewrite must strictly lower
+        # the existing lexicographic Psi tuple. Do not weaken this check
+        # or patch Psi automatically to accommodate a new rule.
+        fault = self.injected_fault and step == 2
+        if fault or not (psi_new < psi_previous):
+            suffix = " [INJECTED]" if fault else ""
+            return f"Psi did not strictly decrease: {psi_previous} -> {psi_new}{suffix}"
+        return None
+
+    def _evaluate_status(self, valid: bool, stable: bool) -> EngineStatus:
+        # STATUS CONTRACT:
+        # - CANONICAL: stable and valid.
+        # - STUCK: stable but invalid/unresolved input.
+        # - ENGINE_FAULT: instability or an internal contract failure.
+        if valid and stable:
+            return EngineStatus.CANONICAL
+        if stable:
+            return EngineStatus.STUCK
+        return EngineStatus.ENGINE_FAULT
 
     def _apply_local_rule(self, kind: str, payload) -> None:
         if kind == "A1":

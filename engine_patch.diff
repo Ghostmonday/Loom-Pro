@@ -1,0 +1,98 @@
+<<<<<<< SEARCH
+    def run(self, max_steps: int = 200) -> dict:
+        # DETERMINISM: seed the initial frontier canonically; never inherit dict
+        # insertion order for nodes. Edge indices are the graph's stable handles.
+        for node_id in sorted(self.cg.nodes):
+            self.worklist.push(Locus.node(node_id), NORMAL)
+        for index in range(len(self.cg.edges)):
+            self.worklist.push(Locus.edge(index), NORMAL)
+
+        step = 0
+=======
+    def run(self, max_steps: int = 200) -> dict:
+        self._seed_worklist()
+
+        step = 0
+>>>>>>> REPLACE
+<<<<<<< SEARCH
+                # TERMINATION PROOF: every applied rewrite must strictly lower
+                # the existing lexicographic Psi tuple. Do not weaken this check
+                # or patch Psi automatically to accommodate a new rule.
+                fault = self.injected_fault and step == 2
+                if fault or not (psi_new < psi_previous):
+                    suffix = " [INJECTED]" if fault else ""
+                    return self._report(
+                        EngineStatus.ENGINE_FAULT,
+                        step,
+                        trace,
+                        fault_detail=f"Psi did not strictly decrease: {psi_previous} -> {psi_new}{suffix}",
+                    )
+=======
+                fault_detail = self._check_termination(step, psi_new, psi_previous)
+                if fault_detail:
+                    return self._report(EngineStatus.ENGINE_FAULT, step, trace, fault_detail=fault_detail)
+>>>>>>> REPLACE
+<<<<<<< SEARCH
+        valid = self.cg.is_valid()
+        stable = self.cg.is_stable(self)
+
+        # STATUS CONTRACT:
+        # - CANONICAL: stable and valid.
+        # - STUCK: stable but invalid/unresolved input.
+        # - ENGINE_FAULT: instability or an internal contract failure.
+        if valid and stable:
+            status = EngineStatus.CANONICAL
+        elif stable:
+            status = EngineStatus.STUCK
+        else:
+            status = EngineStatus.ENGINE_FAULT
+
+        fault_detail = None
+        if status == EngineStatus.ENGINE_FAULT and step >= max_steps:
+            fault_detail = f"step budget exhausted at {max_steps} before stability"
+
+        return self._report(status, step, trace, valid=valid, stable=stable, fault_detail=fault_detail)
+
+    def _apply_local_rule(self, kind: str, payload) -> None:
+=======
+        valid = self.cg.is_valid()
+        stable = self.cg.is_stable(self)
+        status = self._evaluate_status(valid, stable)
+
+        fault_detail = None
+        if status == EngineStatus.ENGINE_FAULT and step >= max_steps:
+            fault_detail = f"step budget exhausted at {max_steps} before stability"
+
+        return self._report(status, step, trace, valid=valid, stable=stable, fault_detail=fault_detail)
+
+    def _seed_worklist(self) -> None:
+        # DETERMINISM: seed the initial frontier canonically; never inherit dict
+        # insertion order for nodes. Edge indices are the graph's stable handles.
+        for node_id in sorted(self.cg.nodes):
+            self.worklist.push(Locus.node(node_id), NORMAL)
+        for index in range(len(self.cg.edges)):
+            self.worklist.push(Locus.edge(index), NORMAL)
+
+    def _check_termination(self, step: int, psi_new: tuple, psi_previous: tuple) -> str | None:
+        # TERMINATION PROOF: every applied rewrite must strictly lower
+        # the existing lexicographic Psi tuple. Do not weaken this check
+        # or patch Psi automatically to accommodate a new rule.
+        fault = self.injected_fault and step == 2
+        if fault or not (psi_new < psi_previous):
+            suffix = " [INJECTED]" if fault else ""
+            return f"Psi did not strictly decrease: {psi_previous} -> {psi_new}{suffix}"
+        return None
+
+    def _evaluate_status(self, valid: bool, stable: bool) -> EngineStatus:
+        # STATUS CONTRACT:
+        # - CANONICAL: stable and valid.
+        # - STUCK: stable but invalid/unresolved input.
+        # - ENGINE_FAULT: instability or an internal contract failure.
+        if valid and stable:
+            return EngineStatus.CANONICAL
+        if stable:
+            return EngineStatus.STUCK
+        return EngineStatus.ENGINE_FAULT
+
+    def _apply_local_rule(self, kind: str, payload) -> None:
+>>>>>>> REPLACE
