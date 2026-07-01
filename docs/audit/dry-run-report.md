@@ -1,8 +1,8 @@
 # Code Hygiene Audit — Dry-Run Report
 
-**Branch:** `audit/code-hygiene-pass`  
-**Base:** `main` (fbd97220)  
-**Date:** 2026-06-30  
+**Branch:** `audit/code-hygiene-pass`
+**Base:** `main` (fbd97220)
+**Date:** 2026-06-30
 **Scope:** ~90 source files, ~29K LOC across `aoc_cli/`, `aoc_supervisor/`, `tests/`, root-level scripts, `scripts/dev/`
 
 ---
@@ -415,8 +415,8 @@ These are confirmed one-off scripts (already excluded from ruff) that applied pa
 | `patch_script_v2.py` | 131 | One-off, patches applied | Delete |
 | `patch_script.py` | ~320 | One-off, patches applied | Delete |
 
-**Total lines:** ~1,021  
-**Confidence:** High | **Risk:** None (all patches verified in source)  
+**Total lines:** ~1,021
+**Confidence:** High | **Risk:** None (all patches verified in source)
 **Post-delete:** Remove excluded paths from `pyproject.toml` ruff config
 
 ---

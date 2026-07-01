@@ -1,8 +1,8 @@
 # Code Hygiene Audit — DeepSeek Report
 
-**Auditor:** DeepSeek (worktree: `Loom-deepseek`)  
-**Date:** 2026-06-30  
-**Base report:** `docs/audit/dry-run-report.md` (2026-06-30, 26.8 KB)  
+**Auditor:** DeepSeek (worktree: `Loom-deepseek`)
+**Date:** 2026-06-30
+**Base report:** `docs/audit/dry-run-report.md` (2026-06-30, 26.8 KB)
 **Status:** Merge-captain-ready review
 
 ---
