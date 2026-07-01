@@ -1,24 +1,41 @@
 <!-- Intent Forge — Workspace Content Fragment -->
 <!-- Loaded dynamically by shell.js into #workspace-content -->
 
-<div class="max-w-4xl mx-auto space-y-stack-lg">
+<div class="workspace-shell space-y-stack-lg">
 
   <!-- Hero -->
-  <section class="mb-gutter">
-    <h1 id="loom-brand" class="font-headline-lg text-headline-lg text-primary mb-stack-md">Loom</h1>
-    <p id="loom-subtitle" class="text-on-surface-variant font-body-lg opacity-80">Canvas your vision before architecture is synthesized</p>
+  <section class="flex items-end justify-between gap-stack-lg mb-gutter">
+    <div>
+      <div class="workspace-kicker mb-stack-sm">Vision intake</div>
+      <h1 id="loom-brand" class="font-headline-lg text-headline-lg text-primary mb-stack-sm">Loom</h1>
+      <p id="loom-subtitle" class="text-on-surface-variant font-body-lg opacity-80">
+        Canvas your vision before architecture is synthesized.
+      </p>
+    </div>
+    <div class="hidden sm:flex items-center gap-stack-sm rounded-xl border border-outline-variant/30 bg-white/5 px-stack-lg py-stack-md">
+      <span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_12px_rgba(71,226,102,0.55)]"></span>
+      <span class="font-label-caps text-label-caps text-on-surface-variant">API Ready</span>
+    </div>
   </section>
 
   <!-- Prompt Panel -->
   <div class="glass-panel rounded-xl p-container-margin space-y-stack-lg">
-    <label for="prompt-input" class="font-label-caps text-label-caps text-on-surface-variant">Express your vision</label>
+    <div>
+      <label for="prompt-input" class="font-label-caps text-label-caps text-on-surface-variant">Express your vision</label>
+      <p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-stack-sm">
+        Start with the product outcome, users, constraints, and any non-negotiable behavior.
+      </p>
+    </div>
     <textarea id="prompt-input"
-              class="w-full min-h-[120px] bg-surface-container-high border border-outline-variant/30 rounded-xl p-stack-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary resize-y"
+              class="w-full min-h-[136px] bg-surface-container-high border border-outline-variant/30 rounded-xl p-stack-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary resize-y"
               placeholder="Describe the software vision Loom should interrogate..."></textarea>
-    <button id="btn-start-session"
-            class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
-      Start Intent Forge
-    </button>
+    <div class="flex flex-wrap items-center justify-between gap-stack-md">
+      <button id="btn-start-session"
+              class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
+        Start Intent Forge
+      </button>
+      <span class="font-body-sm text-body-sm text-on-surface-variant/60">No graph is mutated during intake.</span>
+    </div>
   </div>
 
   <!-- Question Panel -->
@@ -35,7 +52,7 @@
     <textarea id="answer-input"
               class="w-full min-h-[100px] bg-surface-container-high border border-outline-variant/30 rounded-xl p-stack-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary resize-y"
               placeholder="Answer the active question..."></textarea>
-    <div class="flex gap-stack-md">
+    <div class="flex flex-wrap gap-stack-md">
       <button id="btn-submit-answer"
               class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
         Submit Answer
@@ -54,8 +71,8 @@
 
   <!-- Readiness Gate -->
   <div class="glass-panel rounded-xl p-container-margin">
-    <div class="flex items-center justify-between">
-      <div>
+    <div class="flex flex-wrap items-center justify-between gap-stack-lg">
+      <div class="shrink-0">
         <span class="font-label-caps text-label-caps text-on-surface-variant">READINESS SCORE</span>
         <div class="flex items-baseline gap-stack-sm mt-stack-sm">
           <span id="readiness-score" class="text-[2rem] font-bold text-on-surface">0.00</span>
@@ -87,7 +104,7 @@
   </div>
 
   <!-- Handoff Controls -->
-  <div class="flex gap-stack-md">
+  <div class="flex flex-wrap gap-stack-md pb-stack-lg">
     <button id="btn-confirm-handoff"
            class="px-6 py-2 bg-secondary text-on-secondary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all spring-transition disabled:opacity-30" disabled>
       Confirm Handoff

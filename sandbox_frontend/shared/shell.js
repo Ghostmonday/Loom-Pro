@@ -88,13 +88,54 @@
   var PIPELINE_STAGES = [
     { id: "hub",                label: "Hub",              icon: "dashboard" },
     { id: "intent-forge",       label: "Intent Forge",     icon: "straighten" },
-    { id: "blueprint-ratification", label: "Ratification", icon: "architecture" },
     { id: "claims-ledger",      label: "Claims",           icon: "layers" },
+    { id: "blueprint-ratification", label: "Ratification", icon: "architecture" },
     { id: "curvature-analysis", label: "Curvature",        icon: "architecture" },
+    { id: "topological-observatory", label: "Observatory", icon: "visibility" },
     { id: "drift-monitor",      label: "Drift",            icon: "straighten" },
-    { id: "packet-export",      label: "Export",           icon: "terminal" },
-    { id: "topological-observatory", label: "Observatory", icon: "visibility" }
+    { id: "packet-export",      label: "Export",           icon: "terminal" }
   ];
+
+  var STAGE_LOCKS = {
+    hub: {
+      unlockedByDefault: true,
+      reason: "The hub is always available."
+    },
+    "intent-forge": {
+      unlockedByDefault: true,
+      reason: "Start here. Capture the product intent before blueprint work."
+    },
+    "claims-ledger": {
+      requiredStage: "intent-forge",
+      requiredLabel: "Start an Intent Forge session",
+      reason: "Claims require session-backed evidence before they can be inspected."
+    },
+    "blueprint-ratification": {
+      requiredStage: "claims-ledger",
+      requiredLabel: "Reach final blueprint confirmation",
+      reason: "Ratification is only meaningful after Loom validates enough claims and requirements."
+    },
+    "curvature-analysis": {
+      requiredStage: "blueprint-ratification",
+      requiredLabel: "Finalize or hand off the blueprint",
+      reason: "Curvature analysis needs a real graph projection, not an empty intake state."
+    },
+    "topological-observatory": {
+      requiredStage: "curvature-analysis",
+      requiredLabel: "Finalize or hand off the blueprint",
+      reason: "The observatory opens once Loom has a real topology to inspect."
+    },
+    "drift-monitor": {
+      requiredStage: "topological-observatory",
+      requiredLabel: "Create a finalized topology",
+      reason: "Drift monitoring compares topology over time, so it requires a finalized baseline."
+    },
+    "packet-export": {
+      requiredStage: "drift-monitor",
+      requiredLabel: "Complete blueprint handoff",
+      reason: "Exports are locked until a blueprint packet exists."
+    }
+  };
 
   /* SideBar tool definitions */
   var SIDEBAR_TOOLS = [
@@ -119,6 +160,65 @@
     inspectorVisible: true,
     previousWorkspace: null
   };
+
+  function stageStorageKey(stageId) {
+    return "loom.stage." + stageId + ".unlocked";
+  }
+
+  function isStageUnlocked(stageId) {
+    var lock = STAGE_LOCKS[stageId];
+    if (!lock) return true;
+    if (lock.unlockedByDefault) return true;
+    return localStorage.getItem(stageStorageKey(stageId)) === "true";
+  }
+
+  function unlockStage(stageId) {
+    if (!STAGE_LOCKS[stageId]) return;
+    localStorage.setItem(stageStorageKey(stageId), "true");
+    if (dom.topnav) renderTopNav();
+  }
+
+  function unlockStages(stageIds) {
+    stageIds.forEach(unlockStage);
+  }
+
+  function resetStageLocks() {
+    Object.keys(STAGE_LOCKS).forEach(function (stageId) {
+      if (!STAGE_LOCKS[stageId].unlockedByDefault) {
+        localStorage.removeItem(stageStorageKey(stageId));
+      }
+    });
+    if (dom.topnav) renderTopNav();
+  }
+
+  function stageLabel(stageId) {
+    var ws = WORKSPACES[stageId];
+    return ws ? ws.label : stageId;
+  }
+
+  function renderLockedWorkspace(workspaceId) {
+    var lock = STAGE_LOCKS[workspaceId] || {};
+    var nextStage = lock.requiredStage || "intent-forge";
+    var nextLabel = lock.requiredLabel || ("Open " + stageLabel(nextStage));
+    dom.workspace.innerHTML =
+      '<div class="workspace-shell min-h-[62vh] flex items-center justify-center">' +
+      '<div class="glass-panel rounded-xl p-container-margin max-w-2xl text-center space-y-stack-lg">' +
+      '<span class="material-symbols-outlined text-primary/80 text-[44px]">lock</span>' +
+      '<div>' +
+      '<div class="workspace-kicker mb-stack-sm">Stage locked</div>' +
+      '<h1 class="font-headline-lg text-headline-lg text-on-surface">' + stageLabel(workspaceId) + '</h1>' +
+      '<p class="font-body-lg text-body-lg text-on-surface-variant/80 mt-stack-md">' + (lock.reason || "This stage is not ready yet.") + '</p>' +
+      '</div>' +
+      '<button class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all" data-open-required-stage="' + nextStage + '">' + nextLabel + '</button>' +
+      '</div>' +
+      '</div>';
+    var button = dom.workspace.querySelector("[data-open-required-stage]");
+    if (button) {
+      button.addEventListener("click", function () {
+        navigateTo(button.getAttribute("data-open-required-stage"));
+      });
+    }
+  }
 
   /* ═══════════════════════════════════════════════════════════
    *  DOM CACHE
@@ -162,10 +262,14 @@
       '<nav id="shell-nav-links" class="hidden md:flex items-center gap-1 ml-gutter">';
 
     PIPELINE_STAGES.forEach(function (ws) {
+      var unlocked = isStageUnlocked(ws.id);
       var activeClass = ws.id === state.currentWorkspace
         ? 'text-primary font-bold border-b-2 border-primary'
-        : 'text-on-surface-variant font-medium hover:text-primary';
-      html += '<a class="' + activeClass + ' font-body-lg text-body-lg px-2 py-1 spring-transition cursor-pointer" data-workspace="' + ws.id + '">' + ws.label + '</a>';
+        : unlocked
+          ? 'text-on-surface-variant font-medium hover:text-primary'
+          : 'text-on-surface-variant/35 font-medium cursor-not-allowed';
+      var lockIcon = unlocked ? "" : '<span class="material-symbols-outlined text-[14px] align-[-2px] ml-1">lock</span>';
+      html += '<a class="' + activeClass + ' font-body-lg text-body-lg px-2 py-1 spring-transition" data-workspace="' + ws.id + '" aria-disabled="' + (!unlocked) + '">' + ws.label + lockIcon + '</a>';
     });
 
     html += '</nav></div>' +
@@ -239,7 +343,7 @@
 
     html += '</div>' +
       '<div class="flex-1"></div>' +
-      '<div id="dashboard-toggle" class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer spring-transition">pulse</div>' +
+      '<button id="dashboard-toggle" class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer spring-transition" title="Architectural pulse">monitoring</button>' +
       '</div>';
 
     dom.console.innerHTML = html;
@@ -275,13 +379,27 @@
   }
 
   function renderRightInspector() {
-    // The inspector placeholder is in the HTML shell.
-    // Workspaces inject content into #inspector-content when loaded.
-    // Hide on hub by default.
+    var content = document.getElementById("inspector-content");
     if (state.currentWorkspace === "hub") {
       dom.inspectorPanel.style.display = "none";
     } else {
       dom.inspectorPanel.style.display = "flex";
+      if (content) {
+        var ws = WORKSPACES[state.currentWorkspace] || WORKSPACES["intent-forge"];
+        content.innerHTML =
+          '<div class="inspector-card">' +
+          '<div class="inspector-label">Active surface</div>' +
+          '<div class="inspector-value">' + ws.label + '</div>' +
+          '</div>' +
+          '<div class="inspector-card">' +
+          '<div class="inspector-label">Lifecycle</div>' +
+          '<div class="inspector-value">Intent → Teleology → Blueprint → Sprint</div>' +
+          '</div>' +
+          '<div class="inspector-card">' +
+          '<div class="inspector-label">Authority</div>' +
+          '<div class="inspector-value">Backend state is canonical. UI is projection only.</div>' +
+          '</div>';
+      }
     }
   }
 
@@ -309,6 +427,11 @@
     renderConsole();
     renderRightInspector();
 
+    if (!isStageUnlocked(workspaceId)) {
+      renderLockedWorkspace(workspaceId);
+      return;
+    }
+
     // Load workspace content
     loadWorkspace(workspaceId);
   }
@@ -322,7 +445,8 @@
 
     // Fetch workspace content
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", ws.url, true);
+    var separator = ws.url.indexOf("?") === -1 ? "?" : "&";
+    xhr.open("GET", ws.url + separator + "v=ui-stage-locks-20260701", true);
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 400) {
         dom.workspace.innerHTML = xhr.responseText;
@@ -414,7 +538,11 @@
     state: state,
     navigateTo: navigateTo,
     workspaces: WORKSPACES,
-    loadWorkspace: loadWorkspace
+    loadWorkspace: loadWorkspace,
+    isStageUnlocked: isStageUnlocked,
+    unlockStage: unlockStage,
+    unlockStages: unlockStages,
+    resetStageLocks: resetStageLocks
   };
 
 })();

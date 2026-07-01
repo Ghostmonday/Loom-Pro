@@ -71,6 +71,7 @@
     if (data.session_id) s.sessionId = data.session_id;
     if (data.session_status) s.sessionStatus = data.session_status;
     if (typeof data.blueprint_version === "number") s.blueprintVersion = data.blueprint_version;
+    updateStageLocks(data);
     var question = currentQuestion(data);
     if (question) {
       s.currentQuestionId = question.id || question.question_id || null;
@@ -91,6 +92,24 @@
     if (gate) gate.dataset.canHandoff = readiness.ready_to_finalize || data.session_status === "FINAL_CONFIRMATION" ? "true" : "false";
     renderUnderstanding(data);
     syncButtons();
+  }
+  function updateStageLocks(data) {
+    if (!window.LoomShell || !window.LoomShell.unlockStages) return;
+    var status = data.session_status || state().sessionStatus || "";
+    var unlocks = [];
+    if (data.session_id || state().sessionId || status) {
+      unlocks.push("claims-ledger");
+    }
+    if (status === "FINAL_CONFIRMATION" || status === "FINALIZED" || status === "HANDED_OFF") {
+      unlocks.push("blueprint-ratification");
+    }
+    if (status === "FINALIZED" || status === "HANDED_OFF") {
+      unlocks.push("curvature-analysis", "topological-observatory");
+    }
+    if (status === "HANDED_OFF") {
+      unlocks.push("drift-monitor", "packet-export");
+    }
+    if (unlocks.length) window.LoomShell.unlockStages(unlocks);
   }
   function renderUnderstanding(data) {
     var list = $("understanding-list");
