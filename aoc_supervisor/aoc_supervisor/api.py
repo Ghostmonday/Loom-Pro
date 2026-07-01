@@ -11,8 +11,8 @@ import io
 import json
 import os
 import queue
-import shutil
 import shlex
+import shutil
 import subprocess
 import tempfile
 import threading
@@ -1684,6 +1684,7 @@ def _safe_argv_for_log(cmd: list[str]) -> str:
     if not cmd:
         return ""
     import shlex
+
     safe = list(cmd)
     if safe and len(safe[-1]) > 120:
         digest = hashlib.sha256(safe[-1].encode("utf-8")).hexdigest()[:16]
