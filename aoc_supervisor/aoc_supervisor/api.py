@@ -2734,7 +2734,6 @@ async def grid_spawn(request: Request) -> dict[str, Any]:
                 lf.write("=" * 60 + "\n\n")
 
             if mock_grid:
-                if mock_grid:
                 with log_path.open("a", encoding="utf-8") as stdout_file:
                     proc = popen_worker_process(
                         cmd,
