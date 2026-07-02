@@ -1,8 +1,8 @@
 # Loom
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](#)
-[![Tests](https://img.shields.io/badge/tests-940%20passing-green)](#)
-[![Ruff](https://img.shields.io/badge/lint-ruff-clean-brightgreen)](#)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![Tests](https://img.shields.io/badge/tests-940%20passing-green)
+![Ruff](https://img.shields.io/badge/lint-ruff-clean-brightgreen)
 
 **Geometric orchestration engine for parallel AI coding agents.**
 
@@ -64,7 +64,7 @@ The metric: **κ (kappa)**, computed via Wasserstein optimal transport distance.
 
 ### How Loom Reads Code
 
-```
+```text
 Source code
     ↓
 AST parsing (structure)
@@ -81,7 +81,7 @@ Curvature analysis (κ)
 ### What Curvature Means
 
 | Curvature | Meaning | What the system does |
-|-----------|---------|----------------------|
+| ----------- | --------- | ---------------------- |
 | `κ > 0` | Dense cluster — redundant paths | Heavy parallelization |
 | `κ ≈ 0` | Stable pipeline — predictable | Standard splitting |
 | `κ < 0` | Narrow bottleneck — hidden constraint | Increased collision risk |
@@ -121,7 +121,7 @@ On the gateway victory lap, worker-001 raised ticket `TX-HT-84348F`, worker-002 
 
 ## Architecture
 
-```
+```text
 CLI layer:
   scan          Build dependency graph
   analyze       Compute curvature, detect dark bridges
@@ -147,7 +147,7 @@ UI layer:
 ### Blueprint Model
 
 | Layer | Purpose | Artifact |
-|-------|---------|----------|
+| ------- | --------- | ---------- |
 | **Layer 0 — Domain Rules** | Functional domains, invariants, system constraints | `blueprint.json` |
 | **Layer 1 — Reactive Structure** | Endpoints, commands, mutations, guards, state transitions | `graph.json` |
 | **Layer 2 — Reflective Structure** | Lifecycles, dependency contracts, capability ceilings | `inferred.json` |
@@ -158,6 +158,7 @@ UI layer:
 ### GIV Enforcement
 
 Each work unit receives a **GIV (Agent Intent Vector)** — an enforced runtime RBAC contract defining:
+
 - **Allowed paths** — exact files this agent may edit
 - **Denied paths** — files this agent must never touch
 - **Allowed/denied commands** — shell permissions
@@ -168,14 +169,14 @@ The GIV is not advisory. Worker output is checked against it before merge.
 
 ### Merge Integrity
 
-```
+```text
 collect → validate-worker → merge-grid → structural scoring
 ```
 
 Every merge gets a composite grade:
 
 | Signal | Meaning |
-|--------|---------|
+| -------- | --------- |
 | `validation_pass_rate` | Fraction of workers passing all gates |
 | `convergence` | Composite structural score (honest — no ghost merges) |
 | `transaction_bus_synchronized` | All handoff tickets resolved |
@@ -186,7 +187,7 @@ Every merge gets a composite grade:
 ## Commands
 
 | Command | Purpose |
-|---------|---------|
+| --------- | --------- |
 | `loom init` | Initialize project state and seed the build manifest |
 | `loom audit` | Evaluate structural readiness without modifying source files |
 | `loom scan` | Produce the repository graph |
@@ -212,7 +213,7 @@ Loom has been dogfooded end-to-end with **live Grok Build agents** on the Loom m
 ### Phase 2 — Monorepo Dogfood (171 nodes, June 16 2026)
 
 | Parameter | Value |
-|-----------|-------|
+| ----------- | ------- |
 | Target | Loom monorepo (171 code nodes) |
 | Graph | 171 nodes · 92 dark bridges (handoff gateway edges) · 54 work units |
 | Agents | 4 concurrent copy-mode Grok workers |
@@ -234,7 +235,7 @@ Loom's convergence score of **0.8889** is a badge of mathematical purity — thr
 A second live dogfood run, this time coordinated by Claude directing four parallel headless Grok Composer workers, each independently validated against its brief before merge:
 
 | Worker | Task | Result |
-|--------|------|--------|
+| -------- | ------ | -------- |
 | 101 | Lint cleanup of `loom-frontend-base/` + `frontend-formation-complete/` | 33 files fixed, only intentional `S101` (test asserts) remain |
 | 102 | Test coverage for `websocket_telemetry.py` | 44% → **93%** coverage, 32 new tests |
 | 103 | Audit README code-deep-dive snippets against live source | 19 snippets checked, 9 drifted, 1 path-wrong, 0 fabricated — see `docs/reference/deep-dive-appendix-drift.md` |
@@ -360,14 +361,14 @@ bash scripts/dev/phase0-demo.sh
 
 The terminal presents a full product loop:
 
-```
+```text
 Intent → Blueprint → Swarm → Sprint → Merge → Deliverable
 ```
 
 Scope presets:
 
 | Preset | What runs |
-|--------|-----------|
+| -------- | ----------- |
 | Backend only | 1 sprint: generate backend code |
 | Frontend only | 1 sprint: generate frontend code |
 | Backend + Frontend | 2 sprints: backend → context-loaded frontend |
@@ -378,7 +379,7 @@ Scope presets:
 
 ## Repository Structure
 
-```
+```text
 .
 ├── aoc-cli/aoc_cli/                  # CLI, graph analysis, planning, merge commands
 ├── aoc_supervisor/aoc_supervisor/    # API, Intent Forge, synthesis, governance
@@ -463,7 +464,7 @@ This repository contains patent-pending and trade-secret material. Unauthorized 
 
 ---
 
-# Code Deep Dive — Hot Zones for Model Ingestion
+## Code Deep Dive — Hot Zones for Model Ingestion
 
 > This section collects the most algorithmically dense code in the system.
 > If a model understands these zones + the connective tissue between them,
@@ -479,7 +480,7 @@ This is the mathematical core. It computes **directed Ollivier-Ricci curvature**
 
 ### The Curvature Formula
 
-```
+```text
 κ(x, y) = 1 − W₁(μ_x, μ_y) / d(x, y)
 ```
 
@@ -522,7 +523,7 @@ def _compute_ollivier_ricci_curvature(graph: nx.DiGraph) -> dict:
     return curvature
 ```
 
-### Explainer
+### Explainer — Wasserstein Computation
 
 The function visits every directed edge in the codebase graph. For each edge `(source → target)`:
 
@@ -567,7 +568,7 @@ def _compute_structural_gravity(graph: nx.DiGraph) -> dict:
     return gravity
 ```
 
-### Explainer
+### Explainer — Structural Gravity
 
 "Gravity" is a composite per-node score that answers: *how structurally important is this node in the codebase?* It's a weighted combination of:
 
@@ -598,7 +599,7 @@ def _risk_weight(graph, node):
             + SIDE_EFFECT_BETA * _node_side_effect(graph, node))
 ```
 
-### Explainer
+### Explainer — Risk-Weighted Distributions
 
 The outgoing distribution from a node is not uniform — it's weighted by the "risk" of each neighbor. Risk = `0.70 × capability + 0.30 × side_effect`. This means the Wasserstein distance will be *more sensitive* to edges that connect high-risk nodes. A low-risk node with neighbors that are all low-risk has a very different distribution from a low-risk node that calls into a high-risk subsystem — and curvature will catch that difference.
 
@@ -658,7 +659,7 @@ def _atomic_blocks(node_paths, dark_edges):
     return components, serialization_events
 ```
 
-### Explainer
+### Explainer — Atomic Block Welding
 
 **Union-Find** groups connected components in the graph through Dark Bridge edges. Every dark bridge between two files forces them into the same equivalence class. Once all dark edges are processed, each connected component becomes an **atomic work unit** — single-threaded, never parallel-split.
 
@@ -700,7 +701,7 @@ def _refine_grouped_blocks(grouped, graph):
     return refined
 ```
 
-### Explainer
+### Explainer — Convex Hull Over-Weld Prevention
 
 When many files with similar risk/language/directory are grouped together, the group can become too large for a single agent. But you can't just chunk them arbitrarily — that could slice through a cyclic dependency group. This function uses **Tarjan's SCC decomposition** to find the atomic cycle clusters, then chunks *between* them at the threshold boundary, preserving all intra-cycle integrity.
 
@@ -726,7 +727,7 @@ def _resolve_work_units_and_dependencies(work_units, graph, metrics, giv, node_r
         # Loop: recompute dependencies on the reduced set — may expose new cycles
 ```
 
-### Explainer
+### Explainer — Cycle Weld Resolution
 
 This is the **cycle resolution fixpoint**. After computing the dependency DAG between work units, any cycle means those units cannot be ordered — so they get welded into one atomic block. This process iterates: welding may reduce the graph enough that a new cycle is exposed, which gets welded in turn, until the graph is acyclic. Each iteration is guaranteed to strictly decrease the number of work units, so it terminates.
 
@@ -783,7 +784,7 @@ class Engine:
         )
 ```
 
-### Explainer
+### Explainer — The Engine Loop with Psi Descent Proof
 
 The engine is a **priority-ordered rewrite system** with a lexicographic termination proof:
 
@@ -828,7 +829,7 @@ def clash_pairs(cg):
     return sum(req_count * forbid_count for each (u, v, label) pair)
 ```
 
-### Explainer
+### Explainer — Psi Potential Function
 
 Psi is a **lexicographic well-order** — the engine can't loop forever because:
 
@@ -865,7 +866,7 @@ def apply_a1(cg, worklist, edge):
     _requeue_target_closure(cg, worklist, edge.v)
 ```
 
-### Explainer
+### Explainer — Rule Application (A1: Materialize Target)
 
 When a REQ edge references a target that doesn't exist in the graph, A1 creates it as a `LATENT_UNRESOLVED` node. The domain is the **intersection** of all incoming REQ edge labels' type constraints. For example, if one edge says `edge.v` "writes_to" a `log_sink`, and another says it "calls" a `service`, the intersection is empty → contradictory → the node will remain STUCK. If the labels are undeclared in the schema, that's tracked separately.
 
@@ -914,7 +915,7 @@ def apply_b2(cg, worklist):
     return True
 ```
 
-### Explainer
+### Explainer — B2: SCC Welding
 
 When SCCs violate an acyclic layer constraint, B2 welds them. The operation: all member nodes are replaced with a single `composite` node, all edges are rewired, internal REQ edges are absorbed, and the watch index is rebuilt. The composite inherits the minimum layer and any ROOT/SINK authority from its members. After B2, the engine re-checks stability — welding may expose new violations in the reduced graph.
 
@@ -964,7 +965,7 @@ def tarjan_scc(adj, all_nodes):
     return result
 ```
 
-### Explainer
+### Explainer — Iterative Tarjan SCC (Deterministic)
 
 This is an **iterative** Tarjan SCC algorithm — no recursion, so no Python recursion limit issues even on very large graphs. Critical design choices for determinism:
 
@@ -1031,7 +1032,7 @@ def _handle_contradictions(self, session_id, state, question_id, expected_versio
     return None
 ```
 
-### Explainer
+### Explainer — Contradiction Detection & Merge
 
 The forge session lifecycle: `CREATED → QUESTIONING → CONFLICT_RESOLUTION → VALIDATING → FINAL_CONFIRMATION → FINALIZING → FINALIZED → HANDED_OFF`. Each answer triggers LLM-powered analysis that extracts `facts`, `inferences`, and `assumptions` as structured claims. Detected contradictions pause the session and present resolution options. The entire state machine is idempotency-keyed, so replaying a request returns the existing result.
 
@@ -1072,7 +1073,7 @@ def synthesize_blueprint(request, *, forge_service=None):
     executable_projection["synthesis_strategy"] = strategy
 ```
 
-### Explainer
+### Explainer — Strategy Selection
 
 The synthesizer doesn't guess which strategy to use — it runs **both** and picks the one that leaves fewer dark bridges uncontained. Atomic weld fuses dark bridge pairs into single work units (serializes them). Handoff partition keeps them separate but inserts a governance handoff ticket requirement. The metric `_remaining_dark_bridge_count` counts how many dark bridge pairs cross work unit boundaries after partitioning — lower is better.
 
@@ -1115,7 +1116,7 @@ def _topological_order(capabilities, structural_rank):
     return ordered
 ```
 
-### Explainer
+### Explainer — Topological Sort with Heap Tiebreaker
 
 Kahn's algorithm with a **heap** instead of a simple queue ensures determinism: when multiple capabilities become ready simultaneously, the one with better structural rank (derived from topology placement in the codebase graph) executes first. This guarantees reproducible ordering regardless of dict iteration order.
 
@@ -1159,7 +1160,7 @@ def parse_prompt(prompt):
     # ... build MoatProfile with capabilities, risk_flags, prohibitions, paths
 ```
 
-### Explainer
+### Explainer — Keyword-to-Capability Mapping
 
 Pure static analysis. No API calls, no embeddings, no model inference. The profiler normalizes the prompt, checks each word against fixed keyword tuples, and builds a capability profile. Dangerous phrases attach additional prohibitions (e.g., "rm -rf" triggers "no recursive force deletion"). This runs in microseconds and is fully deterministic — used for early guard binding before any work begins.
 
@@ -1207,7 +1208,7 @@ class HandoffTicket:
     resolution_commit: str | None = None
 ```
 
-### Explainer
+### Explainer — GIV Schema & Enforcement
 
 The GIV is not just data — it's a **boundary object** with defined semantics:
 
@@ -1241,7 +1242,7 @@ def sanitize_blocked_reason(reason):
     ...
 ```
 
-### Explainer
+### Explainer — Vocabulary Rewriting
 
 The entire customer-facing surface is filtered through this layer. "Shadow Bridge" becomes "Coupling Review," "Dark Bridge" becomes "Structural Weld," "automatic rejection" becomes "integrity floor trip." The underlying math doesn't change — just the vocabulary. This lets operators use the full technical vocabulary while customers get plain language.
 
@@ -1251,7 +1252,7 @@ The entire customer-facing surface is filtered through this layer. "Shadow Bridg
 
 ### End-to-End Pipeline Flow
 
-```
+```text
 User prompt
     │
     ▼
@@ -1310,7 +1311,7 @@ def run_pipeline(payload):
     }
 ```
 
-### Explainer
+### Explainer — Runtime Pipeline (End-to-End Deterministic)
 
 This is the **narrow deterministic path** through the system: normalize input (sorting all dicts, enforcing schemas) → build constraint graph → resolve (deterministic engine loop) → extract work units → execute mock steps. One input always produces one output — no randomness, no LLM calls, no scheduler cleverness. This path is the "boring correct core" that the rest of the system builds around.
 
@@ -1319,7 +1320,7 @@ This is the **narrow deterministic path** through the system: normalize input (s
 ## Summary: What Fable Needs
 
 | Knowledge Area | Files | What It Encodes |
-|---|---|---|
+| --- | --- | --- |
 | **Gravity math** | `gravity.py` | Ollivier-Ricci curvature, Wasserstein-1 OT, risk-weighted distributions, Dark Bridge detection |
 | **Blueprint partitioning** | `blueprint.py` | Union-Find atomic welds, SCC-aware chunking, cycle resolution fixpoint, convex hull prevention |
 | **Constraint resolution** | `resolution_v3/*.py` | Deterministic rewrite system, Psi lexicographic termination proof, A1/A2/B1/B2 rules, iterative Tarjan |
