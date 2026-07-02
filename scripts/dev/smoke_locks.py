@@ -199,6 +199,7 @@ def main() -> None:
     call = client(args.base, key)
     prefix = "/api/v1/intent-forge"
     plan_mode = ""
+    plan_forced_blockers = 0
 
     print(f"Phase-gated smoke against {args.base}\n")
 
@@ -307,6 +308,7 @@ def main() -> None:
                 if n > 4:
                     preview += f"; … (+{n - 4} more)"
                 print(f"        overridden_blockers: {preview}")
+            plan_forced_blockers = n
             plan_mode = f"force override ({n} blockers overridden)"
         else:
             plan_mode = mode
@@ -356,12 +358,18 @@ def main() -> None:
         p.fail(f"HANDED_OFF but missing unlocks {sorted(missing)}; got {unlocks}")
     p.ok(f"status={status} · unlocks={sorted(expected)}")
 
-    print("\nRESULT: SMOKE PASSED — every stage unlock was earned through the real lifecycle.")
-    if "force override" in plan_mode:
+    forced_plan = plan_forced_blockers > 0
+    if forced_plan:
         print(
-            "        Plan phase used force=True because non-forced finalize cannot satisfy "
-            "domain-coverage blockers with GAIJINN_FAKE_REASONING=1 in this build."
+            "\nRESULT: SMOKE PASSED WITH FORCE OVERRIDE — Plan stage not honestly earnable "
+            f"in this build ({plan_forced_blockers} domain-coverage blocker(s) overridden via force=True)."
         )
+        print(
+            "        Build, Receipts, X-Ray/Map, and Drift/Ship were earned through the real "
+            "lifecycle; Plan used the documented escape hatch, not full validation."
+        )
+    else:
+        print("\nRESULT: SMOKE PASSED — every stage unlock was earned through the real lifecycle.")
     print(f"session {sid}: Build → Receipts → Plan → X-Ray/Map → Drift/Ship")
 
 
