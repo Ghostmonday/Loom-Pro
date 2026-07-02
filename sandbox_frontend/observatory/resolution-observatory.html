@@ -4,7 +4,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Loom Resolution Observatory — replayable flight recorder for the resolution_v3 constraint engine."/>
 <title>Loom | Resolution Observatory</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><text x="2" y="19" font-size="18" fill="%239085e9">⬡</text></svg>'/>
 <style>
   .viz-root, :root {
     --page: #0d0d0d;
@@ -32,11 +34,20 @@
   body { background: var(--page); color: var(--text-primary); font-family: var(--sans);
          padding: 28px clamp(16px, 4vw, 56px) 64px; }
   a { color: var(--series-1); }
+  ::selection { background: rgba(144,133,233,.35); }
+  button:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--series-1); outline-offset: 2px; border-radius: 6px; }
+  kbd { font: 600 10px var(--mono); color: var(--text-secondary); border: 1px solid var(--axis);
+        border-bottom-width: 2px; border-radius: 4px; padding: 1px 5px; background: var(--surface-2); }
 
   header .kicker { font: 600 11px/1 var(--mono); letter-spacing: .18em; color: var(--text-muted);
                    text-transform: uppercase; }
-  header h1 { font-size: clamp(22px, 3vw, 32px); font-weight: 650; margin: 8px 0 4px; }
+  header h1 { font-size: clamp(22px, 3vw, 32px); font-weight: 650; margin: 8px 0 4px;
+              display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   header .sub { color: var(--text-secondary); max-width: 72ch; font-size: 14px; }
+  .status-pill { font: 700 11px var(--mono); letter-spacing: .08em; padding: 5px 12px;
+                 border-radius: 999px; border: 1px solid var(--status-good); color: var(--status-good);
+                 box-shadow: 0 0 14px rgba(12,163,12,.25); white-space: nowrap; }
 
   .doctrine { display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
               margin: 18px 0 26px; font: 500 11px/1.9 var(--mono); color: var(--text-muted); }
@@ -50,10 +61,13 @@
           padding: 14px 16px; }
   .tile .label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
                  color: var(--text-muted); margin-bottom: 6px; }
-  .tile .value { font-size: 22px; font-weight: 650; display: flex; align-items: center; gap: 8px; }
+  .tile .value { font-size: 22px; font-weight: 650; display: flex; align-items: center; gap: 8px;
+                 font-variant-numeric: tabular-nums; }
   .tile .value .icon { font-size: 16px; }
   .tile .detail { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
   .tile .mono { font-family: var(--mono); font-size: 15px; }
+  .tile.copyable { cursor: copy; transition: border-color .15s; }
+  .tile.copyable:hover { border-color: var(--accent-weld); }
   .good { color: var(--status-good); } .warning { color: var(--status-warning); }
   .critical { color: var(--status-critical); } .weld { color: var(--accent-weld); }
 
@@ -66,18 +80,28 @@
   @media (max-width: 1080px) { .layout { grid-template-columns: 1fr; } }
 
   /* transport */
-  .transport { display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-               background: var(--surface-2); border: 1px solid var(--border);
+  .transport { background: var(--surface-2); border: 1px solid var(--border);
                border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; }
+  .transport .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .transport button { background: var(--surface-1); border: 1px solid var(--border); color: var(--text-primary);
-                      border-radius: 8px; font: 600 13px var(--sans); padding: 7px 14px; cursor: pointer; }
+                      border-radius: 8px; font: 600 13px var(--sans); padding: 7px 13px; cursor: pointer;
+                      transition: border-color .15s; }
   .transport button:hover { border-color: var(--text-muted); }
+  .transport button.step { padding: 7px 10px; font-family: var(--mono); }
   .transport input[type=range] { flex: 1; min-width: 160px; accent-color: var(--series-1); }
   .phase-badge { font: 600 11px var(--mono); letter-spacing: .06em; padding: 5px 10px;
                  border-radius: 999px; border: 1px solid var(--border); color: var(--text-secondary); }
   .phase-badge[data-phase="STUCK"] { color: var(--status-warning); border-color: var(--status-warning); }
   .phase-badge[data-phase="CANONICAL"] { color: var(--status-good); border-color: var(--status-good); }
-  .frame-label { font: 500 12px var(--mono); color: var(--text-muted); min-width: 15ch; }
+  .phase-badge[data-phase="PROPOSALS"] { color: var(--accent-weld); border-color: var(--accent-weld); }
+  .frame-label { font: 500 12px var(--mono); color: var(--text-muted); min-width: 19ch; }
+  .frame-count { font: 500 11px var(--mono); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .phase-strip { display: flex; height: 6px; border-radius: 3px; overflow: hidden;
+                 margin: 8px 2px 2px; cursor: pointer; }
+  .phase-strip span { height: 100%; opacity: .45; transition: opacity .15s; }
+  .phase-strip span.done { opacity: 1; }
+  .kbd-hint { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+  @media (max-width: 700px) { .kbd-hint { display: none; } }
 
   svg text { font-family: var(--sans); }
   .tick { font-size: 10.5px; fill: var(--text-muted); font-variant-numeric: tabular-nums;
@@ -99,38 +123,52 @@
   .gedge-label { font: 500 9px var(--mono); fill: var(--text-muted); }
   .glegend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 11.5px;
              color: var(--text-secondary); }
+  @keyframes materialize { 0% { opacity: 0; transform: scale(.92); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes halo { 0% { stroke-opacity: .9; stroke-width: 10; } 100% { stroke-opacity: 0; stroke-width: 22; } }
+  @keyframes edgeflash { 0%,100% { stroke-opacity: .9; } 50% { stroke-opacity: .25; } }
+  .gchanged { animation: materialize .45s cubic-bezier(.2,0,0,1); transform-origin: center; transform-box: fill-box; }
+  .ghalo { animation: halo .9s ease-out forwards; fill: none; pointer-events: none; }
+  .geflash { animation: edgeflash .7s ease-in-out 2; }
 
-  /* ledger + log */
-  .log { font: 12px/1.75 var(--mono); color: var(--text-secondary); max-height: 260px;
-         overflow-y: auto; padding-right: 6px; }
+  /* log + ledger */
+  .log { font: 12px/1.75 var(--mono); color: var(--text-secondary); max-height: 280px;
+         overflow-y: auto; padding-right: 6px; scroll-behavior: smooth; }
   .log .past { opacity: .45; }
   .log .now { color: var(--text-primary); }
+  .log .ftag { color: var(--text-muted); font-size: 10px; user-select: none; }
   .log .rule { font-weight: 700; }
   .rule-A1 { color: var(--series-1); } .rule-A2 { color: var(--series-2); }
   .rule-B1 { color: var(--status-serious); } .rule-B2 { color: var(--series-3); }
   .rule-A3 { color: var(--accent-weld); }
 
   .card { border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2);
-          padding: 13px 15px; margin-bottom: 12px; }
-  .card.dim { opacity: .55; }
+          padding: 13px 15px; margin-bottom: 12px; transition: opacity .3s; }
+  .card.dim { opacity: .5; }
   .card .head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
   .pid { font: 700 12px var(--mono); color: var(--text-primary); }
   .kind { font: 600 10px var(--mono); color: var(--text-secondary); border: 1px solid var(--border);
           padding: 3px 7px; border-radius: 999px; }
   .verdict { margin-left: auto; font: 700 11px var(--sans); display: flex; gap: 6px; align-items: center; }
   .checks { display: grid; gap: 3px; margin: 8px 0; }
-  .check { display: flex; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+  .check { display: flex; gap: 8px; font-size: 12px; color: var(--text-secondary); align-items: baseline; }
+  .check .num { font: 600 10px var(--mono); color: var(--text-muted); width: 12px; }
   .check .mark { width: 14px; text-align: center; font-weight: 700; }
   .check .detail { color: var(--text-muted); }
   .reason { font: 12px var(--mono); color: var(--text-secondary); border-left: 2px solid var(--axis);
             padding-left: 10px; margin-top: 6px; }
   .psijump { font: 600 12px var(--mono); color: var(--text-secondary); margin-top: 6px;
              font-variant-numeric: tabular-nums; }
+  .firing { border-left: 2px solid transparent; padding-left: 12px; margin-left: 2px; transition: border-color .3s; }
+  .firing.active { border-left-color: var(--accent-weld); }
+  .firing.pending { opacity: .35; }
   .firing-title { font: 650 12px var(--sans); color: var(--text-muted); text-transform: uppercase;
-                  letter-spacing: .08em; margin: 16px 0 8px; display:flex; align-items:center; gap:10px; }
-  .firing-title.active { color: var(--text-primary); }
+                  letter-spacing: .08em; margin: 16px 0 8px; display: flex; align-items: center; gap: 10px;
+                  flex-wrap: wrap; }
+  .firing.active .firing-title { color: var(--text-primary); }
   .selected-chip { font: 600 10px var(--mono); color: var(--status-good);
                    border: 1px solid var(--status-good); border-radius: 999px; padding: 2px 8px; }
+  .pending-chip { font: 600 10px var(--mono); color: var(--text-muted);
+                  border: 1px dashed var(--axis); border-radius: 999px; padding: 2px 8px; }
 
   details { margin-top: 10px; }
   summary { cursor: pointer; font-size: 12.5px; color: var(--text-secondary); }
@@ -142,13 +180,20 @@
 
   footer { color: var(--text-muted); font-size: 12px; margin-top: 26px; line-height: 1.7; }
   footer code { font-family: var(--mono); color: var(--text-secondary); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gchanged, .ghalo, .geflash { animation: none; }
+    .ghalo { display: none; }
+    .log { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
 </style>
 </head>
 <body class="viz-root">
 
 <header>
   <div class="kicker">LOOM · GOVERNANCE FLIGHT RECORDER</div>
-  <h1>Resolution Observatory</h1>
+  <h1>Resolution Observatory <span class="status-pill" id="headline-status"></span></h1>
   <p class="sub">Every pixel below is driven by a recorded run of the production
   <code style="font-family:var(--mono)">resolution_v3</code> engine — no mocks, no canned animation.
   Scrub the timeline to replay the run decision-by-decision. Identical inputs reproduce this
@@ -159,10 +204,17 @@
 <div class="tiles" id="tiles"></div>
 
 <div class="transport">
-  <button id="play">▶ Replay</button>
-  <span class="frame-label" id="frameLabel"></span>
-  <input type="range" id="scrub" min="0" value="0" aria-label="Replay timeline scrubber"/>
-  <span class="phase-badge" id="phase"></span>
+  <div class="row">
+    <button id="play" aria-pressed="false">▶ Replay</button>
+    <button id="stepBack" class="step" aria-label="Previous frame">‹</button>
+    <button id="stepFwd" class="step" aria-label="Next frame">›</button>
+    <span class="frame-label" id="frameLabel" aria-live="polite"></span>
+    <input type="range" id="scrub" min="0" value="0" aria-label="Replay timeline scrubber"/>
+    <span class="frame-count" id="frameCount"></span>
+    <span class="phase-badge" id="phase"></span>
+    <span class="kbd-hint"><kbd>←</kbd> <kbd>→</kbd> step · <kbd>space</kbd> play</span>
+  </div>
+  <div class="phase-strip" id="phaseStrip" title="Click to jump"></div>
 </div>
 
 <div class="layout">
@@ -171,7 +223,8 @@
       <h2>Constraint graph — live state</h2>
       <p class="caption">Node status is shown by icon <em>and</em> color: KNOWN resolves,
       LATENT waits, welds fuse. Dashed ghosts are required targets that do not exist yet
-      (growth debt). FORBID edges stay visible even after they win.</p>
+      (growth debt). FORBID edges stay visible even after they win. Whatever changed in the
+      current frame glows.</p>
       <svg id="graph" viewBox="0 0 640 420" width="100%" role="img"
            aria-label="Constraint graph state at the selected replay frame"></svg>
       <div class="glegend" id="glegend"></div>
@@ -190,21 +243,21 @@
         <table id="psitable" aria-label="Psi components per frame"></table>
       </details>
     </div>
-  </div>
 
-  <div>
     <div class="panel">
       <h2>Evidence ledger — engine log</h2>
       <p class="caption">The engine narrates every rewrite it performs. This is the replayable
       evidence trail: log lines below light up as the timeline reaches them.</p>
       <div class="log" id="log" aria-live="polite"></div>
     </div>
+  </div>
 
+  <div>
     <div class="panel">
       <h2>Proposal boundary — the model proposes, the engine decides</h2>
       <p class="caption">At STUCK, LLM proposals slide under the safety glass. Each is applied
-      to a speculative copy and run through the check gauntlet; per firing, exactly one winner
-      is selected by a deterministic rule — never by model preference.</p>
+      to a speculative copy and run through the seven-check gauntlet; per firing, exactly one
+      winner is selected by a deterministic rule — never by model preference.</p>
       <div id="ledger"></div>
     </div>
   </div>
@@ -213,11 +266,13 @@
 <footer>
   Regenerate this exact page from source of truth:
   <code>python3 sandbox_frontend/observatory/generate_resolution_trace.py</code> —
-  the replay digest printed there must match the one in the header tile, or the trace is stale.<br/>
+  the replay digest printed there must match the one in the digest tile (click it to copy),
+  or the trace is stale.<br/>
   Loom · Neural Draft LLC · resolution_v3 · <span id="meta"></span>
 </footer>
 
 <div class="tooltip" id="tooltip"></div>
+<noscript><p style="color:#e66767">This page replays a recorded engine trace and requires JavaScript.</p></noscript>
 <script src="resolution-trace.js"></script>
 <script>
 (() => {
@@ -238,38 +293,54 @@
   frames.push({ kind: "final", label: "post-acceptance resolve", psi: T.final.psi,
                 snapshot: T.final.snapshot, log: T.final.log_tail, phase: T.final.status });
 
-  /* ---------- doctrine strip ---------- */
+  const PHASE_COLOR = { RESOLVING: "var(--axis)", STUCK: "var(--status-warning)",
+                        PROPOSALS: "var(--accent-weld)", CANONICAL: "var(--status-good)",
+                        STUCK_FINAL: "var(--status-warning)" };
+
+  /* ---------- header + doctrine ---------- */
+  $("headline-status").textContent = `RUN ⇒ ${T.final.status}`;
   const chain = ["intent","graph","resolved structure","scoped work","execution","evidence","replay","trust"];
   $("doctrine").innerHTML = chain
     .map((w, i) => `<b class="${i <= 6 ? "lit" : ""}">${w}</b>`)
     .join('<span class="arrow"> → </span>');
 
   /* ---------- stat tiles ---------- */
-  const decisions = T.proposals.firings.flatMap(f => f.evaluations.map(e => e.decision));
+  const finalDecision = {};
+  T.proposals.firings.forEach(f => f.evaluations.forEach(e =>
+    finalDecision[e.proposal.proposal_id] = e.decision.status));
+  const nProposals = Object.keys(finalDecision).length;
   const nAccepted = T.proposals.firings.filter(f => f.selected).length;
   const psi0 = frames[0].psi, psiN = T.final.psi;
   const fmtPsi = (p) => `(${p.join(", ")})`;
+  const engineSteps = T.resolution.steps.length - 1;
   $("tiles").innerHTML = `
     <div class="tile"><div class="label">Terminal status</div>
       <div class="value good"><span class="icon">✓</span> ${T.final.status}</div>
       <div class="detail">stable · zero validation errors</div></div>
     <div class="tile"><div class="label">Ψ descent</div>
       <div class="value mono">${fmtPsi(psi0)} → ${fmtPsi(psiN)}</div>
-      <div class="detail">strict decrease enforced every rewrite</div></div>
+      <div class="detail">${engineSteps} engine steps · strict decrease every rewrite</div></div>
     <div class="tile"><div class="label">Proposal gauntlet</div>
-      <div class="value">${nAccepted} <span style="font-size:13px;color:var(--text-secondary)">accepted</span>
-        · ${decisions.length - nAccepted} <span style="font-size:13px;color:var(--text-secondary)">rejected</span></div>
+      <div class="value">${nProposals} <span style="font-size:13px;color:var(--text-secondary)">proposed</span>
+        · ${nAccepted} <span style="font-size:13px;color:var(--text-secondary)">accepted</span></div>
       <div class="detail">one winner per firing, deterministic selection</div></div>
-    <div class="tile"><div class="label">Replay digest</div>
-      <div class="value mono weld">${T.meta.replay_digest}</div>
-      <div class="detail">same inputs ⇒ same digest, always</div></div>`;
+    <div class="tile copyable" id="digestTile" title="Click to copy digest"><div class="label">Replay digest</div>
+      <div class="value mono weld" id="digestVal">${T.meta.replay_digest}</div>
+      <div class="detail" id="digestHint">same inputs ⇒ same digest · click to copy</div></div>`;
   $("meta").textContent = `trace ${T.meta.generated} · ${T.meta.engine}`;
+  $("digestTile").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(T.meta.replay_digest);
+      $("digestHint").textContent = "copied ✓";
+      setTimeout(() => $("digestHint").textContent = "same inputs ⇒ same digest · click to copy", 1600);
+    } catch { $("digestHint").textContent = T.meta.replay_digest; }
+  });
 
   /* ---------- graph layout (deterministic, hand-placed) ---------- */
   const POS = {
     ingest_api:   [90, 120],  billing_core: [300, 150],
-    audit_buffer: [520, 90],  metrics_hub:  [300, 330],
-    retry_daemon: [90, 300],  queue_mgr:    [520, 300],
+    audit_buffer: [520, 90],  metrics_hub:  [520, 370],
+    retry_daemon: [90, 300],  queue_mgr:    [520, 260],
   };
   const posFor = (id) => {
     if (POS[id]) return POS[id];
@@ -295,18 +366,35 @@
     <span><span style="color:var(--status-critical)">⊘</span> FORBID</span>
     <span style="color:var(--text-muted)">╌ deactivated</span>`;
 
-  function renderGraph(frame) {
+  /* diff helpers: what changed between the previous frame and this one */
+  function diffSnapshots(prev, cur) {
+    const changedNodes = new Set(), changedEdges = new Set();
+    if (!prev) return { changedNodes, changedEdges };
+    const pn = Object.fromEntries(prev.nodes.map(n => [n.id, n]));
+    for (const n of cur.nodes) {
+      const o = pn[n.id];
+      if (!o || o.status !== n.status || o.type !== n.type ||
+          JSON.stringify(o.domain) !== JSON.stringify(n.domain)) changedNodes.add(n.id);
+    }
+    cur.edges.forEach((e, i) => {
+      const o = prev.edges[i];
+      if (!o || o.active !== e.active || o.u !== e.u || o.v !== e.v) changedEdges.add(i);
+    });
+    return { changedNodes, changedEdges };
+  }
+
+  function renderGraph(frame, prevFrame) {
     const svg = $("graph");
     const snap = frame.snapshot;
+    const { changedNodes, changedEdges } = diffSnapshots(prevFrame && prevFrame.snapshot, snap);
     const nodeIds = new Set(snap.nodes.map(n => n.id));
     const ghosts = [...new Set(snap.edges.filter(e => e.active && !nodeIds.has(e.v)).map(e => e.v))];
     let defs = `<defs>
       <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M0,0 L8,4 L0,8 z" fill="#898781"/></marker></defs>`;
-    // parallel-edge offset bookkeeping
     const seen = {};
-    const edgesSvg = snap.edges.map((e) => {
-      const [x1, y1] = posFor(e.u), [x2, y2] = nodeIds.has(e.v) ? posFor(e.v) : posFor(e.v);
+    const edgesSvg = snap.edges.map((e, i) => {
+      const [x1, y1] = posFor(e.u), [x2, y2] = posFor(e.v);
       const key = [e.u, e.v].sort().join("|");
       seen[key] = (seen[key] || 0) + 1;
       const bend = (seen[key] - 1) * 36 * (seen[key] % 2 ? 1 : -1);
@@ -318,8 +406,9 @@
       const stroke = forbid ? "var(--status-critical)" : "#898781";
       const dash = e.active ? (e.modality === "PARTIAL" ? "3 4" : "none") : "5 5";
       const opacity = e.active ? 0.9 : 0.35;
+      const flash = changedEdges.has(i) ? "geflash" : "";
       const lx = mx + nx * (bend * 0.6 + 12), ly = my + ny * (bend * 0.6 + 12);
-      return `<path d="M${x1},${y1} Q${cx},${cy} ${x2},${y2}" fill="none"
+      return `<path class="${flash}" d="M${x1},${y1} Q${cx},${cy} ${x2},${y2}" fill="none"
                 stroke="${stroke}" stroke-width="2" stroke-dasharray="${dash}"
                 opacity="${opacity}" marker-end="${forbid ? "" : "url(#arr)"}"/>
               <text x="${lx}" y="${ly}" class="gedge-label" text-anchor="middle"
@@ -336,7 +425,12 @@
         ? (n.domain.length ? `domain {${n.domain.join(", ")}}` : "domain ∅ (undeclared label)")
         : (n.type || "");
       const w = Math.max(112, short.length * 7.4 + 44);
-      return `<g class="gnode" data-id="${n.id}" data-tip="${n.id} · ${st.name}${sub ? " · " + sub : ""}">
+      const changed = changedNodes.has(n.id);
+      const halo = changed
+        ? `<rect class="ghalo" x="${x - w/2}" y="${y - 24}" width="${w}" height="48" rx="10"
+             stroke="${color}"/>` : "";
+      return `${halo}<g class="gnode ${changed ? "gchanged" : ""}" data-id="${n.id}"
+        data-tip="${n.id} · ${isWeld ? "weld" : st.name}${sub ? " · " + sub : ""}">
         <rect x="${x - w/2}" y="${y - 24}" width="${w}" height="48" rx="10"
               fill="var(--surface-2)" stroke="${color}" stroke-width="2"/>
         <text x="${x - w/2 + 14}" y="${y + 5}" fill="${color}" font-size="15" font-weight="700">${icon}</text>
@@ -360,11 +454,10 @@
     { key: 2, name: "cyclic debt",     color: "var(--series-3)" },
     { key: 3, name: "clash pairs",     color: "var(--series-4)" },
   ];
-  const M = { l: 42, r: 118, t: 14, b: 34 }, W = 640, H = 260;
+  const M = { l: 42, r: 118, t: 18, b: 34 }, W = 640, H = 260;
   const X = (i) => M.l + (i / (frames.length - 1)) * (W - M.l - M.r);
   const yMax = Math.max(...frames.flatMap(f => f.psi));
   const Y = (v) => H - M.b - (v / yMax) * (H - M.t - M.b);
-  let cursorX = null;
 
   function renderPsi(activeIdx) {
     const grid = [...Array(yMax + 1).keys()].map(v =>
@@ -373,21 +466,24 @@
     const stuckIdx = frames.findIndex(f => f.phase === "STUCK");
     const bands = `<rect x="${X(stuckIdx)}" y="${M.t}" width="${X(frames.length - 1) - X(stuckIdx)}"
         height="${H - M.t - M.b}" fill="var(--accent-weld)" opacity="0.06"/>
-      <text x="${X(stuckIdx) + 6}" y="${M.t + 12}" class="tick">proposal boundary →</text>`;
+      <line x1="${X(stuckIdx)}" x2="${X(stuckIdx)}" y1="${M.t}" y2="${H - M.b}"
+        stroke="var(--status-warning)" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>
+      <text x="${X(stuckIdx) + 6}" y="${M.t + 11}" class="tick" fill="var(--status-warning)">STUCK — proposal boundary →</text>`;
     const lines = SERIES.map(s => {
       let d = "";
       frames.forEach((f, i) => {
         const x = X(i), y = Y(f.psi[s.key]);
-        d += i === 0 ? `M${x},${y}` : `H${x}V${y}`;   /* step-after */
+        d += i === 0 ? `M${x},${y}` : `H${x}V${y}`;
       });
       const last = frames[frames.length - 1].psi[s.key];
-      const ly = Y(last) + (s.key * 13 - 18); /* de-collide end labels */
+      const peak = Math.max(...frames.map(f => f.psi[s.key]));
+      const ly = Y(last) + (s.key * 13 - 18);
       return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2"
                 stroke-linejoin="round"/>
-              <text x="${W - M.r + 8}" y="${ly}" class="serieslabel" fill="${s.color}">${s.name} · ${last}</text>`;
+              <text x="${W - M.r + 8}" y="${ly}" class="serieslabel" fill="${s.color}">${s.name} · ${peak}→${last}</text>`;
     }).join("");
     const marks = SERIES.map(s => frames.map((f, i) =>
-      `<circle cx="${X(i)}" cy="${Y(f.psi[s.key])}" r="3" fill="${s.color}"
+      `<circle cx="${X(i)}" cy="${Y(f.psi[s.key])}" r="${i === activeIdx ? 4.5 : 3}" fill="${s.color}"
          stroke="var(--surface-1)" stroke-width="2"/>`).join("")).join("");
     const cursor = `<line x1="${X(activeIdx)}" x2="${X(activeIdx)}" y1="${M.t}" y2="${H - M.b}"
         stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="2 3"/>`;
@@ -405,19 +501,22 @@
   /* table view */
   $("psitable").innerHTML =
     `<tr><th style="text-align:left">frame</th>${SERIES.map(s => `<th>${s.name}</th>`).join("")}</tr>` +
-    frames.map((f, i) =>
+    frames.map((f) =>
       `<tr><td style="text-align:left">${f.label}</td>${f.psi.map(v => `<td>${v}</td>`).join("")}</tr>`).join("");
 
   /* ---------- log ---------- */
   const allLog = [];
   frames.forEach((f, i) => (f.log || []).forEach(line => allLog.push({ frame: i, line })));
   function renderLog(activeIdx) {
+    let lastTag = -1;
     $("log").innerHTML = allLog.map(({ frame, line }) => {
       if (frame > activeIdx) return "";
       const cls = frame === activeIdx ? "now" : "past";
+      const tag = frame !== lastTag ? `<span class="ftag">[${frames[frame].label}]</span> ` : "";
+      lastTag = frame;
       const decorated = line.replace(/^\[(A1|A2->D1|B1|B2|B2-self|A3)\]/,
         (m, r) => `<span class="rule rule-${r.startsWith("A2") ? "A2" : r.startsWith("B2") ? "B2" : r}">${m}</span>`);
-      return `<div class="${cls}">${decorated}</div>`;
+      return `<div class="${cls}">${tag}${decorated}</div>`;
     }).join("") || `<div class="past">— no rewrites yet; worklist seeded canonically —</div>`;
     $("log").scrollTop = $("log").scrollHeight;
   }
@@ -425,17 +524,17 @@
   /* ---------- proposal ledger ---------- */
   function renderLedger(activeIdx) {
     const activeFiring = frames[activeIdx].firing ?? null;
-    const reached = frames.slice(0, activeIdx + 1).map(f => f.firing).filter(Boolean);
+    const reached = new Set(frames.slice(0, activeIdx + 1).map(f => f.firing).filter(Boolean));
     $("ledger").innerHTML = T.proposals.firings.map(f => {
       const isActive = f.firing === activeFiring;
-      const isReached = reached.includes(f.firing);
+      const isReached = reached.has(f.firing);
       const cards = f.evaluations.map(ev => {
         const d = ev.decision, ok = d.status === "ACCEPTED";
-        const checks = ev.checks.map(c => {
+        const checks = ev.checks.map((c, ci) => {
           const mark = c.pass === true ? `<span class="good">✓</span>`
                      : c.pass === false ? `<span class="critical">✕</span>`
                      : `<span style="color:var(--text-muted)">·</span>`;
-          return `<div class="check"><span class="mark">${mark}</span>
+          return `<div class="check"><span class="num">${ci + 1}</span><span class="mark">${mark}</span>
                   <span>${c.name}</span><span class="detail">— ${c.detail}</span></div>`;
         }).join("");
         const jump = d.psi_after
@@ -448,10 +547,13 @@
           <div class="checks">${checks}</div>
           <div class="reason">${d.reason}</div>${jump}</div>`;
       }).join("");
-      return `<div class="firing-title ${isActive ? "active" : ""}">Firing ${f.firing}
-          ${f.selected ? `<span class="selected-chip">engine selected ${f.selected}</span>`
-                       : `<span style="color:var(--text-muted)">no acceptable proposal — boundary closes</span>`}</div>
-        ${isActive || !isReached || activeIdx >= frames.length - 1 || true ? cards : ""}`;
+      const stateChip = f.selected
+        ? `<span class="selected-chip">engine selected ${f.selected}</span>`
+        : `<span style="color:var(--text-muted);font:500 10px var(--mono)">no acceptable proposal — boundary closes</span>`;
+      const pendingChip = !isReached ? `<span class="pending-chip">awaiting replay</span>` : "";
+      return `<div class="firing ${isActive ? "active" : ""} ${!isReached ? "pending" : ""}">
+        <div class="firing-title">Firing ${f.firing} ${stateChip} ${pendingChip}</div>
+        ${cards}</div>`;
     }).join("");
   }
 
@@ -462,10 +564,6 @@
     tip.style.left = Math.min(x + 14, innerWidth - 340) + "px";
     tip.style.top = (y + 14) + "px";
   }
-  document.addEventListener("mouseover", (e) => {
-    const g = e.target.closest("[data-tip]");
-    if (g) showTip(g.dataset.tip, e.clientX, e.clientY);
-  });
   document.addEventListener("mousemove", (e) => {
     const g = e.target.closest("[data-tip]");
     if (g) showTip(g.dataset.tip, e.clientX, e.clientY);
@@ -484,37 +582,75 @@
         `<span class="swatch" style="background:${s.color};display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px"></span>${s.name}: <b>${f.psi[s.key]}</b>`
       ).join("<br/>"), e.clientX, e.clientY);
     });
+    hit.addEventListener("click", (e) => {
+      const rect = $("psi").getBoundingClientRect();
+      const px = ((e.clientX - rect.left) / rect.width) * W;
+      const i = Math.max(0, Math.min(frames.length - 1,
+        Math.round(((px - M.l) / (W - M.l - M.r)) * (frames.length - 1))));
+      setFrame(i);
+    });
     hit.addEventListener("mouseleave", () => tip.style.display = "none");
   }
+
+  /* ---------- phase strip ---------- */
+  function renderPhaseStrip(activeIdx) {
+    $("phaseStrip").innerHTML = frames.map((f, i) =>
+      `<span data-i="${i}" class="${i <= activeIdx ? "done" : ""}"
+         style="flex:1;background:${PHASE_COLOR[f.phase] || "var(--axis)"}"
+         title="${f.label}"></span>`).join("");
+  }
+  $("phaseStrip").addEventListener("click", (e) => {
+    const seg = e.target.closest("[data-i]");
+    if (seg) setFrame(+seg.dataset.i);
+  });
 
   /* ---------- transport ---------- */
   const scrub = $("scrub");
   scrub.max = frames.length - 1;
   let playing = null;
+  let prevIdx = null;
   function setFrame(i) {
     i = Math.max(0, Math.min(frames.length - 1, i));
+    const prevFrame = prevIdx !== null && prevIdx === i - 1 ? frames[prevIdx] : null;
+    prevIdx = i;
     scrub.value = i;
     const f = frames[i];
     $("frameLabel").textContent = f.label;
+    $("frameCount").textContent = `${i + 1}/${frames.length}`;
     const badge = $("phase");
     badge.textContent = f.phase;
     badge.dataset.phase = f.phase;
-    renderGraph(f); renderPsi(i); renderLog(i); renderLedger(i);
+    renderGraph(f, prevFrame); renderPsi(i); renderLog(i); renderLedger(i); renderPhaseStrip(i);
   }
-  scrub.addEventListener("input", () => setFrame(+scrub.value));
+  const dwellFor = (f) =>
+    f.phase === "STUCK" ? 2000 : f.kind === "firing" ? 1900 : f.kind === "final" ? 2200 : 950;
+  function stopPlay() {
+    if (playing) clearTimeout(playing);
+    playing = null;
+    $("play").textContent = "▶ Replay";
+    $("play").setAttribute("aria-pressed", "false");
+  }
+  function playTick() {
+    const next = +scrub.value + 1;
+    setFrame(next);
+    if (next >= frames.length - 1) { stopPlay(); return; }
+    playing = setTimeout(playTick, dwellFor(frames[next]));
+  }
   $("play").addEventListener("click", () => {
-    if (playing) { clearInterval(playing); playing = null; $("play").textContent = "▶ Replay"; return; }
+    if (playing) { stopPlay(); return; }
     if (+scrub.value >= frames.length - 1) setFrame(0);
     $("play").textContent = "⏸ Pause";
-    playing = setInterval(() => {
-      const next = +scrub.value + 1;
-      setFrame(next);
-      if (next >= frames.length - 1) { clearInterval(playing); playing = null; $("play").textContent = "▶ Replay"; }
-    }, 1100);
+    $("play").setAttribute("aria-pressed", "true");
+    playing = setTimeout(playTick, dwellFor(frames[+scrub.value]));
   });
+  $("stepBack").addEventListener("click", () => { stopPlay(); setFrame(+scrub.value - 1); });
+  $("stepFwd").addEventListener("click", () => { stopPlay(); setFrame(+scrub.value + 1); });
+  scrub.addEventListener("input", () => { stopPlay(); setFrame(+scrub.value); });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") setFrame(+scrub.value + 1);
-    if (e.key === "ArrowLeft") setFrame(+scrub.value - 1);
+    if (e.target.matches("input, textarea, summary")) return;
+    if (e.key === "ArrowRight") { stopPlay(); setFrame(+scrub.value + 1); }
+    else if (e.key === "ArrowLeft") { stopPlay(); setFrame(+scrub.value - 1); }
+    else if (e.key === " ") { e.preventDefault(); $("play").click(); }
   });
 
   setFrame(frames.length - 1);   /* land on the proof: CANONICAL */
