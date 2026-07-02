@@ -1,7 +1,7 @@
 # Loom
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](#)
-[![Tests](https://img.shields.io/badge/tests-795%20passing-green)](#)
+[![Tests](https://img.shields.io/badge/tests-940%20passing-green)](#)
 [![Ruff](https://img.shields.io/badge/lint-ruff-clean-brightgreen)](#)
 
 **Geometric orchestration engine for parallel AI coding agents.**
@@ -229,6 +229,19 @@ Loom has been dogfooded end-to-end with **live Grok Build agents** on the Loom m
 
 Loom's convergence score of **0.8889** is a badge of mathematical purity — three copy-mode workers had no fresh filesystem deltas at final merge (their work was already integrated). Loom flagged them as `PREFLIGHT_BLOCKED` rather than inflating metrics with ghost merges. Every participating worker achieved **1.0 validation compliance**, ensuring zero trespass.
 
+### Wave 1 — Multi-Agent Dogfood (Grok Composer 2.5, July 2026)
+
+A second live dogfood run, this time coordinated by Claude directing four parallel headless Grok Composer workers, each independently validated against its brief before merge:
+
+| Worker | Task | Result |
+|--------|------|--------|
+| 101 | Lint cleanup of `loom-frontend-base/` + `frontend-formation-complete/` | 33 files fixed, only intentional `S101` (test asserts) remain |
+| 102 | Test coverage for `websocket_telemetry.py` | 44% → **93%** coverage, 32 new tests |
+| 103 | Audit README code-deep-dive snippets against live source | 19 snippets checked, 9 drifted, 1 path-wrong, 0 fabricated — see `docs/reference/deep-dive-appendix-drift.md` |
+| 104 | Test coverage for `ui_intent.py` | 65% → **75%** coverage, 26 new tests |
+
+Full suite re-verified independently after each worker's commit — **940 passed, 1 skipped, 0 failures.** The same sprint also shipped the **Resolution Observatory** (`sandbox_frontend/observatory/`), a replay UI driven by a real, non-mocked `resolution_v3` engine run — see [Runtime Pipeline](#runtime-pipeline) below.
+
 ---
 
 ## Installation
@@ -306,6 +319,19 @@ input -> constraint graph -> resolution_v3 -> work unit extraction -> execution 
 ```
 
 It is intentionally narrow and boring in the good way: one input, one deterministic output shape, no scheduler cleverness yet.
+
+### Resolution Observatory
+
+A replay UI for watching `resolution_v3` govern a run frame by frame:
+
+```bash
+python3 sandbox_frontend/observatory/generate_resolution_trace.py
+# then open sandbox_frontend/observatory/resolution-observatory.html
+```
+
+The generator executes the real engine and rule set (A1/B1/B2, Ψ, validation) against a fixture that exercises a growth-debt materialization, a REQ/FORBID clash, a B2 SCC weld, a STUCK state, and a working prototype of the A3 proposal-boundary evaluation — the speculative copy, the seven-check gauntlet, and engine-controlled acceptance. It writes a `replay_digest` hash into the trace; regenerating from the same fixture reproduces that hash exactly, which is the practical proof that the run is replayable, not just logged.
+
+The page itself is a scrubbable timeline: drag through the run and watch the constraint graph, the Ψ-descent chart, the evidence log, and the proposal ledger all advance together. Nothing in it is mocked or hand-animated.
 
 ## Source Dump Workflow
 
