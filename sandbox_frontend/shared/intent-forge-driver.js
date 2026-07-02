@@ -300,9 +300,24 @@
     var driver = explicitMockEnabled() ? mockDriver : realDriver;
     return op(driver).then(render).catch(function (err) { feedback(err.message, true); }).finally(function () { setBusy(false); syncButtons(); });
   }
+  function updateApiPill() {
+    var pill = $("intent-api-pill");
+    if (!pill) return;
+    var dot = pill.querySelector("span:first-child");
+    var label = pill.querySelector("span:last-child");
+    var hasKey = !!(localStorage.getItem("loom.api_key") || "");
+    if (hasKey) {
+      if (dot) dot.className = "w-2 h-2 rounded-full bg-secondary shadow-[0_0_12px_rgba(71,226,102,0.55)]";
+      if (label) label.textContent = "API Ready";
+    } else {
+      if (dot) dot.className = "w-2 h-2 rounded-full bg-error shadow-[0_0_12px_rgba(226,71,71,0.55)]";
+      if (label) label.textContent = "API key required";
+    }
+  }
   function initIntentForge() {
     if (!$("prompt-input") || $("prompt-input").dataset.bound === "true") return;
     $("prompt-input").dataset.bound = "true";
+    updateApiPill();
     $("prompt-input").value = localStorage.getItem("loom.prompt_draft") || "";
     $("answer-input").value = localStorage.getItem("loom.answer_draft") || "";
     ["prompt-input", "answer-input"].forEach(function (id) {
@@ -326,7 +341,7 @@
       editor.value = btn.parentElement.textContent.replace(/^Revise/, "").trim();
     });
     syncButtons();
-    window.LoomIntentForgeDriver = { mode: explicitMockEnabled() ? "mock" : "api", real: realDriver, mock: mockDriver };
+    window.LoomIntentForgeDriver = { mode: explicitMockEnabled() ? "mock" : "api", real: realDriver, mock: mockDriver, updateApiPill: updateApiPill };
   }
   document.addEventListener("workspace-loaded", function (event) { if (event.detail.id === "intent-forge") initIntentForge(); });
   document.addEventListener("workspace-loaded", function (event) {

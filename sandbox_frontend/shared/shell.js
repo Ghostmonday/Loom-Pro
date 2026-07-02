@@ -244,7 +244,38 @@
    *  SHELL RENDERERS
    * ═══════════════════════════════════════════════════════════ */
 
+  function openApiKeyPanel() {
+    var existing = document.getElementById("shell-apikey-modal");
+    if (existing) { existing.remove(); return; }
+    var current = localStorage.getItem("loom.api_key") || "";
+    var modal = document.createElement("div");
+    modal.id = "shell-apikey-modal";
+    modal.className = "fixed inset-0 z-[100] flex items-center justify-center bg-black/50";
+    modal.innerHTML =
+      '<div class="bg-surface-container-low border border-outline-variant/30 rounded-xl p-stack-lg w-96 flex flex-col gap-stack-md">' +
+      '<h2 class="font-display-sm text-title-sm font-bold text-on-surface">API Key</h2>' +
+      '<p class="font-body-sm text-body-sm text-on-surface-variant">Paste the LOOM_API_KEY printed when the server started. Without it, every request in this workbench fails silently.</p>' +
+      '<input id="shell-apikey-input" type="text" value="' + current.replace(/"/g, "&quot;") + '" class="bg-white/5 border border-white/10 rounded-lg text-body-sm px-3 py-2 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary/50" placeholder="paste key here"/>' +
+      '<div class="flex justify-end gap-stack-sm">' +
+      '<button id="shell-apikey-cancel" class="font-body-sm px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-white/10">Cancel</button>' +
+      '<button id="shell-apikey-save" class="font-body-sm px-3 py-1.5 rounded-lg bg-primary text-on-primary font-bold">Save</button>' +
+      '</div></div>';
+    document.body.appendChild(modal);
+    document.getElementById("shell-apikey-cancel").addEventListener("click", function () { modal.remove(); });
+    document.getElementById("shell-apikey-save").addEventListener("click", function () {
+      var val = document.getElementById("shell-apikey-input").value.trim();
+      localStorage.setItem("loom.api_key", val);
+      modal.remove();
+      renderTopNav();
+      if (window.LoomIntentForgeDriver && window.LoomIntentForgeDriver.updateApiPill) {
+        window.LoomIntentForgeDriver.updateApiPill();
+      }
+    });
+    document.getElementById("shell-apikey-input").focus();
+  }
+
   function renderTopNav() {
+    var hasApiKey = !!(localStorage.getItem("loom.api_key") || "");
     var html = '<div class="flex items-center gap-stack-lg">' +
       '<span id="shell-brand" class="font-display-lg text-title-md font-bold text-primary tracking-tight cursor-pointer">Loom Blueprint Workbench</span>' +
       '<nav id="shell-nav-links" class="hidden md:flex items-center gap-1 ml-gutter">';
@@ -266,7 +297,9 @@
       '<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-[14px] text-on-surface-variant opacity-50">search</span>' +
       '<input id="shell-search" class="bg-white/5 border border-white/10 rounded-lg text-[12px] pl-8 pr-3 py-1.5 w-44 focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all placeholder:opacity-30 text-on-surface" placeholder="Search workspace..." type="text"/>' +
       '</div>' +
-      '<button id="shell-settings" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface hover:bg-white/10 p-1.5 rounded-lg spring-transition">settings</button>' +
+      '<button id="shell-settings" class="relative material-symbols-outlined text-on-surface-variant hover:text-on-surface hover:bg-white/10 p-1.5 rounded-lg spring-transition" title="' + (hasApiKey ? "API key configured" : "API key required — click to set it") + '">settings' +
+      (hasApiKey ? "" : '<span class="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-error"></span>') +
+      '</button>' +
       '<button id="shell-help" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface hover:bg-white/10 p-1.5 rounded-lg spring-transition">help</button>' +
       '<div class="h-6 w-[1px] bg-white/10 mx-1"></div>' +
       '<div id="shell-avatar" class="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-secondary-fixed opacity-80 cursor-pointer"></div>' +
@@ -283,6 +316,7 @@
 
     dom.searchInput = document.getElementById("shell-search");
     dom.settingsBtn = document.getElementById("shell-settings");
+    dom.settingsBtn.addEventListener("click", openApiKeyPanel);
     dom.helpBtn = document.getElementById("shell-help");
     dom.avatar = document.getElementById("shell-avatar");
   }
