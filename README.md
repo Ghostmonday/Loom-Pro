@@ -214,7 +214,7 @@ Loom has been dogfooded end-to-end with **live Grok Build agents** on the Loom m
 | Parameter | Value |
 |-----------|-------|
 | Target | Loom monorepo (171 code nodes) |
-| Graph | 171 nodes · 92 shadow bridges · 54 work units |
+| Graph | 171 nodes · 92 dark bridges (handoff gateway edges) · 54 work units |
 | Agents | 4 concurrent copy-mode Grok workers |
 | Handoff ticket | `TX-HT-6D0B24` (resolved) |
 | Validation pass rate | **1.0** (4/4 workers) |
@@ -370,7 +370,7 @@ Scope presets:
 ├── scripts/                          # CI, development, and demo scripts
 │   ├── ci/                           # CI pipeline scripts
 │   ├── dev/                          # Development helpers and demos
-│   └── codex/                        # Codex parallel task launchers
+│   └── ops/                          # Operational maintenance scripts
 ├── ui/                               # Intent maps, FRG visualizations, terminal assets
 ├── sandbox_frontend/                 # Standalone frontend sandbox and observatory pages
 ├── vaults/                           # Legacy memory FS and vault storage
@@ -385,7 +385,7 @@ Key implementation files:
 - `aoc-cli/aoc_cli/giv.py` — Agent Intent Vector schema and enforcement
 - `aoc_supervisor/aoc_supervisor/loom_pipeline.py` — Handoff and teleology sequencing
 - `aoc_supervisor/aoc_supervisor/intent_forge_service.py` — Intent → blueprint synthesis
-- `aoc_supervisor/aoc_supervisor/council.py` — Multi-agent handoff transaction bus
+- `aoc-cli/aoc_cli/helpers/council.py` — Multi-agent handoff transaction bus
 - `aoc_supervisor/aoc_supervisor/loom_blueprint_synthesizer.py` — Curvature-conditioned synthesis
 - `aoc_supervisor/aoc_supervisor/loom_map_generator.py` — Deterministic contract generation
 - `aoc_supervisor/aoc_supervisor/api.py` — Hosted service boundary
