@@ -176,7 +176,7 @@
     var gates = ledger.promotion_gates || {};
     setText("claims-ledger-status", claims.length ? "Session evidence loaded" : "Awaiting session evidence");
     setText("claims-ledger-evidence-count", ledger.evidence_packet_count || 0);
-    setText("claims-ledger-evidence-note", claims.length ? "Evidence packets are session-backed." : "No Intent Forge session loaded.");
+    setText("claims-ledger-evidence-note", claims.length ? "Evidence packets are session-backed." : "No Build session loaded.");
     setText("claims-ledger-promoted-count", ledger.promoted_count || 0);
     setText("claims-ledger-contradiction-count", ledger.contradiction_count || 0);
     setText("claims-ledger-contradiction-note", ledger.contradiction_count ? "Blocking contradictions require resolution." : "No real conflicts detected.");

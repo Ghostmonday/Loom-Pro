@@ -27,7 +27,7 @@
       defaultTooltip: "Navigate"
     },
     "intent-forge": {
-      label: "Intent Forge",
+      label: "Build",
       navGroup: "forge",
       sidebarTool: "inspect",
       url: "workspaces/intent-forge.html",
@@ -35,7 +35,7 @@
       defaultTooltip: "Inspect"
     },
     "blueprint-ratification": {
-      label: "Blueprint Ratification",
+      label: "Plan",
       navGroup: "blueprint",
       sidebarTool: "graph-layout",
       url: "workspaces/blueprint-ratification.html",
@@ -43,7 +43,7 @@
       defaultTooltip: "Graph Layout"
     },
     "claims-ledger": {
-      label: "Claims Ledger",
+      label: "Receipts",
       navGroup: "claims",
       sidebarTool: "graph-layout",
       url: "workspaces/claims-ledger.html",
@@ -51,7 +51,7 @@
       defaultTooltip: "Graph Layout"
     },
     "curvature-analysis": {
-      label: "Curvature Analysis",
+      label: "X-Ray",
       navGroup: "analysis",
       sidebarTool: "graph-layout",
       url: "workspaces/curvature-analysis.html",
@@ -59,7 +59,7 @@
       defaultTooltip: "Graph Layout"
     },
     "drift-monitor": {
-      label: "Drift Monitor",
+      label: "Drift",
       navGroup: "pipeline",
       sidebarTool: "inspect",
       url: "workspaces/drift-monitor.html",
@@ -67,7 +67,7 @@
       defaultTooltip: "Inspect"
     },
     "packet-export": {
-      label: "Packet Export",
+      label: "Ship",
       navGroup: "export",
       sidebarTool: "graph-layout",
       url: "workspaces/packet-export.html",
@@ -75,7 +75,7 @@
       defaultTooltip: "Graph Layout"
     },
     "topological-observatory": {
-      label: "Topological Observatory",
+      label: "Map",
       navGroup: "observatory",
       sidebarTool: "visibility",
       url: "workspaces/topological-observatory.html",
@@ -87,13 +87,13 @@
   /* Pipeline stage order for navigation */
   var PIPELINE_STAGES = [
     { id: "hub",                label: "Hub",              icon: "dashboard" },
-    { id: "intent-forge",       label: "Intent Forge",     icon: "straighten" },
-    { id: "claims-ledger",      label: "Claims",           icon: "layers" },
-    { id: "blueprint-ratification", label: "Ratification", icon: "architecture" },
-    { id: "curvature-analysis", label: "Curvature",        icon: "architecture" },
-    { id: "topological-observatory", label: "Observatory", icon: "visibility" },
+    { id: "intent-forge",       label: "Build",            icon: "straighten" },
+    { id: "claims-ledger",      label: "Receipts",         icon: "layers" },
+    { id: "blueprint-ratification", label: "Plan",         icon: "architecture" },
+    { id: "curvature-analysis", label: "X-Ray",            icon: "architecture" },
+    { id: "topological-observatory", label: "Map",         icon: "visibility" },
     { id: "drift-monitor",      label: "Drift",            icon: "straighten" },
-    { id: "packet-export",      label: "Export",           icon: "terminal" }
+    { id: "packet-export",      label: "Ship",             icon: "terminal" }
   ];
 
   var STAGE_LOCKS = {
@@ -103,27 +103,27 @@
     },
     "intent-forge": {
       unlockedByDefault: true,
-      reason: "Start here. Capture the product intent before blueprint work."
+      reason: "Start here. Capture the product intent before planning work."
     },
     "claims-ledger": {
       requiredStage: "intent-forge",
-      requiredLabel: "Start an Intent Forge session",
+      requiredLabel: "Start a Build session",
       reason: "Claims require session-backed evidence before they can be inspected."
     },
     "blueprint-ratification": {
       requiredStage: "claims-ledger",
       requiredLabel: "Reach final blueprint confirmation",
-      reason: "Ratification is only meaningful after Loom validates enough claims and requirements."
+      reason: "Plan approval is only meaningful after Loom validates enough claims and requirements."
     },
     "curvature-analysis": {
       requiredStage: "blueprint-ratification",
       requiredLabel: "Finalize or hand off the blueprint",
-      reason: "Curvature analysis needs a real graph projection, not an empty intake state."
+      reason: "X-Ray needs a real graph projection, not an empty intake state."
     },
     "topological-observatory": {
       requiredStage: "curvature-analysis",
       requiredLabel: "Finalize or hand off the blueprint",
-      reason: "The observatory opens once Loom has a real topology to inspect."
+      reason: "The Map opens once Loom has a real topology to inspect."
     },
     "drift-monitor": {
       requiredStage: "topological-observatory",
@@ -133,7 +133,7 @@
     "packet-export": {
       requiredStage: "drift-monitor",
       requiredLabel: "Complete blueprint handoff",
-      reason: "Exports are locked until a blueprint packet exists."
+      reason: "Shipping is locked until a blueprint packet exists."
     }
   };
 
@@ -291,7 +291,7 @@
     if (state.currentWorkspace === "intent-forge") {
       dom.console.innerHTML =
         '<div class="flex items-center h-full px-container-margin gap-stack-md">' +
-        '<span class="font-label-caps text-label-caps text-on-surface-variant/55">Intent Forge</span>' +
+        '<span class="font-label-caps text-label-caps text-on-surface-variant/55">Build</span>' +
         '<div class="flex-1"></div>' +
         '<button id="dashboard-toggle" class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer spring-transition" title="Architectural pulse">monitoring</button>' +
         '</div>';

@@ -1,6 +1,8 @@
-# Grid Watch — Design Specification
+# Party (Grid Watch) — Design Specification
 
 **Live mission control for parallel AI agent orchestration.**
+Product name: **Party** (see `docs/reference/NAMING.md`); "Grid Watch" remains
+the internal/engineering name used throughout this spec.
 Companion surface to the Resolution Observatory: the Observatory replays a finished
 engine run; Grid Watch shows the sprint *while it is happening* — nine or more
 agents, one screen, zero mystery.
