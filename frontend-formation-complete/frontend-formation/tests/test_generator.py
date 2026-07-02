@@ -10,9 +10,7 @@ SOURCE = ROOT / "examples/source"
 
 def snapshot(directory: Path):
     return {
-        str(path.relative_to(directory)): path.read_bytes()
-        for path in sorted(directory.rglob("*"))
-        if path.is_file()
+        str(path.relative_to(directory)): path.read_bytes() for path in sorted(directory.rglob("*")) if path.is_file()
     }
 
 

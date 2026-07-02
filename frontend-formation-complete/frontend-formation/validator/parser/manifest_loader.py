@@ -42,10 +42,7 @@ def validate_instance(instance: dict[str, Any], schema_path: str | Path, source_
     validator = jsonschema.Draft7Validator(schema)
     errors = sorted(validator.iter_errors(instance), key=lambda e: [str(x) for x in e.path])
     if errors:
-        formatted = [
-            f"{'/'.join(str(p) for p in error.path) or '(root)'}: {error.message}"
-            for error in errors
-        ]
+        formatted = [f"{'/'.join(str(p) for p in error.path) or '(root)'}: {error.message}" for error in errors]
         raise SchemaValidationError(str(source_path), formatted)
 
 

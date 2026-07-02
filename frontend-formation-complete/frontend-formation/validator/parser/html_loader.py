@@ -10,9 +10,22 @@ from bs4 import BeautifulSoup, Tag
 
 NATIVE_INTERACTIVE_TAGS = {"button", "input", "select", "textarea"}
 INLINE_EVENT_ATTRS = {
-    "onclick", "onchange", "onsubmit", "onkeydown", "onkeyup", "onkeypress",
-    "onmouseover", "onmouseout", "onmousedown", "onmouseup", "onfocus",
-    "onblur", "oninput", "ondblclick", "onpointerdown", "onpointerup",
+    "onclick",
+    "onchange",
+    "onsubmit",
+    "onkeydown",
+    "onkeyup",
+    "onkeypress",
+    "onmouseover",
+    "onmouseout",
+    "onmousedown",
+    "onmouseup",
+    "onfocus",
+    "onblur",
+    "oninput",
+    "ondblclick",
+    "onpointerdown",
+    "onpointerup",
 }
 NATIVE_ROLES = {
     "button": "button",
@@ -20,8 +33,19 @@ NATIVE_ROLES = {
     "textarea": "textbox",
 }
 INTERACTIVE_ROLES = {
-    "button", "checkbox", "combobox", "link", "listbox", "menuitem",
-    "option", "radio", "slider", "spinbutton", "switch", "tab", "textbox",
+    "button",
+    "checkbox",
+    "combobox",
+    "link",
+    "listbox",
+    "menuitem",
+    "option",
+    "radio",
+    "slider",
+    "spinbutton",
+    "switch",
+    "tab",
+    "textbox",
 }
 
 
@@ -67,9 +91,7 @@ class DomElement:
             return True
         if self.text.strip():
             return True
-        if self.value and self.value.strip():
-            return True
-        return False
+        return bool(self.value and self.value.strip())
 
 
 @dataclass(frozen=True)

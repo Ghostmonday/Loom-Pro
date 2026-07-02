@@ -44,9 +44,7 @@ def _default_tag(element: dict[str, Any], feedback_targets: set[str]) -> str:
 
 def render_html(manifest: dict[str, Any]) -> str:
     feedback_targets = {
-        element["feedback_target"]
-        for element in manifest["elements"]
-        if element["classification"] == "action_control"
+        element["feedback_target"] for element in manifest["elements"] if element["classification"] == "action_control"
     }
     lines = [
         "<!doctype html>",
@@ -78,13 +76,15 @@ def render_html(manifest: dict[str, Any]) -> str:
             f'data-classification="{classification}"',
         ]
         if classification == "action_control":
-            attrs.extend([
-                f'data-action="{html.escape(element["action"], quote=True)}"',
-                f'data-feedback-target="{html.escape(element["feedback_target"], quote=True)}"',
-                f'aria-label="{html.escape(label, quote=True)}"',
-                'aria-busy="false"',
-                'type="button"' if tag == "button" else 'role="button"',
-            ])
+            attrs.extend(
+                [
+                    f'data-action="{html.escape(element["action"], quote=True)}"',
+                    f'data-feedback-target="{html.escape(element["feedback_target"], quote=True)}"',
+                    f'aria-label="{html.escape(label, quote=True)}"',
+                    'aria-busy="false"',
+                    'type="button"' if tag == "button" else 'role="button"',
+                ]
+            )
             if tag != "button":
                 attrs.append('tabindex="0"')
         elif classification == "display":
@@ -94,19 +94,21 @@ def render_html(manifest: dict[str, Any]) -> str:
 
         lines.append(f"    <{tag} {' '.join(attrs)}>{html.escape(label)}</{tag}>")
 
-    lines.extend([
-        "  </main>",
-        '  <script src="shell.js"></script>',
-        '  <script src="screen.custom.js"></script>',
-        "</body>",
-        "</html>",
-        "",
-    ])
+    lines.extend(
+        [
+            "  </main>",
+            '  <script src="shell.js"></script>',
+            '  <script src="screen.custom.js"></script>',
+            "</body>",
+            "</html>",
+            "",
+        ]
+    )
     return "\n".join(lines)
 
 
 def render_js() -> str:
-    return '''"use strict";
+    return """"use strict";
 
 function renderFallback(target, state, payload) {
   const detail = payload == null ? "" : ` ${JSON.stringify(payload)}`;
@@ -160,11 +162,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-'''
+"""
 
 
 def render_css() -> str:
-    return ''':root {
+    return """:root {
   font-family: system-ui, sans-serif;
   line-height: 1.5;
 }
@@ -195,7 +197,7 @@ body {
 [data-classification="display"] {
   min-height: 1.5rem;
 }
-'''
+"""
 
 
 def _scenario_for(manifest: dict[str, Any], scenario_id: str) -> dict[str, Any]:
@@ -216,9 +218,17 @@ def _scenario_for(manifest: dict[str, Any], scenario_id: str) -> dict[str, Any]:
             {"kind": "perform_interaction", "target": action["id"]},
             {"kind": "assert_intermediate_feedback", "target": feedback_id, "expected": {"state": "pending"}},
             {"kind": "assert_terminal_state", "target": feedback_id, "expected": {"any_of": ["succeeded", "failed"]}},
-            {"kind": "assert_contract_projection", "target": feedback["contract_path"], "expected": {"observable": True}},
+            {
+                "kind": "assert_contract_projection",
+                "target": feedback["contract_path"],
+                "expected": {"observable": True},
+            },
             {"kind": "assert_accessibility_state", "target": action["id"], "expected": {"accessible_name": True}},
-            {"kind": "assert_no_prohibited_side_effect", "target": action["id"], "expected": {"inline_handlers": False}},
+            {
+                "kind": "assert_no_prohibited_side_effect",
+                "target": action["id"],
+                "expected": {"inline_handlers": False},
+            },
         ],
     }
 
@@ -244,7 +254,9 @@ def generate_scaffold(
     preserved = {}
     if output_dir.exists() and any(output_dir.iterdir()):
         if not force:
-            raise GenerationError(f"Output directory is not empty: {output_dir}. Use --force to replace generated files.")
+            raise GenerationError(
+                f"Output directory is not empty: {output_dir}. Use --force to replace generated files."
+            )
         for name in ("screen.custom.css", "screen.custom.js"):
             path = output_dir / name
             if path.exists():

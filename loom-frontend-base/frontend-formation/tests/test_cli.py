@@ -8,14 +8,16 @@ SPEC = ROOT / "specification"
 
 
 def test_json_output_is_machine_readable(capsys):
-    code = main([
-        "--project",
-        str(ROOT / "examples/passing/frontend-formation.yaml"),
-        "--spec-dir",
-        str(SPEC),
-        "--format",
-        "json",
-    ])
+    code = main(
+        [
+            "--project",
+            str(ROOT / "examples/passing/frontend-formation.yaml"),
+            "--spec-dir",
+            str(SPEC),
+            "--format",
+            "json",
+        ]
+    )
     payload = json.loads(capsys.readouterr().out)
     assert code == 0
     assert payload["passed"] is True
@@ -24,14 +26,16 @@ def test_json_output_is_machine_readable(capsys):
 
 
 def test_failing_cli_returns_nonzero(capsys):
-    code = main([
-        "--project",
-        str(ROOT / "examples/failing/frontend-formation.yaml"),
-        "--spec-dir",
-        str(SPEC),
-        "--format",
-        "json",
-    ])
+    code = main(
+        [
+            "--project",
+            str(ROOT / "examples/failing/frontend-formation.yaml"),
+            "--spec-dir",
+            str(SPEC),
+            "--format",
+            "json",
+        ]
+    )
     payload = json.loads(capsys.readouterr().out)
     assert code == 1
     assert payload["passed"] is False

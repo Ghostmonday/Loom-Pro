@@ -1,48 +1,48 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXT = ROOT / 'extension-src'
+EXT = ROOT / "extension-src"
 
 screen_maps = {
-    'vision_canvas': {
-        'loom.vision.prompt':'vision-prompt-display',
-        'loom.vision.current_question':'vision-question-display',
-        'loom.vision.understanding':'vision-understanding-display',
-        'loom.vision.readiness':'vision-readiness-display',
-        'loom.vision.handoff_state':'vision-handoff-display',
+    "vision_canvas": {
+        "loom.vision.prompt": "vision-prompt-display",
+        "loom.vision.current_question": "vision-question-display",
+        "loom.vision.understanding": "vision-understanding-display",
+        "loom.vision.readiness": "vision-readiness-display",
+        "loom.vision.handoff_state": "vision-handoff-display",
     },
-    'command_engine': {
-        'loom.command.teleology_phase':'command-phase-display',
-        'loom.command.topology':'command-topology-display',
-        'loom.command.bridge_plan':'command-bridge-display',
-        'loom.command.blueprint':'command-blueprint-display',
-        'loom.command.approval_gate':'command-approval-display',
+    "command_engine": {
+        "loom.command.teleology_phase": "command-phase-display",
+        "loom.command.topology": "command-topology-display",
+        "loom.command.bridge_plan": "command-bridge-display",
+        "loom.command.blueprint": "command-blueprint-display",
+        "loom.command.approval_gate": "command-approval-display",
     },
-    'terminal': {
-        'loom.terminal.phase':'terminal-phase-display',
-        'loom.terminal.swarm':'terminal-swarm-display',
-        'loom.terminal.grid':'terminal-grid-display',
-        'loom.terminal.merge':'terminal-merge-display',
-        'loom.terminal.deliverable':'terminal-deliverable-display',
+    "terminal": {
+        "loom.terminal.phase": "terminal-phase-display",
+        "loom.terminal.swarm": "terminal-swarm-display",
+        "loom.terminal.grid": "terminal-grid-display",
+        "loom.terminal.merge": "terminal-merge-display",
+        "loom.terminal.deliverable": "terminal-deliverable-display",
     },
-    'continuation': {
-        'loom.continuation.lineage':'continuation-lineage-display',
-        'loom.continuation.graph_status':'continuation-graph-display',
-        'loom.continuation.interrogation_mode':'continuation-mode-display',
-        'loom.continuation.delta_scope':'continuation-scope-display',
-        'loom.continuation.handoff_state':'continuation-handoff-display',
+    "continuation": {
+        "loom.continuation.lineage": "continuation-lineage-display",
+        "loom.continuation.graph_status": "continuation-graph-display",
+        "loom.continuation.interrogation_mode": "continuation-mode-display",
+        "loom.continuation.delta_scope": "continuation-scope-display",
+        "loom.continuation.handoff_state": "continuation-handoff-display",
     },
-    'deliverable_launch': {
-        'loom.deliverable.launch_card':'deliverable-card-display',
-        'loom.deliverable.surfaces':'deliverable-surface-display',
-        'loom.deliverable.run_status':'deliverable-run-display',
-        'loom.deliverable.changelog':'deliverable-change-display',
-        'loom.deliverable.lineage':'deliverable-lineage-display',
+    "deliverable_launch": {
+        "loom.deliverable.launch_card": "deliverable-card-display",
+        "loom.deliverable.surfaces": "deliverable-surface-display",
+        "loom.deliverable.run_status": "deliverable-run-display",
+        "loom.deliverable.changelog": "deliverable-change-display",
+        "loom.deliverable.lineage": "deliverable-lineage-display",
     },
 }
 
-js_template = '''"use strict";
+js_template = """"use strict";
 
 (function installScreenProjectionController() {{
   const bindings = {bindings};
@@ -64,12 +64,14 @@ js_template = '''"use strict";
     project(changed.filter((path) => Object.prototype.hasOwnProperty.call(bindings, path)));
   }});
 }})();
-'''
+"""
 
 for name, bindings in screen_maps.items():
-    (EXT / f'{name}.custom.js').write_text(js_template.format(bindings=json.dumps(bindings, indent=2)), encoding='utf-8')
+    (EXT / f"{name}.custom.js").write_text(
+        js_template.format(bindings=json.dumps(bindings, indent=2)), encoding="utf-8"
+    )
 
-base = '''
+base = """
 :root {
   --loom-bg: #08090c;
   --loom-panel: #11141a;
@@ -156,25 +158,25 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
-'''
+"""
 accents = {
-    'vision_canvas':'#50e3a4',
-    'command_engine':'#65d9ff',
-    'terminal':'#f6c85f',
-    'continuation':'#bd93f9',
-    'deliverable_launch':'#ff8f70',
+    "vision_canvas": "#50e3a4",
+    "command_engine": "#65d9ff",
+    "terminal": "#f6c85f",
+    "continuation": "#bd93f9",
+    "deliverable_launch": "#ff8f70",
 }
 
 for name, accent in accents.items():
-    extra = ''
-    if name == 'terminal':
-        extra = '\n#terminal-grid-display, #terminal-merge-display { background: #05070a; color: #a7f3d0; }\n'
-    if name == 'command_engine':
-        extra = '\n#command-topology-display, #command-bridge-display { background: #071016; color: #a5f3fc; }\n'
-    if name == 'continuation':
-        extra = '\n#continuation-scope-display { border-style: dashed; }\n'
-    if name == 'deliverable_launch':
-        extra = '\n#deliverable-card-display { border-width: 2px; color: var(--loom-text); }\n'
-    (EXT / f'{name}.custom.css').write_text(base.replace('ACCENT', accent) + extra, encoding='utf-8')
+    extra = ""
+    if name == "terminal":
+        extra = "\n#terminal-grid-display, #terminal-merge-display { background: #05070a; color: #a7f3d0; }\n"
+    if name == "command_engine":
+        extra = "\n#command-topology-display, #command-bridge-display { background: #071016; color: #a5f3fc; }\n"
+    if name == "continuation":
+        extra = "\n#continuation-scope-display { border-style: dashed; }\n"
+    if name == "deliverable_launch":
+        extra = "\n#deliverable-card-display { border-width: 2px; color: var(--loom-text); }\n"
+    (EXT / f"{name}.custom.css").write_text(base.replace("ACCENT", accent) + extra, encoding="utf-8")
 
-print('created', len(screen_maps), 'custom JS and CSS pairs')
+print("created", len(screen_maps), "custom JS and CSS pairs")
