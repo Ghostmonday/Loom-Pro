@@ -11,6 +11,7 @@ from aoc_supervisor.blueprint_compiler import (
     compile_rich_artifact,
     validate_blueprint_state,
 )
+from aoc_supervisor.answer_quality import credit_confidence
 from aoc_supervisor.claims_ledger import build_claim_ledger
 from aoc_supervisor.conflict_resolver import detect_contradictions, merge_contradictions, resolution_options
 from aoc_supervisor.intent_blueprint import detect_intent_streams
@@ -192,7 +193,8 @@ class IntentForgeService:
 
         confidence = state.setdefault("confidence_by_domain", {})
         if isinstance(confidence, dict):
-            confidence[domain] = min(1.0, float(confidence.get(domain, 0.0)) + 0.2)
+            # Credit substance, not keystrokes (see answer_quality module).
+            confidence[domain] = credit_confidence(confidence.get(domain, 0.0), answer)
 
         graph = state.setdefault("blueprint_graph", {"version": 0, "nodes": [], "edges": []})
         if isinstance(graph, dict):

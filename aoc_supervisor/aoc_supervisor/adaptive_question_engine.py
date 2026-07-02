@@ -8,6 +8,7 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
+from aoc_supervisor.answer_quality import credit_confidence
 from aoc_supervisor.intent_blueprint_state import new_element_id
 from aoc_supervisor.reasoning_provider import (
     ProviderFailureError,
@@ -40,7 +41,13 @@ try:
 except ImportError:  # pragma: no cover - Subagent A integration path
     _external_append_receipt = None
 
-MAX_AUTO_RESOLUTION_PASSES = 8
+# One turn's auto-resolution loop may silently resolve (DERIVE/DEFAULT/NA)
+# several low-risk domains before it reaches the next ASK-worthy question or
+# genuinely runs out of uncertainties. The budget must exceed the full
+# curriculum size so a real, ready-to-finalize state is never mistaken for a
+# stalled one — this is not a UI paging limit, it's an internal correctness
+# bound. Sized with headroom for follow-up/rescue variants of every domain.
+MAX_AUTO_RESOLUTION_PASSES = 64
 
 
 @dataclass(frozen=True)
@@ -333,7 +340,10 @@ class AdaptiveQuestionEngine:
 
         confidence = state.setdefault("confidence_by_domain", {})
         if isinstance(confidence, dict):
-            confidence[domain] = min(1.0, float(confidence.get(domain, 0.0)) + 0.2)
+            # Credit substance, not keystrokes: an informative answer clears the
+            # finalize threshold in one pass; a deflection stays below it so the
+            # provider can return with a sharper follow-up.
+            confidence[domain] = credit_confidence(confidence.get(domain, 0.0), answer)
 
         graph = state.setdefault("blueprint_graph", {"version": 0, "nodes": [], "edges": []})
         if isinstance(graph, dict):

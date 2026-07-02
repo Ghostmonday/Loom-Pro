@@ -68,88 +68,308 @@ _INTENT_SIGNALS: dict[str, tuple[str, ...]] = {
     "multi_user": ("team", "role", "permission", "tenant", "organization", "user"),
 }
 
+# Interrogation curriculum. One spec per required domain (product_scope is
+# seeded from the intake prompt). Tiers order the interview the way a good
+# product coach works: DISCOVER (0) who/what/journey, DEFINE (1) shape of the
+# thing, GUARD (2) what protects it, OPERATE (3) where it lives, PROVE (4)
+# how we know it works. Within the provider's action policy:
+#   risk >= 0.85 or no default        -> ASK   (the dreamer must speak)
+#   0.80 <= risk < 0.85 with default  -> CONFIRM (drafted, one-tap acceptable)
+#   risk < 0.80 with default          -> auto-DEFAULT (engine drafts, reversible)
 _GAP_SPECS: tuple[dict[str, Any], ...] = (
+    # ── Tier 0 · DISCOVER ────────────────────────────────────────────
     {
         "decision_target": "functional_scope",
         "domain": "functional_requirements",
+        "tier": 0,
         "risk": 0.95,
         "blocking": True,
         "derive_min_intent_len": 48,
         "default": None,
+        "tag_defaults": {},
         "na_tags": set(),
         "template": (
             'You described "{snippet}" — what must V1 actually do? '
             "Be concrete about inputs, outputs, and success criteria."
         ),
         "why": "Implementation scope and acceptance tests depend on concrete V1 behavior.",
+        "follow_up": "Name the three actions a user can take in V1, and what each one produces.",
+    },
+    {
+        "decision_target": "primary_user",
+        "domain": "target_users",
+        "tier": 0,
+        "risk": 0.88,
+        "blocking": True,
+        "derive_min_intent_len": 0,
+        "default": None,
+        "tag_defaults": {},
+        "na_tags": {"personal_tool"},
+        "template": (
+            'Who is "{snippet}" for on day one? Name the primary person or role, '
+            "and what they must accomplish in their first session for you to call it a win."
+        ),
+        "why": "Permissions, interface tone, and every priority call hang off who V1 truly serves.",
+        "follow_up": (
+            "Name one concrete person or role, and the single first-session outcome "
+            "that would make them come back tomorrow."
+        ),
     },
     {
         "decision_target": "critical_user_journey",
         "domain": "user_journeys",
+        "tier": 0,
         "risk": 0.82,
         "blocking": False,
         "derive_min_intent_len": 120,
         "default": "Single-operator flow from discovery to successful outcome.",
+        "tag_defaults": {},
         "na_tags": {"personal_tool"},
         "template": ('For "{snippet}", what is the critical journey from first touch to successful outcome?'),
         "why": "Journey shape drives interface steps, error recovery, and acceptance evidence.",
+        "follow_up": (
+            "Tell it as a story: they arrive, they do what, and what do they see "
+            "that tells them it worked?"
+        ),
     },
+    # ── Tier 1 · DEFINE ──────────────────────────────────────────────
     {
-        "decision_target": "authorization_model",
-        "domain": "authz",
-        "risk": 0.9,
+        "decision_target": "core_entities",
+        "domain": "data_model",
+        "tier": 1,
+        "risk": 0.87,
         "blocking": True,
         "derive_min_intent_len": 0,
         "default": None,
-        "na_tags": {"personal_tool", "filesystem_tool"},
-        "template": "Who needs access and what permissions should each role have?",
-        "why": "Authorization mistakes are expensive to unwind after implementation.",
-    },
-    {
-        "decision_target": "deployment_target",
-        "domain": "infrastructure",
-        "risk": 0.78,
-        "blocking": False,
-        "derive_min_intent_len": 0,
-        "default": "Local machine deployment with portable configuration.",
+        "tag_defaults": {},
         "na_tags": set(),
-        "template": 'Where should "{snippet}" run in V1 — local only, hosted service, or both?',
-        "why": "Deployment constraints shape packaging, secrets handling, and observability.",
+        "template": (
+            'What are the 3–5 core things "{snippet}" must remember — the entities '
+            "you would grieve losing — and how do they relate to each other?"
+        ),
+        "why": "The data model is the skeleton; every feature is muscle attached to it, and reshaping bones later is surgery.",
+        "follow_up": "List the entity names, one line each: what it stores and what it links to.",
     },
     {
-        "decision_target": "performance_targets",
-        "domain": "performance",
-        "risk": 0.74,
-        "blocking": False,
-        "derive_min_intent_len": 0,
-        "default": "Responsive for interactive use on a single machine.",
-        "na_tags": set(),
-        "template": "What performance or scale targets matter for the first release?",
-        "why": "Performance expectations prevent rework on architecture and data paths.",
-    },
-    {
-        "decision_target": "acceptance_evidence",
-        "domain": "testing_acceptance",
-        "risk": 0.8,
-        "blocking": True,
-        "derive_min_intent_len": 0,
-        "default": None,
-        "na_tags": set(),
-        "template": "What acceptance criteria prove each critical requirement is met?",
-        "why": "Executable SPEC completion requires verifiable acceptance evidence.",
-    },
-    {
-        "decision_target": "security_privacy",
-        "domain": "security_privacy",
+        "decision_target": "hard_invariants",
+        "domain": "business_rules",
+        "tier": 1,
         "risk": 0.86,
         "blocking": True,
         "derive_min_intent_len": 0,
         "default": None,
+        "tag_defaults": {},
+        "na_tags": set(),
+        "template": (
+            'What must NEVER happen in "{snippet}" — even if a user or admin asks nicely? '
+            "State the rules that hold no matter what."
+        ),
+        "why": "Invariants are the contract your future self will thank you for writing down; they become the tests that guard the dream.",
+        "follow_up": 'Give one rule in the form "X must never Y" (e.g. "a verified event must never be edited").',
+    },
+    {
+        "decision_target": "interface_contract",
+        "domain": "interface_behavior",
+        "tier": 1,
+        "risk": 0.82,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": (
+            "Clear success feedback on every action; errors say what happened, why, "
+            "and the one next step that recovers."
+        ),
+        "tag_defaults": {
+            "api_product": (
+                "Every response returns stable, documented JSON; errors carry "
+                "machine-readable codes plus a human hint; all write endpoints are idempotent."
+            ),
+        },
+        "na_tags": set(),
+        "template": (
+            "When things go right AND when they fail, what should the user or caller actually see?"
+        ),
+        "why": "Interfaces are promises; unclear failure behavior is where user trust dies first.",
+        "follow_up": "Describe one failure a user will actually hit, and exactly what they should see.",
+    },
+    # ── Tier 2 · GUARD ───────────────────────────────────────────────
+    {
+        "decision_target": "authorization_model",
+        "domain": "authz",
+        "tier": 2,
+        "risk": 0.9,
+        "blocking": True,
+        "derive_min_intent_len": 0,
+        "default": None,
+        "tag_defaults": {},
+        "na_tags": {"personal_tool", "filesystem_tool"},
+        "template": "Who needs access and what permissions should each role have?",
+        "why": "Authorization mistakes are expensive to unwind after implementation.",
+        "follow_up": "List each role and the one thing ONLY that role may do.",
+    },
+    {
+        "decision_target": "security_privacy",
+        "domain": "security_privacy",
+        "tier": 2,
+        "risk": 0.86,
+        "blocking": True,
+        "derive_min_intent_len": 0,
+        "default": None,
+        "tag_defaults": {},
         "na_tags": {"personal_tool"},
         "template": "What security, privacy, or compliance requirements are mandatory for V1?",
         "why": "Safety-sensitive requirements must be explicit before design proceeds.",
+        "follow_up": "Name the most sensitive data the system touches, and who must never see it.",
+    },
+    {
+        "decision_target": "failure_policy",
+        "domain": "error_handling",
+        "tier": 2,
+        "risk": 0.81,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": (
+            "Fail loudly, retry transient failures with backoff, and park anything "
+            "unrecoverable in a dead-letter queue for human review — never silently drop work."
+        ),
+        "tag_defaults": {},
+        "na_tags": set(),
+        "template": (
+            "When a step fails halfway through, what should happen to the work already done — "
+            "roll back, retry, or park it for a human?"
+        ),
+        "why": "Half-finished work is the most expensive kind; deciding its fate now is cheaper than at 2 a.m.",
+        "follow_up": "Pick one: roll back, retry, or park for review — and say why for your riskiest operation.",
+    },
+    {
+        "decision_target": "reliability_bar",
+        "domain": "non_functional_requirements",
+        "tier": 2,
+        "risk": 0.8,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": (
+            "Reliability over raw speed: no data loss on crash, graceful restarts, "
+            "and interactive paths responding under ~500ms at p95."
+        ),
+        "tag_defaults": {},
+        "na_tags": set(),
+        "template": "What reliability, availability, or compliance bar must V1 clear?",
+        "why": "Reliability targets chosen late become rewrites; chosen early they are just line items.",
+        "follow_up": "Finish this sentence: 'It is broken if …' — the observable condition that would page you.",
+    },
+    # ── Tier 3 · OPERATE (engine drafts these; every draft is reversible) ──
+    {
+        "decision_target": "deployment_target",
+        "domain": "infrastructure",
+        "tier": 3,
+        "risk": 0.78,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": "Local machine deployment with portable configuration.",
+        "tag_defaults": {
+            "api_product": "Single hosted environment with health checks and one-command deploy; local dev parity via containers.",
+        },
+        "na_tags": set(),
+        "template": 'Where should "{snippet}" run in V1 — local only, hosted service, or both?',
+        "why": "Deployment constraints shape packaging, secrets handling, and observability.",
+        "follow_up": "Local, hosted, or both — and who is responsible when it goes down?",
+    },
+    {
+        "decision_target": "performance_targets",
+        "domain": "performance",
+        "tier": 3,
+        "risk": 0.74,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": "Responsive for interactive use on a single machine.",
+        "tag_defaults": {
+            "api_product": "Sustains expected request volume with headroom; p95 latency budget defined per endpoint class.",
+        },
+        "na_tags": set(),
+        "template": "What performance or scale targets matter for the first release?",
+        "why": "Performance expectations prevent rework on architecture and data paths.",
+        "follow_up": "Give one number you care about: requests/day, records, or seconds you'd tolerate waiting.",
+    },
+    {
+        "decision_target": "observability_signals",
+        "domain": "observability",
+        "tier": 3,
+        "risk": 0.72,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": (
+            "Timestamped activity log plus a simple health signal — enough to answer "
+            "'what happened?' after the fact."
+        ),
+        "tag_defaults": {
+            "api_product": (
+                "Structured request logs with correlation IDs, error-rate and latency "
+                "metrics, and an audit line for every state change."
+            ),
+        },
+        "na_tags": set(),
+        "template": "What logging, metrics, or audit signals do you need to trust the system is healthy?",
+        "why": "You cannot debug what you cannot see; observability turns a mystery into a minute.",
+        "follow_up": "When something breaks at 2 a.m., what is the first question you'll ask the logs?",
+    },
+    # ── Tier 4 · PROVE ───────────────────────────────────────────────
+    {
+        "decision_target": "acceptance_evidence",
+        "domain": "testing_acceptance",
+        "tier": 4,
+        "risk": 0.8,
+        "blocking": True,
+        "derive_min_intent_len": 0,
+        "default": None,
+        "tag_defaults": {},
+        "na_tags": set(),
+        "template": "What acceptance criteria prove each critical requirement is met?",
+        "why": "Executable SPEC completion requires verifiable acceptance evidence.",
+        "follow_up": "Give one concrete check in the form: 'When I do X, I can verify Y.'",
+    },
+    {
+        "decision_target": "risk_register",
+        "domain": "risks_assumptions",
+        "tier": 4,
+        "risk": 0.76,
+        "blocking": False,
+        "derive_min_intent_len": 0,
+        "default": (
+            "Assumes a single small team and modest initial load; top risks are scope "
+            "creep and upstream data quality — revisit after first real usage."
+        ),
+        "tag_defaults": {},
+        "na_tags": set(),
+        "template": "What are you assuming that, if wrong, sinks the project — and what is the scariest unknown?",
+        "why": "Naming risks doesn't invite them; it just means they arrive with a plan.",
+        "follow_up": "Name one assumption you'd bet the project on, and how you'd notice it failing early.",
     },
 )
+
+# Deterministic priority when several intent tags supply a default.
+_TAG_DEFAULT_ORDER: tuple[str, ...] = (
+    "api_product",
+    "multi_user",
+    "analytics",
+    "filesystem_tool",
+    "personal_tool",
+)
+
+# Confidence below this resurfaces an addressed domain with a sharper
+# follow-up; at or above it, one substantive answer has done its job.
+_FOLLOW_UP_CONFIDENCE = 0.65
+# After this many answers in a domain that still sits below the follow-up
+# bar, the engine rescues the dreamer: it drafts a reversible default
+# instead of asking again. Interrogation must never become attrition.
+_RESCUE_AFTER_ANSWERS = 2
+
+
+def _spec_default(spec: dict[str, Any], tags: set[str]) -> str | None:
+    tag_defaults = spec.get("tag_defaults") or {}
+    for tag in _TAG_DEFAULT_ORDER:
+        if tag in tags and tag in tag_defaults:
+            return str(tag_defaults[tag])
+    return spec.get("default")
 
 
 def _infer_tags(intent: str) -> set[str]:
@@ -222,6 +442,14 @@ def _unresolved_contradictions(snapshot: dict[str, Any]) -> list[dict[str, Any]]
     return [item for item in snapshot.get("contradictions", []) if isinstance(item, dict) and not item.get("resolved")]
 
 
+def _domain_answers(snapshot: dict[str, Any], domain: str) -> list[dict[str, Any]]:
+    return [
+        entry
+        for entry in snapshot.get("active_answers", [])
+        if isinstance(entry, dict) and str(entry.get("domain", "")) == domain
+    ]
+
+
 def _identify_uncertainties(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
     intent = str(snapshot.get("original_intent", "")).strip()
     tags = _infer_tags(intent)
@@ -236,6 +464,7 @@ def _identify_uncertainties(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
             {
                 "decision_target": target,
                 "domain": str(item.get("domain", "functional_requirements")),
+                "tier": -1,  # explicit blockers always outrank curriculum gaps
                 "risk": float(item.get("risk", 0.9)),
                 "blocking": True,
                 "source": "unresolved_item",
@@ -249,31 +478,80 @@ def _identify_uncertainties(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
     for spec in _GAP_SPECS:
         target = str(spec["decision_target"])
         domain = str(spec["domain"])
-        if target.lower() in answered or _domain_addressed(snapshot, domain):
-            continue
         if _domain_na(snapshot, domain):
             continue
         if spec["na_tags"] & tags and "multi_user" not in tags:
             continue
-        risk = float(spec["risk"])
-        if _confidence_for_domain(snapshot, domain) >= 0.8:
+        confidence = _confidence_for_domain(snapshot, domain)
+        if confidence >= 0.8:
             continue
-        candidates.append(
-            {
-                "decision_target": target,
-                "domain": domain,
-                "risk": risk,
-                "blocking": bool(spec["blocking"]),
-                "source": "gap_analysis",
-                "text": str(spec["template"]).format(snippet=_snippet(intent)),
-                "why": str(spec["why"]),
-                "default": spec.get("default"),
-                "derive_min_intent_len": int(spec.get("derive_min_intent_len", 0)),
-            }
-        )
+        risk = float(spec["risk"])
+        addressed = target.lower() in answered or _domain_addressed(snapshot, domain)
+
+        if not addressed:
+            # Keystone question: the domain has never been engaged.
+            candidates.append(
+                {
+                    "decision_target": target,
+                    "domain": domain,
+                    "tier": int(spec.get("tier", 2)),
+                    "risk": risk,
+                    "blocking": bool(spec["blocking"]),
+                    "source": "gap_analysis",
+                    "text": str(spec["template"]).format(snippet=_snippet(intent)),
+                    "why": str(spec["why"]),
+                    "default": _spec_default(spec, tags),
+                    "derive_min_intent_len": int(spec.get("derive_min_intent_len", 0)),
+                }
+            )
+            continue
+
+        if confidence >= _FOLLOW_UP_CONFIDENCE:
+            continue  # answered well enough — never nag a covered domain
+
+        prior = _domain_answers(snapshot, domain)
+        if len(prior) < _RESCUE_AFTER_ANSWERS:
+            # One weak answer: come back once, sharper and quoting their words.
+            last_answer = _snippet(str(prior[-1].get("answer", "")).strip(), max_len=72) if prior else ""
+            preamble = f'Earlier you said "{last_answer}" — let\'s make it concrete. ' if last_answer else ""
+            candidates.append(
+                {
+                    "decision_target": f"{target}::followup",
+                    "domain": domain,
+                    "tier": int(spec.get("tier", 2)),
+                    "risk": max(risk, 0.85),  # follow-ups are always asked, never defaulted
+                    "blocking": bool(spec["blocking"]),
+                    "source": "follow_up",
+                    "text": preamble + str(spec.get("follow_up") or spec["template"]).format(
+                        snippet=_snippet(intent)
+                    ),
+                    "why": str(spec["why"]),
+                    "default": None,
+                }
+            )
+        else:
+            # Two stalled attempts: rescue the dreamer with a reversible draft
+            # instead of asking a third time. Interrogation is not attrition.
+            rescue_text = _spec_default(spec, tags) or (
+                "Adopt a conservative placeholder for now and revisit after the first working slice."
+            )
+            candidates.append(
+                {
+                    "decision_target": f"{target}::rescue",
+                    "domain": domain,
+                    "tier": int(spec.get("tier", 2)),
+                    "risk": 0.5,  # forces the auto-DEFAULT path in analyze()
+                    "blocking": False,
+                    "source": "rescue",
+                    "text": rescue_text,
+                    "why": str(spec["why"]),
+                    "default": rescue_text,
+                }
+            )
 
     candidates.sort(
         key=lambda item: (
+            int(item.get("tier", 2)),
             0 if item.get("blocking") else 1,
             -float(item.get("risk", 0.0)),
             str(item.get("decision_target", "")),
@@ -407,7 +685,7 @@ class DeterministicFakeReasoningProvider:
         resolved: list[dict[str, Any]] = []
         remaining: list[dict[str, Any]] = []
 
-        if readiness.ready_to_finalize:
+        if not uncertainties:
             return {
                 "analysis_revision": analysis_revision,
                 "evidence_revision": evidence_revision,
@@ -443,6 +721,7 @@ class DeterministicFakeReasoningProvider:
             resolved.append(
                 {
                     "decision_target": selected["decision_target"],
+                    "domain": selected["domain"],
                     "method": NextAction.DERIVE,
                     "text": intent,
                     "risk_if_wrong": RiskLevel.LOW,
@@ -454,6 +733,7 @@ class DeterministicFakeReasoningProvider:
             resolved.append(
                 {
                     "decision_target": selected["decision_target"],
+                    "domain": selected["domain"],
                     "method": NextAction.DEFAULT,
                     "text": recommended_default,
                     "risk_if_wrong": RiskLevel.LOW,
@@ -465,6 +745,7 @@ class DeterministicFakeReasoningProvider:
             resolved.append(
                 {
                     "decision_target": selected["decision_target"],
+                    "domain": selected["domain"],
                     "method": NextAction.NOT_APPLICABLE,
                     "text": "Not applicable for this product profile.",
                     "risk_if_wrong": RiskLevel.LOW,

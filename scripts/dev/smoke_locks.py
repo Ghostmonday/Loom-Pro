@@ -27,22 +27,33 @@ VISION = (
     "their signatures, stores them in Postgres, and exposes a paginated "
     "read API for auditors. Reliability over throughput."
 )
-MAX_ANSWERS = 10
+MAX_ANSWERS = 18
 CANNED_ANSWER = (
     "Accept the stated default. Prioritize correctness and auditability; "
     "single region; Postgres is the system of record."
 )
 
 # Domains the deterministic fake provider can surface via _GAP_SPECS questions.
+# Since the interrogation curriculum upgrade, every required domain is
+# reachable through the question flow (product_scope is intake-seeded).
 _GAP_SPEC_DOMAINS = frozenset(
     {
+        "product_scope",
         "functional_requirements",
+        "target_users",
         "user_journeys",
+        "data_model",
+        "business_rules",
+        "interface_behavior",
         "authz",
+        "security_privacy",
+        "error_handling",
+        "non_functional_requirements",
         "infrastructure",
         "performance",
+        "observability",
         "testing_acceptance",
-        "security_privacy",
+        "risks_assumptions",
     }
 )
 
